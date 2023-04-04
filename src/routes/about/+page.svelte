@@ -1,5 +1,6 @@
 <svelte:head>
    <title>{'About'}</title>
+   <meta name="description" content="About informarion. Achievements, goals, motivation">
 </svelte:head>
 
 <script lang='ts'>

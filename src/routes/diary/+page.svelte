@@ -1,5 +1,6 @@
 <svelte:head>
    <title>{'Diary'}</title>
+   <meta name="description" content="Some notes and little projects. Jokes">
 </svelte:head>
 
 <script lang='ts'>
