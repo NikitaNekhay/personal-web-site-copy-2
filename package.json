@@ -24,9 +24,7 @@
 
 	"devDependencies": {
 
-		"@sveltejs/adapter-node": "^1.2.3",
-
-		"@sveltejs/adapter-static": "^2.0.1",
+		"@sveltejs/adapter-static": "^2.0.2",
 
 		"@sveltejs/kit": "^1.5.0",
 
