@@ -8,7 +8,7 @@
 </script>
 
 <div class="grid-item-content">
-<About />
+  <About />
 </div>
 
 <style>
