@@ -1,16 +1,16 @@
 const manifest = {
 	appDir: "_app",
-	appPath: "your-repo-name/_app",
+	appPath: "personal-web-site-copy-2/_app",
 	assets: new Set([".nojekyll","favicon.ico","media/NIKITA.JPG","media/envelop.png","media/envelop.svg","media/flowers_september1.jpg","media/flowers_september1.png","media/instagram.png","media/instagram.svg","media/telegram.png","media/telegram.svg"]),
 	mimeTypes: {".ico":"image/vnd.microsoft.icon",".JPG":"image/jpeg",".png":"image/png",".svg":"image/svg+xml",".jpg":"image/jpeg"},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.3be68616.js","imports":["_app/immutable/entry/start.3be68616.js","_app/immutable/chunks/index.e03ef04e.js","_app/immutable/chunks/singletons.8042373e.js","_app/immutable/chunks/paths.daf6fa0b.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.1ef3644b.js","imports":["_app/immutable/entry/app.1ef3644b.js","_app/immutable/chunks/index.e03ef04e.js"],"stylesheets":[],"fonts":[]}},
+		client: {"start":{"file":"_app/immutable/entry/start.3650ddf0.js","imports":["_app/immutable/entry/start.3650ddf0.js","_app/immutable/chunks/index.e03ef04e.js","_app/immutable/chunks/singletons.36d81ad5.js","_app/immutable/chunks/paths.8033dbbd.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.aa727780.js","imports":["_app/immutable/entry/app.aa727780.js","_app/immutable/chunks/index.e03ef04e.js"],"stylesheets":[],"fonts":[]}},
 		nodes: [
-			() => import('./chunks/0-58193123.js'),
-			() => import('./chunks/1-bd483797.js'),
-			() => import('./chunks/2-11bd8fe1.js'),
+			() => import('./chunks/0-9f95afef.js'),
+			() => import('./chunks/1-e04414d8.js'),
+			() => import('./chunks/2-a037c1f4.js'),
 			() => import('./chunks/3-bbb3043c.js'),
-			() => import('./chunks/4-61e70947.js'),
+			() => import('./chunks/4-60a7f8a2.js'),
 			() => import('./chunks/5-c273ccf5.js')
 		],
 		routes: [
@@ -50,7 +50,7 @@ const manifest = {
 	}
 };
 
-const prerendered = new Set(["/your-repo-name/","/your-repo-name/about/","/your-repo-name/contact/","/your-repo-name/diary/"]);
+const prerendered = new Set(["/personal-web-site-copy-2/","/personal-web-site-copy-2/about/","/personal-web-site-copy-2/contact/","/personal-web-site-copy-2/diary/"]);
 
 export { manifest, prerendered };
 //# sourceMappingURL=manifest.js.map

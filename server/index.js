@@ -1,4 +1,4 @@
-import { b as base, r as reset, a as assets } from './chunks/paths-08c3f6b9.js';
+import { b as base, r as reset, a as assets } from './chunks/paths-d54b0e6b.js';
 import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component, n as noop, a as safe_not_equal } from './chunks/index-f121e8db.js';
 
 /** @type {Record<string, string>} */
@@ -736,7 +736,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "a301ek"
+  version_hash: "1yw8bbu"
 };
 function get_hooks() {
   return {};
