@@ -1,5 +1,6 @@
 <svelte:head>
    <title>{'Contact'}</title>
+   <meta name="description" content="Current contacts and placement of author">
 </svelte:head>
 
 <script lang='ts'>

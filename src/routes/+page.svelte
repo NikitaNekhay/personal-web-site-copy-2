@@ -4,6 +4,7 @@
 
 <svelte:head>
    <title>{'Works'}</title>
+   <meta name="description" content="Recent vivid works">
 </svelte:head>
 
 <figure>
