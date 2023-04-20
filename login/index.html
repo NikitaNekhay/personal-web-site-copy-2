@@ -5,7 +5,7 @@
     <meta name="author" content="NIKITA NIAKHAI">
     <meta http-equiv="content-security-policy" content="">
 		<link href="../_app/immutable/assets/_layout.14986e47.css" rel="stylesheet">
-		<link href="../_app/immutable/assets/_page.0729a8f9.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/_page.43bb28d2.css" rel="stylesheet">
 		<link rel="modulepreload" href="../_app/immutable/entry/start.9727d576.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.64a54b62.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.44ec264f.js">
@@ -14,7 +14,7 @@
 		<link rel="modulepreload" href="../_app/immutable/entry/_layout.svelte.666521c7.js">
 		<link rel="modulepreload" href="../_app/immutable/entry/_layout.ts.822e9be0.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout.79cb23d1.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/about-page.svelte.f0948bd0.js"><title>About</title><!-- HEAD_svelte-1jpy8ey_START --><meta name="description" content="About informarion. Achievements, goals, motivation"><!-- HEAD_svelte-1jpy8ey_END -->
+		<link rel="modulepreload" href="../_app/immutable/entry/login-page.svelte.2fff4634.js"><title>Login</title><!-- HEAD_svelte-dc3wr9_START --><meta name="description" content="Login page"><!-- HEAD_svelte-dc3wr9_END -->
     <meta charset="utf-8" />
     <link rel="icon" href="../favicon.ico" />
     <meta name="viewport" content="width=device-width" />
@@ -48,21 +48,18 @@
 
 
 
-<div class="grid-item-content svelte-1qrh1u5"><p class="short_info svelte-muvav9">IT-Student based in Belarus, Minsk.<br>
-    Part-time making clothes-design, photography, videography.<br>
-    Mainly studies at BSUIR and majoring in 
-    Informational systems and technologies in logistics.
-    <br>Currently studies at <b>Innopolis</b> as an exchange student.</p><br>
-    
-    
-<ul class="svelte-muvav9"><li><p style="margin-block-start: 0px; margin-block-end: 0px; text-decoration:overline;"><a style="text-decoration:none;" class="href_links" href="https://docs.google.com/document/d/1rcklzYqRFf4ICC1Ai48KPzl5S0NArSxANsda5uv7IdM/edit">CV</a></p></li>
-    <li><p style="margin-block-start: 0px; margin-block-end: 0px;"><a style="text-decoration:none;" class="href_links" href="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></p></li></ul>  
+<div class="container">123
 
-<ul class="svelte-muvav9"><li>Conceptual video <a class="href_links" href="https://youtu.be/aJqHTiAQ560">&quot;Campus tour&quot;</a></li>
-    <li>Short cut film <a class="href_links" href="https://youtu.be/WdUAxi6tISg">&quot;Slot&quot;</a></li>
-    <li><a class="href_links" href="https://www.instagram.com/nekhaynikita/" style="text-decoration: underline; ">Capsule collection 2022</a></li>
-    <li><a class="href_links" href="https://www.behance.net/nekhaynikita" style="text-decoration: underline;">Phography pieces</a></li>
-</ul>
+  <h1 class="svelte-1j7f5k">LOGIN</h1>
+    
+    <div class=""><div class="col-span-12 lg:col-span-5"><p>You are not logged in!</p>
+            <p>Please enter your email to login, using the latest in <strong>Passwordless Authentication</strong> 🪄💌!
+            </p></div>
+        <form class="col-span-12 mt-1 flex flex-col gap-6 lg:order-1 lg:col-span-7"><input class="w-full rounded p-4 shadow" name="email" type="email" aria-label="email" placeholder="example@with-svelte.com" required>
+            <button>send magic link</button></form>
+
+    </div>
+  
 </div>
 
     <footer class="svelte-17mgals">Dream big, work hard            
@@ -86,7 +83,7 @@
 						import("../_app/immutable/entry/app.47c8147d.js")
 					]).then(([kit, app]) => {
 						kit.start(app, __sveltekit_zm4zko.element, {
-							node_ids: [0, 3],
+							node_ids: [0, 6],
 							data,
 							form: null,
 							error: null

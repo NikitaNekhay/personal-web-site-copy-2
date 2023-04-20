@@ -1,4 +1,4 @@
-import{S as kt,i as Et,s as xt,k as s,q as u,a as $,l,m as n,r as h,h as e,c as L,n as o,p as v,b as C,D as t,H,y as At,J as It,z as Ct,A as St,g as Bt,d as Pt,B as $t}from"../chunks/index.e03ef04e.js";import"../chunks/paths.4cf900a4.js";function Lt(J){let a,y,f,p,b,c,m,w,j,F,K,z,V,_,q,g,k,Q,W,U,S,E,Y,D,d,R,O,B,X,Z,M,tt,P,et,at,N,x,st,lt,T,A,rt;return{c(){a=s("p"),y=u("IT-Student based in Belarus, Minsk."),f=s("br"),p=u(`
+import{S as kt,i as Et,s as xt,k as s,q as u,a as $,l,m as n,r as h,h as e,c as L,n as o,p as v,b as C,D as t,H,y as At,J as It,z as Ct,A as St,g as Bt,d as Pt,B as $t}from"../chunks/index.64a54b62.js";import"../chunks/paths.fdedef13.js";function Lt(J){let a,y,f,p,b,c,m,w,j,F,K,z,V,_,q,g,k,Q,W,U,S,E,Y,D,d,R,O,B,X,Z,M,tt,P,et,at,N,x,st,lt,T,A,rt;return{c(){a=s("p"),y=u("IT-Student based in Belarus, Minsk."),f=s("br"),p=u(`
     Part-time making clothes-design, photography, videography.`),b=s("br"),c=u(`
     Mainly studies at BSUIR and majoring in 
     Informational systems and technologies in logistics.
