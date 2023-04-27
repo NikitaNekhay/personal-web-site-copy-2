@@ -59,7 +59,7 @@
     <div class="flex max-h-screen w-2/6">
         1
     </div>
-    <div class="flex h-fit w-2/6 table-column">
+    <div class="h-fit w-2/6 table-column">
         <div class="flex h-2/6 justify-center text-center">
             <h1>{register ? 'REGISTER' : 'LOGIN'}</h1>
             {#if errore}
