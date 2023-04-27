@@ -1,29 +1,23 @@
-<script>
-    import Navbar from "../components/Navbar.svelte";
-    import "../app.css";
-    import Footer from "../components/Footer.svelte";
-</script>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-<Navbar />
-<slot />
-<Footer />
+@layer base {
 
-
-<style>
- /* .button-login {
-        @apply col-span-full grid-row-auto;
-        }*/
-
-
-
-     /* h1 {
+    /* h1 {
         @apply text-base inline-block pl-10 pt-25 pb-20 text-left;
     }
 
     footer{
         @apply pt-200 pl-850 w-600 h-800 flex
     } */
-        /*
+
+}
+
+@layer components{
+    /* .button-login {
+        @apply col-span-full grid-row-auto;
+        }
     
     .internal_links {
         @apply text-black no-underline pl-10 flex;
@@ -44,4 +38,17 @@
     .grid-item-column {
     @apply col-span-full grid-row-auto;
     } */
-</style>
+
+}
+
+@layer utilities{
+
+    
+}
+
+html,
+body{
+    @apply font-maven 
+}
+
+
