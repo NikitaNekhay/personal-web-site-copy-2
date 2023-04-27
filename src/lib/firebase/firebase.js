@@ -32,4 +32,4 @@ if(!getApps().length){
 }
 
 export const db = getFirestore(firebaseApp)
-export const auth = getAuth(firebaseApp)
+export const auth = getAuth()
