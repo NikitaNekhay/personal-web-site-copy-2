@@ -7,7 +7,7 @@ export const authStore =  writable({
     user: null,
     loading: true,
     data: {
-        messages:[]
+        messages:{} // []
     }
 })
 
