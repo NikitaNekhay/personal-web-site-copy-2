@@ -16,6 +16,7 @@
 // 	// from the referenced tsconfig.json - TypeScript does not merge them in
 // }
 {
+	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 	  "target": "es5",
 	  "lib": ["dom", "dom.iterable", "esnext"],
