@@ -10,7 +10,7 @@
     let loginState = false
     let readyExit = false
     export {loginState}
-    export {readyExit}  
+    export {readyExit} 
 
 
     onMount(() => {
@@ -21,19 +21,19 @@
             console.log(currentPath)
 
             if(!user && !nonAuthRoutes.includes(currentPath)){
-                window.location.href = "/"
+                window.location.href = `${base}/`
                 loginState = false
                 return
             }
 
-            if(user && currentPath === '/login/') {
-                window.location.href = "/dashboard"
+            if(user && currentPath === `${base}/login/`) {
+                window.location.href = `${base}/dashboard`
                 loginState = true
                 return
             }
 
             // logout logic
-            if(user && currentPath === '/dashboard/') {
+            if(user && currentPath === `${base}/dashboard/`) {
                 readyExit = true
                 loginState = true
                 return
