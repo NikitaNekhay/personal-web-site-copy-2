@@ -5,7 +5,7 @@
     import { getDoc, doc, setDoc } from 'firebase/firestore';
     import { authHandlers, authStore } from '../store/store';
 
-    const nonAuthRoutes = ['/',"/about/",'/contact/','/diary/','/login/']
+    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/diary/`,`${base}/login/`]
 
     let loginState = false
     let readyExit = false
