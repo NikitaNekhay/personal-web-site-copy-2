@@ -40,8 +40,8 @@
             }
 
             if(!user) {
-                // loginState = false
-                // readyExit = false
+                 loginState = false
+                 readyExit = false
                 return
             } else {
                 loginState = true
