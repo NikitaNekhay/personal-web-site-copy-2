@@ -4,25 +4,23 @@
     <title>PERSONAL WEB-PAGE - CV - WORKS</title>
     <meta name="author" content="NIKITA NIAKHAI">
     <meta http-equiv="content-security-policy" content="">
-		<link href="./_app/immutable/assets/_layout.6495dac0.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/_page.3a338aa2.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.b9c6c572.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.c52da2f4.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.9fa68d6f.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.872cdc43.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/paths.01076b1d.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.a055c29c.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_layout.svelte.e26c1dcb.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/firebase.80003ae4.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/store.206d92aa.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/user.91483df6.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_layout.ts.822e9be0.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.79cb23d1.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.32863b06.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.ts.372acae2.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/_page.64b8465d.js"><title>Works</title><!-- HEAD_svelte-cflww3_START --><meta name="description" content="Recent vivid works"><!-- HEAD_svelte-cflww3_END -->
+		<link href="../_app/immutable/assets/_layout.6495dac0.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.b9c6c572.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.c52da2f4.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.9fa68d6f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.872cdc43.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/paths.01076b1d.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.a055c29c.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/_layout.svelte.e26c1dcb.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/firebase.80003ae4.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/store.206d92aa.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/user.91483df6.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/_layout.ts.822e9be0.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_layout.79cb23d1.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/blogs-page.svelte.48a94817.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BlogCreate.2523f5f6.js"><title>Blogs</title><!-- HEAD_svelte-1ddowe5_START --><meta name="blog list" content="List of blogs"><!-- HEAD_svelte-1ddowe5_END -->
     <meta charset="utf-8" />
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="icon" href="../favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,9 +53,22 @@
                         </div></div></div></div></div></nav>
 
 
-<figure><img src="/Personal-Website/media/flowers_september1.jpg" alt="beatiful flowers" title="Some beatiful flowers presented as a gift/1 september anniversary">
-    <figcaption class="img_descript svelte-107s5gh">1 september anniversary</figcaption></figure>
-<br>
+
+
+<div class="pt-20 flex text-center justify-center"><h2>Create a New Blog</h2>
+    <form><div><label for="title">Title:</label>
+        <input type="text" id="title" required value=""></div>
+      <div><label for="description">Description:</label>
+        <textarea id="description"></textarea></div>
+      <div><label for="author">Author:</label>
+        <input type="text" id="author" required value=""></div>
+      <div><label for="authorEmail">Author Email:</label>
+        <input type="email" id="authorEmail" required value=""></div>
+      <div><label for="price">Price:</label>
+        <input type="number" id="price" required value=""></div>
+      <div><label for="images">Images:</label>
+        <input type="file" id="images" multiple></div>
+      <button type="submit">Submit</button></form></div>
 <nav class="flex w-screen font-anonymous"><footer class="h-screen flex justify-center items-center"><div>Dream big, work hard   
         </div></footer>
 </nav>
@@ -68,7 +79,7 @@
 				{
 					__sveltekit_1x0o5u = {
 						assets: "/Personal-Website",
-						base: new URL(".", location).pathname.slice(0, -1),
+						base: new URL("..", location).pathname.slice(0, -1),
 						env: {}
 					};
 
@@ -77,11 +88,11 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("./_app/immutable/entry/start.b9c6c572.js"),
-						import("./_app/immutable/entry/app.a055c29c.js")
+						import("../_app/immutable/entry/start.b9c6c572.js"),
+						import("../_app/immutable/entry/app.a055c29c.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
-							node_ids: [0, 2],
+							node_ids: [0, 4],
 							data,
 							form: null,
 							error: null
