@@ -1,19 +1,6 @@
 <script >
     import { authHandlers } from "../store/store";
     import { base } from '$app/paths'
-    // import { base } from '$app/paths'
-    // import { redirect } from '@sveltejs/kit';
-    // import { sendMagicLink } from '../firebase/client';
-
-    // // prevent default behavior
-    // const handleSumbit: svelte.JSX.EventHandler<
-    // SubmitEvent,
-    // HTMLFormElement
-    // > = ({currentTarget}) => {
-    //     const email = new FormData(currentTarget).get('email') as string
-    //     const redirectUrl = `${window.location.origin}/auth/confirm`
-    //     sendMagicLink(email, redirectUrl)
-    // }
     
     let email = "";
     let password ="";
@@ -34,9 +21,13 @@
         authenticating = true
 
         try{
+            console.log("before",register)
+            // await authHandlers.login(email,password)
             if(!register) {
+                console.log("in !",register)
                 await authHandlers.login(email,password)
             } else {
+                console.log("in else",register)
                 await authHandlers.signup(email,password)
             }
         } catch (err) {

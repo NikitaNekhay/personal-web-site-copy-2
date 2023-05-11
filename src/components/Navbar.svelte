@@ -1,39 +1,55 @@
 <script>
     import { base } from '$app/paths'
-    import {onMount} from 'svelte'
+    import {getContext, onMount} from 'svelte'
     import {auth, db} from '../lib/firebase/firebase'
     import { getDoc, doc, setDoc } from 'firebase/firestore';
     import { authHandlers, authStore } from '../store/store';
-
+    import Menu from './Menu.svelte'
+    import { readable } from 'svelte/store';
     const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/diary/`,`${base}/login/`]
+    //const AuthRoutes = [`${base}/dashboard/`,`${base}/profile/`]
 
-    let loginState = false
-    let readyExit = false
+    
     export {loginState}
     export {readyExit} 
+    let loginState = false
+    let readyExit = false
+    
+    // import {profile} from "./Edituserprofile.svelte"
+    let userName = "Mister"
 
-
-    onMount(() => {
+    var boobik = onMount(() => {
         console.log('Mounting')
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             const currentPath = window.location.pathname
+            
+            console.log("we are hier: ",currentPath)
+            console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
+            if(user){
+                console.log("there is a user: ",user)
+                userName = user.email.slice(0,user.email?.search('@'))
+            } else {
+                console.log("there is no user: ",user)
+            }
 
-            console.log(currentPath)
-
-            if(!user && !nonAuthRoutes.includes(currentPath)){
+            // console.log("there is name: ",profile.name)
+            
+            if(user === null && !nonAuthRoutes.includes(currentPath)){
                 window.location.href = `${base}/`
                 loginState = false
+                readyExit = false
                 return
             }
 
-            if(user && currentPath === `${base}/login/`) {
-                window.location.href = `${base}/dashboard`
+            if(user !== null && currentPath === `${base}/login/`) {
+                window.location.href = `${base}/profile`
                 loginState = true
+                readyExit = false
                 return
             }
 
             // logout logic
-            if(user && currentPath === `${base}/dashboard/`) {
+            if(user && currentPath === `${base}/profile/`) {
                 readyExit = true
                 loginState = true
                 return
@@ -49,7 +65,8 @@
 
             let dataToSetToStore= {
                     email:user.email, 
-                    messages: []
+                     messages: []
+                    // messages: string[] = [];
                 };
 
             const docRef = doc(db, 'user', user.uid)
@@ -71,11 +88,10 @@
             } else {
                 console.log("Fetching User");
                 const userData = docSnap.data()
+                
                 dataToSetToStore = userData
-                //console.log(userData)
-            }
-            
-            authStore.update((curr) => {
+                // console.log(dataToSetToStore)
+                authStore.update((curr) => {
                 return{
                     ...curr,
                     user:user,
@@ -84,8 +100,20 @@
                 }
                     
             })
+            
+            }
+            
+           
 
         })
+
+        // For updating the name
+
+        //console.log($profile.name)
+        // if(!profile.name) {
+        //     userName = profile.name
+        // }
+
         return unsubscribe
     })
 </script>
@@ -114,24 +142,33 @@
             
                 <!-- Login/Profile(Right side) -->
                 <div>
-                    <!-- Logo -->
-                    <div class="grid-column-auto grid-row-auto">
-                        <h1 class="text-base inline-block pl-10 pt-25 pb-20 text-left">123</h1>
-                    </div>
+                  
                     <!-- Login/Dashboard -->
+
+                   
+
                     <div class="grid-column-auto grid-row-auto ">
                         {#if loginState == false}
-                        <a on:click={authHandlers.login} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>Login</a>
-                        {:else if readyExit == true}
+                            <a on:click={authHandlers.login} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
+                                Login
+                            </a>
+                        {:else}
+                            <Menu />
+                        {/if}
+                        <!-- {#if loginState == false}
+                        <a on:click={authHandlers.login} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
+                            Login
+                        </a>
+                        {:else if readyExit == true}    
                         <a on:click={authHandlers.logout} class="col-span-full grid-row-auto" target="_self"  href='{base}/'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>                          
-                            Logout
+                              
+                            {userName} Logout
                         </a>
                         {:else}
-                        <a class="col-span-full grid-row-auto" target="_self"  href='{base}/dashboard'>Dashboard</a>
-                        {/if}
+                        <a class="col-span-full grid-row-auto" target="_self"  href='{base}/profile'>
+                            {userName}
+                        </a>
+                        {/if} -->
                     </div>    
                 </div>
             </div>
