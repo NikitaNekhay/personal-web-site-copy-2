@@ -1,6 +1,8 @@
 <svelte:head>
    <title>{'Edit page of the post'}</title>
    <meta name="edit of a single blog page" content="Edit form for the blog post">
+   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' data:;">
+
 </svelte:head>
 
 <script lang="ts">

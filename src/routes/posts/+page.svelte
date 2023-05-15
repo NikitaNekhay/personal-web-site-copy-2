@@ -1,6 +1,7 @@
 <svelte:head>
    <title>{'Posts of the blog'}</title>
    <meta name="post list" content="List of blogs">
+
 </svelte:head>
 
 <script >
