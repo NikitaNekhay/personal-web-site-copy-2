@@ -1,10 +1,7 @@
 <svelte:head>
    <title>{'Page of the post'}</title>
    <meta name="single blog page" content="Detailed blog post">
-   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' data:;">
-   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' data:;">
-
-
+  
 </svelte:head>
 
 <script lang="ts">
