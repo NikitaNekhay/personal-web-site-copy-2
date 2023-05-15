@@ -151,6 +151,6 @@
         </div>
       </div>
     </div>
-    <button class="" type="submit">{$t('Submit')} </button>
+    <button on:click={handleSubmit} type="submit">{$t('Submit')} </button>
   </form>
 </div>
