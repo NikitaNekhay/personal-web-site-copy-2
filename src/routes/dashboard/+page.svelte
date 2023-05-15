@@ -4,10 +4,10 @@
 </svelte:head>
 
 <script >
-  import BlogCreate from '../../components/PostCreate.svelte'
+  import PostCreate from '../../components/PostCreate.svelte'
 </script>
 
-<BlogCreate />
+<PostCreate />
 
 <style>
 

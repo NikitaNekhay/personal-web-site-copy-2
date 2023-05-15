@@ -3,10 +3,15 @@
     import { getDoc, doc, setDoc } from 'firebase/firestore';
     import {auth, db} from '../lib/firebase/firebase'
     import { onMount } from "svelte";
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
 
     let index 
-
-    //let descriptionList: string[] = [] 
     let descriptionList = [""]
     let errore = false
     let currDescription = ""

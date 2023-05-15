@@ -5,6 +5,13 @@
   import { authHandlers, authStore } from "../store/store";
   import { auth } from "$lib/firebase/firebase";
   import { getUserProfile } from "../routes/profile/user";
+  import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
 
   export let isOpen = false
   export let isAdmin = false
@@ -53,22 +60,27 @@
             use:clickOutside
             on:click_outside={handleClickOutside}
         >
-            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/profile'>
-                Profile
+            <a class="col-span-full grid-row-auto transition duration-100 
+            hover:text-yellow-0" target="_self" href='{base}/profile'>
+                {$t('Profile')} 
             </a>
             {#if isAdmin}
-            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/dashboard'>
-                Create
+            <a class="col-span-full grid-row-auto transition duration-100 
+            hover:text-yellow-0" target="_self" href='{base}/dashboard'>
+                {$t('Create')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/posts'>
-                View
+            <a class="col-span-full grid-row-auto transition duration-100 
+            hover:text-yellow-0" target="_self" href='{base}/posts'>
+                {$t('View')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/stat'>
-                Stat
+            <a class="col-span-full grid-row-auto transition duration-100 
+            hover:text-yellow-0" target="_self" href='{base}/stat'>
+                {$t('Stat')} 
             </a>
             {/if}
-            <a on:click={authHandlers.logout} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
-                Logout
+            <a on:click={authHandlers.logout} class="col-span-full grid-row-auto 
+            transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
+                {$t('Logout')} 
             </a>
         </div>
         {/if}

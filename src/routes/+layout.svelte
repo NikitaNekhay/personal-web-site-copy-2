@@ -2,46 +2,9 @@
     import Navbar from "../components/Navbar.svelte";
     import "../app.css";
     import Footer from "../components/Footer.svelte";
+
 </script>
 
 <Navbar />
 <slot />
 <Footer />
-
-
-<style>
- /* .button-login {
-        @apply col-span-full grid-row-auto;
-        }*/
-
-
-
-     /* h1 {
-        @apply text-base inline-block pl-10 pt-25 pb-20 text-left;
-    }
-
-    footer{
-        @apply pt-200 pl-850 w-600 h-800 flex
-    } */
-        /*
-    
-    .internal_links {
-        @apply text-black no-underline pl-10 flex;
-    }
-
-    .container {
-    @apply grid-rows-max grid-cols-auto grid-col-gap-0 grid-row-gap-0 grid-gap-0 grid-auto-cols-auto grid-auto-rows-auto grid-0;
-    }
-
-    .grid-item-navigation {
-    @apply flex justify-items-center justify-between bg-bisque outline-chocolate;
-    }
-
-    .grid-item-header {
-    @apply grid-column-auto grid-row-auto;
-    }
-
-    .grid-item-column {
-    @apply col-span-full grid-row-auto;
-    } */
-</style>

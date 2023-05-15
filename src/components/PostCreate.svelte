@@ -5,6 +5,14 @@
     import { auth, db, storage} from "$lib/firebase/firebase";
     import { onMount } from 'svelte';
     import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/posts/post';
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
+
   
     let tempPost = {
       id:-1,
@@ -59,33 +67,75 @@
 
   </script>
 
-  <div class="pt-20 flex text-center justify-center">
-    <h2>Create a New Blog</h2>
-    <form on:submit|preventDefault={handleSubmit}>
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" bind:value={tempPost.title} required>
+<div class="flex pt-60 place-content-center place">
+  <form class="w-full max-w-lg ">
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">
+          {$t('Title')} 
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 
+        border border-gray-200 rounded py-3 px-4 mb-3 leading-tight 
+        focus:outline-none focus:bg-white focus:border-gray-500" 
+        type="text" id="title" bind:value={tempPost.title} required placeholder="Title">
       </div>
-      <div>
-        <label for="description">Description:</label>
-        <textarea id="description" bind:value={tempPost.description}></textarea>
+    </div>
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full px-3 h-full">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="description">
+          {$t('Description')} 
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 
+        place-items-start border border-gray-200 rounded py-3 px-4 mb-3 leading-tight 
+        focus:outline-none focus:bg-white focus:border-gray-500" id="description" 
+        bind:value={tempPost.description} placeholder="Description">
+        <p class="text-gray-600 text-xs italic">{$t('Make it as simple as informative')} </p>
       </div>
-      <div>
-        <label for="author">Author:</label>
-        <input type="text" id="author" bind:value={tempPost.author} required>
+    </div>
+
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="author">
+          {$t('Author Name')} 
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  
+        border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white 
+        focus:border-gray-500" type="text" id="author" bind:value={tempPost.author} 
+        placeholder="Author" required>
       </div>
-      <div>
-        <label for="authorEmail">Author Email:</label>
-        <input type="email" id="authorEmail" bind:value={tempPost.authorEmail} required>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="authorEmail">
+          {$t('Author Email')} 
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 
+        border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
+        focus:bg-white focus:border-gray-500" type="email" id="authorEmail" 
+        bind:value={tempPost.authorEmail} placeholder="email@web.net" required>
       </div>
-      <div>
-        <label for="price">Price:</label>
-        <input type="number" id="price" bind:value={tempPost.price} required>
+    </div>
+   
+    <div class="flex flex-wrap -mx-3 mb-2 ms-0">
+      <div class="md:w-2/4 h-1/2 py-0 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">
+          {$t('Price')} 
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 
+        border border-gray-200 rounded py-2.5 px-4 leading-tight focus:outline-none 
+        focus:bg-white focus:border-gray-500" type="number" id="price" 
+        bind:value={tempPost.price} required placeholder="400$">
       </div>
-      <div>
-        <label for="images">Images:</label>
-        <input type="file" id="images" on:change={handleImageUpload} multiple>
+      <div class="md:w-2/4 h-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="files">
+          {$t('Files')} 
+        </label>
+        <div class="relative">
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 
+        border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none 
+        focus:bg-white focus:border-gray-500" type="file" id="images" 
+        on:change={handleImageUpload} multiple placeholder="Files">
+        </div>
       </div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+    </div>
+    <button class="" type="submit">{$t('Submit')}</button>
+  </form>
+</div>

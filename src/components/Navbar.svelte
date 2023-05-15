@@ -8,9 +8,17 @@
     import { authHandlers, authStore } from '../store/store';
     import Menu from './Menu.svelte'
     import { readable } from 'svelte/store';
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
+
+
     const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/diary/`,`${base}/login/`]
     //const AuthRoutes = [`${base}/dashboard/`,`${base}/profile/`]
-
     
     export {loginState}
     export {readyExit} 
@@ -138,45 +146,36 @@
                 <!-- Links(Center) -->
                 <div class="flex items-center justify-between drop-shadow mx-20 ">
                     <div class="border-r-2 border-navy-2">
-                        <a  class="text-black no-underline hover:underline underline-offset-4"   target="_self" href='{base}/about' >About</a>
-                        <a  class="text-black no-underline mx-20 hover:underline underline-offset-4"   target="_self" href='{base}/contact' >Contact</a>
+                        <a  class="text-black no-underline 
+                        hover:underline underline-offset-4"   target="_self" 
+                        href='{base}/about' >{$t('About')} </a>
+                        <a  class="text-black no-underline mx-20 
+                        hover:underline underline-offset-4"   target="_self" 
+                        href='{base}/contact' >{$t('Contact')} </a>
                     </div>
                     <div class="border-l-2 border-navy-2">
-                        <a  class="text-black no-underline mx-20 hover:underline underline-offset-4"   target="_self" href='{base}/diary' >Diary</a>
-                        <a  class="text-black no-underline hover:underline underline-offset-4"   target="_self" href='{base}/' >Works</a>
+                        <a  class="text-black no-underline mx-20 
+                        hover:underline underline-offset-4"   
+                        target="_self" href='{base}/diary' >{$t('Diary')} </a>
+                        <a  class="text-black no-underline 
+                        hover:underline underline-offset-4"   
+                        target="_self" href='{base}/' >{$t('Works')} </a>
                     </div>
                     
                 </div>   
             
                 <!-- Login/Profile(Right side) -->
-                <div>
-                  
-                    <!-- Login/Dashboard -->
-
-                   
-
+                <div>  
                     <div class="grid-column-auto grid-row-auto ">
                         {#if loginState == false}
-                            <a on:click={authHandlers.login} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
-                                Login
+                            <a on:click={authHandlers.login} class="col-span-full 
+                            grid-row-auto transition duration-100 
+                            hover:text-yellow-0" target="_self" href='{base}/login'>
+                                {$t('Login')} 
                             </a>
                         {:else}
                             <Menu />
                         {/if}
-                        <!-- {#if loginState == false}
-                        <a on:click={authHandlers.login} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
-                            Login
-                        </a>
-                        {:else if readyExit == true}    
-                        <a on:click={authHandlers.logout} class="col-span-full grid-row-auto" target="_self"  href='{base}/'>
-                              
-                            {userName} Logout
-                        </a>
-                        {:else}
-                        <a class="col-span-full grid-row-auto" target="_self"  href='{base}/profile'>
-                            {userName}
-                        </a>
-                        {/if} -->
                     </div>    
                 </div>
             </div>

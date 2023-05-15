@@ -1,7 +1,14 @@
 <script >
     import { authHandlers } from "../store/store";
     import { base } from '$app/paths'
-    
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
+
     let email = "";
     let password ="";
     let rpassword = "";
@@ -48,14 +55,14 @@
 
 <div class="containerAuth">
     <div class="flex max-h-screen w-2/6">
-        1
-    </div>
+    </div> 
     <div class="h-fit w-2/6 table-column">
-        <div class="flex h-2/6 justify-center text-center">
-            <h1>{register ? 'REGISTER' : 'LOGIN'}</h1>
+        <div class=" h-2/6 justify-center text-center">
+            <h1>{register ? $t('REGISTER') : $t('LOGIN')}</h1>
             {#if errore}
-            <div class="containterErrore">
-                <p class="errore">The info is incorrect!</p>
+
+            <div class="containterErrore ">
+                <p class="errore">{$t('The info is incorrect!')}</p>
             </div>
             {/if}
         </div>
@@ -63,24 +70,47 @@
             
             <form>
                 <div>
-                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{$t('Email address')}</label>
                     <div class="mt-2">
-                      <input bind:value={email} id="email" name="email" type="email" autocomplete="email" placeholder="email@mail-service.com" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-1 sm:text-sm sm:leading-6">
+                      <input bind:value={email} id="email" name="email" 
+                      type="email" autocomplete="email" 
+                      placeholder="email@mail-service.com" required 
+                      class="block w-full rounded-md border-0 py-1.5 
+                      text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
+                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+                      focus:ring-black-1 sm:text-sm sm:leading-6">
                     </div>
                   </div>
             
                   <div>
-                    <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                    <label for="password" class="block text-sm font-medium 
+                    leading-6 text-gray-900">
+                        {$t('Password')} 
+                    </label>
                     <div class="mt-2">
-                      <input bind:value={password} id="password" placeholder="Password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-1 sm:text-sm sm:leading-6">
+                      <input bind:value={password} id="password" 
+                      placeholder="Password" name="password" 
+                      type="password" autocomplete="current-password" 
+                      required class="block w-full rounded-md border-0 py-1.5 
+                      text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
+                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+                      focus:ring-black-1 sm:text-sm sm:leading-6">
                     </div>
                   </div>
 
                 {#if register}
                     <div>
-                        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Repeat Password</label>
+                        <label for="password" class="block text-sm font-medium 
+                        leading-6 text-gray-900">
+                            {$t('Repeat Password')} 
+                        </label>
                         <div class="mt-2">
-                            <input bind:value={rpassword} id="rpassword" placeholder="   Repeat password" name="rpassword" type="rpassword" autocomplete="password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black-1 sm:text-sm sm:leading-6">
+                            <input bind:value={rpassword} id="rpassword" 
+                            placeholder="   Repeat password" name="rpassword" 
+                            type="rpassword" autocomplete="password" required 
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 
+                            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                            focus:ring-2 focus:ring-inset focus:ring-black-1 sm:text-sm sm:leading-6">
                         </div>
                     </div>
                 {/if}
@@ -90,7 +120,7 @@
                         {#if authenticating}
                             <img alt="spinner" src="{base}/media/envelop.svg" class="spinner" />
                         {:else}
-                            submit
+                            {$t('Submit')} 
                         {/if}
                     </button>
                   </div>
@@ -102,20 +132,19 @@
             <div class="options">
                 {#if register}
                     <div> 
-                        <p>Already have an account?</p> 
-                        <p on:click={handleRegister} on:keydown={() => {}}>Login</p>
+                        <p>{$t('Already have an account?')} </p> 
+                        <p on:click={handleRegister} on:keydown={() => {}}>{$t('Login')}</p>
                     </div> 
                 {:else}
                     <div> 
-                        <p>Don't have an account?</p> 
-                        <p on:click={handleRegister} on:keydown={() => {}}>Register</p>
+                        <p>{$t("Don't have an account?")} </p> 
+                        <p on:click={handleRegister} on:keydown={() => {}}>{$t('Register')} </p>
                     </div> 
                 {/if}
             </div>
         </div>
     </div>
     <div class="flex max-h-screen w-2/6">
-        3
     </div>
 </div>
 
@@ -145,51 +174,6 @@
         max-width: 100%;
         margin: 0 auto;
     }
-
-
-
-    /* form button {
-        background: turquoise;
-        color: firebrick;
-        border: none;
-        padding: 14px 0;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        display: grid;
-        place-items: center;
-    } 
-
-    form button:hover{
-        background: darkturquoise;
-    } */
-
-    /* .above,
-    .center{
-        position: absolute;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: firebrick;
-        border-radius: 4px;
-        padding: 0 6px;
-        font-size: 0.8rem;
-        
-    } */
-
-    /* .above{
-        top: 0;
-        left: 24px;
-
-        border: 1px solid darkorange;
-        font-size: 0.7rem;
-    } */
-
-    /* .center{
-        top: 50%;
-        left: 6px;
-        border: 1px solid transparent;
-        opacity: 0;
-    } */
 
     .errore{
         font-size: 0.9ram;

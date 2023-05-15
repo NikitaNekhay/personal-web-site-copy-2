@@ -2,6 +2,13 @@
     import { base } from '$app/paths'
     import { db } from '$lib/firebase/firebase';
     import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
     //import { statisticsStore } from '../store/store';
 
    // async function updateStatisticsCollection() {
@@ -24,11 +31,12 @@
 
 <div style="display: table-column;">
     <p class="contacts">
-        Currently studies at <b>Innopolis</b> as an exchange student.<br><br>Contacts:<br>
+        {$t('Currently studies at Innopolis as an exchange student.')}
+        <br>{$t('Contacts')}:<br><br>
         <ul style="position: relative;" >
-            <li style="list-style-image:url({base}/media/envelop.svg); padding-bottom: 10px;"> email: <a href="mailto:ktofreesapiens@gmail.com">SAY HELLO WITH EMAIL</a><br></li>
-            <li style="list-style-image:url({base}/media/instagram.svg); padding-bottom: 10px;"> instagram: <a target="_blank" href="https://instagram.com/araneaesolidum/">ARANEAESOLIDUM</a> || <a href="https://instagram.com/nekhaynikita/">NEKHAYNIKITA</a><br></li>
-            <li style="list-style-image:url({base}/media/telegram.svg); padding-bottom: 10px;"> telegram: <a target="_blank" href="https://t.me/araneaesolidum">ARANEAESOLIDUM</a><br></li>
+            <li style="list-style-image:url({base}/media/envelop.svg); padding-bottom: 10px;"> {$t('email')}: <a href="mailto:ktofreesapiens@gmail.com">{$t('SAY HELLO WITH EMAIL')} </a><br></li>
+            <li style="list-style-image:url({base}/media/instagram.svg); padding-bottom: 10px;">{$t('instagram')}: <a target="_blank" href="https://instagram.com/araneaesolidum/">ARANEAESOLIDUM</a> || <a href="https://instagram.com/nekhaynikita/">NEKHAYNIKITA</a><br></li>
+            <li style="list-style-image:url({base}/media/telegram.svg); padding-bottom: 10px;">{$t('telegram')}: <a target="_blank" href="https://t.me/araneaesolidum">ARANEAESOLIDUM</a><br></li>
         </ul>
     <br>
 </div>

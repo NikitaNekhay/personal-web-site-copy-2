@@ -3,11 +3,17 @@
     import { getBlogPost } from '../routes/posts/post';
     import { navigate, useLocation } from 'svelte-routing';
     import { page } from '$app/stores';
-  import { authStore } from '../store/store';
-  import { getUserProfile } from '../routes/profile/user';
-  import { base } from '$app/paths';
-  import { writable } from 'svelte/store';
-    //import { params } from 'svelte-spa-router'
+    import { authStore } from '../store/store';
+    import { getUserProfile } from '../routes/profile/user';
+    import { base } from '$app/paths';
+    import { writable } from 'svelte/store';
+    import { addMessages, locale, t } from 'svelte-i18n';
+    import ru from '../services/ru.json';
+
+    // Загружаем переводы для русского языка
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
     
     let post ={};
     const { id } = $page.params
@@ -101,8 +107,8 @@ let offset = 0; // Initialize the offset variable
         </div>
       </div>
       <div class="buttons items-center justify-center text-center content-center">
-        <button class="slider-back" on:click={handleNextClick}>&larr; BACK</button>
-        <button class="slider-next" on:click={handleBackClick}>NEXT &rarr;</button>
+        <button class="slider-back" on:click={handleNextClick}>&larr; {$t('BACK')} </button>
+        <button class="slider-next" on:click={handleBackClick}>{$t('NEXT')} &rarr;</button>
       </div>
       
     </div>
@@ -110,12 +116,12 @@ let offset = 0; // Initialize the offset variable
     <div class="items-center justify-center text-center content-center mt-4 bore">
       <h1>{post.title}</h1>
       <p>{post.description}</p>
-      <p>Author: {post.author}</p>
-      <p>Author Email: {post.authorEmail}</p>
-      <p>Price: {post.price}</p>
-      <p>Date: {post.date}</p>
+      <p>{$t('Author')} : {post.author}</p>
+      <p>{$t('Author Email')} : {post.authorEmail}</p>
+      <p>{$t('Price')} : {post.price}</p>
+      <p>{$t('Date')} : {post.date}</p>
 
-      <a href="mailto:{post.authorEmail}" class="bg-red-2">SEND EMAIL TO AUTHOR</a>
+      <a href="mailto:{post.authorEmail}" class="bg-red-2">{$t('SEND EMAIL TO AUTHOR')} </a>
     </div>
       
 {:else}

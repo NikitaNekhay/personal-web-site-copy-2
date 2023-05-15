@@ -42,6 +42,7 @@
     //}
 
     //createStatisticsCollection();
+    
 </script>
 
 <svelte:head>
