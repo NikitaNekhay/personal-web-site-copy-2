@@ -1,4 +1,33 @@
 <script>
+  import { collection, doc, setDoc } from "firebase/firestore";
+  //import { statisticsStore } from "../store/store";
+  import { db } from "$lib/firebase/firebase";
+
+ // async function updateStatisticsCollection() {
+        // try {
+        //     console.log("statistic store before click", $statisticsStore)
+        //     $statisticsStore.adminDataClicks += 1
+        //     console.log("statistic store after click", $statisticsStore)
+        //     const statisticsCollectionRef = collection(db, "statistics");
+        //     const newDocRef = doc(statisticsCollectionRef); // Create a reference to a new document
+        //     console.log("what we got from db:",newDocRef)
+        //     // update if not empty
+        
+           
+        //     // // to ensure that the data fits
+        //     // const updatedData = {
+        //     //     authorEmailClicks: $statisticsStore.authorEmailClicks,
+        //     //     adminDataClicks: $statisticsStore.authorEmailClicks,
+        //     // };
+        //     // console.log("updatedData:",updatedData)
+        //     // // set the value to store
+        //     console.log("value of statisticsStore after updating: ",$statisticsStore)
+        //     await setDoc(newDocRef, $statisticsStore);
+        // } catch (error) {
+        //     console.error("Error updating statistics collection:", error);
+        // }
+   // }
+
 </script>
 
 
@@ -10,16 +39,13 @@
     <br>Currently studies at <b>Innopolis</b> as an exchange student.</p><br>
     
     
-<ul>
-    <li><p style=" margin-block-start: 0px; margin-block-end: 0px; text-decoration:overline;" ><a style=" text-decoration:none;" class="href_links" href ="https://docs.google.com/document/d/1rcklzYqRFf4ICC1Ai48KPzl5S0NArSxANsda5uv7IdM/edit">CV</a></p></li>
-    <li><p style="margin-block-start: 0px; margin-block-end: 0px;"><a style=" text-decoration:none;" class="href_links" href ="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></p></li>
-</ul>  
-
-<ul>
-    <li>Conceptual video <a class="href_links" href="https://youtu.be/aJqHTiAQ560" >"Campus tour"</a></li>
-    <li>Short cut film <a class="href_links" href="https://youtu.be/WdUAxi6tISg" >"Slot"</a></li>
-    <li><a class="href_links" href="https://www.instagram.com/nekhaynikita/" style="text-decoration: underline; ">Capsule collection 2022</a></li>
-    <li><a class="href_links" href="https://www.behance.net/nekhaynikita" style="  text-decoration: underline;">Phography pieces</a></li>
+<ul >
+    <li><p style=" margin-block-start: 0px; margin-block-end: 0px; text-decoration:overline;" ><a target="_blank" style=" text-decoration:none;" class="href_links" href ="https://docs.google.com/document/d/1rcklzYqRFf4ICC1Ai48KPzl5S0NArSxANsda5uv7IdM/edit">CV</a></p></li>
+    <li><p style="margin-block-start: 0px; margin-block-end: 0px;"><a style=" text-decoration:none;" class="href_links" target="_blank" href ="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></p></li>
+    <li>Conceptual video <a class="href_links" target="_blank" href="https://youtu.be/aJqHTiAQ560" >"Campus tour"</a></li>
+    <li>Short cut film <a class="href_links" target="_blank" href="https://youtu.be/WdUAxi6tISg" >"Slot"</a></li>
+    <li><a class="href_links" target="_blank" href="https://www.instagram.com/nekhaynikita/" style="text-decoration: underline; ">Capsule collection 2022</a></li>
+    <li><a class="href_links" target="_blank" href="https://www.behance.net/nekhaynikita" style="  text-decoration: underline;">Phography pieces</a></li>
 </ul>
 
 

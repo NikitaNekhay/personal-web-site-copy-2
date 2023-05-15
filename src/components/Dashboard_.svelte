@@ -43,11 +43,9 @@
     }
 
     async function saveDescription(){
-
+        try {
             console.log($authStore)
             let userRef = doc(db, 'user', $authStore.user.uid)
-        try {
-
             await setDoc(userRef,
             {
                 messages:descriptionList
@@ -55,7 +53,7 @@
             {merge:true}
             )
         } catch (err) {
-           console.log("Error while saving info") 
+           console.log("Error while saving info", err) 
         }
     }
 

@@ -3,7 +3,9 @@
 	"name": "svelte-kit-app",
 
 	"version": "0.0.1",
+
 	"homepage": "https://nikitanekhay.github.io/Personal-Website/",
+
 	"private": true,
 
 	"scripts": {
@@ -24,9 +26,13 @@
 
 	"devDependencies": {
 
+		"@sveltech/routify": "^1.9.10",
+
 		"@sveltejs/adapter-static": "^2.0.2",
 
 		"@sveltejs/kit": "^1.5.0",
+
+		"@tailwindcss/aspect-ratio": "^0.4.2",
 
 		"@tailwindcss/forms": "^0.5.3",
 
@@ -50,13 +56,21 @@
 
 		"prettier-plugin-tailwindcss": "^0.2.7",
 
+		"routify": "^1.2.7",
+
 		"svelte": "^3.54.0",
 
 		"svelte-check": "^3.0.1",
 
+		"svelte-routing": "^1.8.8",
+
+		"svelte-spa-router": "^3.3.0",
+
 		"tailwindcss": "^3.3.2",
 
 		"tslib": "^2.4.1",
+
+		"tw-elements": "^1.0.0-beta2",
 
 		"typescript": "^4.9.3",
 

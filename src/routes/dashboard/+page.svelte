@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import BlogCreate from '../../components/BlogCreate.svelte'
+  import BlogCreate from '../../components/PostCreate.svelte'
 </script>
 
 <BlogCreate />

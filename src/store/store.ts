@@ -1,38 +1,61 @@
 import { auth, db } from "$lib/firebase/firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import { collection, deleteDoc, doc} from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc} from "firebase/firestore";
 import {  writable } from "svelte/store"
 import { getStorage } from 'firebase/storage';
 import {onMount } from "svelte";
 import { getUserProfile } from "../routes/profile/user";
 
-export const authStore =  writable({
+
+function createLocalStorageStore(key: string, initialValue: any) {
+    try {
+      const localStorageAvailable = typeof localStorage !== 'undefined';
+  
+      const storedValue = localStorageAvailable ? localStorage.getItem(key) : null;
+      const initialValueToUse = localStorageAvailable && storedValue !== null ? JSON.parse(storedValue) : initialValue;
+    
+      const { subscribe, set, update } = writable(initialValueToUse);
+    
+      return {
+        subscribe,
+        set(value: any) {
+          set(value);
+    
+          if (localStorageAvailable) {
+            localStorage.setItem(key, JSON.stringify(value));
+          }
+        },
+        update,
+      };
+    } catch (error) {
+      console.log("error createLocalStorageStore ",error)
+    }
+   
+  }
+  
+  export const authStore = createLocalStorageStore('auth', {
     user: null,
     loading: true,
     data: {
-        // []
-        name: "",
-        email: "",
-        phone: "",
-        country: "",
-        description: "",
-        messages:[],
-    }
+      name: "",
+      email: "",
+      phone: "",
+      country: "",
+      description: "",
+      messages:[],
+    },
+  });
 
-})
-
-export const profile = writable({
-    name: '',
-    email: '',
-    phone: '',
-    country: '',
-    description: ''
-});
+  export const statisticsStore = createLocalStorageStore('stat', {
+    id: -1,
+    authorEmailClicks: 0,
+    adminDataClicks: 0,
+  });
 
 export const blogPost = writable({
-    id:0,
+    id:'',
     title:'',
-    images: [],
+    images: [] as string[],
     author: 'John Berkley',
     authorEmail: 'john.example@gmail.com',
     description: 'Lorem ipsum',
@@ -69,16 +92,4 @@ export const authHandlers = {
 
     },
 
-}
-
-
-export const blogPostHandlers = {
-    add: async () => {
-        
-        console.log("creating user")
-    },
-    delete: async () => {
-        
-        console.log("deleting user")
-    },
 }

@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
     import { base } from '$app/paths'
     import {getContext, onMount} from 'svelte'
     import {auth, db} from '../lib/firebase/firebase'
@@ -18,7 +20,8 @@
     // import {profile} from "./Edituserprofile.svelte"
     let userName = "Mister"
 
-    var boobik = onMount(() => {
+    try {
+        onMount(() => {
         console.log('Mounting')
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             const currentPath = window.location.pathname
@@ -27,7 +30,8 @@
             console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
             if(user){
                 console.log("there is a user: ",user)
-                userName = user.email.slice(0,user.email?.search('@'))
+                if(user.email)
+                    userName = user.email.slice(0,user.email?.search('@'))
             } else {
                 console.log("there is no user: ",user)
             }
@@ -64,58 +68,62 @@
             }
 
             let dataToSetToStore= {
-                    email:user.email, 
-                     messages: []
-                    // messages: string[] = [];
+                    email:user.email,
+                     
+                    messages: []
+                    
                 };
 
-            const docRef = doc(db, 'user', user.uid)
-            
-            const docSnap = await getDoc(docRef)
-            if(!docSnap.exists()) {
-                //initialize users document
-                console.log('Creating user')
-                const userRef = doc(db,'user',user.uid)
-                dataToSetToStore = {
-                    email:user.email, 
-                    messages: []
-                }
-                await setDoc(
-                    userRef,
-                    dataToSetToStore,
-                    {merge: true}
-                )
-            } else {
-                console.log("Fetching User");
-                const userData = docSnap.data()
+            if(user){
+                const docRef = doc(db, 'user', user.uid)
                 
-                dataToSetToStore = userData
-                // console.log(dataToSetToStore)
-                authStore.update((curr) => {
-                return{
-                    ...curr,
-                    user:user,
-                    data:dataToSetToStore,
-                    loading: false,
-                }
+                const docSnap = await getDoc(docRef)
+                if(!docSnap.exists()) {
+                    //initialize users document
+                    console.log('Creating user')
+                    const userRef = doc(db,'user',user.uid)
+                    dataToSetToStore = {
+                        email:user.email, 
+                        messages: []
+                    }
+                    await setDoc(
+                        userRef,
+                        dataToSetToStore,
+                        {merge: true}
+                    )
+                } else {
+                    console.log("Fetching User");
+                    const userData = docSnap.data()
                     
-            })
-            
+                    dataToSetToStore = userData
+                    // console.log(dataToSetToStore)
+                    authStore.update((curr) => {
+                    return{
+                        ...curr,
+                        user:user,
+                        data:{
+                            ...curr.data,
+                            email: dataToSetToStore.email
+                        },
+                        loading: false,
+                    }
+                        
+                })
+                
+                }
             }
+            
             
            
 
         })
 
-        // For updating the name
-
-        //console.log($profile.name)
-        // if(!profile.name) {
-        //     userName = profile.name
-        // }
-
         return unsubscribe
     })
+    } catch (error) {
+        console.log("error while mounting")
+    }
+    
 </script>
 
 <nav class="flex w-screen font-anonymous">

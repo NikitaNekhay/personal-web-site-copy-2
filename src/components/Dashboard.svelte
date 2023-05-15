@@ -27,7 +27,7 @@
     // // return downloadURL;
     // }
 
-    async function handleSubmit() {
+    //async function handleSubmit() {
       // const imagesUrls = await Promise.all(images.map(uploadImage));
       // const blogData = {
       //   title,
@@ -46,7 +46,7 @@
       // authorEmail = '';
       // price = '';
       // images = [];
-    }
+    //}
   
     
 </script>

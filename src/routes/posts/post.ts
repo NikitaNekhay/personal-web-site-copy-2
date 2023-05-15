@@ -1,14 +1,19 @@
-
 import { db } from '../../lib/firebase/firebase';
-import { collection, doc, getDoc, updateDoc,runTransaction, query, getDocs, addDoc} from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc,runTransaction, query, getDocs, addDoc, deleteDoc} from "firebase/firestore";
 import { blogPost } from '../../store/store';
 
 export const blogsCollection = collection(db, "blogs");
 
 export async function addBlogPost(tempPost){
+  try {
+    console.log('Temp post:', tempPost)
     const docRef = await addDoc(blogsCollection, tempPost);
     console.log("New blog added with ID: ", docRef.id);
     updateBlogPost(docRef.id,tempPost.title,tempPost.images,tempPost.author,tempPost.authorEmail,tempPost.description,tempPost.price,tempPost.date)
+  } catch (error) {
+    console.log("error while adding blog post",error)
+  }
+    
 }
 
 
@@ -16,7 +21,7 @@ export async function addBlogPost(tempPost){
 export async function updateBlogPost(  
                                     id:string,
                                     title:string,
-                                    images: [],
+                                    images: string[],
                                     author: string,
                                     authorEmail: string,
                                     description: string,
@@ -24,7 +29,8 @@ export async function updateBlogPost(
                                     date: Date){
   try{
 
-    const postDocRef = doc(blogsCollection, id);
+    //const postDocRef = doc(blogsCollection, id);
+    const postDocRef = doc(collection(db, "blogs"), id);
     
     await runTransaction(db, async (transaction) => {
       const postDoc = await transaction.get(postDocRef);
@@ -37,7 +43,7 @@ export async function updateBlogPost(
       const updatedPostData = {     
         id:id ?? postData.id,
         title:title ?? postData.title,
-        images: [] ?? postData.images,
+        images: images ?? postData.images,
         author: author ?? postData.author,
         authorEmail: authorEmail ?? postData.authorEmail,
         description: description ?? postData.description,
@@ -48,13 +54,9 @@ export async function updateBlogPost(
       // Update user document
       transaction.update(postDocRef, updatedPostData);
       console.log("this is updatedPostData var:",updatedPostData)
+      console.log("this is what happens with post data after transaction: ", postDoc.data())
     });
-      // Update email field of messages sub-collection??????????
-    //   const messagesQuery = query(collection(postDocRef, "messages"));
-    //   const messagesQuerySnapshot = await getDocs(messagesQuery);
-    // //   messagesQuerySnapshot.forEach((doc) => {
-    // //     updateDoc(doc.ref, { email: email ?? user.email });
-    // //   });
+
     
   } catch (error) {
     console.error('Error updating post:', error);
@@ -64,6 +66,7 @@ export async function updateBlogPost(
 
 export async function getBlogPost(id:string){
   try{
+    console.log("this is id for db call: ", id)
     const postDoc = doc(collection(db, "blogs"), id);
     const postSnapshot = await getDoc(postDoc);
     // put the value in store
@@ -90,5 +93,34 @@ export async function getBlogPost(id:string){
     // return postSnapshot.exists() ? postSnapshot.data() : null;
   } catch (error) {
     console.error('Error fetching post:', error);
+  }
+}
+
+export async function getBlogPosts() {
+  try {
+    
+    const blogPostsCollection = collection(db, 'blogs');
+    const blogPostsSnapshot = await getDocs(blogPostsCollection);
+
+    // Extract the data from each blog post document
+    const blogPosts = blogPostsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return blogPosts;
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    return [];
+  }
+}
+
+export async function deleteBlogPost(id:string){
+  try {
+    const postDocRef = doc(collection(db, 'blogs'), id);
+    await deleteDoc(postDocRef);
+    console.log('Blog post deleted:', id);
+  } catch (error) {
+    console.error('Error deleting blog post:', error);
   }
 }

@@ -4,7 +4,7 @@
     import { collection, addDoc, Timestamp } from 'firebase/firestore';
     import { auth, db, storage} from "$lib/firebase/firebase";
     import { onMount } from 'svelte';
-    import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/blogs/post';
+    import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/posts/post';
   
     let tempPost = {
       id:-1,
@@ -13,7 +13,7 @@
       author:'',
       authorEmail:'',
       price:'',
-      images:[],
+      images:[] as string[],
       date: new Date(),
     };
 
@@ -21,13 +21,41 @@
       event.preventDefault();
       const user = auth.currentUser;
 
-        try{
-            addBlogPost(tempPost)      
-        } catch (err) {
-            console.log("auth error", err)
-        }
+      try{
+         const imageUrls = await Promise.all(tempPost.images.map(uploadImage));
+
+        // Update the tempPost object with the download URLs
+          tempPost.images = imageUrls;
+          addBlogPost(tempPost)      
+          console.log('Form submitted')
+      } catch (err) {
+          console.log("auth error", err)
+      }
     }
      
+    async function uploadImage(image) {
+    try {
+      const storageRef = ref(storage, `images/${image.name}`);
+      await uploadBytes(storageRef, image);
+      const downloadURL = await getDownloadURL(storageRef);
+      // correct console.log('Image uploaded:', downloadURL)
+      return downloadURL;
+    } catch (error) {
+      console.log("error while uploading the image",error)
+    }
+    
+  }
+
+  function handleImageUpload(event) {
+      try {
+        const files = event.target.files;
+        // coorect console.log(files)
+        tempPost.images = Array.from(files);
+      } catch (error) {
+        console.log("error while handleImageUpload",error)
+      }
+      
+    }
 
   </script>
 
@@ -56,7 +84,7 @@
       </div>
       <div>
         <label for="images">Images:</label>
-        <input type="file" id="images" bind:value={tempPost.images} multiple>
+        <input type="file" id="images" on:change={handleImageUpload} multiple>
       </div>
       <button type="submit">Submit</button>
     </form>

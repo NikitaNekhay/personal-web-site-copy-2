@@ -17,6 +17,9 @@ const config = {
 		paths: {
 			base: dev ? '' : '/Personal-Website',
 		  },
+		prerender: {
+			entries: ['/posts/[id]','/posts','/posts/[id]/edit','/profile','/profile/edit','/dashboard','/stat',], 
+		},
 	}
 };
 

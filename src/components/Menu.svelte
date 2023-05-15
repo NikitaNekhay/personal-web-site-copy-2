@@ -2,7 +2,7 @@
   import { base } from "$app/paths";
   import { getContext, onMount } from "svelte";
   import { clickOutside } from "../services/clickOutside";
-  import { authHandlers, authStore, profile } from "../store/store";
+  import { authHandlers, authStore } from "../store/store";
   import { auth } from "$lib/firebase/firebase";
   import { getUserProfile } from "../routes/profile/user";
 
@@ -19,16 +19,20 @@
   let name = 'Mister';
 
     onMount(() => {
-    console.log("getting the name of profile...")
-    
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            let Ready_profile = await getUserProfile(user);
-            if (user) {
-                name = Ready_profile.name
-            // 
-            }
-    })
-        return unsubscribe
+        console.log("getting the name of profile...")
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+                //console.log(user)
+                let Ready_profile = await getUserProfile(user);
+                //console.log(Ready_profile)
+                if (user) {
+                    name = Ready_profile.name
+                    if(Ready_profile.email === "vaper20041337@gmail.com" || Ready_profile.email ==="ktofreesapiens@gmail.com"){
+                        isAdmin = true
+                    }
+                // 
+                }
+        })
+            return unsubscribe
     });
 
 
@@ -38,9 +42,9 @@
     <div class="grid-column-auto grid-row-auto" on:click={openMenu} on:keydown={openMenu}>
         {#if !isOpen}
             <p class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0">{name}</p>
-            <div class="w-8 h-8 rounded-full overflow-hidden">
-                <!-- <img src="../../../static/favicon.ico" alt="NAME"> -->
-            </div>
+            <!-- <div class="w-8 h-8 rounded-full overflow-hidden">
+                <img src="../../../static/favicon.ico" alt="NAME">
+            </div> -->
     
         {:else}
         <div
@@ -54,14 +58,17 @@
             </a>
             {#if isAdmin}
             <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/dashboard'>
-                Dashboard
+                Create
+            </a>
+            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/posts'>
+                View
+            </a>
+            <a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/stat'>
+                Stat
             </a>
             {/if}
             <a on:click={authHandlers.logout} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
                 Logout
-            </a>
-            <a on:click={authHandlers.deactivate} class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
-                Deactivate
             </a>
         </div>
         {/if}
