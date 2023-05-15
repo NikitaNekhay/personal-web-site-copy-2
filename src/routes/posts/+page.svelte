@@ -42,7 +42,7 @@
 
 </script>
 
-<Router>
+<!-- <Router>
   <Route path={`${base}/posts/`} let:params>
     <PostList />
   </Route>
@@ -52,8 +52,8 @@
   <Route path={`${base}/posts/:id/edit`} let:params>
     <PostEdit {params} />
   </Route>
-</Router>
+</Router> -->
 
 
-
+<PostList />
 <!-- Make it gallery for the normal user -->

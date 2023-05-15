@@ -38,12 +38,12 @@
   </script>
   
 <Router>
-  <!-- Other routes... -->
+  
   <Route path={`${base}/posts/:id/edit`} let:params>
     {#if isLoading}
       LOADING
     {:else}
-      <PostEdit {post} /> <!-- Pass the `post` prop to the `PostEdit` component -->
+      <PostEdit {post} /> 
     {/if}
   </Route>
 </Router>

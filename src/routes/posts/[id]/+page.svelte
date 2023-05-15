@@ -37,17 +37,17 @@
   </script>
   
   <Router>
-    <!-- Other routes... -->
+
     <Route path={`${base}/posts/:id`} let:params>
         {#if isLoading}
           LOADING
-        <!-- Show loading indicator or skeleton UI -->
+
         {:else}
-        <PostDetail {post} /> <!-- Pass the `post` prop to the `PostDetail` component -->
+        <PostDetail {post} /> 
         {/if}
     </Route>
-    
-    <Route path={`${base}/posts/:id/edit`} let:params>
+
+    <!-- <Route path={`${base}/posts/:id/edit`} let:params>
       <PostEdit {params} />
-    </Route>
+    </Route> -->
   </Router>
