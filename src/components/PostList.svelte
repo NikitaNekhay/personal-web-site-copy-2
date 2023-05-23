@@ -4,16 +4,15 @@
   import { getBlogPosts, deleteBlogPost } from '../routes/posts/post';
   import { navigate } from 'svelte-routing';
   import { base } from '$app/paths';
-  import { blogPost } from '../store/store';
+  import { blogPost, currentLanguage } from '../store/store';
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../services/ru.json';
+  import { goto } from '$app/navigation';
+  
 
-  // Загружаем переводы для русского языка
-  addMessages('ru', ru);
-  // Устанавливаем язык по умолчанию
-  locale.set('ru')
-
-
+        addMessages('ru', ru);
+      // Устанавливаем язык по умолчанию
+      locale.set('ru')
 
   // use Firestore's onSnapshot method to listen for changes
   // in the blogs collection and update the page in 
@@ -25,11 +24,27 @@
   // Fetch blog posts from the database
   blogPosts = await getBlogPosts();
   console.log(blogPosts)
+
+  // if($currentLanguage.language==='ru'){
+  //     // Загружаем переводы для русского языка
+  //     addMessages('ru', ru);
+  //     // Устанавливаем язык по умолчанию
+  //     locale.set('ru')
+  // } else {
+  //     // Загружаем переводы для русского языка
+  //     addMessages('en', en);
+  //     // Устанавливаем язык по умолчанию
+  //     locale.set('en')
+  // }
+
   });
 
   function handleClick(id:string) {
   // Navigate to the detailed page of the selected blog post
+  console.log(id)
   $blogPost.id = id
+  console.log($blogPost.id)
+  //goto(`${base}/posts/${id}`);
   window.location.href = `${base}/posts/${id}`;
   }
 

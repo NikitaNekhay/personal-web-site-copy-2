@@ -17,6 +17,8 @@ export default {
         "red-1": "#9F2D2D",
         "red-2": "#C53030",
         "yellow-0": "#f6ae2dff",
+        "blue-0" : "#0496ffff",
+        "orange-0": "#fe7f2dff;", 
       },
       fontFamily:{
         'maven':['Maven Pro','sans-serif'],

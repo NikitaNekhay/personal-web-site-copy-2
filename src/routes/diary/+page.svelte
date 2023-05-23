@@ -14,7 +14,7 @@
   locale.set('ru')
 </script>
 
-<div class="grid-item-content">
+<div class="grid-item-content mt-[200px] mb-[600px]">
   <div class="grid-item4">
     <p style="text-align: right;">{$t('Diary is hidden!')} <br>
   </div>
@@ -23,7 +23,7 @@
 
 <style>
   .grid-item-content{
-    padding-top: 200px;
+
     padding-left: 350px;
     padding-right: 350px;
     display: flexbox;

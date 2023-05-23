@@ -116,7 +116,7 @@
                 {/if}
                 
                 <div>
-                    <button on:click={handleAuthenticate} type="button" class="submitButton flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-navy-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <button on:click={handleAuthenticate} type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         {#if authenticating}
                             <img alt="spinner" src="{base}/media/envelop.svg" class="spinner" />
                         {:else}
@@ -153,7 +153,7 @@
     .containerAuth{
         display:flex;
         flex: 1;
-        padding-top:25%;
+        padding-top:15%;
         justify-items: center;
         @apply max-h-screen;
     }   
@@ -201,7 +201,7 @@
     .options div p:last-of-type {
         
         cursor: pointer;
-        @apply text-yellow-0;
+        @apply text-orange-0;
     }
 
     .spinner{

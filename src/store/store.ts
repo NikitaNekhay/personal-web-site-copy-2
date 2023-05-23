@@ -64,6 +64,10 @@ export const blogPost = writable({
     
 });
 
+export const currentLanguage = writable({
+  language:'en',
+});
+
 export const authHandlers = {
 
     signup: async (email,pass) => {

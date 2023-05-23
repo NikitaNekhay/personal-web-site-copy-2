@@ -7,12 +7,14 @@
     import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/posts/post';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
+    import { base } from '$app/paths';
 
     // Загружаем переводы для русского языка
     addMessages('ru', ru);
     // Устанавливаем язык по умолчанию
     locale.set('ru')
 
+    let loading = false
   
     let tempPost = {
       id:-1,
@@ -36,6 +38,7 @@
           tempPost.images = imageUrls;
           addBlogPost(tempPost)      
           console.log('Form submitted')
+          loading = true
       } catch (err) {
           console.log("auth error", err)
       }
@@ -136,6 +139,12 @@
         </div>
       </div>
     </div>
-    <button on:click={handleSubmit} type="submit">{$t('Submit')}</button>
+    <button on:click={handleSubmit} type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      {#if loading}
+          <img alt="spinner" src="{base}/media/spinner.svg" class="spinner" />
+      {:else}
+          {$t('Submit')} 
+      {/if}
+    </button>
   </form>
 </div>

@@ -29,63 +29,150 @@
 
 </script>
 
-<div class="px-4 sm:px-0 items-center justify-between">
-    <div class="flex items-center justify-between">
-        <h3 class="text-base font-semibold leading-7 text-gray-900">{$t('Applicant Information')} 
-        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{$t('Personal details and application.')} </p>
-        </h3>
-        
-    <div class="flex items-center justify-between">
-        
-        <div class=" inline-block text-left">
+<div class="px-6 sm:px-0">
+    <div class="grid items-center justify-items-center grid-rows-1 grid-cols-3">
+      <div>
+        <div class=" justify-items-start">
+          <h3 class="text-base font-semibold leading-7 text-gray-900">{$t('Applicant Information')} 
+            <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{$t('Personal details and application.')} </p>
+            </h3>
+        </div>
+      </div>
+      
+        <div class=" ml-16">
+          <div class="grid justify-items-center">
             {#if !isOpen}
-            <div>
-              <button type="button" class="inline-flex w-full justify-center 
-              gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold 
-              text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
-              on:click={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true">
-                {$t('Options')} 
-                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
-                  clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-            {:else}
-            <!--
-              Dropdown menu, show/hide based on menu state.
 
-              Entering: "transition ease-out duration-100"
-                From: "transform opacity-0 scale-95"
-                To: "transform opacity-100 scale-100"
-              Leaving: "transition ease-in duration-75"
-                From: "transform opacity-100 scale-100"
-                To: "transform opacity-0 scale-95"
-              -->
-            <div class="absolute right-8 z-0 mt-0 
-            w-56 origin-top-right rounded-md bg-white 
-            shadow-lg ring-1 ring-black ring-opacity-5 
-            focus:outline-none  " role="menu" aria-orientation="vertical" 
-            aria-labelledby="menu-button" tabindex="-1"
+            <div
+              class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1"
+              on:click={handleButtonClick} on:keypress={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true"
             >
-                <div class="py-1" role="none" use:clickOutside on:click_outside={handleClickOutside}>
-                    <a href="{base}/profile/" class="text-gray-700 block px-4 py-2 text-sm hover:text-yellow-0" 
-                    role="menuitem" tabindex="-1" id="menu-item-0">
-                        {$t('View')} 
-                    </a>
-                    <a href="{base}/profile/edit" class="text-gray-700 block px-4 py-2 text-sm hover:text-yellow-0" 
-                    role="menuitem" tabindex="-1" id="menu-item-0">
-                        {$t('Edit')} 
-                    </a>
-                    <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="text-gray-700 block px-4 py-2 text-sm hover:text-yellow-0" 
-                    role="menuitem" tabindex="-1" id="menu-item-1">
-                        {$t('Deactivate')} 
-                    </a>
-                </div>
+              <span
+                class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              ></span>
+
+              <span class="relative block border border-current bg-white px-8 py-3">
+                <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
+  
+                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                    clip-rule="evenodd" />
+                  </svg>
+              </span>
+            </div>
+
+
+              <!-- <div class=" border-t-4 border-navy-1">
+                <button type="button" class="inline-flex w-full justify-center 
+                gap-x-1.5 bg-white px-3 py-2 text-sm font-semibold 
+                text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
+                on:click={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true">
+                  <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
+  
+                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                    clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div> -->
+              <!--
+                Dropdown menu, show/hide based on menu state.
+  
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+                -->
+              {:else}
+              <!-- <div class=" border-t-4 border-navy-1">
+                <button type="button" class="inline-flex w-full justify-center 
+                gap-x-1.5 bg-white px-3 py-2 text-sm font-semibold 
+                text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
+                on:click={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true">
+                  <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
+  
+                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                    clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div> -->
+              <div
+              class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1"
+              on:click={handleButtonClick} on:keypress={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true"
+            >
+              <span
+                class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform group-hover:translate-y-0.5 group-hover:-translate-x-0.5"
+              ></span>
+
+              <span class="relative block border border-current bg-white px-8 py-3">
+                <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
+  
+                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                    clip-rule="evenodd" />
+                  </svg>
+              </span>
+            </div>
+
+              <div class="absolute z-0 mt-24 
+              w-50 h-42 origin-center bg-white-0 
+              shadow-lg ring-1 ring-black ring-opacity-5 
+              focus:outline-none border-x-4 border-navy-1"
+               role="menu" aria-orientation="vertical" 
+              aria-labelledby="menu-button" tabindex="-1"
+              
+              >
+                  <div class="py-1" role="none" use:clickOutside on:click_outside={handleClickOutside}>
+                    <div class="p-2 border-1 shadow-white-2 shadow text-left">
+                      <a href="{base}/profile" class="text-gray-700 block px-4 py-2 text-sm transition duration-100 hover:text-yellow-0" 
+                      role="menuitem" tabindex="-1" id="menu-item-0">
+                          {$t('View')} 
+                      </a>
+                      <a href="{base}/profile/edit" class="text-gray-700 block px-4 py-2 text-sm transition duration-100 hover:text-yellow-0" 
+                      role="menuitem" tabindex="-1" id="menu-item-0">
+                          {$t('Edit')} 
+                      </a>
+                    </div>
+                    <div class="p-2">
+                      <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="cursor-pointer flex text-gray-700 px-4 py-2 text-sm transition duration-100 hover:text-red-2" 
+                      role="menuitem" tabindex="-1" id="menu-item-1">
+                      <svg  
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 mt-0.5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>  
+                        <p class="">{$t('Deactivate')} </p>
+                      </a>
+                    </div>
+                  </div>
               </div>
-              {/if}
-        </div>            
-    </div>
+                {/if}
+       
+          </div>
+        </div>
+        
+      <div>
+        <div class="flex">
+          <h3 class="text-base font-semibold leading-7 text-transparent">{$t('Applicant Information')} 
+            <p class="mt-1 max-w-2xl text-sm leading-6 text-transparent">{$t('Personal details and application.')} </p>
+            </h3>
+        </div>
+      </div>
+     
+        
+  
   </div>
 </div>
 

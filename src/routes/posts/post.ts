@@ -13,7 +13,6 @@ export async function addBlogPost(tempPost){
   } catch (error) {
     console.log("error while adding blog post",error)
   }
-    
 }
 
 

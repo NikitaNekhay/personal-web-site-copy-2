@@ -14,10 +14,10 @@
   import { page } from '$app/stores';
   import { base } from '$app/paths';
   
-    // let post = {}; // Define and initialize the `post` variable
-    // let isLoading = true; // Initialize the loading state
+    let post = {}; // Define and initialize the `post` variable
+    let isLoading = true; // Initialize the loading state
     
-    // const { id } = $page.params
+    const { id } = $page.params
     // if(id){
     //   post = await getBlogPost(id); // Fetch the blog post details
     //   //isLoading = false; // Set the loading state to false once data is loadeds
@@ -47,10 +47,10 @@
   <Route path={`${base}/posts/`} let:params>
     <PostList />
   </Route>
-  <Route path={`${base}/posts/:id`} let:params>
+  <Route path={`${base}/posts/:id/`} let:params>
     <PostDetail {params} />
   </Route>
-  <Route path={`${base}/posts/:id/edit`} let:params>
+  <Route path={`${base}/posts/:id/edit/`} let:params>
     <PostEdit {params} />
   </Route>
 </Router> -->

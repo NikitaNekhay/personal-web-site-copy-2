@@ -10,11 +10,14 @@
   import ProfileOptions from './ProfileOptions.svelte';
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../services/ru.json';
+  import ProfileEditDone from './ProfileEditDone.svelte';
 
   // Загружаем переводы для русского языка
   addMessages('ru', ru);
   // Устанавливаем язык по умолчанию
   locale.set('ru')
+
+  let loading = false
 
   let profileValue = {
       name:'',
@@ -27,6 +30,7 @@
   // setContext('profile', profile);
   onMount(() => {
     console.log("updating profile...")  
+    loading = false
     console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
         let Ready_profile = await getUserProfile(user);
@@ -58,6 +62,9 @@
           profileValue.description,
           profileValue.messages
         );
+
+        console.log("after onMount",loading)
+
       } else {
         console.log("no user in Profile.svelte");
       }
@@ -85,9 +92,10 @@
       .catch((error) => {
         console.error("Error updating profile:", error.message);
       });
-      // Redirect the user to their profile page
-      // window.location.href = `${base}/`;
-      // window.location.href = `${base}/profile/`;
+      
+      loading = true
+      console.log("after submit",loading)
+      window.location.href = `${base}/profile/edit/`
     } catch (error) {
       console.error(error.message);
     }
@@ -99,6 +107,12 @@
 </script>
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+
+  {#if loading}
+    <ProfileEditDone />
+  {:else}
+      WAITING
+  {/if}
 
     <ProfileOptions/>
 
@@ -163,10 +177,8 @@
         </div>
       </div>
       <div class="mt-10">
-        <button type="submit" class="block w-full rounded-md bg-indigo-600 
-        px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm 
-        hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
-        focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+
+        <button on:click={handleSubmit} type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           {$t('Submit')} 
         </button>
       </div>

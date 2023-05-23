@@ -68,30 +68,44 @@ let isView = true
 
 </script>
 
-<div class="isolate bg-white px-6 pt-36">
+<div class="isolate bg-white px-10 pt-36">
+
+  <div>
     <ProfileOptions/>
+  </div>
+
+  <div>
     <div class="mt-6 border-t border-gray-100">
-      <dl class="divide-y divide-gray-100">
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">{$t('User name')} </dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.name}</dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Email address')} </dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.email}</dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Country')} </dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.country}</dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Number phone')} </dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.phone}</dd>
-        </div>
-        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt class="text-sm font-medium leading-6 text-gray-900">{$t('About')} </dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.description}</dd>
-        </div>
-      </dl>
+      <div class="ml-8">
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">{$t('User name')} </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.name}</dd>
+          </div>
+          <div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Email address')} </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.email}</dd>
+          </div>
+          <div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0">
+              <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Country')} </dt>
+              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.country}</dd>
+          </div>
+          <div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">{$t('Number phone')} </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.phone}</dd>
+          </div>
+          <div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-gray-900">{$t('About')} </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{profileValue.description}</dd>
+          </div>
+        </dl>
+      </div>
+      
     </div>
   </div>
+    
+    
+  <div>
+
+  </div>
+</div>

@@ -43,6 +43,8 @@
     {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design, photography, videography. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.Currently studies at Innopolis as an exchange student.')}<br>
 </p>
 
+
+
 <ul >
     <li>
         <p style=" margin-block-start: 0px; margin-block-end: 0px; text-decoration:overline;" >
@@ -52,11 +54,11 @@
             </a>
         </p>
     </li>
-    <li><p style="margin-block-start: 0px; margin-block-end: 0px;"><a style=" text-decoration:none;" class="href_links" target="_blank" href ="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></p></li>
-    <li>Conceptual video<a class="href_links" target="_blank" href="https://youtu.be/aJqHTiAQ560" >"Campus tour"</a></li>
-    <li>Short cut film <a class="href_links" target="_blank" href="https://youtu.be/WdUAxi6tISg" >"Slot"</a></li>
-    <li><a class="href_links" target="_blank" href="https://www.instagram.com/nekhaynikita/" style="text-decoration: underline; ">Capsule collection 2022</a></li>
-    <li><a class="href_links" target="_blank" href="https://www.behance.net/nekhaynikita" style="  text-decoration: underline;">Phography pieces</a></li>
+    <li><a style=" text-decoration:none;" class="href_links transition duration-100 hover:text-blue-0" target="_blank" href ="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></li>
+    <li><a class="href_links transition duration-100 hover:text-blue-0" target="_blank" href="https://youtu.be/aJqHTiAQ560" >Conceptual video "Campus tour"</a></li>
+    <li><a class="href_links transition duration-100 hover:text-blue-0" target="_blank" href="https://youtu.be/WdUAxi6tISg" >Short cut film "The Whole"</a></li>
+    <li><a class="href_links transition duration-100 hover:text-blue-0" target="_blank" href="https://www.instagram.com/nekhaynikita/" style="text-decoration: underline; ">Capsule collection 2022</a></li>
+    <li><a class="href_links transition duration-100 hover:text-blue-0" target="_blank" href="https://www.behance.net/nekhaynikita" style="  text-decoration: underline;">Phography pieces</a></li>
 </ul>
 
 

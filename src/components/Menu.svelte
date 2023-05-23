@@ -8,10 +8,15 @@
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
+    import en from '../services/en.json'
+
+addMessages('en', en);
+//  Устанавливаем язык по умолчанию
+locale.set('en')
+    // // Загружаем переводы для русского языка
+    // addMessages('ru', ru);
+    // // Устанавливаем язык по умолчанию
+    // locale.set('ru')
 
   export let isOpen = false
   export let isAdmin = false

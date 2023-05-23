@@ -21,9 +21,10 @@
         console.log(id)
         if(id){
           post = await getBlogPost(id); // Fetch the blog post details
-          console.log(isLoading)
+         
           isLoading = false; // Set the loading state to false once data is loadeds
-          console.log(isLoading)
+          console.log("loading state:", isLoading)
+          console.log("this is fucking post prop", post)
         } else {
           console.log("id is not exists on page.params!")
         }
@@ -40,7 +41,7 @@
   
 <Router>
   
-  <Route path={`${base}/posts/:id/edit`} let:params>
+  <Route path={`${base}/posts/:id/edit/`} let:params>
     {#if isLoading}
       LOADING
     {:else}

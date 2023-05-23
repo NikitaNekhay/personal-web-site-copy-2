@@ -5,17 +5,17 @@
     import {getContext, onMount} from 'svelte'
     import {auth, db} from '../lib/firebase/firebase'
     import { getDoc, doc, setDoc } from 'firebase/firestore';
-    import { authHandlers, authStore } from '../store/store';
+    import { authHandlers, authStore, currentLanguage } from '../store/store';
     import Menu from './Menu.svelte'
     import { readable } from 'svelte/store';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
+    import en from '../services/en.json'
 
+    addMessages('en', en);
+    //  Устанавливаем язык по умолчанию
+    locale.set('en')
 
     const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/diary/`,`${base}/login/`]
     //const AuthRoutes = [`${base}/dashboard/`,`${base}/profile/`]
@@ -31,6 +31,19 @@
     try {
         onMount(() => {
         console.log('Mounting')
+
+        // if($currentLanguage.language==='ru'){
+        //     // Загружаем переводы для русского языка
+        //     addMessages('ru', ru);
+        //     // Устанавливаем язык по умолчанию
+        //     locale.set('ru')
+        // } else {
+        //     // Загружаем переводы для русского языка
+        //     addMessages('en', en);
+        //     // Устанавливаем язык по умолчанию
+        //     locale.set('en')
+        // }
+
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             const currentPath = window.location.pathname
             
@@ -136,7 +149,7 @@
 
 <nav class="flex w-screen font-anonymous">
     <!--The form itself  -->
-    <div class="fixed top-0 z-30 w-full py-">
+    <div class="fixed top-0 z-30 w-full">
         <div class='flex items-center justify-between mx-auto w-11/12 bg-white-1 shadow-white-2 drop-shadow-2xl border-x-4 border-navy-1'>
             <div class='flex items-center justify-between mx-2 w-full gap-16 '>
                 <!-- Logo(Left side) -->
