@@ -95,7 +95,7 @@
       
       loading = true
       console.log("after submit",loading)
-      window.location.href = `${base}/profile/edit/`
+      //window.location.href = `${base}/profile/edit/`
     } catch (error) {
       console.error(error.message);
     }

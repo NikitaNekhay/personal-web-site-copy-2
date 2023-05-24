@@ -127,33 +127,28 @@
               >
                   <div class="py-1" role="none" use:clickOutside on:click_outside={handleClickOutside}>
                     <div class="p-2 border-1 shadow-white-2 shadow text-left">
-                      <a href="{base}/profile" class="text-gray-700 block px-4 py-2 text-sm transition duration-100 hover:text-yellow-0" 
+                      <a href="{base}/profile" class="group text-gray-700 flex px-4 py-2 text-sm 
+                      transition duration-100" 
                       role="menuitem" tabindex="-1" id="menu-item-0">
-                          {$t('View')} 
+                          <img class="mr-2 group-hover:text-yellow-0" src="{base}/media/user.svg" alt="user icon">
+                          <p class="self-center group-hover:text-yellow-0">{$t('View')}</p>
                       </a>
-                      <a href="{base}/profile/edit" class="text-gray-700 block px-4 py-2 text-sm transition duration-100 hover:text-yellow-0" 
+                      <a href="{base}/profile/edit" class="flex text-gray-700 px-4 py-2 text-sm 
+                      transition duration-100 group" 
                       role="menuitem" tabindex="-1" id="menu-item-0">
-                          {$t('Edit')} 
+                      <!-- EDIT ICON -->
+                        <img class="mr-2 group-hover:text-yellow-0 stroke-current" src="{base}/media/user-edit.svg" alt="user edit icon">
+                        <p class="self-center group-hover:text-yellow-0">{$t('Edit')}</p>
                       </a>
                     </div>
                     <div class="p-2">
-                      <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="cursor-pointer flex text-gray-700 px-4 py-2 text-sm transition duration-100 hover:text-red-2" 
+                      <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="cursor-pointer 
+                      flex  text-gray-700 px-4 py-2 text-sm transition stroke-current duration-100 hover:text-red-2 hover:stroke-current" 
                       role="menuitem" tabindex="-1" id="menu-item-1">
-                      <svg  
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 mt-0.5 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="1.9"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
-                      </svg>  
-                        <p class="">{$t('Deactivate')} </p>
+                      <!-- DELETE ICON -->
+
+                        <img class="mr-2 " src="{base}/media/user-x.svg" alt="user delete icon">
+                        <p class=" self-center ">{$t('Deactivate')} </p>
                       </a>
                     </div>
                   </div>

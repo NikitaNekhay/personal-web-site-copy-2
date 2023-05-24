@@ -1,6 +1,6 @@
 <svelte:head>
-   <title>{''}</title>
-   <meta name="description" content="">
+   <title>{'Edit profile'}</title>
+   <meta name="edit profile" content="forms for editing profile">
 </svelte:head>
 
 <script >

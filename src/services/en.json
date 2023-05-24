@@ -54,12 +54,14 @@
     "View":"View",
         "Edit":"Edit",
         "NO POSTS":"NO POSTS",
+        "NO POSTS | FOUND":"NO POSTS | FOUND",
         "Delete":"Delete",
         "Date":"Date",
         "SEND EMAIL TO AUTHOR":"SEND EMAIL TO AUTHOR",
         "BACK":"BACK",
         "NEXT":"NEXT",
     "Stat":"Stat",
+    "Shop":"Shop",
 
     "Logout":"Logout"
    

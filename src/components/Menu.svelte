@@ -7,7 +7,7 @@
   import { getUserProfile } from "../routes/profile/user";
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
-
+   // import isAdmin from "../components/Navbar.svelte"
     import en from '../services/en.json'
 
 addMessages('en', en);
@@ -19,7 +19,9 @@ locale.set('en')
     // locale.set('ru')
 
   export let isOpen = false
-  export let isAdmin = false
+  
+  let isAdmin=false
+
   function handleClickOutside() {
     isOpen = false;
   }  
@@ -71,11 +73,11 @@ locale.set('en')
             </a>
             {#if isAdmin}
             <a class="col-span-full grid-row-auto transition duration-100 
-            hover:text-yellow-0" target="_self" href='{base}/dashboard'>
+            hover:text-yellow-0" target="_self" href='{base}/create'>
                 {$t('Create')} 
             </a>
             <a class="col-span-full grid-row-auto transition duration-100 
-            hover:text-yellow-0" target="_self" href='{base}/posts'>
+            hover:text-yellow-0" target="_self" href='{base}/dashboard'>
                 {$t('View')} 
             </a>
             <a class="col-span-full grid-row-auto transition duration-100 

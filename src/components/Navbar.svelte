@@ -13,137 +13,138 @@
 
     import en from '../services/en.json'
 
+
     addMessages('en', en);
     //  Устанавливаем язык по умолчанию
     locale.set('en')
 
-    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/diary/`,`${base}/login/`]
-    //const AuthRoutes = [`${base}/dashboard/`,`${base}/profile/`]
-    
-    export {loginState}
-    export {readyExit} 
-    let loginState = false
-    let readyExit = false
-    
-    // import {profile} from "./Edituserprofile.svelte"
-    let userName = "Mister"
+    export let isAdmin = false
+    export let loginState = false
+    export let readyExit = false
+
+    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/login/`]
+    const AdminRoutes = [`${base}/dashboard`,`${base}/stat/`,`${base}/create/`,]
 
     try {
         onMount(() => {
-        console.log('Mounting')
+            console.log('Mounting')
 
-        // if($currentLanguage.language==='ru'){
-        //     // Загружаем переводы для русского языка
-        //     addMessages('ru', ru);
-        //     // Устанавливаем язык по умолчанию
-        //     locale.set('ru')
-        // } else {
-        //     // Загружаем переводы для русского языка
-        //     addMessages('en', en);
-        //     // Устанавливаем язык по умолчанию
-        //     locale.set('en')
-        // }
-
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            const currentPath = window.location.pathname
-            
-            console.log("we are hier: ",currentPath)
-            console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
-            if(user){
-                console.log("there is a user: ",user)
-                if(user.email)
-                    userName = user.email.slice(0,user.email?.search('@'))
-            } else {
-                console.log("there is no user: ",user)
-            }
-
-            // console.log("there is name: ",profile.name)
-            
-            if(user === null && !nonAuthRoutes.includes(currentPath)){
-                window.location.href = `${base}/`
-                loginState = false
-                readyExit = false
-                return
-            }
-
-            if(user !== null && currentPath === `${base}/login/`) {
-                window.location.href = `${base}/profile`
-                loginState = true
-                readyExit = false
-                return
-            }
-
-            // logout logic
-            if(user && currentPath === `${base}/profile/`) {
-                readyExit = true
-                loginState = true
-                return
-            }
-
-            if(!user) {
-                 loginState = false
-                 readyExit = false
-                return
-            } else {
-                loginState = true
-            }
-
-            let dataToSetToStore= {
-                    email:user.email,
-                     
-                    messages: []
-                    
-                };
-
-            if(user){
-                const docRef = doc(db, 'user', user.uid)
+            const unsubscribe = auth.onAuthStateChanged(async (user) => {
+                const currentPath = window.location.pathname
                 
-                const docSnap = await getDoc(docRef)
-                if(!docSnap.exists()) {
-                    //initialize users document
-                    console.log('Creating user')
-                    const userRef = doc(db,'user',user.uid)
-                    dataToSetToStore = {
-                        email:user.email, 
-                        messages: []
-                    }
-                    await setDoc(
-                        userRef,
-                        dataToSetToStore,
-                        {merge: true}
-                    )
+                console.log("we are hier: ",currentPath)
+                console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
+                if(user){
+                    console.log("there is a user: ",user)
+                    if(user.email === "ktofreesapiens@gmail.com")
+                            isAdmin = true
+                    // if(user.email){
+                    //     userName = user.email.slice(0,user.email?.search('@'))
+                    // }
+                                            
                 } else {
-                    console.log("Fetching User");
-                    const userData = docSnap.data()
-                    
-                    dataToSetToStore = userData
-                    // console.log(dataToSetToStore)
-                    authStore.update((curr) => {
-                    return{
-                        ...curr,
-                        user:user,
-                        data:{
-                            ...curr.data,
-                            email: dataToSetToStore.email
-                        },
-                        loading: false,
-                    }
-                        
-                })
-                
+                    console.log("there is no user: ",user)
+                    //isAdmin = false
                 }
-            }
-            
-            
-           
 
-        })
+                // console.log("there is name: ",profile.name)
+                
+                if(user === null && !nonAuthRoutes.includes(currentPath)){
+                    window.location.href = `${base}/`
+                    loginState = false
+                    readyExit = false
+                    return
+                }
 
+                // if(!isAdmin && !AdminRoutes.includes(currentPath)){
+                //     window.location.href = `${base}/`
+                //     loginState = true
+                //     readyExit = false
+                //     return
+                // }
+
+                if(user !== null && currentPath === `${base}/login/`) {
+                    window.location.href = `${base}/profile`
+                    loginState = true
+                    readyExit = false
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500);
+                    return
+                }
+
+                // logout logic
+                if(user && currentPath === `${base}/profile/`) {
+                    readyExit = true
+                    loginState = true
+                    return
+                }
+
+                if(!user) {
+                    loginState = false
+                    readyExit = false
+                    return
+                } else {
+                    loginState = true
+                }
+
+                let dataToSetToStore= {
+                        email:user.email,
+                        
+                        messages: []
+                        
+                    };
+
+                if(user){
+                    const docRef = doc(db, 'user', user.uid)
+                    
+                    const docSnap = await getDoc(docRef)
+                    if(!docSnap.exists()) {
+                        //initialize users document
+                        console.log('Creating user')
+                        const userRef = doc(db,'user',user.uid)
+                        dataToSetToStore = {
+                            email:user.email, 
+                            messages: []
+                        }
+                        await setDoc(
+                            userRef,
+                            dataToSetToStore,
+                            {merge: true}
+                        )
+                        if(user.email === "ktofreesapiens@gmail.com")
+                            isAdmin = true
+                    } else {
+                        console.log("Fetching User");
+                        const userData = docSnap.data()
+                        
+                        dataToSetToStore = userData
+                        if(dataToSetToStore.email === "ktofreesapiens@gmail.com")
+                            isAdmin = true
+                        
+                        authStore.update((curr) => {
+                        return{
+                            ...curr,
+                            user:user,
+                            data:{
+                                ...curr.data,
+                                email: dataToSetToStore.email
+                            },
+                            loading: false,
+                        }
+                            
+                    })
+                    
+                    }
+                }
+                
+            })
         return unsubscribe
-    })
+        })
     } catch (error) {
-        console.log("error while mounting")
+        console.log("error while mounting", error)
     }
+    
     
 </script>
 
@@ -154,7 +155,17 @@
             <div class='flex items-center justify-between mx-2 w-full gap-16 '>
                 <!-- Logo(Left side) -->
                 <div class="text-2xl ">
-                    <h1><p  class="flex justify-center">NIKITA</p><p>NIAKHAI</p></h1>
+                    <a class="hover:text-yellow-0" 
+                    target="_self" href='{base}/'>
+                        <h1>
+                            <p class="flex justify-center">
+                                NIKITA
+                            </p>
+                            <p>
+                                NIAKHAI
+                            </p>
+                        </h1>
+                    </a>
                 </div>
                 <!-- Links(Center) -->
                 <div class="flex items-center justify-between drop-shadow mx-20 ">
@@ -169,10 +180,10 @@
                     <div class="border-l-2 border-navy-2">
                         <a  class="text-black no-underline mx-20 
                         hover:underline underline-offset-4"   
-                        target="_self" href='{base}/diary' >{$t('Diary')} </a>
+                        target="_self" href='{base}/shop' >{$t('Shop')} </a>
                         <a  class="text-black no-underline 
                         hover:underline underline-offset-4"   
-                        target="_self" href='{base}/' >{$t('Works')} </a>
+                        target="_self" href='{base}/posts' >{$t('Works')} </a>
                     </div>
                     
                 </div>   
