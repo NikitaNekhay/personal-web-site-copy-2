@@ -19,8 +19,8 @@
 		<link rel="modulepreload" href="../_app/immutable/chunks/stores.e76dd826.js">
 		<link rel="modulepreload" href="../_app/immutable/entry/_layout.ts.822e9be0.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout.79cb23d1.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/profile-page.svelte.31615000.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/ProfileOptions.222009d0.js"><title>User Profile</title><!-- HEAD_svelte-5kmet8_START --><meta name="description" content="User Profile"><!-- HEAD_svelte-5kmet8_END -->
+		<link rel="modulepreload" href="../_app/immutable/entry/create-page.svelte.56b33478.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/post.8bdc363c.js"><title>Sandbox of posts</title><!-- HEAD_svelte-1s9z257_START --><meta name="sandbox" content="Admin dashboard, manage posts"><!-- HEAD_svelte-1s9z257_END -->
     <meta charset="utf-8" />
     <link rel="icon" href="../favicon.ico" />
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
@@ -55,37 +55,22 @@
 
 
 
-<div class="isolate bg-white px-10 pt-36"><div><div class="px-6 sm:px-0"><div class="grid items-center justify-items-center grid-rows-1 grid-cols-3"><div><div class="justify-items-start"><h3 class="text-base font-semibold leading-7 text-gray-900">Информация о пользователе 
-            <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Личные данные.</p></h3></div></div>
-      
-        <div class="ml-16"><div class="grid justify-items-center"><div class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1" id="menu-button" aria-expanded="true" aria-haspopup="true"><span class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></span>
+<div class="flex pt-60 place-content-center place"><form class="w-full max-w-lg "><div class="flex flex-wrap -mx-3 mb-6"><div class="w-full px-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="title"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="title" required placeholder="Title" value="">
+        <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Оглавление</span></label></div></div>
+    <div class="flex flex-wrap -mx-3 mb-6"><div class="w-full px-3 h-full"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="description"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" id="description" placeholder="Description" value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Описание</span></label>
+        <p class="text-gray-600 text-xs italic mt-3">Сделайте это как можно более простым и информативным</p></div></div>
 
-              <span class="relative block border border-current bg-white px-8 py-3"><img class="mr-1" alt="setting" src="/Personal-Website/media/settings.svg">
-  
-                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path></svg></span></div>
-
-
-              
-              </div></div>
-        
-      <div><div class="flex"><h3 class="text-base font-semibold leading-7 text-transparent">Информация о пользователе 
-            <p class="mt-1 max-w-2xl text-sm leading-6 text-transparent">Личные данные.</p></h3></div></div></div></div>
-
-</div>
-
-  <div><div class="mt-6 border-t border-gray-100"><div class="ml-8"><dl class="divide-y divide-gray-100"><div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0"><dt class="text-sm font-medium leading-6 text-gray-900">Имя</dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-          </div><div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0"><dt class="text-sm font-medium leading-6 text-gray-900">Адрес электронной почты</dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-          </div><div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0"><dt class="text-sm font-medium leading-6 text-gray-900">Страна</dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-          </div><div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0"><dt class="text-sm font-medium leading-6 text-gray-900">Телефон</dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-          </div><div class="px-4 py-6 grid grid-cols-4 gap-4 sm:px-0"><dt class="text-sm font-medium leading-6 text-gray-900">Главное</dt>
-            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd></div></dl></div></div></div>
-    
-    
-  <div></div></div>
+    <div class="flex flex-wrap -mx-3 mb-6"><div class="w-full md:w-1/2 px-3 mb-6 md:mb-0"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="author"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="author" placeholder="Author" required value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Автор</span></label></div>
+      <div class="w-full md:w-1/2 px-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="authorEmail"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="email" id="authorEmail" placeholder="email@web.net" required value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Почта автора</span></label></div></div>
+   
+    <div class="flex flex-wrap -mx-3 mb-0 ms-0"><div class="w-2/5 mb-6"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="price"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="price" placeholder="400$" required value="">
+        <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Цена</span></label></div>
+      <div class="md:w-3/5 h-1/2 px-3 mb-3 md:mb-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="files"><input class="transparent peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm text-center block" type="file" id="images" multiple placeholder="Files">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"></span></label></div></div>
+    <button type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Подтвердить</button></form></div>
 <footer aria-label="Site Footer" class="bg-white lg:grid lg:grid-cols-5 font-anonymous mt-96"><div class="relative block h-32 lg:col-span-2 lg:h-full"><img src="https://images.unsplash.com/photo-1642370324100-324b21fab3a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80" alt="" class="absolute inset-0 object-cover w-full h-full"></div>
     
     <div class="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8"><div class="grid grid-cols-1 gap-8 sm:grid-cols-2"><div><p><span class="text-xs tracking-wide text-gray-500 uppercase">Call us
@@ -174,7 +159,7 @@
 						import("../_app/immutable/entry/app.8c5254b0.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
-							node_ids: [0, 11],
+							node_ids: [0, 5],
 							data,
 							form: null,
 							error: null
