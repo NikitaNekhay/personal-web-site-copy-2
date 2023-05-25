@@ -2,18 +2,18 @@
   import { onMount } from 'svelte';
   import { getUserProfile, updateUserProfile} from '../routes/profile/user';
   import { auth } from "../lib/firebase/firebase";
-  import {authHandlers, authStore } from "../store/store";
+  import {authHandlers, authStore, currentLanguage } from "../store/store";
   import { base } from '$app/paths';
   import { clickOutside } from '../services/clickOutside';
   import ProfileOptions from './ProfileOptions.svelte';
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../services/ru.json';
+  import en from '../services/en.json';
 
-  // Загружаем переводы для русского языка
-  addMessages('ru', ru);
-  // Устанавливаем язык по умолчанию
-  locale.set('ru')
-
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
 
   let profileValue = {
       name:'',
@@ -25,41 +25,51 @@
   };
   // setContext('profile', profile);
   onMount(() => {
+
+   
     console.log("updating profile...")  
     console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      try {
         let Ready_profile = await getUserProfile(user);
         if (user) {
-          if (!$authStore.data.name && !$authStore.data.email) {
-          // Restore profileValue from user profile data
-          profileValue.name = Ready_profile.name;
-          profileValue.email = Ready_profile.email;
-          profileValue.phone = Ready_profile.phone;
-          profileValue.country = Ready_profile.country;
-          profileValue.description = Ready_profile.description;
-          profileValue.messages = Ready_profile.messages;
-        } else {
-          // Use the values from authStore
-          profileValue.name = $authStore.data.name;
-          profileValue.email = $authStore.data.email;
-          profileValue.phone = $authStore.data.phone;
-          profileValue.country = $authStore.data.country;
-          profileValue.description = $authStore.data.description;
-          profileValue.messages = $authStore.data.messages;
-        }
+          if (!$authStore.data) {
+            // Restore profileValue from user profile data
+            profileValue.name = Ready_profile.name;
+            profileValue.email = Ready_profile.email;
+            profileValue.phone = Ready_profile.phone;
+            profileValue.country = Ready_profile.country;
+            profileValue.description = Ready_profile.description;
+            profileValue.messages = Ready_profile.messages;
+          } else {
+            // Use the values from authStore
+            profileValue.name = $authStore.data.name;
+            profileValue.email = $authStore.data.email;
+            profileValue.phone = $authStore.data.phone;
+            profileValue.country = $authStore.data.country;
+            profileValue.description = $authStore.data.description;
+            profileValue.messages = $authStore.data.messages;
+          }
 
-        updateUserProfile(
-          user,
-          profileValue.name,
-          profileValue.email,
-          profileValue.phone,
-          profileValue.country,
-          profileValue.description,
-          profileValue.messages
-        );
-      } else {
-        console.log("no user in Profile.svelte");
+          updateUserProfile(
+            user,
+            profileValue.name,
+            profileValue.email,
+            profileValue.phone,
+            profileValue.country,
+            profileValue.description,
+            profileValue.messages
+          );
+
+          
+        } else {
+          console.log("no user in Profile.svelte");
+        }
+      } catch (error) {
+        console.log("error while updating profile",error);
       }
+      
+      
     })
     return unsubscribe
   })

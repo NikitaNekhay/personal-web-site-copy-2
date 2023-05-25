@@ -3,7 +3,16 @@
     import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
     import { collection, addDoc, Timestamp } from 'firebase/firestore';
     import { db, storage} from "$lib/firebase/firebase";
+    import ru from '../services/ru.json';
+    import en from '../services/en.json'
+  import { currentLanguage } from '../store/store';
+  import { onMount } from 'svelte';
+  import { addMessages, locale,t } from 'svelte-i18n';
 
+            // Загружаем переводы для русского языка
+            addMessages('en', en);
+            // Устанавливаем язык по умолчанию
+            locale.set('en')
   
     
 </script>

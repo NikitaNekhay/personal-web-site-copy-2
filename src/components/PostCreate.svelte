@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { blogPost } from '../store/store';
+    import { blogPost, currentLanguage } from '../store/store';
     import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
     import { collection, addDoc, Timestamp } from 'firebase/firestore';
     import { auth, db, storage} from "$lib/firebase/firebase";
@@ -7,12 +7,13 @@
     import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/posts/post';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
+    import en from '../services/en.json'
     import { base } from '$app/paths';
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
 
     let loading = false
   
@@ -71,7 +72,12 @@
   </script>
 
 <div class="flex pt-60 place-content-center place">
+  
   <form class="w-full max-w-lg ">
+    <div class=" flex justify-center mb-6">
+      <h1 class="text-blue-0 text-4xl font-abril">{$t('CREATE POST')}</h1>
+    </div>
+
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
         <label class="block relative overflow-hidden bg-white-1 
@@ -91,7 +97,7 @@
       </label>
       </div>
     </div>
-    <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="flex flex-wrap -mx-3 mb-4">
       <div class="w-full px-3 h-full">
         <label class="block relative overflow-hidden bg-white-1 
         rounded-md border border-gray-200
@@ -157,7 +163,7 @@
       </div>
     </div>
    
-    <div class="flex flex-wrap -mx-3 mb-0 ms-0">
+    <div class="flex flex-wrap -mx-3 mb-2 ms-0">
       <div class=" w-2/5 mb-6">
         <label class="block relative overflow-hidden bg-white-1 
         rounded-md border border-gray-200
@@ -182,7 +188,9 @@
         rounded-md border border-gray-200
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
         focus-within:ring-white-2" for="files">
-          <input class=" transparent peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm text-center block" type="file" id="images" 
+          <input class=" transparent peer bg-white-1 h-8 w-full border-none bg-transparent p-0 
+          placeholder-transparent focus:border-transparent focus:outline-none 
+          focus:ring-0 sm:text-sm text-center block" type="file" id="images" 
           on:change={handleImageUpload} multiple placeholder="Files">
           <span
           class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
@@ -194,17 +202,26 @@
         
       </div>
     </div>
-    <button on:click={handleSubmit} type="button" 
-    class="flex w-full justify-center rounded-md bg-navy-1 
-    px-3 py-1.5 text-sm font-semibold leading-6 
-    text-white shadow-sm  transition duration-100 
-    hover:bg-red-2 focus-visible:outline focus-visible:outline-2 
-    focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-      {#if loading}
-          <img alt="spinner" src="{base}/media/spinner.svg" class="spinner" />
-      {:else}
-          {$t('Submit')} 
-      {/if}
+
+    <button
+      class="flex items-center mx-[136px] w-1/2 
+      rounded-md justify-center group relative 
+       overflow-hidden border border-orange-0
+      px-8 py-3 focus:outline-none focus:ring"
+      type="button" on:click={handleSubmit}
+    >
+      <span
+        class="absolute inset-x-0 bottom-0 h-[2px] 
+        bg-orange-0 transition-all group-hover:h-full 
+        group-active:bg-orange-0"
+      ></span>
+
+      <span
+        class="relative text-sm font-medium 
+        text-orange-0 transition-colors group-hover:text-white"
+      >
+      {$t('Submit')} 
+      </span>
     </button>
   </form>
 </div>

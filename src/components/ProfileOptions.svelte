@@ -3,29 +3,32 @@
   import { clickOutside } from "../services/clickOutside";
   import { authHandlers } from "../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
+  import ru from '../services/ru.json';
+  import en from '../services/en.json';
+  import { currentLanguage } from '../store/store';
+  import { onMount } from 'svelte';
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
 
-    let isOpen = false
+  let isOpen = false
 
 
-    function handleButtonClick(){
-    isOpen = !isOpen
-    }
+  function handleButtonClick(){
+  isOpen = !isOpen
+  }
 
-    function handleClickOutside() {
-    isOpen = false;
-    }  
+  function handleClickOutside() {
+  isOpen = false;
+  }  
 
-    let isDeactivate = false
+  let isDeactivate = false
 
-    function ensureDeactivate(){
-    isDeactivate = !isDeactivate
-    }
+  function ensureDeactivate(){
+  isDeactivate = !isDeactivate
+  }
 
 </script>
 
@@ -117,7 +120,7 @@
               </span>
             </div>
 
-              <div class="absolute z-0 mt-24 
+              <div class="absolute z-0 md:ml-[672px] 
               w-50 h-42 origin-center bg-white-0 
               shadow-lg ring-1 ring-black ring-opacity-5 
               focus:outline-none border-x-4 border-navy-1"

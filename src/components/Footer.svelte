@@ -6,22 +6,19 @@
   import en from '../services/en.json'
   import { base } from '$app/paths';
 
-  onMount(() => {
-    console.log('waiting for the language pick...')
+console.log('before all at footer',$currentLanguage.language)
 
-    if($currentLanguage.language==='ru'){
-            // Загружаем переводы для русского языка
-            addMessages('ru', ru);
-            // Устанавливаем язык по умолчанию
-            locale.set('ru')
-        } else {
-            // Загружаем переводы для русского языка
-            addMessages('en', en);
-            // Устанавливаем язык по умолчанию
-            locale.set('en')
-        }
+  if($currentLanguage.language==='en'){
 
-  })
+addMessages('en', en);
+// Устанавливаем язык по умолчанию
+locale.set('en')
+} else {
+addMessages('ru', ru);
+// Устанавливаем язык по умолчанию
+locale.set('ru')
+} 
+
 
 
   function changeLanguage(){
@@ -43,6 +40,8 @@
 
         // set the value to store
         currentLanguage.set(tempLanguage)
+        console.log('after set at footer',$currentLanguage.language)
+       // location.reload();
     }
 
 </script>
@@ -66,13 +65,13 @@
     
             <a
                 href="tel:+375445785057"
-                class="block text-2xl font-medium text-gray-900 hover:opacity-75 hover:text-blue-0sm:text-3xl"
+                class="block text-2xl font-medium text-red-2 hover:opacity-75 hover:text-blue-0sm:text-3xl"
             >
                 +375445785057
             </a>
             </p>
     
-            <ul class="mt-8 space-y-1 text-sm text-gray-700">
+            <ul class="mt-8 space-y-1 text-sm text-red-2">
             <li>Monday to Friday: 10am - 5pm</li>
             <li>Weekend: 10am - 3pm</li>
             </ul>
@@ -83,7 +82,7 @@
                 href="{base}/"
                 rel="noreferrer"
                 target="_blank"
-                class="text-gray-700 transition hover:opacity-75"
+                class="text-red-2 transition hover:opacity-75"
                 >
                 <span class="sr-only">Facebook</span>
     
@@ -131,7 +130,7 @@
                 href="{base}/"
                 rel="noreferrer"
                 target="_blank"
-                class="text-gray-700 transition hover:opacity-75 hover:text-blue-0"
+                class="text-red-2 transition hover:opacity-75 hover:text-blue-0"
                 >
                 <span class="sr-only">Twitter</span>
     
@@ -183,31 +182,19 @@
                 <ul class="space-y-4 text-sm">
                 <li>
                     <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    1on1 Coaching
+                    Individual sewing and designing
                     </a>
                 </li>
     
                 <li>
                     <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    Company Review
+                    Creative director
                     </a>
                 </li>
     
                 <li>
                     <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    Accounts Review
-                    </a>
-                </li>
-    
-                <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    HR Consulting
-                    </a>
-                </li>
-    
-                <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    SEO Optimisation
+                    Photography
                     </a>
                 </li>
                 </ul>
@@ -220,20 +207,14 @@
             <nav aria-label="Footer Navigation - Company" class="mt-6">
                 <ul class="space-y-4 text-sm">
                 <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    About
+                    <a href="{base}/about" class="text-gray-700 transition hover:opacity-75">
+                        About
                     </a>
                 </li>
     
                 <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    Meet the Team
-                    </a>
-                </li>
-    
-                <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
-                    Accounts Review
+                    <a href="{base}/" class="text-red-2 transition hover:opacity-75">
+                        Accounts Review
                     </a>
                 </li>
                 </ul>
@@ -247,19 +228,19 @@
             <nav aria-label="Footer Navigation - Support">
             <ul class="flex flex-wrap gap-4 text-xs">
                 <li>
-                <a href="{base}/" class="text-gray-500 transition hover:opacity-75">
+                <a href="{base}/" class="text-red-2 transition hover:opacity-75">
                     Terms & Conditions
                 </a>
                 </li>
     
                 <li>
-                <a href="{base}/" class="text-gray-500 transition hover:opacity-75">
+                <a href="{base}/" class="text-red-2 transition hover:opacity-75">
                     Privacy Policy
                 </a>
                 </li>
     
                 <li>
-                <a href="{base}/" class="text-gray-500 transition hover:opacity-75">
+                <a href="{base}/" class="text-red-2 transition hover:opacity-75">
                     Cookies
                 </a>
                 </li>

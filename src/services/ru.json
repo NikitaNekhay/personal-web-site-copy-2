@@ -4,7 +4,7 @@
     "Contact":"Контакты",
         "Currently studies at Innopolis as an exchange student.":"В настоящее время учится в Иннополисе.",
         "email":"почта",
-        "SAY HELLO WITH EMAIL":"Отправить пиьсмо на почту",
+        "SAY HELLO WITH EMAIL":"Отправить письмо на почту",
         "Contacts":"Контакты",
         "instagram":"Инстаграм",
         "telegram":"Телеграм",
@@ -62,7 +62,11 @@
         "NEXT":"ВПЕРЁД",
     "Stat":"Статистика",
     "Shop":"Магазин",
-
+        "Revert":"Назад",
+        "Dismiss popup":"Отклонять всплывающее окно",
+        "Preview":"Превью",
+        "Your product changes have been saved.":"Ваши изменения продукта были сохранены.",
+        "Changes saved":"Изменения сохранены",
     "Logout":"Выйти"
    
 

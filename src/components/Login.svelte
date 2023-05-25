@@ -1,14 +1,15 @@
 <script >
-    import { authHandlers } from "../store/store";
+    import { authHandlers, currentLanguage } from "../store/store";
     import { base } from '$app/paths'
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
+    import en from '../services/en.json'
+    import { onMount } from "svelte";
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
-
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
     let email = "";
     let password ="";
     let rpassword = "";
@@ -56,33 +57,68 @@
 <div class="containerAuth">
     <div class="flex max-h-screen w-2/6">
     </div> 
-    <div class="h-fit w-2/6 table-column">
-        <div class=" h-2/6 justify-center text-center">
-            <h1>{register ? $t('REGISTER') : $t('LOGIN')}</h1>
+    <div class="h-fit w-2/6 table-column mb-6">
+        <div class=" h-2/6 justify-center text-center mb-6">
+            <h1 class="text-blue-0 text-4xl font-abril">{register ? $t('REGISTER') : $t('LOGIN')}</h1>
             {#if errore}
-
-            <div class="containterErrore ">
-                <p class="errore">{$t('The info is incorrect!')}</p>
-            </div>
+            <div class=" flex justify-center my-6">
+                <h1 class=" errore text-4xl font-abril">{$t('The info is incorrect!')}</h1>
+              </div>
             {/if}
         </div>
         <div class="flex h-2/6">
             
-            <form>
-                <div>
-                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{$t('Email address')}</label>
-                    <div class="mt-2">
-                      <input bind:value={email} id="email" name="email" 
-                      type="email" autocomplete="email" 
-                      placeholder="email@mail-service.com" required 
-                      class="block w-full rounded-md border-0 py-1.5 
-                      text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
-                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-                      focus:ring-black-1 sm:text-sm sm:leading-6">
+            <form class="w-full max-w-lg ">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block relative overflow-hidden bg-white-1 
+                        rounded-md border border-gray-200
+                        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+                        focus-within:ring-white-2" for="email">
+                          <input class="peer bg-white-1 h-8 w-full border-none 
+                          bg-transparent p-0 placeholder-transparent 
+                          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                          id="email" name="email" 
+                            type="email" autocomplete="email" 
+                            placeholder="email@mail-service.com" required 
+                          bind:value={email}>
+                          <span
+                          class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                          text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+                          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                          >
+                            {$t('Author Email')} 
+                          </span>
+                        </label>
                     </div>
-                  </div>
+                </div>
             
-                  <div>
+                <div class="flex flex-wrap -mx-3 mb-3">
+                    <div class="w-full px-3">
+                        <label class="block relative overflow-hidden bg-white-1 
+                        rounded-md border border-gray-200
+                        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+                        focus-within:ring-white-2" for="password">
+                          <input class="peer bg-white-1 h-8 w-full border-none 
+                          bg-transparent p-0 placeholder-transparent 
+                          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                          bind:value={password} id="password" 
+                            placeholder="Password" name="password" 
+                            type="password" autocomplete="current-password" 
+                            required
+                          >
+                          <span
+                          class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                          text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+                          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                          >
+                          {$t('Password')} 
+                          </span>
+                        </label>
+                    </div>
+                </div>
+
+                  <!-- <div>
                     <label for="password" class="block text-sm font-medium 
                     leading-6 text-gray-900">
                         {$t('Password')} 
@@ -96,34 +132,56 @@
                       placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
                       focus:ring-black-1 sm:text-sm sm:leading-6">
                     </div>
-                  </div>
+                  </div> -->
 
                 {#if register}
-                    <div>
-                        <label for="password" class="block text-sm font-medium 
-                        leading-6 text-gray-900">
-                            {$t('Repeat Password')} 
-                        </label>
-                        <div class="mt-2">
-                            <input bind:value={rpassword} id="rpassword" 
+
+                <div class="flex flex-wrap -mx-3 mb-3">
+                    <div class="w-full px-3">
+                        <label class="block relative overflow-hidden bg-white-1 
+                        rounded-md border border-gray-200
+                        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+                        focus-within:ring-white-2" for="password">
+                          <input class="peer bg-white-1 h-8 w-full border-none 
+                          bg-transparent p-0 placeholder-transparent 
+                          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                          bind:value={rpassword} id="rpassword" 
                             placeholder="   Repeat password" name="rpassword" 
                             type="rpassword" autocomplete="password" required 
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 
-                            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                            focus:ring-2 focus:ring-inset focus:ring-black-1 sm:text-sm sm:leading-6">
-                        </div>
+                          >
+                          <span
+                          class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                          text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+                          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                          >
+                          {$t('Repeat Password')} 
+                          </span>
+                        </label>
                     </div>
+                </div>
                 {/if}
                 
-                <div>
-                    <button on:click={handleAuthenticate} type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        {#if authenticating}
-                            <img alt="spinner" src="{base}/media/envelop.svg" class="spinner" />
-                        {:else}
-                            {$t('Submit')} 
-                        {/if}
-                    </button>
-                  </div>
+
+                <button
+                class="flex items-center mx-[98px] w-1/2 
+                rounded-md justify-center group relative 
+                 overflow-hidden border border-orange-0
+                px-8 py-3 focus:outline-none focus:ring"
+                on:click={handleAuthenticate} type="button"
+                >
+                <span
+                  class="absolute inset-x-0 bottom-0 h-[2px] 
+                  bg-orange-0 transition-all group-hover:h-full 
+                  group-active:bg-orange-0"
+                ></span>
+          
+                <span
+                  class="relative text-sm font-medium 
+                  text-orange-0 transition-colors group-hover:text-white"
+                >
+                {$t('Submit')} 
+                </span>
+              </button>
                 
             </form>
            
@@ -133,12 +191,12 @@
                 {#if register}
                     <div> 
                         <p>{$t('Already have an account?')} </p> 
-                        <p on:click={handleRegister} on:keydown={() => {}}>{$t('Login')}</p>
+                        <p class=" font-anonymous text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-100 via-red-00 to-yellow-100 transition hover:opacity-25 hover:text-red-0" on:click={handleRegister} on:keydown={() => {}}>{$t('Login')}</p>
                     </div> 
                 {:else}
                     <div> 
                         <p>{$t("Don't have an account?")} </p> 
-                        <p on:click={handleRegister} on:keydown={() => {}}>{$t('Register')} </p>
+                        <p class=" font-anonymous text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-100 via-red-00 to-yellow-100 transition hover:opacity-25 hover:text-red-0" on:click={handleRegister} on:keydown={() => {}}>{$t('Register')} </p>
                     </div> 
                 {/if}
             </div>

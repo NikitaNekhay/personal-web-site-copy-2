@@ -4,18 +4,19 @@
   import { getUserProfile, updateUserProfile} from '../routes/profile/user';
   import type { User } from 'firebase/auth';
   import { auth , db} from "../lib/firebase/firebase";
-  import {authHandlers, authStore } from "../store/store";
+  import {authHandlers, authStore, currentLanguage } from "../store/store";
   import { base } from '$app/paths';
   import { clickOutside } from '../services/clickOutside';
   import ProfileOptions from './ProfileOptions.svelte';
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../services/ru.json';
   import ProfileEditDone from './ProfileEditDone.svelte';
+  import en from '../services/en.json';
 
   // Загружаем переводы для русского языка
-  addMessages('ru', ru);
+  addMessages('en', en);
   // Устанавливаем язык по умолчанию
-  locale.set('ru')
+  locale.set('en')
 
   let loading = false
 
@@ -27,15 +28,49 @@
       description:'',
       messages: [],
   };
+
+  // let tempAuthStore = {
+  //   user: null || User,
+  //   loading: true,
+  //   data: {
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     country: "",
+  //     description: "",
+  //     messages:[],
+  //   },
+  // }
+
+  // let tempAuthStore = {}
+
   // setContext('profile', profile);
   onMount(() => {
+
     console.log("updating profile...")  
     loading = false
     console.log("authStore in prfile.svelte before everything",$authStore.data);
+
+//   const unsubscribe = auth.onAuthStateChanged(async (user) => {
+//     if (user) 
+//       tempAuthStore = await getUserProfile(user);
+//       updateUserProfile(
+//         tempAuthStore.user,
+//         tempAuthStore.data.name,
+//         tempAuthStore.data.email,
+//         tempAuthStore.data.phone,
+//         tempAuthStore.data.country,
+//         tempAuthStore.data.description,
+//         tempAuthStore.data.messages
+//         );
+//  })
+
+
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
         let Ready_profile = await getUserProfile(user);
         if (user) {
-          if (!$authStore.data.name && !$authStore.data.email) {
+          console.log($authStore.data)
+          if (!$authStore.data) {
           // Restore profileValue from user profile data
           profileValue.name = Ready_profile.name;
           profileValue.email = Ready_profile.email;
@@ -69,13 +104,14 @@
         console.log("no user in Profile.svelte");
       }
     })
-    return unsubscribe
+     return unsubscribe
   })
 
 
   async function handleSubmit(event) {
     event.preventDefault();
     const user = auth.currentUser;
+
     console.log("authStore in prfile.svelte before handling",$authStore.data);
     try {
       await updateUserProfile(
@@ -86,6 +122,13 @@
         profileValue.country,
         profileValue.description,
         profileValue.messages
+        // tempAuthStore.user,
+        // tempAuthStore.data.name,
+        // tempAuthStore.data.email,
+        // tempAuthStore.data.phone,
+        // tempAuthStore.data.country,
+        // tempAuthStore.data.description,
+        // tempAuthStore.data.messages
       ).then(() => {
         console.log("Profile updated successfully.");
       })
@@ -97,7 +140,7 @@
       console.log("after submit",loading)
       //window.location.href = `${base}/profile/edit/`
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
     console.log("authStore in prfile.svelte after handling",$authStore.data);
   }
@@ -110,77 +153,166 @@
 
   {#if loading}
     <ProfileEditDone />
-  {:else}
-      WAITING
   {/if}
+
 
     <ProfileOptions/>
 
-    <!-- <form class="mx-auto mt-16 max-w-xl sm:mt-20" on:submit|preventDefault={startMath}> -->
-      <form class="mx-auto mt-16 max-w-xl sm:mt-20" on:submit|preventDefault={handleSubmit}>
-      <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-        <div>
-          <label for="first-name" class="block text-sm font-semibold leading-6 text-gray-900">{$t('User name')} </label>
-          <div class="mt-2.5">
-            <input type="text" bind:value={profileValue.name} required id="name" 
-            autocomplete="given-name" class="block w-full rounded-md 
-            border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset 
-            ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-            focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          </div>
+    <div class="flex mt-40 place-content-center place">
+  
+      <form class="w-full max-w-lg ">
+        <div class=" flex justify-center mb-6">
+          <h1 class="text-blue-0 text-4xl font-abril">{$t('EDIT PROFILE')}</h1>
         </div>
-        <div class="sm:col-span-2">
-          <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">{$t('Email')} </label>
-          <div class="mt-2.5">
-            <input type="email" bind:value={profileValue.email} required id="email" 
-            autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2
-             text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-             focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="phone-number" class="block text-sm font-semibold leading-6 text-gray-900">{$t('Phone number')} </label>
-          <div class="relative mt-2.5">
-            <input type="tel" bind:value={profileValue.phone} id="phone" 
-            required autocomplete="tel" class="block w-full rounded-md 
-            border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset 
-            ring-gray-300 placeholder:text-gray-400 focus:ring-2 
-            focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-          </div>
-        </div>
-        <div>
-          <label class="block font-bold">{$t('Country')} </label>
-          <select class="w-full p-2 border rounded" id="country" bind:value={profileValue.country} required>
-            <option value="">-- {$t('Select Country')}  --</option>
-            <option value="Russia">Russia</option>
-            <option value="Europe">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="South America">South America</option>
-            <option value="North America">North America</option>
-            <option value="Australia">Africa</option>
-            <option value="Australia">Australia</option>
-            <option value="Antarctic">Antarctic</option>
-            <!-- Add more countries as needed -->
-          </select>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="message" class="block text-sm font-semibold leading-6 text-gray-900">
-            {$t('Short description about you')} 
+    
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3">
+            <label class="block relative overflow-hidden bg-white-1 
+            rounded-md border border-gray-200
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+            focus-within:ring-white-2" for="first-name">
+            <input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent 
+            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+            type="text" bind:value={ profileValue.name} required id="name" 
+            autocomplete="given-name">
+            <span
+              class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+              text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            >
+            {$t('User name')}
+            </span>
           </label>
-          <div class="mt-2.5">
-            <textarea bind:value={profileValue.description} id="description" 
-            rows="4" class="block w-full rounded-md border-0 px-3.5 py-2 
-            text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
-            placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-            focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-          </div> 
+          </div>
         </div>
-      </div>
-      <div class="mt-10">
+        <div class="flex flex-wrap -mx-3 mb-4">
+          <div class="w-full px-3 h-full">
+            <label class="block relative overflow-hidden bg-white-1 
+            rounded-md border border-gray-200
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+            focus-within:ring-white-2" for="description">
+              <input class="peer bg-white-1 h-8 w-full border-none 
+              bg-transparent p-0 placeholder-transparent 
+              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+              bind:value={ profileValue.description} id="description" placeholder="Description">
+              <span
+              class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+              text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+              {$t('Short description about you')} 
+              </span>
+            </label>
+            <p class="text-gray-600 text-xs italic mt-3">
+              {$t("Don't hesitate write as much as you want")} 
+            </p>
+          </div>
+        </div>
+    
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3">
+            <label class="block relative overflow-hidden bg-white-1 
+            rounded-md border border-gray-200
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+            focus-within:ring-white-2" for="email">
+              <input class="peer bg-white-1 h-8 w-full border-none 
+              bg-transparent p-0 placeholder-transparent 
+              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+              type="email" bind:value={ profileValue.email} required id="email" 
+              autocomplete="email" placeholder="email@web.net">
+              <span
+              class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+              text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+              {$t('Email')}
+              </span>
+            </label>
+          </div>
+        </div>
 
-        <button on:click={handleSubmit} type="button" class="flex w-full justify-center rounded-md bg-navy-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition duration-100 hover:bg-red-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class=" w-1/2 px-3">
+              <label class="block relative overflow-hidden bg-white-1 
+              rounded-md border border-gray-200
+              px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+              focus-within:ring-white-2" for="phone-number">
+                <input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent 
+                focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                type="tel" bind:value={ profileValue.phone} id="phone" 
+                required autocomplete="tel">
+                <span
+                  class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                  text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                >
+                  {$t('Phone number')}
+              </span>
+              </label>
+            </div>
+            <div class="w-1/2 px-3">
+              <label class="block relative overflow-hidden bg-white-1 
+              rounded-md border border-gray-200
+              px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+              focus-within:ring-white-2" for="first-name">
+              <select class=" peer bg-white-1 h-[34px] w-full border-none bg-transparent p-0 placeholder-transparent 
+              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              id="country" bind:value={ profileValue.country} required>
+                <option value="">-- {$t('Select Country')}  --</option>
+                <option value="Russia">Russia</option>
+                <option value="Europe">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="South America">South America</option>
+                <option value="North America">North America</option>
+                <option value="Australia">Africa</option>
+                <option value="Australia">Australia</option>
+                <option value="Antarctic">Antarctic</option>
+              
+              </select>
+              <span
+                class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
+                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+              {$t('Country')}
+              </span>
+            </label>
+          </div>
+        </div>
+
+
+          
+     
+
+        
+    
+        <button
+          class="flex items-center mx-[136px] w-1/2 
+          rounded-md justify-center group relative 
+           overflow-hidden border border-orange-0
+          px-8 py-3 focus:outline-none focus:ring"
+          type="button" on:click={handleSubmit}
+        >
+          <span
+            class="absolute inset-x-0 bottom-0 h-[2px] 
+            bg-orange-0 transition-all group-hover:h-full 
+            group-active:bg-orange-0"
+          ></span>
+    
+          <span
+            class="relative text-sm font-medium 
+            text-orange-0 transition-colors group-hover:text-white"
+          >
           {$t('Submit')} 
+          </span>
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
+    
+
+    
+
+
+
+
   </div>

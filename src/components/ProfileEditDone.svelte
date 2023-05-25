@@ -1,6 +1,16 @@
 <script>
-
+  import { addMessages, locale, t } from 'svelte-i18n';
+  import ru from '../services/ru.json';
+  import ProfileEditDone from './ProfileEditDone.svelte';
+  import en from '../services/en.json';
   import { base } from "$app/paths";
+  import { currentLanguage } from '../store/store';
+  import { onMount } from 'svelte';
+
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
 
 </script>
 <div
@@ -26,10 +36,10 @@
     </span>
 
     <div class="flex-1">
-      <strong class="block font-medium text-gray-900"> Changes saved </strong>
+      <strong class="block font-medium text-gray-900"> {$t('Changes saved')} </strong>
 
       <p class="mt-1 text-sm text-gray-700">
-        Your product changes have been saved.
+        {$t('Your product changes have been saved.')}
       </p>
 
       <div class="mt-4 flex gap-2">
@@ -37,7 +47,7 @@
           href="{base}/profile"
           class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0"
         >
-          <span class="text-sm"> Preview </span>
+          <span class="text-sm"> {$t('Preview')} </span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,13 +68,13 @@
         <button
           class="block rounded-lg px-4 py-2 text-gray-700 transition hover:bg-gray-100"
         >
-          <span class="text-sm">Revert</span>
+          <span class="text-sm">{$t('Revert')}</span>
         </button>
       </div>
     </div>
 
     <button class="text-gray-500 transition hover:text-gray-600">
-      <span class="sr-only">Dismiss popup</span>
+      <span class="sr-only">{$t('Dismiss popup')}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

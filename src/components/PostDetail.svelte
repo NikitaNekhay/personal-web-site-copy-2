@@ -3,17 +3,18 @@
     import { getBlogPost } from '../routes/posts/post';
     import { navigate, useLocation } from 'svelte-routing';
     import { page } from '$app/stores';
-    import { authStore } from '../store/store';
+    import { authStore, currentLanguage } from '../store/store';
     import { getUserProfile } from '../routes/profile/user';
     import { base } from '$app/paths';
     import { writable } from 'svelte/store';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
+    import en from '../services/en.json'
 
-    // Загружаем переводы для русского языка
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
+          // Загружаем переводы для русского языка
+          addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
     
     let post ={};
     const { id } = $page.params

@@ -31,30 +31,30 @@ export async function updateUserProfile(user:User, name: string, email: string, 
       };
       console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
       // Update authStore to reflect changes in the user profile
-      authStore.update((store) => {
-        store.user = user
-        store.loading = true
-        store.data.email = updatedUserData.email
-        store.data.country = updatedUserData.country
-        store.data.name = updatedUserData.name
-        store.data.email = updatedUserData.email
-        store.data.phone = updatedUserData.phone
-        store.data.country = updatedUserData.country
-        store.data.description = updatedUserData.description
-        console.log("this is the store:",store)
-        return {
-          user: user,
-          loading: true,
-          data: {
-            ...store.data,
-            name: updatedUserData.name,
-            email: updatedUserData.email,
-            phone: updatedUserData.phone,
-            country: updatedUserData.country,
-            description: updatedUserData.description,
-          },
-        };
-      });
+      // authStore.update((store) => {
+      //   store.user = user
+      //   store.loading = true
+      //   store.data.email = updatedUserData.email
+      //   store.data.country = updatedUserData.country
+      //   store.data.name = updatedUserData.name
+      //   store.data.email = updatedUserData.email
+      //   store.data.phone = updatedUserData.phone
+      //   store.data.country = updatedUserData.country
+      //   store.data.description = updatedUserData.description
+      //   console.log("this is the store:",store)
+      //   return {
+      //     user: user,
+      //     loading: true,
+      //     data: {
+      //       ...store.data,
+      //       name: updatedUserData.name,
+      //       email: updatedUserData.email,
+      //       phone: updatedUserData.phone,
+      //       country: updatedUserData.country,
+      //       description: updatedUserData.description,
+      //     },
+      //   };
+      // });
       // Update user document
       transaction.update(userDocRef, updatedUserData);
 
@@ -144,6 +144,9 @@ export async function getUserProfile(user:User){
     console.log(user.uid)
     const userDoc = doc(collection(db, "user"), user.uid);
     const userSnapshot = await getDoc(userDoc);
+
+    const userData = userSnapshot.data() // added reling to post.ts
+    authStore?.set(userData) // added reling to post.ts : all other data is missing for complete setting
     return userSnapshot.exists() ? userSnapshot.data() : null;
   } catch (error) {
     console.error('Error fetching user:', error);

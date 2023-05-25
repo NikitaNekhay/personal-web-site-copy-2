@@ -7,13 +7,14 @@
     import { blogPost, currentLanguage } from '../store/store';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
+    import en from '../services/en.json'
     import { goto } from '$app/navigation';
     
-  
-          addMessages('ru', ru);
-        // Устанавливаем язык по умолчанию
-        locale.set('ru')
-  
+              // Загружаем переводы для русского языка
+              addMessages('en', en);
+          // Устанавливаем язык по умолчанию
+          locale.set('en')
+
     // use Firestore's onSnapshot method to listen for changes
     // in the blogs collection and update the page in 
     // real-time whenever a new blog is added, edited, or deleted.
@@ -21,21 +22,12 @@
     let blogPosts = [];
   
     onMount(async () => {
-    // Fetch blog posts from the database
-    blogPosts = await getBlogPosts();
-    console.log(blogPosts)
     
-    // if($currentLanguage.language==='ru'){
-    //     // Загружаем переводы для русского языка
-    //     addMessages('ru', ru);
-    //     // Устанавливаем язык по умолчанию
-    //     locale.set('ru')
-    // } else {
-    //     // Загружаем переводы для русского языка
-    //     addMessages('en', en);
-    //     // Устанавливаем язык по умолчанию
-    //     locale.set('en')
-    // }
+      // Fetch blog posts from the database
+      console.log('Fetching blog posts from the database...')
+      blogPosts = await getBlogPosts();
+      console.log(blogPosts)
+      
   
     });
   

@@ -2,24 +2,29 @@
   import { base } from "$app/paths";
   import { getContext, onMount } from "svelte";
   import { clickOutside } from "../services/clickOutside";
-  import { authHandlers, authStore } from "../store/store";
+  import { authHandlers, authStore, currentLanguage } from "../store/store";
   import { auth } from "$lib/firebase/firebase";
   import { getUserProfile } from "../routes/profile/user";
   import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-   // import isAdmin from "../components/Navbar.svelte"
-    import en from '../services/en.json'
-
-addMessages('en', en);
-//  Устанавливаем язык по умолчанию
-locale.set('en')
-    // // Загружаем переводы для русского языка
-    // addMessages('ru', ru);
-    // // Устанавливаем язык по умолчанию
-    // locale.set('ru')
+  import ru from '../services/ru.json';
+  // import isAdmin from "../components/Navbar.svelte"
+  import en from '../services/en.json'
 
   export let isOpen = false
-  
+  console.log('before all at menu',$currentLanguage.language)
+  onMount(()=>{
+    if($currentLanguage.language==='en'){
+
+    addMessages('en', en);
+    // Устанавливаем язык по умолчанию
+    locale.set('en')
+    } else {
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
+    }
+  })
+
   let isAdmin=false
 
   function handleClickOutside() {
@@ -33,6 +38,7 @@ locale.set('en')
   let name = 'Mister';
 
     onMount(() => {
+
         console.log("getting the name of profile...")
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
                 //console.log(user)

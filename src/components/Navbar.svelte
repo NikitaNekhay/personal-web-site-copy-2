@@ -10,13 +10,18 @@
     import { readable } from 'svelte/store';
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
-
     import en from '../services/en.json'
-
+    console.log('before all at navbar',$currentLanguage.language)
+    if($currentLanguage.language==='en'){
 
     addMessages('en', en);
-    //  Устанавливаем язык по умолчанию
+    // Устанавливаем язык по умолчанию
     locale.set('en')
+    } else {
+    addMessages('ru', ru);
+    // Устанавливаем язык по умолчанию
+    locale.set('ru')
+    } 
 
     export let isAdmin = false
     export let loginState = false
@@ -27,6 +32,8 @@
 
     try {
         onMount(() => {
+
+    
             console.log('Mounting')
 
             const unsubscribe = auth.onAuthStateChanged(async (user) => {

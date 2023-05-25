@@ -84,7 +84,8 @@ export async function getBlogPost(id:string){
         };
         // set the value to store
         blogPost.set(updatedData)
-        return postSnapshot.data();
+        /// return postSnapshot.data(); // работало заебись, но рещил соотнести с неработающей частью профиля юзера
+        return postSnapshot.exists() ? postSnapshot.data() : null;
       } else {
         return null;
       }
