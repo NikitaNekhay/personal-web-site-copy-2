@@ -2,6 +2,7 @@
     import { base } from '$app/paths'
     import { db } from '$lib/firebase/firebase';
     import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+    export const ssr = false;
     //import {statisticsStore} from "../store/store"
     //async function createStatisticsCollection() {
         // try {
