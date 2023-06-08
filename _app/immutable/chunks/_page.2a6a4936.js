@@ -1,1 +1,0 @@
-import{b as e}from"./post.20967798.js";async function a({params:t}){const o=await e(t.id);return console.log(o),{post:o}}const n=Object.freeze(Object.defineProperty({__proto__:null,load:a},Symbol.toStringTag,{value:"Module"}));export{n as _,a as l};
