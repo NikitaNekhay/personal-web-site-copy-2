@@ -29,7 +29,7 @@
   //       locale.set(Language.English)
   //   }
 
-    export let post = $page.params
+    export let post
 
     let tempPost = post
 

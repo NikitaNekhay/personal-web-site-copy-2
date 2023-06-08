@@ -10,8 +10,8 @@
   import en from '../services/en.json';
   import { Language } from '../store/store';
 
-    
-    export let post = $page.params
+    export let post
+    //export let post = $page.params
     console.log(post)
     let isLoading = true; // Initialize the loading state
     
