@@ -43,8 +43,23 @@ let routes = {
 
 <!-- <Router {routes} /> -->
 
-{#if isAdmin}
+<!-- {#if isAdmin}
+  <PostList />
+{:else}
+  <Gallery />
+{/if} -->
+
+<Router>
+  <Route path={`${base}/posts`} />
+  {#if isAdmin}
   <PostList />
 {:else}
   <Gallery />
 {/if}
+
+    <Route path={`${base}/posts/:id`}   /> 
+    <Route path={`${base}/posts/:id/edit`}   /> 
+</Router>
+ 
+
+
