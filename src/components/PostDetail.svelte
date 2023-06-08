@@ -11,9 +11,8 @@
   import { Language } from '../store/store';
 
     
-    export let post = {};
+    export let post = $page.params
     console.log(post)
-    const { id } = post.id
     let isLoading = true; // Initialize the loading state
     
     onMount(async () => {

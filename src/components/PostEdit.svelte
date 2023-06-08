@@ -29,23 +29,23 @@
   //       locale.set(Language.English)
   //   }
 
+    export let post = $page.params
 
-
-    let tempPost = {}
+    let tempPost = post
 
     let handleSubmitFlag = false
-    try {
-      const { id } = $page.params
-      console.log(id)
+    // try {
+    //   const { id } = $page.params
+    //   console.log(id)
 
-      onMount(async () => {
-      // Fetch the blog post details
-      tempPost = await getBlogPost(id);
-      console.log(tempPost)
-    }); 
-    } catch (error) {
-      console.log("error while getting id of a post", error)
-    }
+    //   onMount(async () => {
+    //   // Fetch the blog post details
+    //   tempPost = await getBlogPost(id);
+    //   console.log(tempPost)
+    // }); 
+    // } catch (error) {
+    //   console.log("error while getting id of a post", error)
+    // }
    
 
     async function handleSubmit(event) {

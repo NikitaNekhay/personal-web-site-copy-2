@@ -12,30 +12,15 @@
     import { page } from '$app/stores';
   import { blogPost } from '../../../../store/store';
   
-    let post = {}; // Define and initialize the `post` variable
-    let isLoading = true; // Initialize the loading state
-    
-    const loadPost = async () => {
-      try {
-        const id = $page.params.id
-        console.log(id)
-        if(id){
-          post = await getBlogPost(id); // Fetch the blog post details
-         
-          isLoading = false; // Set the loading state to false once data is loadeds
-          console.log("loading state:", isLoading)
-          console.log("this is fucking post prop", post)
-        } else {
-          console.log("id is not exists on page.params!")
-        }
-       
-      } catch (error) {
-        console.log("error while loadPost",error)
-      }
-        
-    };
 
-    loadPost(); // Call the `loadPost` function with the route parameters to fetch the data
+    let isLoading = true; // Initialize the loading state
+
+    export let data
+    if(data.post!==undefined){
+      isLoading=false
+    } 
+
+
 
   </script>
   
@@ -45,7 +30,7 @@
     {#if isLoading}
       LOADING
     {:else}
-      <PostEdit {post} /> 
+      <PostEdit post={data.post} /> 
     {/if}
   </Route>
 </Router>
