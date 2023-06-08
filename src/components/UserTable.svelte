@@ -1,7 +1,7 @@
 <script lang="ts">
       import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
-  import { getUserProfiles, handleDelete } from '../routes/profile/user';
+  import { getUserProfiles, handleDelete, updateUserProfile } from '../routes/profile/user';
   import { base } from '$app/paths';
   import { authHandlers } from '../store/store';
   import { collection, deleteDoc, doc } from 'firebase/firestore';
@@ -10,26 +10,44 @@
   let userProfiles = [];
   let l_userProfiles = 0
   let latestProfiles = [];
-  let l_latestProfiles = 0
-  var nextPage_flag = false
+
+
   onMount(async () => {
   
     // Fetch blog posts from the database
     console.log('Fetching blog posts from the database...')
     userProfiles = await getUserProfiles();
     l_userProfiles = userProfiles.length
-    //console.log(userProfiles)
-    // if(latestProfiles.length==0)
-    //   nextPairs(userProfiles[0],0)
-
-   
 
   });
 
-  function handleEdit(id:string) {
-  // Navigate to the edit page of the selected blog post
-  window.location.href = `${base}/profile/${id}/edit`;
+  async function handleSubmit(curentUser) {
+    // event.preventDefault();
+    try {
+      await updateUserProfile(
+        userProfiles[userProfiles.indexOf(curentUser)].id,
+        userProfiles[userProfiles.indexOf(curentUser)].name,
+        userProfiles[userProfiles.indexOf(curentUser)].email,
+        userProfiles[userProfiles.indexOf(curentUser)].phone,
+        userProfiles[userProfiles.indexOf(curentUser)].country,
+        userProfiles[userProfiles.indexOf(curentUser)].description,
+        userProfiles[userProfiles.indexOf(curentUser)].messages
+
+      ).then(() => {
+        console.log("Profile updated successfully.");
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error.message);
+      });
+      
+      //window.location.href = `${base}/profile/edit/`
+    } catch (error) {
+      console.error(error);
+    }
+  
   }
+
+  
 
   let isDeactivate = false
 
@@ -85,29 +103,34 @@
 
   function nextPairs(lastElement,lastElement_index){
     let borderNumber = 4
-    //console.log("border",borderNumber)
-    //console.log(latestProfiles)
+    console.log(lastElement_index)
+    console.log(latestProfiles)
     if(latestProfiles.length>=4){
       latestProfiles.length = 0
     }
-      if(userProfiles.length>4){
-        borderNumber = borderNumber - (lastElement_index%4)
-      //  console.log("border",borderNumber)
-      } else {
-        if(lastElement_index!==0)
-          borderNumber = lastElement_index%4
-        else
-          borderNumber = userProfiles.length
-          
-      }
-      //console.log("border",borderNumber)
+
+    if(userProfiles.length-lastElement_index%4 !== 0 && userProfiles.length-lastElement_index<=4){
+      borderNumber = userProfiles.length-lastElement_index
+    } else if(userProfiles.length>4) {
+      borderNumber = borderNumber - (lastElement_index%4)
+    } else {
+      if(lastElement_index!==0)
+        borderNumber = lastElement_index%4
+      else
+        borderNumber = userProfiles.length
+    }
+    console.log(borderNumber)
       var i = 0
-      for(var j = lastElement_index; i<=borderNumber;j++){
+      for(var j = lastElement_index; i<borderNumber;j++){
         i=0
-        if(j%4===0 && j!==lastElement_index){
+        if(j%4===0 && j!==lastElement_index ){
           break
         } else {
-          l_latestProfiles = latestProfiles.push(userProfiles[j])
+          if(userProfiles[j]===undefined){
+            break
+          }
+          latestProfiles.push(userProfiles[j])
+          console.log(latestProfiles.length)
           i++
         }
       }
@@ -186,15 +209,28 @@
               
    
                   <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <div class="flex items-center">
-
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {user.name}
-                            </p>
-                          </div>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                      <div class="flex mt-4">
+                        <div class="flex flex-wrap -mx-3 mb-6 place-content-center place">
+                          <div class="w-full px-3">
+                            <label class="block relative overflow-hidden 
+                            rounded-md border border-transparent
+                            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+                            focus-within:ring-white-2" for="first-name">
+                            <input class="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent 
+                            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                            type="text" bind:value={user.name} required id="name" 
+                            autocomplete="given-name">
+                              <span
+                                class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                                text-xs text-gray-900 whitespace-no-wrap transition-all peer-placeholder-shown:top-1/2 
+                                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                              >
+                              {$t('Enter the name')}
+                            </span>
+                          </label>
                         </div>
+                      </div>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p class="text-gray-900 whitespace-no-wrap">
@@ -206,14 +242,27 @@
                       </p>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <div class="flex items-center">
-
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {user.email}
-                            </p>
-                          </div>
+                      <div class="flex mt-4">
+                        <div class="flex flex-wrap -mx-3 mb-6 place-content-center place">
+                          <div class="w-full px-3">
+                            <label class="block relative overflow-hidden 
+                            rounded-md border border-transparent
+                            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 
+                            focus-within:ring-white-2" for="first-name">
+                            <input class="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent 
+                            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" 
+                            type="text" bind:value={user.email} required id="email" 
+                            autocomplete="given-name">
+                              <span
+                                class=" cursor-text absolute start-3 top-3 -translate-y-1/2 
+                                text-xs text-gray-900 whitespace-no-wrap transition-all peer-placeholder-shown:top-1/2 
+                                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                              >
+                              {$t('Enter email')}
+                            </span>
+                          </label>
                         </div>
+                      </div>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p class="text-gray-900 whitespace-no-wrap">
@@ -240,7 +289,7 @@
                           <div
                           class="group relative inline-block text-sm font-medium text-black-1 
                           focus:outline-none focus:ring active:text-black-1 hover:cursor-pointer"
-                          on:click={() => handleEdit(user.id)} on:keypress={() => handleEdit(user.id)} 
+                          on:click={() => handleSubmit(user)} on:keypress={() => handleSubmit(user)} 
                           id="menu-button" aria-expanded="true" aria-haspopup="true"
                           >
                             <span
@@ -274,7 +323,6 @@
                     </td>
                     
                   </tr>
-
                   {/each}
                 {:else}
                 <div class="grid h-screen px-4 bg-white place-content-center">
@@ -310,6 +358,7 @@
           </div>
         </div>
       </div>
+      
 	</div>
 
    

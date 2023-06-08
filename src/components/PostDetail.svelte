@@ -11,19 +11,20 @@
   import { Language } from '../store/store';
 
     
-    let post ={};
-    const { id } = $page.params
+    export let post = {};
+    console.log(post)
+    const { id } = post.id
     let isLoading = true; // Initialize the loading state
     
     onMount(async () => {
       // Fetch the blog post details
-      try {
-        post = await getBlogPost(id);
-        console.log(post)
-        isLoading = false; // Set the loading state to false once data is loaded
-      } catch (error) {
-        console.log("error fetching the blog post with id:", id)
-      }
+      // try {
+      //   post = await getBlogPost(id);
+      //   console.log(post)
+      //   isLoading = false; // Set the loading state to false once data is loaded
+      // } catch (error) {
+      //   console.log("error fetching the blog post with id:", id)
+      // }
      
     }); 
   

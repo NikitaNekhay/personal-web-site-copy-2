@@ -12,31 +12,22 @@
   import { page } from '$app/stores';
   import { blogPost } from '../../../store/store';
   import PostEdit from '../../../components/PostEdit.svelte';
-  
-    let post = {}; // Define and initialize the `post` variable
-    let isLoading = true; // Initialize the loading state
-    
-    const loadPost = async () => {
-      try {
-        const id  = $page.params.id
-        console.log(id)
-        if(id){
-          post = await getBlogPost(id); // Fetch the blog post details
-          isLoading = false; // Set the loading state to false once data is loadeds
-        } else {
-          console.log("id is not exists on page params")
-        }
-      } catch (error) {
-        console.log("error while loadPost",error)
-      }
-        
-    };
+  import { onMount } from 'svelte';
 
-    loadPost(); // Call the `loadPost` function with the route parameters to fetch the data
+  let isLoading = true
 
+  export let data
+  if(data.post!==undefined){
+    isLoading=false
+  } 
+  console.log('entered +page.svelte',data.post)
+
+    // Define and initialize the `post` variable
     
   </script>
   
+
+
   <Router>
 
     <Route path={`${base}/posts/:id`} let:params>
@@ -44,11 +35,8 @@
           LOADING
 
         {:else}
-        <PostDetail {post} /> 
+          <PostDetail post={data.post} />
         {/if}
     </Route>
 
-    <!-- <Route path={`${base}/posts/:id/edit`} let:params>
-      <PostEdit {params} />
-    </Route> -->
   </Router>

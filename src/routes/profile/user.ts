@@ -1,12 +1,17 @@
 import type { User } from 'firebase/auth';
 import { db } from '../../lib/firebase/firebase';
-import { collection, doc, getDoc, updateDoc,runTransaction, query, getDocs} from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc,runTransaction, query, getDocs, deleteDoc} from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { auth } from "$lib/firebase/firebase";
 
-export async function updateUserProfile(user:User, name: string, email: string, phone: string, country: string, description: string,messages:[]) {
+export async function updateUserProfile(user:User|string, name: string, email: string, phone: string, country: string, description: string,messages:[]) {
   try{
-    const userDocRef = doc(collection(db, "user"), user.uid);
+    let userDocRef
+    console.log(typeof user)
+    if(typeof user !== 'string')
+      userDocRef = doc(collection(db, "user"), user.uid);
+    else
+      userDocRef = doc(collection(db, "user"), user);
     await runTransaction(db, async (transaction) => {
       const userDoc = await transaction.get(userDocRef);
       console.log("userDoc is existing?",userDoc)
@@ -232,9 +237,13 @@ export async function handleDelete(id:string){
   try {
       const postDocRef = doc(collection(db, 'user'), id);
       await deleteDoc(postDocRef);
-      console.log('Blog post deleted:', id);
+      console.log('user is deleted:', id);
   } catch (error) {
       console.error('Error deleting blog post:', error);
   }
+  setTimeout(() => {
+    // Calculate and set the new scroll position based on the previous percentage
+    location.reload();
+  }, 500);
 }
 

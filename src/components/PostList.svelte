@@ -9,6 +9,7 @@
   import ru from '../services/ru.json';
   import en from '../services/en.json'
   import { goto } from '$app/navigation';
+  import PostDetail from './PostDetail.svelte';
 
 
 
@@ -31,8 +32,8 @@
   console.log(id)
   $blogPost.id = id
   console.log($blogPost.id)
-  //goto(`${base}/posts/${id}`);
-  window.location.href = `${base}/posts/${id}/`;
+  goto(`${base}/posts/${id}`);
+  //window.location.href = `${base}/posts/${id}/`;
   }
 
   function handleEdit(id:string) {
