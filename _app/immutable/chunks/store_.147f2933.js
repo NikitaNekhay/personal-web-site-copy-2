@@ -1,0 +1,1 @@
+import{w as r}from"./index.b6807587.js";import{L as g}from"./store.842acd05.js";const u=(e,o)=>{if(typeof window<"u"){const t=localStorage.getItem(e);console.log(t);const a=t??o;console.log(a);const n=r(a,()=>n.subscribe(s=>{localStorage.setItem(e,s)}));return n}},c={language:g.English};let m=u("language",c.language);export{m as c};
