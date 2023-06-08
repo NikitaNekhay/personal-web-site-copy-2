@@ -7,10 +7,6 @@
   import { currentLanguage } from '../store/store';
   import { onMount } from 'svelte';
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
 
 </script>
 <div

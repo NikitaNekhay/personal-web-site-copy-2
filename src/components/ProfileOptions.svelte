@@ -8,10 +8,6 @@
   import { currentLanguage } from '../store/store';
   import { onMount } from 'svelte';
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
 
   let isOpen = false
 
@@ -130,19 +126,18 @@
               >
                   <div class="py-1" role="none" use:clickOutside on:click_outside={handleClickOutside}>
                     <div class="p-2 border-1 shadow-white-2 shadow text-left">
-                      <a href="{base}/profile" class="group text-gray-700 flex px-4 py-2 text-sm 
+                       <a href="{base}/profile" class="group text-gray-700 flex px-4 py-2 text-sm 
                       transition duration-100" 
                       role="menuitem" tabindex="-1" id="menu-item-0">
                           <img class="mr-2 group-hover:text-yellow-0" src="{base}/media/user.svg" alt="user icon">
                           <p class="self-center group-hover:text-yellow-0">{$t('View')}</p>
-                      </a>
-                      <a href="{base}/profile/edit" class="flex text-gray-700 px-4 py-2 text-sm 
+                      </a> 
+                       <a href="{base}/profile/edit" class="flex text-gray-700 px-4 py-2 text-sm 
                       transition duration-100 group" 
                       role="menuitem" tabindex="-1" id="menu-item-0">
-                      <!-- EDIT ICON -->
                         <img class="mr-2 group-hover:text-yellow-0 stroke-current" src="{base}/media/user-edit.svg" alt="user edit icon">
                         <p class="self-center group-hover:text-yellow-0">{$t('Edit')}</p>
-                      </a>
+                      </a> 
                     </div>
                     <div class="p-2">
                       <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="cursor-pointer 

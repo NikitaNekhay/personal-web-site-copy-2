@@ -1,29 +1,35 @@
 <script>
   import { base } from "$app/paths";
-  import { getContext, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { clickOutside } from "../services/clickOutside";
-  import { authHandlers, authStore, currentLanguage } from "../store/store";
+  import { Language, authHandlers } from "../store/store";
   import { auth } from "$lib/firebase/firebase";
   import { getUserProfile } from "../routes/profile/user";
   import { addMessages, locale, t } from 'svelte-i18n';
-  import ru from '../services/ru.json';
-  // import isAdmin from "../components/Navbar.svelte"
-  import en from '../services/en.json'
+    import ru from '../services/ru.json';
+  import en from '../services/en.json';
+  import { currentLanguagee } from "../store/store_";
+
+  if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        // Switch the language value
+        if(currentValue === Language.English){
+           
+            addMessages(Language.English, en)
+            locale.set(Language.English)
+        } else {
+          addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+           
+        }
+    } else {
+        addMessages(Language.English, en)
+        locale.set(Language.English)
+    }
 
   export let isOpen = false
-  console.log('before all at menu',$currentLanguage.language)
-  onMount(()=>{
-    if($currentLanguage.language==='en'){
 
-    addMessages('en', en);
-    // Устанавливаем язык по умолчанию
-    locale.set('en')
-    } else {
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
-    }
-  })
+
 
   let isAdmin=false
 
@@ -37,23 +43,34 @@
 
   let name = 'Mister';
 
+  let currentUser = {}
+
     onMount(() => {
 
         console.log("getting the name of profile...")
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                //console.log(user)
+                console.log("the user in menu.svelte",user)
                 let Ready_profile = await getUserProfile(user);
-                //console.log(Ready_profile)
+                console.log("got user profile in menu.svelte",Ready_profile)
                 if (user) {
-                    name = Ready_profile.name
-                    if(Ready_profile.email === "vaper20041337@gmail.com" || Ready_profile.email ==="ktofreesapiens@gmail.com"){
-                        isAdmin = true
+                    currentUser = user
+                    if(Ready_profile.name!==undefined){
+                        name = Ready_profile.name
                     }
-                // 
+                    isAdmin = user.email === "ktofreesapiens@gmail.com" ? true : false
+ 
                 }
         })
             return unsubscribe
     });
+
+    function handleClick() {
+  // Navigate to the detailed page of the selected blog post
+    console.log(currentUser.uid)
+    
+    window.location.href = `${base}/profile/`;
+  }
+
 
 
 </script>

@@ -13,10 +13,6 @@
   import ProfileEditDone from './ProfileEditDone.svelte';
   import en from '../services/en.json';
 
-  // Загружаем переводы для русского языка
-  addMessages('en', en);
-  // Устанавливаем язык по умолчанию
-  locale.set('en')
 
   let loading = false
 
@@ -29,74 +25,55 @@
       messages: [],
   };
 
-  // let tempAuthStore = {
-  //   user: null || User,
-  //   loading: true,
-  //   data: {
-  //     name: "",
-  //     email: "",
-  //     phone: "",
-  //     country: "",
-  //     description: "",
-  //     messages:[],
-  //   },
-  // }
 
-  // let tempAuthStore = {}
 
-  // setContext('profile', profile);
+
   onMount(() => {
 
     console.log("updating profile...")  
     loading = false
-    console.log("authStore in prfile.svelte before everything",$authStore.data);
-
-//   const unsubscribe = auth.onAuthStateChanged(async (user) => {
-//     if (user) 
-//       tempAuthStore = await getUserProfile(user);
-//       updateUserProfile(
-//         tempAuthStore.user,
-//         tempAuthStore.data.name,
-//         tempAuthStore.data.email,
-//         tempAuthStore.data.phone,
-//         tempAuthStore.data.country,
-//         tempAuthStore.data.description,
-//         tempAuthStore.data.messages
-//         );
-//  })
+    console.log("authStore in prfile.svelte before everything",$authStore);
 
 
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
         let Ready_profile = await getUserProfile(user);
         if (user) {
-          console.log($authStore.data)
-          if (!$authStore.data) {
-          // Restore profileValue from user profile data
-          profileValue.name = Ready_profile.name;
-          profileValue.email = Ready_profile.email;
-          profileValue.phone = Ready_profile.phone;
-          profileValue.country = Ready_profile.country;
-          profileValue.description = Ready_profile.description;
-          profileValue.messages = Ready_profile.messages;
-        } else {
-          // Use the values from authStore
-          profileValue.name = $authStore.data.name;
-          profileValue.email = $authStore.data.email;
-          profileValue.phone = $authStore.data.phone;
-          profileValue.country = $authStore.data.country;
-          profileValue.description = $authStore.data.description;
-          profileValue.messages = $authStore.data.messages;
-        }
+          console.log("Restoring profileValue from user profile data");
+            profileValue.name = Ready_profile.name ?? profileValue.name;
+            profileValue.email = Ready_profile.email ?? profileValue.email;
+            profileValue.phone = Ready_profile.phone ?? profileValue.phone;
+            profileValue.country = Ready_profile.country ?? profileValue.country;
+            profileValue.description = Ready_profile.description ?? profileValue.description;
+            profileValue.messages = Ready_profile.messages ?? profileValue.messages;
 
-        updateUserProfile(
-          user,
-          profileValue.name,
-          profileValue.email,
-          profileValue.phone,
-          profileValue.country,
-          profileValue.description,
-          profileValue.messages
-        );
+        //   console.log($authStore)
+        //   if (!$authStore.data) {
+        //   // Restore profileValue from user profile data
+        //   profileValue.name = Ready_profile.name;
+        //   profileValue.email = Ready_profile.email;
+        //   profileValue.phone = Ready_profile.phone;
+        //   profileValue.country = Ready_profile.country;
+        //   profileValue.description = Ready_profile.description;
+        //   profileValue.messages = Ready_profile.messages;
+        // } else {
+        //   // Use the values from authStore
+        //   profileValue.name = $authStore.data.name;
+        //   profileValue.email = $authStore.data.email;
+        //   profileValue.phone = $authStore.data.phone;
+        //   profileValue.country = $authStore.data.country;
+        //   profileValue.description = $authStore.data.description;
+        //   profileValue.messages = $authStore.data.messages;
+        // }
+
+        // updateUserProfile(
+        //   user,
+        //   profileValue.name,
+        //   profileValue.email,
+        //   profileValue.phone,
+        //   profileValue.country,
+        //   profileValue.description,
+        //   profileValue.messages
+        // );
 
         console.log("after onMount",loading)
 
@@ -122,13 +99,7 @@
         profileValue.country,
         profileValue.description,
         profileValue.messages
-        // tempAuthStore.user,
-        // tempAuthStore.data.name,
-        // tempAuthStore.data.email,
-        // tempAuthStore.data.phone,
-        // tempAuthStore.data.country,
-        // tempAuthStore.data.description,
-        // tempAuthStore.data.messages
+
       ).then(() => {
         console.log("Profile updated successfully.");
       })

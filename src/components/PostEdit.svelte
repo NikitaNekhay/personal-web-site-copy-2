@@ -1,19 +1,34 @@
 <script lang="ts">
-    import { blogPost, currentLanguage } from '../store/store';
+
     import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-    import { collection, addDoc, Timestamp } from 'firebase/firestore';
-    import { auth, db, storage} from "$lib/firebase/firebase";
+
+    import { auth, storage} from "$lib/firebase/firebase";
     import { onMount } from 'svelte';
     import { addBlogPost, blogsCollection, getBlogPost, updateBlogPost } from '../routes/posts/post';
     import { page } from '$app/stores';
     import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-    import en from '../services/en.json'
+  import { currentLanguagee } from '../store/store_';
+  import ru from '../services/ru.json';
+  import en from '../services/en.json';
+  import { Language } from '../store/store';
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+  // if($currentLanguagee!==undefined){
+  //       const currentValue = $currentLanguagee;
+  //       // Switch the language value
+  //       if(currentValue === Language.English){
+           
+  //           addMessages(Language.English, en)
+  //           locale.set(Language.English)
+  //       } else {
+  //         addMessages(Language.Russian, ru)
+  //           locale.set(Language.Russian)
+           
+  //       }
+  //   } else {
+  //       addMessages(Language.English, en)
+  //       locale.set(Language.English)
+  //   }
+
 
 
     let tempPost = {}

@@ -10,10 +10,7 @@
   import en from '../services/en.json'
   import { goto } from '$app/navigation';
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+
 
   let blogPosts = [];
 
@@ -35,7 +32,7 @@
   $blogPost.id = id
   console.log($blogPost.id)
   //goto(`${base}/posts/${id}`);
-  window.location.href = `${base}/posts/${id}`;
+  window.location.href = `${base}/posts/${id}/`;
   }
 
   function handleEdit(id:string) {

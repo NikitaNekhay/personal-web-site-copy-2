@@ -1,28 +1,8 @@
 <script>
-  import { collection, doc, setDoc } from "firebase/firestore";
-  //import { statisticsStore } from "../store/store";
-  import { db } from "$lib/firebase/firebase";
-  import { addMessages, locale, t } from 'svelte-i18n';
-  import ru from '../services/ru.json';
-  import en from '../services/en.json';
-  import { onMount } from "svelte";
-  import { currentLanguage } from "../store/store";
+  import { t } from 'svelte-i18n';
 
 
-  console.log('before all at about',$currentLanguage.language)
 
-  onMount(()=>{
-    if($currentLanguage.language==='en'){
-
-    addMessages('en', en);
-    // Устанавливаем язык по умолчанию
-    locale.set('en')
-    } else {
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
-    }
-  })
 
 
 

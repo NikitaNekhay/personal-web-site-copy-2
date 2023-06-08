@@ -1,15 +1,28 @@
 <script >
-    import { authHandlers, currentLanguage } from "../store/store";
-    import { base } from '$app/paths'
+    import { Language, authHandlers } from "../store/store";
+
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
-    import en from '../services/en.json'
-    import { onMount } from "svelte";
+  import en from '../services/en.json';
+  import { currentLanguagee } from "../store/store_";
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+  if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        // Switch the language value
+        if(currentValue === Language.English){
+           
+            addMessages(Language.English, en)
+            locale.set(Language.English)
+        } else {
+          addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+           
+        }
+    } else {
+        addMessages(Language.English, en)
+        locale.set(Language.English)
+    }
+
     let email = "";
     let password ="";
     let rpassword = "";
@@ -87,7 +100,7 @@
                           text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 
                           peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
                           >
-                            {$t('Author Email')} 
+                            {$t('Email')} 
                           </span>
                         </label>
                     </div>

@@ -1,19 +1,30 @@
 <script lang="ts">
     // import states
     import { onMount } from 'svelte';
-    import { getBlogPosts, deleteBlogPost } from '../routes/posts/post';
-    import { navigate } from 'svelte-routing';
+    import { getBlogPosts } from '../routes/posts/post';
     import { base } from '$app/paths';
-    import { blogPost, currentLanguage } from '../store/store';
+    import { Language, blogPost } from '../store/store';
     import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-    import en from '../services/en.json'
-    import { goto } from '$app/navigation';
-    
-              // Загружаем переводы для русского языка
-              addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+  import { currentLanguagee } from '../store/store_';
+  import ru from '../services/ru.json';
+  import en from '../services/en.json';
+
+  if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        // Switch the language value
+        if(currentValue === Language.English){
+           
+            addMessages(Language.English, en)
+            locale.set(Language.English)
+        } else {
+          addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+           
+        }
+    } else {
+        addMessages(Language.English, en)
+        locale.set(Language.English)
+    }
 
     // use Firestore's onSnapshot method to listen for changes
     // in the blogs collection and update the page in 

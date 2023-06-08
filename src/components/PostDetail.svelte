@@ -1,20 +1,15 @@
 <script lang="ts">
-    import { createEventDispatcher, getContext, onMount } from 'svelte';
+    import { createEventDispatcher, onMount } from 'svelte';
     import { getBlogPost } from '../routes/posts/post';
-    import { navigate, useLocation } from 'svelte-routing';
-    import { page } from '$app/stores';
-    import { authStore, currentLanguage } from '../store/store';
-    import { getUserProfile } from '../routes/profile/user';
-    import { base } from '$app/paths';
-    import { writable } from 'svelte/store';
-    import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-    import en from '../services/en.json'
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+    import { page } from '$app/stores';
+
+    import { addMessages, locale, t } from 'svelte-i18n';
+  import { currentLanguagee } from '../store/store_';
+  import ru from '../services/ru.json';
+  import en from '../services/en.json';
+  import { Language } from '../store/store';
+
     
     let post ={};
     const { id } = $page.params

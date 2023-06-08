@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { getUserProfile, updateUserProfile} from '../routes/profile/user';
+  import { getUserProfile, getUserProfiles, updateUserProfile} from '../routes/profile/user';
   import { auth } from "../lib/firebase/firebase";
   import {authHandlers, authStore, currentLanguage } from "../store/store";
   import { base } from '$app/paths';
@@ -10,10 +10,7 @@
   import ru from '../services/ru.json';
   import en from '../services/en.json';
 
-          // Загружаем переводы для русского языка
-          addMessages('en', en);
-          // Устанавливаем язык по умолчанию
-          locale.set('en')
+    let isLoading = true; // Initialize the loading state
 
   let profileValue = {
       name:'',
@@ -23,56 +20,39 @@
       description:'',
       messages: [],
   };
-  // setContext('profile', profile);
+ 
   onMount(() => {
 
-   
-    console.log("updating profile...")  
-    console.log("authStore in prfile.svelte before everything",$authStore.data);
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      try {
-        let Ready_profile = await getUserProfile(user);
-        if (user) {
-          if (!$authStore.data) {
-            // Restore profileValue from user profile data
-            profileValue.name = Ready_profile.name;
-            profileValue.email = Ready_profile.email;
-            profileValue.phone = Ready_profile.phone;
-            profileValue.country = Ready_profile.country;
-            profileValue.description = Ready_profile.description;
-            profileValue.messages = Ready_profile.messages;
+
+    
+      console.log("updating profile...")  
+      console.log("authStore in prfile.svelte before everything",$authStore.data);
+      const unsubscribe = auth.onAuthStateChanged(async (user) => {
+        try {
+          let Ready_profile = await getUserProfile(user);
+          console.log("what we got from db getUserProfile:",Ready_profile)
+          if (user) {
+              console.log("Restoring profileValue from user profile data");
+              profileValue.name = Ready_profile.name ?? profileValue.name;
+              profileValue.email = Ready_profile.email ?? profileValue.email;
+              profileValue.phone = Ready_profile.phone ?? profileValue.phone;
+              profileValue.country = Ready_profile.country ?? profileValue.country;
+              profileValue.description = Ready_profile.description ?? profileValue.description;
+              profileValue.messages = Ready_profile.messages ?? profileValue.messages;
+
+            
           } else {
-            // Use the values from authStore
-            profileValue.name = $authStore.data.name;
-            profileValue.email = $authStore.data.email;
-            profileValue.phone = $authStore.data.phone;
-            profileValue.country = $authStore.data.country;
-            profileValue.description = $authStore.data.description;
-            profileValue.messages = $authStore.data.messages;
+            console.log("no user in Profile.svelte");
           }
-
-          updateUserProfile(
-            user,
-            profileValue.name,
-            profileValue.email,
-            profileValue.phone,
-            profileValue.country,
-            profileValue.description,
-            profileValue.messages
-          );
-
-          
-        } else {
-          console.log("no user in Profile.svelte");
+        } catch (error) {
+          console.log("error while updating profile",error);
         }
-      } catch (error) {
-        console.log("error while updating profile",error);
-      }
-      
-      
-    })
-    return unsubscribe
-  })
+        
+        
+      })
+      return unsubscribe
+
+      })
 
 let isView = true
 

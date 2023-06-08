@@ -1,19 +1,8 @@
 <script>
-    import { base } from '$app/paths'
-    import { db } from '$lib/firebase/firebase';
-    import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
-    import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-    import en from '../services/en.json'
-  import { currentLanguage } from '../store/store';
-  import { onMount } from 'svelte';
+    import {  t } from 'svelte-i18n';
 
-            // Загружаем переводы для русского языка
-            addMessages('en', en);
-            // Устанавливаем язык по умолчанию
-            locale.set('en')
 
-    //import { statisticsStore } from '../store/store';
+
 
    // async function updateStatisticsCollection() {
         // try {

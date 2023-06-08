@@ -1,48 +1,58 @@
 <script>
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../services/ru.json';
-  import { currentLanguage } from '../store/store';
-  import { onMount } from 'svelte';
+  import { Language} from '../store/store';
   import en from '../services/en.json'
   import { base } from '$app/paths';
-
-console.log('before all at footer',$currentLanguage.language)
-
-  if($currentLanguage.language==='en'){
-
-addMessages('en', en);
-// Устанавливаем язык по умолчанию
-locale.set('en')
-} else {
-addMessages('ru', ru);
-// Устанавливаем язык по умолчанию
-locale.set('ru')
-} 
+  import { currentLanguagee } from '../store/store_';
 
 
-
-  function changeLanguage(){
-        const tempLanguage = {
-            language: 'en', 
-        };
-
-        if($currentLanguage.language==='ru'){
-            tempLanguage.language='en'
-            addMessages('en', en);
-            // Устанавливаем язык по умолчанию
-            locale.set('en')
+  if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        // Switch the language value
+        if(currentValue === Language.English){
+           
+            addMessages(Language.English, en)
+            locale.set(Language.English)
         } else {
-            tempLanguage.language='ru'
-            addMessages('ru', ru);
-            // Устанавливаем язык по умолчанию
-            locale.set('ru')
+          addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+           
         }
-
-        // set the value to store
-        currentLanguage.set(tempLanguage)
-        console.log('after set at footer',$currentLanguage.language)
-       // location.reload();
+    } else {
+        addMessages(Language.English, en)
+        locale.set(Language.English)
     }
+
+
+    // version 2
+function changeLanguage(){
+    // Get the current value of the store
+    if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        let newLanguage = Language.English
+        // Switch the language value
+        if(currentValue === Language.English){
+            newLanguage = Language.Russian
+            addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+        } else {
+            newLanguage = Language.English
+            addMessages(Language.English, en)
+            locale.set(Language.English)
+        }
+       
+        // Update the store with the new value
+        currentLanguagee.set(newLanguage);
+
+        
+    } else {
+        console.log("access to localStorage for languages is restricted...")
+    }
+
+
+     
+}
 
 </script>
 
@@ -246,7 +256,12 @@ locale.set('ru')
                 </li>
                 <li>
                 <button on:click={changeLanguage} >
-                    <p class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 transition hover:opacity-75 hover:text-red-0">language: {$currentLanguage.language}</p> 
+                    <form method="POST" action="/?/setLang"
+                    class="font-extrabold text-transparent bg-clip-text 
+                    bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 
+                    transition hover:opacity-75 hover:text-red-0">
+                        [language: {$currentLanguagee} :language]
+                    </form> 
                 </button>
                
                 </li>

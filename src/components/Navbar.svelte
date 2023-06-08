@@ -2,28 +2,39 @@
 // @ts-nocheck
 
     import { base } from '$app/paths'
-    import {getContext, onMount} from 'svelte'
+    import { onMount} from 'svelte'
     import {auth, db} from '../lib/firebase/firebase'
     import { getDoc, doc, setDoc } from 'firebase/firestore';
-    import { authHandlers, authStore, currentLanguage } from '../store/store';
+    import { Language, authHandlers, authStore } from '../store/store';
     import Menu from './Menu.svelte'
-    import { readable } from 'svelte/store';
+
     import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../services/ru.json';
-    import en from '../services/en.json'
-    console.log('before all at navbar',$currentLanguage.language)
-    if($currentLanguage.language==='en'){
+  import en from '../services/en.json';
+  import { currentLanguagee } from "../store/store_";
 
-    addMessages('en', en);
-    // Устанавливаем язык по умолчанию
-    locale.set('en')
+  if($currentLanguagee!==undefined){
+        const currentValue = $currentLanguagee;
+        // Switch the language value
+        if(currentValue === Language.English){
+           
+            addMessages(Language.English, en)
+            locale.set(Language.English)
+        } else {
+          addMessages(Language.Russian, ru)
+            locale.set(Language.Russian)
+           
+        }
     } else {
-    addMessages('ru', ru);
-    // Устанавливаем язык по умолчанию
-    locale.set('ru')
-    } 
+        addMessages(Language.English, en)
+        locale.set(Language.English)
+    }
 
-    export let isAdmin = false
+
+
+     
+
+    let isAdmin = false
     export let loginState = false
     export let readyExit = false
 
@@ -43,15 +54,15 @@
                 console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
                 if(user){
                     console.log("there is a user: ",user)
-                    if(user.email === "ktofreesapiens@gmail.com")
-                            isAdmin = true
+                    isAdmin = user.email === "ktofreesapiens@gmail.com" ? true : false
+                            
                     // if(user.email){
                     //     userName = user.email.slice(0,user.email?.search('@'))
                     // }
                                             
                 } else {
                     console.log("there is no user: ",user)
-                    //isAdmin = false
+                    isAdmin = false
                 }
 
                 // console.log("there is name: ",profile.name)
@@ -71,7 +82,7 @@
                 // }
 
                 if(user !== null && currentPath === `${base}/login/`) {
-                    window.location.href = `${base}/profile`
+                    window.location.href = `${base}/profile/`;
                     loginState = true
                     readyExit = false
                     setTimeout(() => {
@@ -80,8 +91,8 @@
                     return
                 }
 
-                // logout logic
-                if(user && currentPath === `${base}/profile/`) {
+                // logout logic???????????
+                if(user && currentPath === `${base}/profile/}`) {
                     readyExit = true
                     loginState = true
                     return
@@ -129,7 +140,7 @@
                         if(dataToSetToStore.email === "ktofreesapiens@gmail.com")
                             isAdmin = true
                         
-                        authStore.update((curr) => {
+                        authStore.set((curr) => { // was update
                         return{
                             ...curr,
                             user:user,
