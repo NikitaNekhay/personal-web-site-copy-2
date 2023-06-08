@@ -32,7 +32,7 @@ onMount(() => {
 });
 
 let routes = {
-  "/posts":PostList||Gallery,
+  "/posts":PostList,
   "/posts/:id":PostDetail,
   "/posts/:id/edit":PostEdit,
   
@@ -41,7 +41,7 @@ let routes = {
 
 </script>
 
-<Router {routes} />
+<!-- <Router {routes} /> -->
 
 {#if isAdmin}
   <PostList />

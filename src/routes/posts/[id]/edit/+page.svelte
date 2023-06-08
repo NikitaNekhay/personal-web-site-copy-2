@@ -23,7 +23,7 @@
 
 
   </script>
-  
+
 <Router>
   
   <Route path={`${base}/posts/:id/edit/`} let:params>

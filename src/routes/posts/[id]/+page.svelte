@@ -27,13 +27,11 @@
   </script>
   
 
-
   <Router>
 
     <Route path={`${base}/posts/:id`} let:params>
         {#if isLoading}
           LOADING
-
         {:else}
           <PostDetail post={data.post} />
         {/if}
