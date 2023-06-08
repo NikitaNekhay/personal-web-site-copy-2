@@ -4,7 +4,6 @@ import { blogPost } from '../../store/store';
 
 export const blogsCollection = collection(db, "blogs");
 
-export const ssr = false;
 
 export async function addBlogPost(tempPost){
   try {
