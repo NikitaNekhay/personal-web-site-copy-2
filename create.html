@@ -5,7 +5,6 @@
     <meta name="author" content="NIKITA NIAKHAI">
     <meta http-equiv="content-security-policy" content="">
 		<link href="./_app/immutable/assets/_layout.b7856b8f.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/_page.3a338aa2.css" rel="stylesheet">
 		<link rel="modulepreload" href="./_app/immutable/entry/start.b7106285.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/index.dda795d4.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.0a2b17f3.js">
@@ -24,8 +23,8 @@
 		<link rel="modulepreload" href="./_app/immutable/chunks/stores.ca8f689e.js">
 		<link rel="modulepreload" href="./_app/immutable/entry/_layout.ts.50a6b084.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.73540493.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.76702d79.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.ts.4ed993c7.js"><title>Works</title><!-- HEAD_svelte-cflww3_START --><meta name="description" content="Recent vivid works"><!-- HEAD_svelte-cflww3_END -->
+		<link rel="modulepreload" href="./_app/immutable/entry/create-page.svelte.2d18a312.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/post.c5ebc967.js"><title>Sandbox of posts</title><!-- HEAD_svelte-1s9z257_START --><meta name="sandbox" content="Admin dashboard, manage posts"><!-- HEAD_svelte-1s9z257_END -->
     <meta charset="utf-8" />
     <link rel="icon" href="./favicon.ico" />
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
@@ -67,9 +66,29 @@
                 <div><div class="grid-column-auto grid-row-auto "><a class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0" target="_self" href="/Personal-Website/login">Login</a></div></div></div></div></div></nav>
 
 
-<figure><img src="/Personal-Website/media/flowers_september1.jpg" alt="beatiful flowers" title="Some beatiful flowers presented as a gift/1 september anniversary">
-    <figcaption class="img_descript svelte-107s5gh">1 september anniversary</figcaption></figure>
-<br>
+
+
+<div class="flex pt-60 place-content-center place"><form class="w-full max-w-lg "><div class="flex justify-center mb-6"><h1 class="text-blue-0 text-4xl font-abril">CREATE POST</h1></div>
+
+    <div class="flex flex-wrap -mx-3 mb-6"><div class="w-full px-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="title"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="title" required placeholder="Title" value="">
+        <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Title</span></label></div></div>
+    <div class="flex flex-wrap -mx-3 mb-4"><div class="w-full px-3 h-full"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="description"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" id="description" placeholder="Description" value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Description</span></label>
+        <p class="text-gray-600 text-xs italic mt-3">Make it as simple as informative</p></div></div>
+
+    <div class="flex flex-wrap -mx-3 mb-6"><div class="w-full md:w-1/2 px-3 mb-6 md:mb-0"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="author"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="author" placeholder="Author" required value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Author Name</span></label></div>
+      <div class="w-full md:w-1/2 px-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="authorEmail"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="email" id="authorEmail" placeholder="email@web.net" required value="">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Author Email</span></label></div></div>
+   
+    <div class="flex flex-wrap -mx-3 mb-2 ms-0"><div class="w-2/5 mb-6"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="price"><input class="peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" type="text" id="price" placeholder="400$" required value="">
+        <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs">Price</span></label></div>
+      <div class="md:w-3/5 h-1/2 px-3 mb-3 md:mb-3"><label class="block relative overflow-hidden bg-white-1 rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1 focus-within:ring-white-2" for="files"><input class="transparent peer bg-white-1 h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm text-center block" type="file" id="images" multiple placeholder="Files">
+          <span class="cursor-text absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 bg-white-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"></span></label></div></div>
+
+    <button class="flex items-center mx-[136px] w-1/2 rounded-md justify-center group relative overflow-hidden border border-orange-0 px-8 py-3 focus:outline-none focus:ring" type="button"><span class="absolute inset-x-0 bottom-0 h-[2px] bg-orange-0 transition-all group-hover:h-full group-active:bg-orange-0"></span>
+
+      <span class="relative text-sm font-medium text-orange-0 transition-colors group-hover:text-white">Submit</span></button></form></div>
 <footer aria-label="Site Footer" class="bg-white lg:grid lg:grid-cols-5 font-anonymous mt-96"><div class="relative block h-32 lg:col-span-2 lg:h-full"><img src="https://images.unsplash.com/photo-1642370324100-324b21fab3a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80" alt="" class="absolute inset-0 object-cover w-full h-full"></div>
     
     <div class="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8"><div class="grid grid-cols-1 gap-8 sm:grid-cols-2"><div><p><span class="text-xs tracking-wide text-gray-500 uppercase">Call us
@@ -150,7 +169,7 @@
 						import("./_app/immutable/entry/app.a314be6e.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
-							node_ids: [0, 2],
+							node_ids: [0, 5],
 							data,
 							form: null,
 							error: null
