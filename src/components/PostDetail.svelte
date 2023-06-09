@@ -115,7 +115,7 @@ let offset = 0; // Initialize the offset variable
       <p>{$t('Author')} : {post.author}</p>
       <p>{$t('Author Email')} : {post.authorEmail}</p>
       <p>{$t('Price')} : {post.price}</p>
-      <p>{$t('Date')} : {post.date}</p>
+      <p>{$t('Date')} : {post.date.getFullYear()}:{post.date.getDay()}:{post.date.getMonth()}</p>
 
       <a href="mailto:{post.authorEmail}" class="transition duration-100 hover:text-blue-0">{$t('SEND EMAIL TO AUTHOR')} </a>
     </div>
