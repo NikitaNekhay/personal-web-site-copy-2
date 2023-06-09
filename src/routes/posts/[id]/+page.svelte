@@ -14,19 +14,36 @@
   import PostEdit from '../../../components/PostEdit.svelte';
   import { onMount } from 'svelte';
 
-  let isLoading = true
+  let isLoading = true; // Initialize the loading state
 
+  let post 
   export let data
-  if(data.post!==undefined){
+
+  if(data.post!==undefined && data.post!==null){
     isLoading=false
-  } 
-  console.log('entered +page.svelte',data.post)
-
-    // Define and initialize the `post` variable
+    post = data.post
+  } else if ($page.params!==undefined && $page.params!==null){
+    post = $page.params
+    isLoading=false
+  } else {
+    isLoading=true
+    console.log('error getting params for posts page')
+  }
+  console.log('entered +page.svelte',post)
     
-  </script>
-  
+</script>
 
+<Router>
+  
+  <Route path={`${base}/posts/:id`} let:params>
+    {#if isLoading}
+      LOADING
+    {:else}
+    <PostDetail post={post} />
+    {/if}
+  </Route>
+</Router>
+  <!-- <PostDetail post={data.post} />
   <Router>
 
     <Route path={`${base}/posts/:id`} let:params>
@@ -37,4 +54,4 @@
         {/if}
     </Route>
 
-  </Router>
+  </Router> -->

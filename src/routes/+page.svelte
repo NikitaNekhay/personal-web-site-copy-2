@@ -2,7 +2,8 @@
     import { base } from '$app/paths'
     import { db } from '$lib/firebase/firebase';
     import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
-    export const ssr = false;
+  import { Route, Router } from 'svelte-routing';
+  import Home from '../components/Home.svelte';
     //import {statisticsStore} from "../store/store"
     //async function createStatisticsCollection() {
         // try {
@@ -46,24 +47,5 @@
     
 </script>
 
-<svelte:head>
-   <title>{'Works'}</title>
-   <meta name="description" content="Recent vivid works">
-</svelte:head>
 
-<figure>
-    <img
-    src="{base}/media/flowers_september1.jpg"
-    alt="beatiful flowers"
-    title="Some beatiful flowers presented as a gift/1 september anniversary" />
-    <figcaption class="img_descript">1 september anniversary</figcaption>
-</figure>
-<br>
-
-<style>
-    .img_descript{
-        font-size:18px; 
-        text-decoration: underline;
-
-    }
-</style>
+<Home />

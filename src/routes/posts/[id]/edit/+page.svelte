@@ -15,10 +15,20 @@
 
     let isLoading = true; // Initialize the loading state
 
+    let post 
     export let data
-    if(data.post!==undefined){
+    
+    if(data.post!==undefined && data.post!==null){
       isLoading=false
-    } 
+      post = data.post
+    } else if ($page.params!==undefined && $page.params!==null){
+      post = $page.params
+      isLoading=false
+    } else {
+      isLoading=true
+      console.log('error getting params for posts page')
+    }
+    console.log('entered +page.svelte',post)
 
 
 
@@ -30,7 +40,7 @@
     {#if isLoading}
       LOADING
     {:else}
-      <PostEdit post={data.post} /> 
+      <PostEdit post={post} /> 
     {/if}
   </Route>
 </Router>

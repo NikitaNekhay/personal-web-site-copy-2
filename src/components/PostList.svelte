@@ -33,7 +33,7 @@
   $blogPost.id = id
   console.log($blogPost.id)
   //goto(`${base}/posts/${id}`);
-  window.location.href = `${base}/posts/${id}/`;
+  window.location.href = `${base}/posts/${id}`;
   }
 
   function handleEdit(id:string) {

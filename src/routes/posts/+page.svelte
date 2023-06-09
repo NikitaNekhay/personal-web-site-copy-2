@@ -31,13 +31,7 @@ onMount(() => {
         return unsubscribe
 });
 
-let routes = {
-  "/posts":PostList,
-  "/posts/:id":PostDetail,
-  "/posts/:id/edit":PostEdit,
-  
-  "*":EmptyPage
-}
+
 
 </script>
 
@@ -49,17 +43,15 @@ let routes = {
   <Gallery />
 {/if} -->
 
-<Router>
-  <Route path={`${base}/posts`} />
   {#if isAdmin}
   <PostList />
 {:else}
   <Gallery />
 {/if}
 
-    <Route path={`${base}/posts/:id`}   /> 
-    <Route path={`${base}/posts/:id/edit`}   /> 
-</Router>
+    <!-- <Route path={`${base}/posts/:id`}   /> 
+    <Route path={`${base}/posts/:id/edit`}   />  -->
+
  
 
 
