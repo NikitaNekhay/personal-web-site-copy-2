@@ -38,7 +38,7 @@
     export let loginState = false
     export let readyExit = false
 
-    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/login/`]
+    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/login/`,`${base}/shop/`]
     const AdminRoutes = [`${base}/dashboard`,`${base}/stat/`,`${base}/create/`,]
 
     try {
@@ -198,10 +198,10 @@
                     <div class="border-l-2 border-navy-2">
                         <a  class="text-black no-underline mx-20 
                         hover:underline underline-offset-4"   
-                        target="_self" href='{base}/shop' >{$t('Shop')} </a>
+                        target="_self" href='{base}/posts' >{$t('Shop')} </a>
                         <a  class="text-black no-underline 
                         hover:underline underline-offset-4"   
-                        target="_self" href='{base}/posts' >{$t('Works')} </a>
+                        target="_self" href='{base}/works' >{$t('Works')} </a>
                     </div>
                     
                 </div>   

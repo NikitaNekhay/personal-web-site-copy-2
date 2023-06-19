@@ -59,8 +59,8 @@ function changeLanguage(){
 <footer aria-label="Site Footer" class="bg-white lg:grid lg:grid-cols-5 font-anonymous mt-96">
     <div class="relative block h-32 lg:col-span-2 lg:h-full">
         <img
-        src="https://images.unsplash.com/photo-1642370324100-324b21fab3a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
-        alt=""
+        src="https://lh3.googleusercontent.com/pw/AJFCJaWk73NiFqnvmE4ERdCThcHS_cjkfnjyMZT77oTLttHPaAYfRT2E0vWixrFc_Yk_PkkbBO6EunYTPi65rkik7TkcgBi1Av-UeGfMTcww1syn7ZlhRpU=w2400"
+        alt="pink flower in lake"
         class="absolute inset-0 object-cover w-full h-full"
         />
     </div>
