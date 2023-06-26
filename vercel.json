@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "personal-web-site",
+    "builds": [
+       { "src": "svelte.config.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+       { "src": "/(.*)", "dest": "/app.html" }
+    ]
+ }
