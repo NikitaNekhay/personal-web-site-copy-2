@@ -5,6 +5,6 @@
        { "src": "vite.config.ts", "use": "@vercel/node" }
     ],
     "routes": [
-       { "src": "/(.*)", "dest": "/app.js" }
+       { "src": "/(.*)", "dest": "/app.html" }
     ]
  }
