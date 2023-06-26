@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "personal-web-site",
+    "builds": [
+       { "src": "vite.config.ts", "use": "@vercel/node" }
+    ],
+    "routes": [
+       { "src": "/(.*)", "dest": "/app.js" }
+    ]
+ }
