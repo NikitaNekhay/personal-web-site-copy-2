@@ -2,7 +2,7 @@
     "version": 2,
     "name": "personal-web-site",
     "builds": [
-       { "src": "src/app.d.ts", "use": "@vercel/node" }
+       { "src": "src/app.html", "use": "@vercel/node" }
     ],
     "routes": [
        { "src": "/(.*)", "dest": "/app.html" }

@@ -4,9 +4,9 @@ const Works = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $t, $$unsubscribe_t;
   $$unsubscribe_t = subscribe(X, (value) => $t = value);
   $$unsubscribe_t();
-  return `<main><div class="grid h-screen px-4 bg-white place-content-center"><h1 class="tracking-widest text-black-1 uppercase font-abril text-6xl">${escape($t("project 1 CAPSULE COLLECTION"))}</h1></div>
+  return `<main><section class=""><div class="grid h-screen px-4 bg-white place-content-center lg:mb-0 md:mb-48 sm:mb-96"><h1 class="tracking-widest text-black-1 uppercase font-abril text-6xl ">${escape($t("project 1 CAPSULE COLLECTION"))}</h1></div>
 
-    <div class="col-span-full"><div class="posts flex h-screen"><div class="w-1/12">1
+    <div class="col-span-full "><div class="posts flex h-screen"><div class="w-1/12">1
         </div> 
         <div class="w-4/12 justify-center self-center font-anonymous text-2xl "><article><p>${escape($t("This is a presentation of first capsule collection made by my hands. Also it is my early experience in clothes' making."))}
               <br><br>
@@ -40,7 +40,7 @@ const Works = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             <img src="https://lh3.googleusercontent.com/AEs9uGffV9Ie4KZoNo5f6ykdIRBM968xjamb3zNlFZQ0KlXHOokOpdTm1JPDgFPFv_2adC6lTNv0S4P5HZtQcaqf_tG8aFKS4qilaoVukeTK-91LbygHwtlFOKdXXZCimy2QiMv4YQ=w2400" alt="tank 2" title="tank 2" class="h-6/12 w-5/12">
 
             <img src="https://lh3.googleusercontent.com/z2ebtCAt5Vrc7loda-LbpH0dtxCx1wRAezzsK3nqYX8egPQTuAe60lFy2kxhyE8dSq_N8A4_4vz0n3sTGUjn6wxscU0G7SmtfCO00fWdKxPMWEjanAQLGFqFQj61iwqOxol8Q7fEDQ=w2400" alt="tank 3" title="tank 3" class="h-6/12 w-5/12"></div></div></div></div></div></div>
-    </main>`;
+    </section></main>`;
 });
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `${$$result.head += `<!-- HEAD_svelte-l5s87i_START -->${$$result.title = `<title>${escape("Works")}</title>`, ""}<meta name="work" content="clothes, books, and products"><!-- HEAD_svelte-l5s87i_END -->`, ""}
