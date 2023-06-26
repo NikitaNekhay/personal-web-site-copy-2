@@ -28,8 +28,8 @@
         <br>{$t('Contacts')}:<br><br>
         <ul style="position: relative;" >
             <li style="padding-bottom: 10px;"> {$t('email')}: <a class="transition duration-100 hover:text-blue-0" href="mailto:ktofreesapiens@gmail.com">{$t('SAY HELLO WITH EMAIL')} </a><br></li>
-            <li style="padding-bottom: 10px;">{$t('instagram')}: <a class="transition duration-100 hover:text-blue-0" target="_blank" href="https://instagram.com/araneaesolidum/">ARANEAESOLIDUM</a></li>
-            <li style="padding-bottom: 10px;">{$t('telegram')}: <a class="transition duration-100 hover:text-blue-0" target="_blank" href="https://t.me/araneaesolidum">ARANEAESOLIDUM</a><br></li>
+            <li style="padding-bottom: 10px;">{$t('instagram')}: <a class="transition duration-100 hover:text-blue-0" target="_blank" href="https://instagram.com/araneaesolidum/">{$t('OPEN ACCOUNT')}</a></li>
+            <li style="padding-bottom: 10px;">{$t('telegram')}: <a class="transition duration-100 hover:text-blue-0" target="_blank" href="https://t.me/araneaesolidum">{$t('SAY HELLO IN TELEGRAM')}</a><br></li>
         </ul>
     <br>
 </div>

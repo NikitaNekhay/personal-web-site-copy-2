@@ -35,13 +35,13 @@
 
 
 <p class="short_info">
-    {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design, photography, videography. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.Currently studies at Innopolis as an exchange student.')}<br>
+    {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design, photography, videography. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.')}<br>
 </p>
 
 
 <div class=" text-center justify-self-center">
-    <ul class="text-center">
-        <li>
+    <ul class="text-center ">
+        <li class="gap-y-10">
             <p style=" margin-block-start: 0px; margin-block-end: 0px;" >
                 <a target="_blank" style=" text-decoration:none;" 
                 class="href_links transition duration-100 hover:text-blue-0" href ="https://docs.google.com/document/d/1rcklzYqRFf4ICC1Ai48KPzl5S0NArSxANsda5uv7IdM/edit">

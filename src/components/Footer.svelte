@@ -203,7 +203,7 @@ function changeLanguage(){
                 </li>
     
                 <li>
-                    <a href="{base}/" class="text-gray-700 transition hover:opacity-75">
+                    <a href="https://www.behance.net/nekhaynikita" target="_blank" class="text-gray-700 transition hover:opacity-75">
                     Photography
                     </a>
                 </li>
@@ -233,7 +233,7 @@ function changeLanguage(){
         </div>
         </div>
     
-        <div class="pt-12 mt-12 border-t border-gray-100">
+        <div class="pt-12 mt-12 border-navy-1 border-t-2">
         <div class="sm:flex sm:items-center sm:justify-between">
             <nav aria-label="Footer Navigation - Support">
             <ul class="flex flex-wrap gap-4 text-xs">
