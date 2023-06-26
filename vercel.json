@@ -2,9 +2,9 @@
     "version": 2,
     "name": "personal-web-site",
     "builds": [
-       { "src": "svelte.config.js", "use": "@vercel/node" }
+       { "src": "src/app.d.ts", "use": "@vercel/node" }
     ],
     "routes": [
-       { "src": "/Personal-Website/(.*)", "dest": "/app.html" }
+       { "src": "/(.*)", "dest": "/app.html" }
     ]
  }
