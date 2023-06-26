@@ -170,7 +170,7 @@
     <!--The form itself  -->
     <div class="fixed top-0 z-30 w-full">
         <div class='flex items-center justify-between mx-auto w-11/12 bg-white-1 shadow-white-2 drop-shadow-2xl border-x-4 border-navy-1'>
-            <div class='flex items-center justify-between mx-2 w-full gap-16 '>
+            <div class='flex items-center justify-between mx-2 w-full lg:gap-16 sm:gap-0 md:gap-8'>
                 <!-- Logo(Left side) -->
                 <div class="text-2xl ">
                     <a class="hover:text-yellow-0" 
@@ -186,17 +186,17 @@
                     </a>
                 </div>
                 <!-- Links(Center) -->
-                <div class="flex items-center justify-between drop-shadow mx-20 ">
+                <div class="flex items-center justify-between drop-shadow lg:mx-20 sm:mx-8 md:mx-12">
                     <div class="border-r-2 border-navy-2">
                         <a  class="text-black no-underline 
                         hover:underline underline-offset-4"   target="_self" 
                         href='{base}/about' >{$t('About')} </a>
-                        <a  class="text-black no-underline mx-20 
+                        <a  class="text-black no-underline lg:mx-20 sm:mx-8 md:mx-12 
                         hover:underline underline-offset-4"   target="_self" 
                         href='{base}/contact' >{$t('Contact')} </a>
                     </div>
                     <div class="border-l-2 border-navy-2">
-                        <a  class="text-black no-underline mx-20 
+                        <a  class="text-black no-underline lg:mx-20 sm:mx-8 md:mx-12
                         hover:underline underline-offset-4"   
                         target="_self" href='{base}/posts' >{$t('Shop')} </a>
                         <a  class="text-black no-underline 

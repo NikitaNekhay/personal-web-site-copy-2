@@ -3,13 +3,14 @@
 
 </script>
 <main>
-    <div class="grid h-screen px-4 bg-white place-content-center">
-      <h1 class="tracking-widest text-black-1 uppercase font-abril text-6xl">
+  <section class="">
+    <div class="grid h-screen px-4 bg-white place-content-center lg:mb-0 md:mb-48 sm:mb-96">
+      <h1 class="tracking-widest text-black-1 uppercase font-abril text-6xl ">
         {$t('project 1 CAPSULE COLLECTION')}
       </h1>
     </div>
 
-    <div class="col-span-full">
+    <div class="col-span-full ">
       <div class="posts flex  h-screen">
         <div class=" w-1/12">
           1
@@ -130,8 +131,6 @@
           </div>
         </div>
     </div> -->
-
-
-
+  </section>
 
 </main>
