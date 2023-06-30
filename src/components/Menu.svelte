@@ -78,7 +78,7 @@
 <div class="menu relative cursor-pointer">
     <div class="grid-column-auto grid-row-auto" on:click={openMenu} on:keydown={openMenu}>
         {#if !isOpen}
-            <p class="col-span-full grid-row-auto transition duration-100 hover:text-yellow-0">{name}</p>
+            <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{name}</p>
             <!-- <div class="w-8 h-8 rounded-full overflow-hidden">
                 <img src="../../../static/favicon.ico" alt="NAME">
             </div> -->
@@ -90,26 +90,26 @@
             use:clickOutside
             on:click_outside={handleClickOutside}
         >
-            <a class="col-span-full grid-row-auto transition duration-100 
+            <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/profile'>
                 {$t('Profile')} 
             </a>
             {#if isAdmin}
-            <a class="col-span-full grid-row-auto transition duration-100 
+            <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/create'>
                 {$t('Create')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-100 
+            <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/dashboard'>
                 {$t('View')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-100 
+            <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/stat'>
                 {$t('Stat')} 
             </a>
             {/if}
             <a on:click={authHandlers.logout} class="col-span-full grid-row-auto 
-            transition duration-100 hover:text-yellow-0" target="_self" href='{base}/login'>
+            transition duration-200 hover:text-yellow-0" target="_self" href='{base}/login'>
                 {$t('Logout')} 
             </a>
         </div>

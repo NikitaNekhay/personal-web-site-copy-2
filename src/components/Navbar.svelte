@@ -173,7 +173,7 @@
             <div class='flex items-center justify-between mx-2 w-full lg:gap-16 sm:gap-0 md:gap-8'>
                 <!-- Logo(Left side) -->
                 <div class="text-2xl ">
-                    <a class="hover:text-yellow-0" 
+                    <a class="transition duration-200 hover:text-yellow-0" 
                     target="_self" href='{base}/'>
                         <h1>
                             <p class="flex justify-center">
@@ -211,7 +211,7 @@
                     <div class="grid-column-auto grid-row-auto ">
                         {#if loginState == false}
                             <a on:click={authHandlers.login} class="col-span-full 
-                            grid-row-auto transition duration-100 
+                            grid-row-auto transition duration-200 
                             hover:text-yellow-0" target="_self" href='{base}/login'>
                                 {$t('Login')} 
                             </a>

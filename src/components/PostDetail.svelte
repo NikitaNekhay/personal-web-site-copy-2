@@ -103,8 +103,8 @@ let offset = 0; // Initialize the offset variable
         </div>
       </div>
       <div class="buttons items-center justify-center text-center content-center">
-        <button class="slider-back transition duration-100 hover:text-orange-0" on:click={handleNextClick}>&larr; {$t('BACK')} </button>
-        <button class="slider-next transition duration-100 hover:text-orange-0" on:click={handleBackClick}>{$t('NEXT')} &rarr;</button>
+        <button class="slider-back transition duration-200 hover:text-orange-0" on:click={handleNextClick}>&larr; {$t('BACK')} </button>
+        <button class="slider-next transition duration-200 hover:text-orange-0" on:click={handleBackClick}>{$t('NEXT')} &rarr;</button>
       </div>
       
     </div>
@@ -117,7 +117,7 @@ let offset = 0; // Initialize the offset variable
       <p>{$t('Price')} : {post.price}</p>
       <p>{$t('Date')} : {post.date}:{post.date}:{post.date}</p>
 
-      <a href="mailto:{post.authorEmail}" class="transition duration-100 hover:text-blue-0">{$t('SEND EMAIL TO AUTHOR')} </a>
+      <a href="mailto:{post.authorEmail}" class="transition duration-200 hover:text-blue-0">{$t('SEND EMAIL TO AUTHOR')} </a>
     </div>
       
 {:else}
