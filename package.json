@@ -28,8 +28,6 @@
 
 		"@sveltejs/adapter-auto": "^2.1.0",
 
-		"@sveltejs/adapter-vercel": "^0.0.3",
-
 		"@sveltejs/kit": "^1.5.0",
 
 		"@tailwindcss/aspect-ratio": "^0.4.2",
