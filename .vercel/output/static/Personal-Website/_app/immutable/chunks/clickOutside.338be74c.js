@@ -1,1 +1,0 @@
-function i(t){const e=n=>{t&&!t.contains(n.target)&&!n.defaultPrevented&&t.dispatchEvent(new CustomEvent("click_outside"))},c=window.document;return c.addEventListener("click",e,!0),{destroy(){c.removeEventListener("click",e,!0)}}}export{i as c};
