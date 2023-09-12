@@ -1,5 +1,5 @@
 import { db } from '../../lib/firebase/firebase';
-import { collection, doc, getDoc, updateDoc,runTransaction, query, getDocs, addDoc, deleteDoc} from "firebase/firestore";
+import { collection, doc, getDoc, runTransaction,  getDocs, addDoc, deleteDoc} from "firebase/firestore";
 import { blogPost } from '../../store/store';
 
 export const blogsCollection = collection(db, "blogs");
@@ -7,12 +7,12 @@ export const blogsCollection = collection(db, "blogs");
 
 export async function addBlogPost(tempPost){
   try {
-    console.log('Temp post:', tempPost)
+   // console.log('Temp post:', tempPost)
     const docRef = await addDoc(blogsCollection, tempPost);
-    console.log("New blog added with ID: ", docRef.id);
+   // console.log("New blog added with ID: ", docRef.id);
     updateBlogPost(docRef.id,tempPost.title,tempPost.images,tempPost.author,tempPost.authorEmail,tempPost.description,tempPost.price,tempPost.date)
   } catch (error) {
-    console.log("error while adding blog post",error)
+    console.error("error while adding blog post",error)
   }
 }
 
@@ -39,7 +39,8 @@ export async function updateBlogPost(
       }
       
       const postData = postDoc.data();
-      console.log("this is postData var:",postData)
+     // console.log("this is temp value of data by method .data():",postData)
+     // console.log("this is temp value of images passed to function:",images)
       const updatedPostData = {     
         id:id ?? postData.id,
         title:title ?? postData.title,
@@ -53,8 +54,8 @@ export async function updateBlogPost(
 
       // Update user document
       transaction.update(postDocRef, updatedPostData);
-      console.log("this is updatedPostData var:",updatedPostData)
-      console.log("this is what happens with post data after transaction: ", postDoc.data())
+     // console.log("this is updated temp value of data:",updatedPostData)
+     // console.log("this is what happens with roots of value for temp value after update: ", postDoc.data())
     });
 
     
@@ -66,7 +67,7 @@ export async function updateBlogPost(
 
 export async function getBlogPost(id:string){
   try{
-    console.log("this is id for db call: ", id)
+   // console.log("this is id passed to function for db call: ", id)
     const postDoc = doc(collection(db, "blogs"), id);
     const postSnapshot = await getDoc(postDoc);
     // put the value in store
@@ -120,7 +121,7 @@ export async function deleteBlogPost(id:string){
   try {
     const postDocRef = doc(collection(db, 'blogs'), id);
     await deleteDoc(postDocRef);
-    console.log('Blog post deleted:', id);
+   // console.log('Blog post deleted:', id);
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }

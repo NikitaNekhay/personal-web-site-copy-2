@@ -23,7 +23,7 @@ export function getCurrentLanguage(switcher:boolean){
             return "ru"
         }
     } catch (error) {
-        console.log("error while switching the lang", error)
+        console.error("error while switching the lang", error)
     }
    
 

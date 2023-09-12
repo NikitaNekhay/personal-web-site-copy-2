@@ -47,28 +47,37 @@
 
     onMount(() => {
 
-        console.log("getting the name of profile...")
+        //console.log("getting the name of profile...")
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                console.log("the user in menu.svelte",user)
+                //console.log("the user in menu.svelte",user)
                 let Ready_profile = await getUserProfile(user);
-                console.log("got user profile in menu.svelte",Ready_profile)
+                //console.log("got user profile in menu.svelte",Ready_profile)
                 if (user) {
                     currentUser = user
                     if(Ready_profile.name!==undefined){
                         name = Ready_profile.name
                     }
-                    isAdmin = user.email === "ktofreesapiens@gmail.com" ? true : false
+                    isAdmin = user.email === "ktofreesapiens@gmail.com" || user.email === "vaper20041337@gmail.com"  ? true : false
  
                 }
         })
+        
             return unsubscribe
+
     });
+
+    // const a = onMount(async()=>{
+    //     const interval = setInterval(async() => {
+    //         console.log('beep')
+    //     }, 2000);
+    //     return () => clearInterval(interval);
+    // })
 
     function handleClick() {
   // Navigate to the detailed page of the selected blog post
-    console.log(currentUser.uid)
+    //console.log(currentUser.uid)
     
-    window.location.href = `${base}/profile/`;
+    //window.location.href = `${base}/profile/`;
   }
 
 
@@ -100,8 +109,12 @@
                 {$t('Create')} 
             </a>
             <a class="col-span-full grid-row-auto transition duration-200 
-            hover:text-yellow-0" target="_self" href='{base}/dashboard'>
+            hover:text-yellow-0" target="_self" href='{base}/posts'>
                 {$t('View')} 
+            </a>
+            <a class="col-span-full grid-row-auto transition duration-200 
+            hover:text-yellow-0" target="_self" href='{base}/dashboard'>
+                {$t('Users')} 
             </a>
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/stat'>

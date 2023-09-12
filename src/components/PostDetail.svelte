@@ -1,37 +1,40 @@
 <script lang="ts">
-    import { createEventDispatcher, onMount } from 'svelte';
-    import { getBlogPost } from '../routes/posts/post';
+  import { createEventDispatcher, onMount } from "svelte";
+  import { getBlogPost } from "../routes/posts/post";
 
-    import { page } from '$app/stores';
+  import { page } from "$app/stores";
 
-    import { addMessages, locale, t } from 'svelte-i18n';
-  import { currentLanguagee } from '../store/store_';
-  import ru from '../services/ru.json';
-  import en from '../services/en.json';
-  import { Language } from '../store/store';
+  import { addMessages, locale, t } from "svelte-i18n";
+  import { currentLanguagee } from "../store/store_";
+  import ru from "../services/ru.json";
+  import en from "../services/en.json";
+  import { Language } from "../store/store";
+  import type { PostType } from "../shared/types";
+  import NoPosts from "./NoPosts.svelte";
+  import LoadingSpinner from "./LoadingSpinner.svelte";
 
-    export let post
-    //export let post = $page.params
-    console.log(post)
-    let isLoading = true; // Initialize the loading state
-    
-    onMount(async () => {
-      // Fetch the blog post details
-      // try {
-      //   post = await getBlogPost(id);
-      //   console.log(post)
-      //   isLoading = false; // Set the loading state to false once data is loaded
-      // } catch (error) {
-      //   console.log("error fetching the blog post with id:", id)
-      // }
-     
-    }); 
-  
+  export let post: PostType;
+  //export let post = $page.params
+  //console.log("this is the post:", post);
+  let isLoading = true; // Initialize the loading state
 
-//Dispatch custom events for swiping
-const dispatch = createEventDispatcher();
+  onMount(async () => {
+    // Fetch the blog post details
+    isLoading = true;
+    const sliderLine = document.querySelector(".slider-line");
+    // try {
+    //   post = await getBlogPost(id);
+    //   console.log(post)
+    //   isLoading = false; // Set the loading state to false once data is loaded
+    // } catch (error) {
+    //   console.log("error fetching the blog post with id:", id)
+    // }
+  });
 
-let offset = 0; // Initialize the offset variable
+  //Dispatch custom events for swiping
+  const dispatch = createEventDispatcher();
+
+  let offset = 0; // Initialize the offset variable
 
   // Handle next click
   function handleNextClick() {
@@ -39,7 +42,7 @@ let offset = 0; // Initialize the offset variable
     if (offset > (post.images.length - 1) * 100) {
       offset = 0;
     }
-    dispatch('swipe', { direction: 'next', offset });
+    dispatch("swipe", { direction: "next", offset });
   }
 
   // Handle back click
@@ -48,7 +51,7 @@ let offset = 0; // Initialize the offset variable
     if (offset < 0) {
       offset = (post.images.length - 1) * 100;
     }
-    dispatch('swipe', { direction: 'back', offset });
+    dispatch("swipe", { direction: "back", offset });
   }
 
   // Detect swipes
@@ -72,99 +75,82 @@ let offset = 0; // Initialize the offset variable
       }
     }
   }
-
-  onMount(() => {
-    const sliderLine = document.querySelector('.slider-line');
-
-    sliderLine.addEventListener('touchstart', handleTouchStart);
-    sliderLine.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      sliderLine.removeEventListener('touchstart', handleTouchStart);
-      sliderLine.removeEventListener('touchend', handleTouchEnd);
-    };
-  });
-
 </script>
-  
-{#if post}
-    <div class="container_slider">
-      <div class="slider">
-        <div class="slider-line" style="transform: translateX({offset}px);">
-          {#if post.images}
-            {#each post.images as imag}
-              <img src={imag} alt={post.title} class="w-100 h-100">
-            {/each}
-          {:else}
-            <div>
-              <p>NO images</p>
-            </div>
-          {/if}
-        </div>
-      </div>
-      <div class="buttons items-center justify-center text-center content-center">
-        <button class="slider-back transition duration-200 hover:text-orange-0" on:click={handleNextClick}>&larr; {$t('BACK')} </button>
-        <button class="slider-next transition duration-200 hover:text-orange-0" on:click={handleBackClick}>{$t('NEXT')} &rarr;</button>
-      </div>
-      
-    </div>
-  
-    <div class="items-center justify-center text-center content-center mt-4 bore">
-      <h1>{post.title}</h1>
-      <p>{post.description}</p>
-      <p>{$t('Author')} : {post.author}</p>
-      <p>{$t('Author Email')} : {post.authorEmail}</p>
-      <p>{$t('Price')} : {post.price}</p>
-      <p>{$t('Date')} : {post.date}:{post.date}:{post.date}</p>
 
-      <a href="mailto:{post.authorEmail}" class="transition duration-200 hover:text-blue-0">{$t('SEND EMAIL TO AUTHOR')} </a>
-    </div>
-      
+<link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+{#if !isLoading}
+  <LoadingSpinner />
+{:else if post == undefined}
+  <NoPosts />
 {:else}
-  <p>Loading...</p>
+  <div class="container_slider mt-56">
+    <div class="slider">
+      <div class="slider-line" style="transform: translateX({offset}px);">
+        {#if post.images}
+          {#each post.images as imag}
+            <img src={imag} alt={post.title} class="w-100 h-100" />
+          {/each}
+        {:else}
+          <div>
+            <p>NO images</p>
+          </div>
+        {/if}
+      </div>
+    </div>
+    <div class="buttons content-center items-center justify-center text-center">
+      <button
+        class="slider-back transition duration-200 hover:text-orange-0"
+        on:click={handleNextClick}
+        >&larr; {$t("BACK")}
+      </button>
+      <button
+        class="slider-next transition duration-200 hover:text-orange-0"
+        on:click={handleBackClick}>{$t("NEXT")} &rarr;</button
+      >
+    </div>
+  </div>
+
+  <div class="bore mt-4 content-center items-center justify-center text-center">
+    <h1>{post.title}</h1>
+    <p>{post.description}</p>
+    <p>{$t("Author")} : {post.author}</p>
+    <p>{$t("Author Email")} : {post.authorEmail}</p>
+    <p>{$t("Price")} : {post.price}</p>
+    <p>{$t("Date")} : {post.date}:{post.date}:{post.date}</p>
+
+    <a
+      href="mailto:{post.authorEmail}"
+      class="transition duration-200 hover:text-blue-0"
+      >{$t("SEND EMAIL TO AUTHOR")}
+    </a>
+  </div>
 {/if}
 
 
 
 
 <style>
-
-.container{
-
+  .slider {
     display: flex;
-    width: 60%;
-    height: 40%;
-    background-color:seashell;
-    margin-left: 30%;
-    align-items: center;
-    justify-content: center;
-}
-
-.slider{
-    display:flex;
     width: 800px;
     height: 500px;
     border: 2px solid royalblue;
     margin: 30px auto;
     overflow: hidden;
-}
+  }
 
-.slider-line{
+  .slider-line {
     position: relative;
     display: flex;
     height: 500px;
-    background-color:darkorange;
+    background-color: darkorange;
     left: 0px;
     transition: all ease 1s;
-}
+  }
 
-img{
-
-  width: 800px;
+  img {
+    width: 800px;
     height: 500px;
-}
-
-
-
+  }
 </style>
-

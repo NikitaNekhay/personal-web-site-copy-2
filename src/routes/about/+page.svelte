@@ -5,10 +5,13 @@
 
 <script lang='ts'>
   import About from '../../components/About.svelte'
+   
+   
 </script>
 
 <div class="grid-item-content mt-[200px] mb-[420px]">
   <About />
+
 </div>
 
 <style>

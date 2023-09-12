@@ -1,57 +1,46 @@
-<svelte:head>
-   <title>{'Posts of the blog'}</title>
-   <meta name="post list" content="List of blogs">
+<script>
+  import { Route, Router } from "svelte-routing";
+  import PostList from "../../components/PostList.svelte";
+  import Gallery from "../../components/Gallery.svelte";
 
-</svelte:head>
+  import { getBlogPost } from "./post";
+  import { page } from "$app/stores";
+  import { base } from "$app/paths";
+  import { beforeUpdate, identity, onMount } from "svelte/internal";
+  import { auth } from "$lib/firebase/firebase";
+  import { getUserProfile } from "../profile/user";
+  import PostEdit from "../../components/PostEdit.svelte";
+  import PostDetail from "../../components/PostDetail.svelte";
+  import EmptyPage from "../../components/EmptyPage.svelte";
+  import LoadingSpinner from "../../components/LoadingSpinner.svelte";
 
-<script >
-  import { Route, Router } from 'svelte-routing';
-  import PostList from '../../components/PostList.svelte'
-  import Gallery from '../../components/Gallery.svelte';
+  let isAdmin = false;
+  let passComponent = false;
 
-  import { getBlogPost } from './post';
-  import { page } from '$app/stores';
-  import { base } from '$app/paths';
-  import { identity, onMount } from 'svelte/internal';
-  import { auth } from '$lib/firebase/firebase';
-  import { getUserProfile } from '../profile/user';
-  import PostEdit from '../../components/PostEdit.svelte';
-  import PostDetail from '../../components/PostDetail.svelte';
-  import EmptyPage from '../../components/EmptyPage.svelte';
-   
-  let isAdmin = false
-
-onMount(() => {
-    console.log("getting the name of profile...")
+  onMount(() => {
+    //console.log("getting the name of profile...");
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-        if (user) 
-            if(user.email ==="ktofreesapiens@gmail.com")
-              isAdmin = true
-    })
-        return unsubscribe
-});
-
-
-
+      if (user)
+        if (
+          user.email === "ktofreesapiens@gmail.com" ||
+          user.email === "vaper20041337@gmail.com"
+        )
+          isAdmin = true;
+    });
+    // passComponent = true;
+    return unsubscribe;
+  });
 </script>
 
-<!-- <Router {routes} /> -->
+<svelte:head>
+  <title>{"Posts of the blog"}</title>
+  <meta name="post list" content="List of blogs" />
+</svelte:head>
 
-<!-- {#if isAdmin}
+<!-- {#if passComponent} -->
+{#if isAdmin}
   <PostList />
-{:else}
-  <Gallery />
-{/if} -->
-
-  {#if isAdmin}
-  <PostList />
-{:else}
-  <Gallery />
 {/if}
-
-    <!-- <Route path={`${base}/posts/:id`}   /> 
-    <Route path={`${base}/posts/:id/edit`}   />  -->
-
- 
-
-
+<!-- {:else}
+  <LoadingSpinner />
+{/if} -->

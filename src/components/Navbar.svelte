@@ -1,224 +1,246 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
-    import { base } from '$app/paths'
-    import { onMount} from 'svelte'
-    import {auth, db} from '../lib/firebase/firebase'
-    import { getDoc, doc, setDoc } from 'firebase/firestore';
-    import { Language, authHandlers, authStore } from '../store/store';
-    import Menu from './Menu.svelte'
+    import { base } from "$app/paths";
+    import { onMount } from "svelte";
+    import { auth, db } from "../lib/firebase/firebase";
+    import { getDoc, doc, setDoc } from "firebase/firestore";
+    import { Language, authHandlers, authStore } from "../store/store";
+    import Menu from "./Menu.svelte";
 
-    import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-  import en from '../services/en.json';
-  import { currentLanguagee } from "../store/store_";
+    import { addMessages, locale, t } from "svelte-i18n";
+    import ru from "../services/ru.json";
+    import en from "../services/en.json";
+    import { currentLanguagee } from "../store/store_";
+    import { subscribe } from "svelte/internal";
 
-  if($currentLanguagee!==undefined){
+    if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
         // Switch the language value
-        if(currentValue === Language.English){
-           
-            addMessages(Language.English, en)
-            locale.set(Language.English)
+        if (currentValue === Language.English) {
+            addMessages(Language.English, en);
+            locale.set(Language.English);
         } else {
-          addMessages(Language.Russian, ru)
-            locale.set(Language.Russian)
-           
+            addMessages(Language.Russian, ru);
+            locale.set(Language.Russian);
         }
     } else {
-        addMessages(Language.English, en)
-        locale.set(Language.English)
+        addMessages(Language.English, en);
+        locale.set(Language.English);
     }
 
+    let isAdmin = false;
+    let passComponent = false;
+    export let loginState = false;
+    export let readyExit = false;
 
-
-     
-
-    let isAdmin = false
-    export let loginState = false
-    export let readyExit = false
-
-    const nonAuthRoutes = [`${base}/`,`${base}/about/`,`${base}/contact/`,`${base}/login/`,`${base}/shop/`]
-    const AdminRoutes = [`${base}/dashboard`,`${base}/stat/`,`${base}/create/`,]
+    const nonAuthRoutes = [
+        `${base}/`,
+        `${base}/about/`,
+        `${base}/contact/`,
+        `${base}/login/`,
+        `${base}/shop/`,
+    ];
+    const AdminRoutes = [
+        `${base}/dashboard`,
+        `${base}/stat/`,
+        `${base}/create/`,
+    ];
 
     try {
         onMount(() => {
-
-    
-            console.log('Mounting')
-
+            //console.log('Mounting')
+           
             const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                const currentPath = window.location.pathname
-                
-                console.log("we are hier: ",currentPath)
-                console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
-                if(user){
-                    console.log("there is a user: ",user)
-                    isAdmin = user.email === "ktofreesapiens@gmail.com" ? true : false
-                            
-                    // if(user.email){
-                    //     userName = user.email.slice(0,user.email?.search('@'))
-                    // }
-                                            
+                const currentPath = window.location.pathname;
+
+                //console.log("we are hier: ",currentPath)
+                //console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
+                if (user) {
+                    //console.log("there is a user: ",user)
+                    isAdmin =
+                        user.email === "ktofreesapiens@gmail.com"
+                            ? true
+                            : false;
                 } else {
-                    console.log("there is no user: ",user)
-                    isAdmin = false
+                    //console.log("there is no user: ",user)
+                    isAdmin = false;
                 }
 
-                // console.log("there is name: ",profile.name)
-                
-                if(user === null && !nonAuthRoutes.includes(currentPath)){
-                    window.location.href = `${base}/`
-                    loginState = false
-                    readyExit = false
-                    return
+                if (user === null && !nonAuthRoutes.includes(currentPath)) {
+                    window.location.href = `${base}/`;
+                    loginState = false;
+                    readyExit = false;
+                    return;
                 }
 
-                // if(!isAdmin && !AdminRoutes.includes(currentPath)){
-                //     window.location.href = `${base}/`
-                //     loginState = true
-                //     readyExit = false
-                //     return
-                // }
-
-                if(user !== null && currentPath === `${base}/login/`) {
+                if (user !== null && currentPath === `${base}/login/`) {
                     window.location.href = `${base}/profile/`;
-                    loginState = true
-                    readyExit = false
-                    setTimeout(() => {
-                        location.reload();
-                    }, 500);
-                    return
+                    loginState = true;
+                    readyExit = false;
+                    // setTimeout(() => {
+                    //     location.reload();
+                    // }, 500);
+                    return;
                 }
 
                 // logout logic???????????
-                if(user && currentPath === `${base}/profile/}`) {
-                    readyExit = true
-                    loginState = true
-                    return
+                if (user && currentPath === `${base}/profile/}`) {
+                    readyExit = true;
+                    loginState = true;
+                    return;
                 }
 
-                if(!user) {
-                    loginState = false
-                    readyExit = false
-                    return
+                if (!user) {
+                    loginState = false;
+                    readyExit = false;
+                    return;
                 } else {
-                    loginState = true
+                    loginState = true;
                 }
 
-                let dataToSetToStore= {
-                        email:user.email,
-                        
-                        messages: []
-                        
-                    };
+                let dataToSetToStore = {
+                    email: user.email,
 
-                if(user){
-                    const docRef = doc(db, 'user', user.uid)
-                    
-                    const docSnap = await getDoc(docRef)
-                    if(!docSnap.exists()) {
+                    messages: [],
+                };
+
+                if (user) {
+                    const docRef = doc(db, "user", user.uid);
+
+                    const docSnap = await getDoc(docRef);
+                    if (!docSnap.exists()) {
                         //initialize users document
-                        console.log('Creating user')
-                        const userRef = doc(db,'user',user.uid)
+                        //console.log('Creating user')
+                        const userRef = doc(db, "user", user.uid);
                         dataToSetToStore = {
-                            email:user.email, 
-                            messages: []
-                        }
-                        await setDoc(
-                            userRef,
-                            dataToSetToStore,
-                            {merge: true}
-                        )
-                        if(user.email === "ktofreesapiens@gmail.com")
-                            isAdmin = true
+                            email: user.email,
+                            messages: [],
+                        };
+                        await setDoc(userRef, dataToSetToStore, {
+                            merge: true,
+                        });
+                        if (user.email === "ktofreesapiens@gmail.com")
+                            isAdmin = true;
                     } else {
-                        console.log("Fetching User");
-                        const userData = docSnap.data()
-                        
-                        dataToSetToStore = userData
-                        if(dataToSetToStore.email === "ktofreesapiens@gmail.com")
-                            isAdmin = true
-                        
-                        authStore.set((curr) => { // was update
-                        return{
-                            ...curr,
-                            user:user,
-                            data:{
-                                ...curr.data,
-                                email: dataToSetToStore.email
-                            },
-                            loading: false,
-                        }
-                            
-                    })
-                    
+                        //console.log("Fetching User");
+                        const userData = docSnap.data();
+
+                        dataToSetToStore = userData;
+                        if (
+                            dataToSetToStore.email ===
+                            "ktofreesapiens@gmail.com"
+                        )
+                            isAdmin = true;
+
+                        authStore.set((curr) => {
+                            // was update
+                            return {
+                                ...curr,
+                                user: user,
+                                data: {
+                                    ...curr.data,
+                                    email: dataToSetToStore.email,
+                                },
+                                loading: false,
+                            };
+                        });
                     }
                 }
-                
-            })
-        return unsubscribe
-        })
+            });
+            const interval = setInterval(() => {
+                //console.log('hi')
+                passComponent = true;
+            }, 1000);
+            return subscribe,() => clearInterval(interval);
+            
+        });
     } catch (error) {
-        console.log("error while mounting", error)
+        console.error("error while mounting", error);
     }
-    
-    
+
 </script>
 
 <nav class="flex w-screen font-anonymous">
     <!--The form itself  -->
     <div class="fixed top-0 z-30 w-full">
-        <div class='flex items-center justify-between mx-auto w-11/12 bg-white-1 shadow-white-2 drop-shadow-2xl border-x-4 border-navy-1'>
-            <div class='flex items-center justify-between mx-2 w-full lg:gap-16 sm:gap-0 md:gap-8'>
+        <div
+            class="mx-auto flex w-11/12 items-center justify-between border-x-4 border-navy-1 bg-white-1 shadow-white-2 drop-shadow-2xl"
+        >
+            <div
+                class="mx-2 flex w-full items-center justify-between sm:gap-0 md:gap-8 lg:gap-16"
+            >
                 <!-- Logo(Left side) -->
-                <div class="text-2xl ">
-                    <a class="transition duration-200 hover:text-yellow-0" 
-                    target="_self" href='{base}/'>
+                <div class="text-2xl">
+                    <a
+                        class="transition duration-200 hover:text-yellow-0"
+                        target="_self"
+                        href="{base}/"
+                    >
                         <h1>
-                            <p class="flex justify-center">
-                                NIKITA
-                            </p>
-                            <p>
-                                NIAKHAI
-                            </p>
+                            <p class="flex justify-center">NIKITA</p>
+                            <p>NIAKHAI</p>
                         </h1>
                     </a>
                 </div>
                 <!-- Links(Center) -->
-                <div class="flex items-center justify-between drop-shadow lg:mx-20 sm:mx-8 md:mx-12">
+                <div
+                    class="flex items-center justify-between drop-shadow sm:mx-8 md:mx-12 lg:mx-20"
+                >
                     <div class="border-r-2 border-navy-2">
-                        <a  class="text-black no-underline 
-                        hover:underline underline-offset-4"   target="_self" 
-                        href='{base}/about' >{$t('About')} </a>
-                        <a  class="text-black no-underline lg:mx-20 sm:mx-8 md:mx-12 
-                        hover:underline underline-offset-4"   target="_self" 
-                        href='{base}/contact' >{$t('Contact')} </a>
+                        <a
+                            class="text-black no-underline
+                        underline-offset-4 hover:underline"
+                            target="_self"
+                            href="{base}/about"
+                            >{$t("About")}
+                        </a>
+                        <a
+                            class="text-black no-underline underline-offset-4 hover:underline sm:mx-8
+                        md:mx-12 lg:mx-20"
+                            target="_self"
+                            href="{base}/contact"
+                            >{$t("Contact")}
+                        </a>
                     </div>
                     <div class="border-l-2 border-navy-2">
-                        <a  class="text-black no-underline lg:mx-20 sm:mx-8 md:mx-12
-                        hover:underline underline-offset-4"   
-                        target="_self" href='{base}/posts' >{$t('Shop')} </a>
-                        <a  class="text-black no-underline 
-                        hover:underline underline-offset-4"   
-                        target="_self" href='{base}/works' >{$t('Works')} </a>
+                        <a
+                            class="text-black no-underline underline-offset-4 hover:underline sm:mx-8
+                        md:mx-12 lg:mx-20"
+                            target="_self"
+                            href="{base}/shop"
+                            >{$t("Shop")}
+                        </a>
+                        <a
+                            class="text-black no-underline
+                        underline-offset-4 hover:underline"
+                            target="_self"
+                            href="{base}/works"
+                            >{$t("Works")}
+                        </a>
                     </div>
-                    
-                </div>   
-            
+                </div>
+
                 <!-- Login/Profile(Right side) -->
-                <div>  
-                    <div class="grid-column-auto grid-row-auto ">
+                <div>
+                    <div class="grid-column-auto grid-row-auto">
+                        {#if passComponent}
                         {#if loginState == false}
-                            <a on:click={authHandlers.login} class="col-span-full 
-                            grid-row-auto transition duration-200 
-                            hover:text-yellow-0" target="_self" href='{base}/login'>
-                                {$t('Login')} 
+                            <a
+                                on:click={authHandlers.login}
+                                class="grid-row-auto
+                            col-span-full transition duration-200
+                            hover:text-yellow-0"
+                                target="_self"
+                                href="{base}/login"
+                            >
+                                {$t("Login")}
                             </a>
                         {:else}
                             <Menu />
                         {/if}
-                    </div>    
+                        {/if}
+                    </div>
                 </div>
             </div>
         </div>

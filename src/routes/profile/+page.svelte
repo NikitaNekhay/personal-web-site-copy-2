@@ -5,7 +5,7 @@
 
 <script >
   import Profile from '../../components/Profile.svelte'
-  export const prerender = 'auto'
+  
 </script>
 
 <Profile />

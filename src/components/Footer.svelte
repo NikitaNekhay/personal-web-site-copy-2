@@ -47,7 +47,7 @@ function changeLanguage(){
 
         
     } else {
-        console.log("access to localStorage for languages is restricted...")
+        console.error("access to localStorage for languages is restricted...")
     }
 
 
@@ -56,9 +56,9 @@ function changeLanguage(){
 
 </script>
 
-<footer aria-label="Site Footer" class="bg-white-1 lg:grid lg:grid-cols-5 font-anonymous mt-96  shadow-white-2 drop-shadow-2xl">
+<footer aria-label="Site Footer" class="relative bg-white-1  lg:grid lg:grid-cols-5 font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
 
-        <div class="relative block h-32 lg:col-span-2 lg:h-full">
+        <div class="relative block h-32  lg:col-span-2 lg:h-full">
             <img
             src="https://lh3.googleusercontent.com/pw/AJFCJaWk73NiFqnvmE4ERdCThcHS_cjkfnjyMZT77oTLttHPaAYfRT2E0vWixrFc_Yk_PkkbBO6EunYTPi65rkik7TkcgBi1Av-UeGfMTcww1syn7ZlhRpU=w2400"
             alt="pink flower in lake"

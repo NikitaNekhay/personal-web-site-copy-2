@@ -1,12 +1,7 @@
 import { auth, db } from "$lib/firebase/firebase"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import { collection, deleteDoc, doc, getDoc} from "firebase/firestore";
-import {  derived, writable } from "svelte/store"
-import { getStorage } from 'firebase/storage';
-import {onMount } from "svelte";
-import { getUserProfile } from "../routes/profile/user";
-import { browser } from "$app/environment";
-import type { SessionStore } from "../hooks";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { deleteDoc, doc } from "firebase/firestore";
+import { writable } from "svelte/store"
 
 
 // function createLocalStorageStore(key, initialValue) {
@@ -36,128 +31,128 @@ import type { SessionStore } from "../hooks";
 //   };
 // }
 
-  
-  // export const authStore = createLocalStorageStore('auth',{
-  //   user: null,
-  //   loading: true,
-  //   data: {
-  //     name: "",
-  //     email: "",
-  //     phone: "",
-  //     country: "",
-  //     description: "",
-  //     messages:[],
-  //   },
-  // });
 
-  export enum Language {
-    English = 'en',
-    Russian = 'ru',
-  }
+// export const authStore = createLocalStorageStore('auth',{
+//   user: null,
+//   loading: true,
+//   data: {
+//     name: "",
+//     email: "",
+//     phone: "",
+//     country: "",
+//     description: "",
+//     messages:[],
+//   },
+// });
 
-    // if (typeof window !== 'undefined') {
-    //   // Perform localStorage action
-    //   localStorage.setItem("language",Language.English)
-      
-    // }
- 
-  
+export enum Language {
+  English = 'en',
+  Russian = 'ru',
+}
 
-    export const currentLanguage = writable({
-      language: Language.English
-    })
+// if (typeof window !== 'undefined') {
+//   // Perform localStorage action
+//   localStorage.setItem("language",Language.English)
+
+// }
 
 
-  // export const language = derived<SessionStore, Language>(session, ($session, set)=>{})
 
-  // export const currentLanguage = writable<Language>(Language.English, (set)=>{
-  //   if(browser){
-  //     const localStorageValue = window.localStorage.getItem(
-  //       'language'
-  //     ) as Language | null
-  //     const value = localStorageValue
-  //       ? localStorageValue
-  //       : window.onlanguagechange
-  //       ? Language.English
-  //       : Language.Russian
-
-  //     set(value)
-  //   }
-  // })
-
-  // currentLanguage.subscribe((value)=>{
-  //   if(browser){
-  //     window.localStorage.setItem('language',value)
-  //   }
-  // })
+export const currentLanguage = writable({
+  language: Language.English
+})
 
 
-  export const authStore = writable({
-    user: null,
-    loading: true,
-    data: {
-      name: "",
-      email: "",
-      phone: "",
-      country: "",
-      description: "",
-      messages:[],
-    },
-  });
+// export const language = derived<SessionStore, Language>(session, ($session, set)=>{})
 
-  ////////////////
-  export const statisticsStore = writable({
-    id: -1,
-    authorEmailClicks: 0,
-    adminDataClicks: 0,
-  });
+// export const currentLanguage = writable<Language>(Language.English, (set)=>{
+//   if(browser){
+//     const localStorageValue = window.localStorage.getItem(
+//       'language'
+//     ) as Language | null
+//     const value = localStorageValue
+//       ? localStorageValue
+//       : window.onlanguagechange
+//       ? Language.English
+//       : Language.Russian
+
+//     set(value)
+//   }
+// })
+
+// currentLanguage.subscribe((value)=>{
+//   if(browser){
+//     window.localStorage.setItem('language',value)
+//   }
+// })
+
+
+export const authStore = writable({
+  user: null,
+  loading: true,
+  data: {
+    name: "",
+    email: "",
+    phone: "",
+    country: "",
+    description: "",
+    messages: [],
+  },
+});
+
+////////////////
+export const statisticsStore = writable({
+  id: -1,
+  authorEmailClicks: 0,
+  adminDataClicks: 0,
+});
 
 export const blogPost = writable({
-    id:'',
-    title:'',
-    images: [] as string[],
-    author: 'John Berkley',
-    authorEmail: 'john.example@gmail.com',
-    description: 'Lorem ipsum',
-    price: 1,
-    date: new Date(),
-    
+  id: '',
+  title: '',
+  images: [] as string[],
+  author: 'John Berkley',
+  authorEmail: 'john.example@gmail.com',
+  description: 'Lorem ipsum',
+  price: 1,
+  date: new Date(),
+
 });
 
 
 export const authHandlers = {
 
-    signup: async (email,pass) => {
-        await createUserWithEmailAndPassword(auth,email,pass)
-        console.log("creating user")
-        // var emailAuth = email;
+  signup: async (email, pass) => {
+    await createUserWithEmailAndPassword(auth, email, pass)
+    // console.log("creating user")
+    // var emailAuth = email;
 
-        // FirebaseAuth.instance.sendSignInLinkToEmail(
-        //         email: emailAuth, actionCodeSettings: acs)
-        //     .catchError((onError) => print('Error sending email verification $onError'))
-        //     .then((value) => print('Successfully sent email verification'));
-        // };
-    },
-    login:async (email,pass) => {
-        console.log("signing in")
-        await signInWithEmailAndPassword(auth,email,pass)
-    },
-    logout: async () => {
-        console.log("signing out")
-        await signOut(auth)
+    // FirebaseAuth.instance.sendSignInLinkToEmail(
+    //         email: emailAuth, actionCodeSettings: acs)
+    //     .catchError((onError) => print('Error sending email verification $onError'))
+    //     .then((value) => print('Successfully sent email verification'));
+    // };
+  },
+  login: async (email, pass) => {
+    // console.log("signing in")
+    await signInWithEmailAndPassword(auth, email, pass)
+  },
+  logout: async () => {
+    // console.log("signing out")
+    await signOut(auth)
 
-    },
-    deactivate: async () => {
-        console.log("deactivating account...")
-        // Delete the user from Firestore
-        const userDocRef = doc(db, "user", auth.currentUser.uid);
-        await deleteDoc(userDocRef);
-        await db.collection("user").doc(auth.currentUser?.uid).delete();
+  },
+  deactivate: async () => {
+    //  console.log("deactivating account...")
+    // Delete the user from Firestore
+    const userDocRef = doc(db, "user", auth.currentUser.uid);
+    await deleteDoc(userDocRef);
+    await db.collection("user").doc(auth.currentUser?.uid).delete();
 
-       // Delete user from Firebase Authentication
-        await auth.currentUser?.delete()
-        console.log('User successfully deactivated');
+    // Delete user from Firebase Authentication
+    await auth.currentUser?.delete()
+    //  console.log('User successfully deactivated');
 
-    },
+  },
 
 }

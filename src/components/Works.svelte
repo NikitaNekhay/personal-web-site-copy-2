@@ -39,16 +39,16 @@
         </div>
         <div class="grid w-3/12 justify-center self-center font-anonymous text-2xl gap-y-20">
           <div>
-            <a class="transition duration-200 hover:text-yellow-0" target="_blank" href="https://www.instagram.com/direct/t/17845712849869313">{$t("longsleeve 'Polar bear'")}</a>
+            <a class="transition duration-200 hover:text-yellow-0" target="_blank" href="http://localhost:5173/Personal-Website/posts/lDfXFtXkEcyUlzc82nqJ/">{$t("longsleeve 'Polar bear'")}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="https://www.instagram.com/direct/t/17845712849869313">{$t('jacket Channel')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="http://localhost:5173/Personal-Website/posts/lmeIFdYuXjilAHVh7ClK/">{$t('jacket Channel')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="https://www.instagram.com/direct/t/17845712849869313">{$t('assymetric longsleeve')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="http://localhost:5173/Personal-Website/posts/7pnembg3O6YIsmaJWdbG/">{$t('assymetric longsleeve')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="https://www.instagram.com/direct/t/17845712849869313">{$t('circled tank top')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="http://localhost:5173/Personal-Website/posts/Y1JigqXUTUrLEYxmv2G2/">{$t('circled tank top')}</a>
           </div>
 
 
@@ -132,5 +132,7 @@
         </div>
     </div> -->
   </section>
+
+ 
 
 </main>

@@ -9,6 +9,10 @@
   import Home from "../components/Home.svelte";
   import PostDetail from "../components/PostDetail.svelte";
   import { base } from "$app/paths";
+    import { onMount } from "svelte";
+
+
+
 
 </script>
 
