@@ -5,9 +5,9 @@
     getUserProfiles,
     handleDelete,
     updateUserProfile,
-  } from "../routes/profile/user";
+  } from "../../routes/profile/user";
   import { base } from "$app/paths";
-    import LoadingSpinner from "./LoadingSpinner.svelte";
+    import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
 
   let userProfiles = [];
   let latestProfiles = [];

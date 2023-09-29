@@ -1,86 +1,63 @@
 <script lang="ts">
   import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
   import { auth, storage } from "$lib/firebase/firebase";
-  import { onMount } from "svelte";
-  import {
-    addBlogPost,
-    blogsCollection,
-    getBlogPost,
-    updateBlogPost,
-  } from "../routes/posts/post";
-  import { page } from "$app/stores";
+  import { addBlogPost } from "../../../routes/posts/post";
   import { addMessages, locale, t } from "svelte-i18n";
-  import { currentLanguagee } from "../store/store_";
-  import ru from "../services/ru.json";
-  import en from "../services/en.json";
-  import { Language } from "../store/store";
-  import LoadingButton from "./LoadingButton.svelte";
+  import ru from "../../../services/ru.json";
+  import en from "../../../services/en.json";
+  import { currentLanguagee } from "../../../store/store_";
+  import { Language } from "../../../store/store";
+  import LoadingButton from "../../Shared/LoadingButton.svelte";
+    import { beforeUpdate } from "svelte";
 
-  export let post;
+  // if($currentLanguagee!==undefined){
+  //     const currentValue = $currentLanguagee;
+  //     // Switch the language value
+  //     if(currentValue === Language.English){
 
-  let tempPost = post;
+  //         addMessages(Language.English, en)
+  //         locale.set(Language.English)
+  //     } else {
+  //       addMessages(Language.Russian, ru)
+  //         locale.set(Language.Russian)
+
+  //     }
+  // } else {
+  //     addMessages(Language.English, en)
+  //     locale.set(Language.English)
+  // }
 
   let isLoading = true;
-  let submitClicked = false;
-  let submitImageClicked = false;
+  let sumbitClicked = false;
+
+  let tempPost = {
+    id: -1,
+    title: "",
+    description: "",
+    author: "",
+    authorEmail: "",
+    price: "",
+    images: [] as string[],
+    date: new Date(),
+  };
 
   async function handleSubmit(event) {
     event.preventDefault();
     const user = auth.currentUser;
-    submitClicked = true;
+    sumbitClicked = true;
     isLoading = true;
     try {
-      if (submitImageClicked) {
-        //console.log("these are tempPost.images",tempPost.images)
-        const imageUrls: string[] = [];
-        // console.log('typeof imageURLS',tempPost)
-        // console.log(tempPost.images.length)
-        for (let i = 0; i < tempPost.images.length; i++) {
-          const tempURL = await uploadImage(tempPost.images);
-          // imageUrls[i].push(tempURL);
-        }
+      const imageUrls = await Promise.all(tempPost.images.map(uploadImage));
 
-        // console.log("These are imageUrls in handleSumbit",imageUrls)
-        // Update the tempPost object with the download URLs
-        tempPost.images = imageUrls;
-        // if(typeof(tempPost.images)==='string'){
-        //   tempPost.images=['',]
-        //   console.log('type of uploaded images is just a string not an array')
-        // }
-        // console.log("tempPost.images after promise from uploadImage",tempPost.images)
-        updateBlogPost(
-          tempPost.id,
-          tempPost.title,
-          tempPost.images,
-          tempPost.author,
-          tempPost.authorEmail,
-          tempPost.description,
-          tempPost.price,
-          tempPost.date
-        );
-        isLoading = false;
-        submitClicked = false;
-        //  console.log("Form submitted");
-      } else {
-        //  console.log("haven't touch images")
-        // if there is error in 1 and second ways of updating, then console on images there
-        updateBlogPost(
-          tempPost.id,
-          tempPost.title,
-          tempPost.images,
-          tempPost.author,
-          tempPost.authorEmail,
-          tempPost.description,
-          tempPost.price,
-          tempPost.date
-        );
-        isLoading = false;
-      }
+      // Update the tempPost object with the download URLs
 
-      //console.log('Form submitted')
-    } catch (error) {
-      console.error("auth error", error);
+      tempPost.images = imageUrls;
+      addBlogPost(tempPost);
+      console.log("Form submitted",isLoading);
+      isLoading = false;
+      sumbitClicked = false;
+    } catch (err) {
+      console.error("auth error", err);
     }
   }
 
@@ -89,31 +66,30 @@
       const storageRef = ref(storage, `images/${image.name}`);
       await uploadBytes(storageRef, image);
       const downloadURL = await getDownloadURL(storageRef);
-      // console.log('URL of Images:', downloadURL)
+      // correct console.log('Image uploaded:', downloadURL)
       return downloadURL;
     } catch (error) {
-      console.error("uploadImage error", error);
+      console.error("error while upisLoading the image", error);
     }
   }
 
   function handleImageUpload(event) {
     try {
-      submitImageClicked = true;
       const files = event.target.files;
-      // coorect
-      tempPost.images = [];
-      tempPost.images = [...tempPost.images, ...Array.from(files)];
-      //  console.log("these are your files for tempPost.images:",tempPost.images)
+      // coorect console.log(files)
+      tempPost.images = Array.from(files);
     } catch (error) {
-      console.error("handleImageUpload error", error);
+      console.error("error while handleImageUpload", error);
     }
   }
+
+
 </script>
 
 <div class="place flex place-content-center pt-60">
   <form class="w-full max-w-lg">
     <div class=" mb-6 flex justify-center">
-      <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT POST")}</h1>
+      <h1 class="font-abril text-4xl text-blue-0">{$t("CREATE POST")}</h1>
     </div>
 
     <div class="-mx-3 mb-6 flex flex-wrap">
@@ -275,7 +251,6 @@
             type="file"
             id="images"
             on:change={handleImageUpload}
-            bind:value={tempPost.images}
             multiple
             placeholder="Files"
           />
@@ -285,34 +260,29 @@
           peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
           />
         </label>
-        {#if !submitImageClicked}
-          <p class="mt-3 text-xs italic text-gray-600">
-            {$t("Quantity of images")}:{tempPost.images.length}
-          </p>
-        {/if}
       </div>
     </div>
 
-    {#if submitClicked && isLoading}
+    {#if sumbitClicked && isLoading}
       <LoadingButton />
     {:else}
       <button
         class="group relative mx-[136px] flex
-w-1/2 items-center justify-center overflow-hidden
- rounded-md border border-orange-0
-px-8 py-3 focus:outline-none"
+  w-1/2 items-center justify-center overflow-hidden
+   rounded-md border border-orange-0
+  px-8 py-3 focus:outline-none"
         type="button"
         on:click={handleSubmit}
       >
         <span
           class="absolute inset-x-0 bottom-0 h-[2px]
-  bg-orange-0 transition-all group-hover:h-full
-  group-active:bg-orange-0"
+    bg-orange-0 transition-all group-hover:h-full
+    group-active:bg-orange-0"
         />
 
         <span
           class="relative text-sm font-medium
-  text-orange-0 transition-colors group-hover:text-white"
+    text-orange-0 transition-colors group-hover:text-white"
         >
           {$t("Submit")}
         </span>

@@ -1,7 +1,7 @@
 <script>
   import { Route, Router } from "svelte-routing";
-  import PostList from "../../components/PostList.svelte";
-  import Gallery from "../../components/Gallery.svelte";
+  import PostList from "../../components/MainPages/Posts/PostList.svelte";
+  import Gallery from "../../components/MainPages/Gallery.svelte";
 
   import { getBlogPost } from "./post";
   import { page } from "$app/stores";
@@ -9,10 +9,10 @@
   import { beforeUpdate, identity, onMount } from "svelte/internal";
   import { auth } from "$lib/firebase/firebase";
   import { getUserProfile } from "../profile/user";
-  import PostEdit from "../../components/PostEdit.svelte";
-  import PostDetail from "../../components/PostDetail.svelte";
-  import EmptyPage from "../../components/EmptyPage.svelte";
-  import LoadingSpinner from "../../components/LoadingSpinner.svelte";
+  import PostEdit from "../../components/MainPages/Posts/PostEdit.svelte";
+  import PostDetail from "../../components/MainPages/Posts/PostDetail.svelte";
+  import EmptyPage from "../../components/Shared/EmptyPage.svelte";
+  import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
 
   let isAdmin = false;
   let passComponent = false;

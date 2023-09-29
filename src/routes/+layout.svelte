@@ -1,16 +1,9 @@
 <script>
-    import Navbar from "../components/Navbar.svelte";
-    import EmptyPage from "../components/EmptyPage.svelte";
+    import Navbar from "../components/NavbarFooter/Navbar.svelte";
+    import EmptyPage from "../components/Shared/EmptyPage.svelte";
     import "../app.css";
-    import Footer from "../components/Footer.svelte";
+    import Footer from "../components/NavbarFooter/Footer.svelte";
     import { page } from "$app/stores";
-    import { Route, Router } from 'svelte-routing';
-
-  import Home from "../components/Home.svelte";
-  import PostDetail from "../components/PostDetail.svelte";
-  import { base } from "$app/paths";
-    import { onMount } from "svelte";
-
 
 
 

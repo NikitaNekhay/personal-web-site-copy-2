@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script lang='ts'>
-  import About from '../../components/About.svelte'
+  import About from '../../components/MainPages/About.svelte'
    
    
 </script>

@@ -1,11 +1,11 @@
 <script>
-    import { Language, authHandlers } from "../store/store";
+    import { Language, authHandlers } from "../../store/store";
 
     import { addMessages, locale, t } from "svelte-i18n";
-    import ru from "../services/ru.json";
-    import en from "../services/en.json";
-    import { currentLanguagee } from "../store/store_";
-    import LoadingButton from "./LoadingButton.svelte";
+    import ru from "../../services/ru.json";
+    import en from "../../services/en.json";
+    import { currentLanguagee } from "../../store/store_";
+    import LoadingButton from "../Shared/LoadingButton.svelte";
 
     let sumbitClicked = false;
     let isLoading = true;

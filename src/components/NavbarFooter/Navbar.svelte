@@ -3,15 +3,15 @@
 
     import { base } from "$app/paths";
     import { onMount } from "svelte";
-    import { auth, db } from "../lib/firebase/firebase";
+    import { auth, db } from "../../lib/firebase/firebase";
     import { getDoc, doc, setDoc } from "firebase/firestore";
-    import { Language, authHandlers, authStore } from "../store/store";
+    import { Language, authHandlers, authStore } from "../../store/store";
     import Menu from "./Menu.svelte";
 
     import { addMessages, locale, t } from "svelte-i18n";
-    import ru from "../services/ru.json";
-    import en from "../services/en.json";
-    import { currentLanguagee } from "../store/store_";
+    import ru from "../../services/ru.json";
+    import en from "../../services/en.json";
+    import { currentLanguagee } from "../../store/store_";
     import { subscribe } from "svelte/internal";
 
     if ($currentLanguagee !== undefined) {
@@ -40,17 +40,18 @@
         `${base}/contact/`,
         `${base}/login/`,
         `${base}/shop/`,
+        `${base}/works/`,
     ];
     const AdminRoutes = [
-        `${base}/dashboard`,
+        `${base}/dashboard/`,
         `${base}/stat/`,
         `${base}/create/`,
+        `${base}/posts/`,
     ];
 
     try {
         onMount(() => {
-            //console.log('Mounting')
-           
+        
             const unsubscribe = auth.onAuthStateChanged(async (user) => {
                 const currentPath = window.location.pathname;
 
@@ -59,7 +60,7 @@
                 if (user) {
                     //console.log("there is a user: ",user)
                     isAdmin =
-                        user.email === "ktofreesapiens@gmail.com"
+                        user.email === "ktofreesapiens@gmail.com" || "vaper20041337@gmail.com"
                             ? true
                             : false;
                 } else {

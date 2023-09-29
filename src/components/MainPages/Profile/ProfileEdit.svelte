@@ -1,17 +1,17 @@
 <script lang="ts">
   import { onMount, setContext } from "svelte";
-  import { getUserProfile, updateUserProfile } from "../routes/profile/user";
+  import { getUserProfile, updateUserProfile } from "../../../routes/profile/user";
   import type { User } from "firebase/auth";
-  import { auth, db } from "../lib/firebase/firebase";
-  import { authHandlers, authStore, currentLanguage } from "../store/store";
+  import { auth, db } from "../../../lib/firebase/firebase";
+  import { authHandlers, authStore, currentLanguage } from "../../../store/store";
   import { base } from "$app/paths";
-  import { clickOutside } from "../services/clickOutside";
+  import { clickOutside } from "../../../services/clickOutside";
   import ProfileOptions from "./ProfileOptions.svelte";
   import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../services/ru.json";
+  import ru from "../../../services/ru.json";
   import ProfileEditDone from "./ProfileEditDone.svelte";
-  import en from "../services/en.json";
-  import LoadingButton from "./LoadingButton.svelte";
+  import en from "../../../services/en.json";
+  import LoadingButton from "../../Shared/LoadingButton.svelte";
 
   let sumbitClicked = false;
   let isLoading = false;

@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script lang='ts'>
-  import Login from '../../components/Login.svelte'
+  import Login from '../../components/MainPages/Login.svelte'
 </script>
 
 <Login />

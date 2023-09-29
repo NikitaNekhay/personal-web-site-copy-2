@@ -1,15 +1,15 @@
 <script lang="ts">
   // import states
   import { onMount } from "svelte";
-  import { getBlogPosts } from "../routes/posts/post";
+  import { getBlogPosts } from "../../routes/posts/post";
   import { base } from "$app/paths";
-  import { Language, blogPost } from "../store/store";
+  import { Language, blogPost } from "../../store/store";
   import { addMessages, locale, t } from "svelte-i18n";
-  import { currentLanguagee } from "../store/store_";
-  import ru from "../services/ru.json";
-  import en from "../services/en.json";
-  import NoPosts from "./NoPosts.svelte";
-  import LoadingSpinner from "./LoadingSpinner.svelte";
+  import { currentLanguagee } from "../../store/store_";
+  import ru from "../../services/ru.json";
+  import en from "../../services/en.json";
+  import NoPosts from "../Shared/NoPosts.svelte";
+  import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
 
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;

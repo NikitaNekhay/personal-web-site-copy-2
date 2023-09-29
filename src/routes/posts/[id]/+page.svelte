@@ -1,16 +1,16 @@
 <script lang="ts">
   import { Router, Route } from "svelte-routing";
-  import PostDetail from "../../../components/PostDetail.svelte";
+  import PostDetail from "../../../components/MainPages/Posts/PostDetail.svelte";
 
   import { base } from "$app/paths";
   import { getBlogPost } from "../post";
   import { page } from "$app/stores";
   import { blogPost } from "../../../store/store";
-  import PostEdit from "../../../components/PostEdit.svelte";
+  import PostEdit from "../../../components/MainPages/Posts/PostEdit.svelte";
   import { onMount } from "svelte";
   import type { PostType } from "../../../shared/types";
-  import LoadingButton from "../../../components/LoadingButton.svelte";
-    import LoadingSpinner from "../../../components/LoadingSpinner.svelte";
+  import LoadingButton from "../../../components/Shared/LoadingButton.svelte";
+    import LoadingSpinner from "../../../components/Shared/LoadingSpinner.svelte";
 
   let isLoading = true; // Initialize the loading state
 

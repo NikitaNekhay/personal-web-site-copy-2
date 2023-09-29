@@ -1,11 +1,11 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { clickOutside } from "../services/clickOutside";
-  import { authHandlers } from "../store/store";
+  import { clickOutside } from "../../../services/clickOutside";
+  import { authHandlers } from "../../../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
-  import ru from '../services/ru.json';
-  import en from '../services/en.json';
-  import { currentLanguage } from '../store/store';
+  import ru from '../../../services/ru.json';
+  import en from '../../../services/en.json';
+  import { currentLanguage } from '../../../store/store';
   import { onMount } from 'svelte';
 
 

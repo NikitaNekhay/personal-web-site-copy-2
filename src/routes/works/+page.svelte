@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import Works from '../../components/Works.svelte'
+  import Works from '../../components/MainPages/Works.svelte'
 </script>
 
 <Works />

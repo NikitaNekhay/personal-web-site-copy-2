@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import EditProfile from '../../../components/ProfileEdit.svelte'
+  import EditProfile from '../../../components/MainPages/Profile/ProfileEdit.svelte'
 </script>
 
 <EditProfile />

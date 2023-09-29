@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import PostCreate from '../../components/PostCreate.svelte'
+  import PostCreate from '../../components/MainPages/Posts/PostCreate.svelte'
 </script>
 
 <PostCreate />

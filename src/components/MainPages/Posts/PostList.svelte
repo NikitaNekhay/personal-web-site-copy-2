@@ -1,14 +1,14 @@
 <script lang="ts">
   // import states
   import {  onMount } from "svelte";
-  import { getBlogPosts, deleteBlogPost } from "../routes/posts/post";
+  import { getBlogPosts, deleteBlogPost } from "../../../routes/posts/post";
   import { base } from "$app/paths";
-  import { blogPost, currentLanguage } from "../store/store";
+  import { blogPost, currentLanguage } from "../../../store/store";
   import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../services/ru.json";
-  import en from "../services/en.json";
-  import NoPosts from "./NoPosts.svelte";
-  import LoadingSpinner from "./LoadingSpinner.svelte";
+  import ru from "../../../services/ru.json";
+  import en from "../../../services/en.json";
+  import NoPosts from "../../Shared/NoPosts.svelte";
+  import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
 
   let blogPosts = [];
   let isLoading = true;

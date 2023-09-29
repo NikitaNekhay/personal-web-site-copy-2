@@ -1,11 +1,11 @@
 <script lang="ts">
-  import PostEdit from "../../../../components/PostEdit.svelte";
+  import PostEdit from "../../../../components/MainPages/Posts/PostEdit.svelte";
   import { Router, Route } from "svelte-routing";
   import { base } from "$app/paths";
   import { getBlogPost } from "../../post";
   import { page } from "$app/stores";
   import { blogPost } from "../../../../store/store";
-  import LoadingSpinner from "../../../../components/LoadingSpinner.svelte";
+  import LoadingSpinner from "../../../../components/Shared/LoadingSpinner.svelte";
 
   let isLoading = true; // Initialize the loading state
 

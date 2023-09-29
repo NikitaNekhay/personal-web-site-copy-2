@@ -1,17 +1,17 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import { getBlogPost } from "../routes/posts/post";
+  import { getBlogPost } from "../../../routes/posts/post";
 
   import { page } from "$app/stores";
 
   import { addMessages, locale, t } from "svelte-i18n";
-  import { currentLanguagee } from "../store/store_";
-  import ru from "../services/ru.json";
-  import en from "../services/en.json";
-  import { Language } from "../store/store";
-  import type { PostType } from "../shared/types";
-  import NoPosts from "./NoPosts.svelte";
-  import LoadingSpinner from "./LoadingSpinner.svelte";
+  import { currentLanguagee } from "../../../store/store_";
+  import ru from "../../../services/ru.json";
+  import en from "../../../services/en.json";
+  import { Language } from "../../../store/store";
+  import type { PostType } from "../../../shared/types";
+  import NoPosts from "../../Shared/NoPosts.svelte";
+  import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
 
   export let post: PostType;
   //export let post = $page.params

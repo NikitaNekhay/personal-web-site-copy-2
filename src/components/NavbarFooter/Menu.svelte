@@ -1,14 +1,14 @@
 <script>
   import { base } from "$app/paths";
   import { onMount } from "svelte";
-  import { clickOutside } from "../services/clickOutside";
-  import { Language, authHandlers } from "../store/store";
+  import { clickOutside } from "../../services/clickOutside";
+  import { Language, authHandlers } from "../../store/store";
   import { auth } from "$lib/firebase/firebase";
-  import { getUserProfile } from "../routes/profile/user";
+  import { getUserProfile } from "../../routes/profile/user";
   import { addMessages, locale, t } from 'svelte-i18n';
-    import ru from '../services/ru.json';
-  import en from '../services/en.json';
-  import { currentLanguagee } from "../store/store_";
+    import ru from '../../services/ru.json';
+  import en from '../../services/en.json';
+  import { currentLanguagee } from "../../store/store_";
 
   if($currentLanguagee!==undefined){
         const currentValue = $currentLanguagee;

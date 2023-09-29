@@ -4,8 +4,8 @@
 </svelte:head>
 
 <script lang='ts'>
-  import Contact from '../../components/Contact.svelte'
-  import Authorphoto from '../../components/Authorphoto.svelte'
+  import Contact from '../../components/MainPages/Contact.svelte'
+  import Authorphoto from '../../components/MainPages/About/Authorphoto.svelte'
 </script>
 
 <div style="display: inline;">

@@ -101,13 +101,13 @@ export const authStore = writable({
 });
 
 ////////////////
-export const statisticsStore = writable({
-  id: -1,
-  authorEmailClicks: 0,
-  adminDataClicks: 0,
-});
+// export const statisticsStore = writable({
+//   id: -1,
+//   authorEmailClicks: 0,
+//   adminDataClicks: 0,
+// });
 
-export const blogPost = writable({
+export const postsStore = writable({
   id: '',
   title: '',
   images: [] as string[],
