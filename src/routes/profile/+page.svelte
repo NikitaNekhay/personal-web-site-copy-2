@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import Profile from '../../components/MainPages/Profile.svelte'
+  import Profile from '../../components/MainPages/Profile/Profile.svelte'
   
 </script>
 

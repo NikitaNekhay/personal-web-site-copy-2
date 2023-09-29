@@ -4,16 +4,16 @@
     getUserProfile,
     getUserProfiles,
     updateUserProfile,
-  } from "../../routes/profile/user";
-  import { auth } from "../../lib/firebase/firebase";
-  import { authHandlers, authStore, currentLanguage } from "../../store/store";
+  } from "../../../routes/profile/user";
+  import { auth } from "../../../lib/firebase/firebase";
+  import { authHandlers, authStore, currentLanguage } from "../../../store/store";
   import { base } from "$app/paths";
-  import { clickOutside } from "../../services/clickOutside";
-  import ProfileOptions from "./Profile/ProfileOptions.svelte";
+  import { clickOutside } from "../../../services/clickOutside";
+  import ProfileOptions from "./ProfileOptions.svelte";
   import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../services/ru.json";
-  import en from "../../services/en.json";
-  import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
+  import ru from "../../../services/ru.json";
+  import en from "../../../services/en.json";
+  import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
 
   let isLoading = true; // Initialize the loading state
 
@@ -27,7 +27,7 @@
   };
 
   onMount(() => {
-    // console.log("updating profile...")
+     console.log("updating profile...")
     //  console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
