@@ -2,9 +2,7 @@
     // @ts-nocheck
 
     import { base } from "$app/paths";
-    import { onMount } from "svelte";
-    import { auth, db } from "../../lib/firebase/firebase";
-    import { getDoc, doc, setDoc } from "firebase/firestore";
+
     import { Language, authHandlers, authStore } from "../../store/store";
     import Menu from "./Menu.svelte";
 
@@ -29,12 +27,11 @@
         addMessages(Language.English, en);
         locale.set(Language.English);
     }
-
-    export let isAdmin
+    //export let data
     export let passComponent
     export let loginState
     export let readyExit
-    // console.log("props???",readyExit)
+     console.log("props???",readyExit)
     // let isAdmin = data.isAdmin;
     //  let passComponent = data.;
     //  let loginState = data.;
@@ -119,7 +116,7 @@
                                 {$t("Login")}
                             </a>
                         {:else}
-                            <Menu {isAdmin}/>
+                            <Menu />
                         {/if}
                         {/if}
                     </div>

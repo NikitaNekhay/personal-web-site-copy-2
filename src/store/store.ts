@@ -47,6 +47,12 @@ export const blogPost = writable({
 
 });
 
+export const isAdmin = writable({
+  value:false,
+});
+
+
+
 
 export const authHandlers = {
 

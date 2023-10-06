@@ -1,7 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { clickOutside } from "../../services/clickOutside";
-  import { Language, authHandlers, authStore } from "../../store/store";
+  import { Language, authHandlers, authStore, isAdmin } from "../../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../../services/ru.json';
   import en from '../../services/en.json';
@@ -26,10 +26,17 @@
 
   export let isOpen = false
 
+let name_menu="";
+console.log($authStore.data.name)
+if($authStore.data.name === undefined){
+    name_menu = "template_name"
+    console.log("shit")
+} else{
+    name_menu=$authStore.data.name
+}
 
-
-  export let isAdmin
-  console.log(isAdmin)
+//   export let isAdmin
+   
 
   function handleClickOutside() {
     isOpen = false;
@@ -45,7 +52,7 @@
 <div class="menu relative cursor-pointer">
     <div class="grid-column-auto grid-row-auto" on:click={openMenu} on:keydown={openMenu}>
         {#if !isOpen}
-            <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{$authStore.data.name}</p>
+            <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{name_menu}</p>
             <!-- <div class="w-8 h-8 rounded-full overflow-hidden">
                 <img src="../../../static/favicon.ico" alt="NAME">
             </div> -->
@@ -61,7 +68,7 @@
             hover:text-yellow-0" target="_self" href='{base}/profile'>
                 {$t('Profile')} 
             </a>
-            {#if isAdmin}
+            {#if $isAdmin.value}
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/create'>
                 {$t('Create')} 

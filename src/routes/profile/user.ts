@@ -9,7 +9,7 @@ export const prerender = 'auto'
 
 export async function updateUserProfile(user: User | string, name: string, email: string, phone: string, country: string, description: string, messages: []) {
   try {
-    let userDocRef
+    let userDocRef:any;
     //console.log(typeof user)
     if (typeof user !== 'string')
       userDocRef = doc(collection(db, "user"), user.uid);
@@ -35,23 +35,12 @@ export async function updateUserProfile(user: User | string, name: string, email
       };
       //console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
       // Update authStore to reflect changes in the user profile
-      // authStore.set({
-      //     user: user,
-      //     loading: true,
-      //     data: {
-
-      //       name: updatedUserData.name,
-      //       email: updatedUserData.email,
-      //       phone: updatedUserData.phone,
-      //       country: updatedUserData.country,
-      //       description: updatedUserData.description,
-      //       messages:updatedUserData.messages,
-      //     },
-
-      // });
-      // Update user document
-      //console.log("userDocRef before transaction.update ",userDocRef)
-      //console.log("updatedUserData before transaction.update ",updatedUserData)
+      
+    //   authStore.set({
+    //     user: user,
+    //     data: updatedUserData,
+    //     loading: false,
+    // })
       transaction.update(userDocRef, updatedUserData); // was update
 
     });
@@ -86,49 +75,15 @@ export async function refreshUserProfile(user: User) {
 
       };
 
+      // Update authStore to reflect changes in the user profile
       //set authStore to reflect changes in the user profile
-      authStore.set({
-        user: user,
-        //data updatedUserData,
-        loading: true,
-        data: {
+      // authStore.set({
+      //   user: user,
+      //   loading: true,
+      //   data: updatedUserData,
 
-          name: updatedUserData.name,
-          email: tempEmail,
-          phone: updatedUserData.phone,
-          country: updatedUserData.country,
-          description: updatedUserData.description,
-          messages: updatedUserData.messages,
-        },
-
-      })
-      //update authStore to reflect changes in the user profile
-      // authStore?.update((store) => {
-      //   store.loading = true
-      //   store.data.email = updatedUserData.email
-      //   // console.log(store)
-      //   return {
-      //     ...store,
-      //     loading: true,
-      //     data: {
-      //       ...store.data,
-      //       email: updatedUserData.email,
-      //     },
-      //   };
-      // });
-
-      //update authStore to reflect changes in the user profile
-      // authStore.update((store) => {
-      //   return {
-      //     ...store,
-      //     user:user,
-      //     loading: true,
-      //     data: {
-      //       ...store.data,
-      //       email: updatedUserData.email,
-      //     },
-      //   };
-      // });
+      // })
+    
 
     });
   } catch (error) {
@@ -149,11 +104,17 @@ export async function getUserProfile(user: User) {
       email: user.email,
     }
     // authStore.set({
+    //   user: user,
+    //   loading: true,
+    //   data: updatedUserData,
+
+    // })
+    // authStore.set({
     //   user:userData.user,
     //   loading:userData.loading,
     //   data:userData.data
     // }) // added reling to post.ts : all other data is missing for complete setting
-    //console.log("is user exists? ",userSnapshot.exists())
+    console.log("is user exists? ",userSnapshot.exists())
 
     return userSnapshot.exists() ? userSnapshot.data() : emptyData;
   } catch (error) {
