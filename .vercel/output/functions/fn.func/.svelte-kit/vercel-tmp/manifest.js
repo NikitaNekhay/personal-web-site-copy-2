@@ -4,7 +4,7 @@ export const manifest = {
 	assets: new Set([".nojekyll","favicon.ico","media/edit.svg","media/envelop.svg","media/external.svg","media/flowers_september1.jpg","media/flowers_september1.png","media/globe.svg","media/NIKITA.JPG","media/send.svg","media/settings.svg","media/shopping-cart.svg","media/spinner.svg","media/trash.svg","media/user-edit.svg","media/user-minus.svg","media/user-plus.svg","media/user-x.svg","media/user.svg"]),
 	mimeTypes: {".ico":"image/vnd.microsoft.icon",".svg":"image/svg+xml",".jpg":"image/jpeg",".png":"image/png",".JPG":"image/jpeg"},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.37788d47.js","imports":["_app/immutable/entry/start.37788d47.js","_app/immutable/chunks/index.b32834ed.js","_app/immutable/chunks/singletons.c75bcd08.js","_app/immutable/chunks/index.90de6a5d.js","_app/immutable/chunks/paths.f19bd6bd.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.8d91b340.js","imports":["_app/immutable/entry/app.8d91b340.js","_app/immutable/chunks/index.b32834ed.js"],"stylesheets":[],"fonts":[]}},
+		client: {"start":{"file":"_app/immutable/entry/start.786f0100.js","imports":["_app/immutable/entry/start.786f0100.js","_app/immutable/chunks/index.b32834ed.js","_app/immutable/chunks/singletons.be15d611.js","_app/immutable/chunks/index.90de6a5d.js","_app/immutable/chunks/paths.b1522938.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.06b82d1b.js","imports":["_app/immutable/entry/app.06b82d1b.js","_app/immutable/chunks/index.b32834ed.js"],"stylesheets":[],"fonts":[]}},
 		nodes: [
 			() => import('../output/server/nodes/0.js'),
 			() => import('../output/server/nodes/1.js'),

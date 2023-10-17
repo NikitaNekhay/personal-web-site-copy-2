@@ -225,12 +225,14 @@ let readyExit:Boolean = false;
 
     const handleRedirect = (user, currentPath) => {
         if (user === null && !nonAuthRoutes.includes(currentPath)) {
+            console.log("error on routes identity")
             window.location.href = `${base}/`;
             loginState = false;
             readyExit = false;
         }
 
         if (AdminRoutes.includes(currentPath) && !$isAdmin.value) {
+            console.log("error on routes identity")
             window.location.href = `${base}/`;
             loginState = false;
             readyExit = false;
@@ -262,6 +264,7 @@ let readyExit:Boolean = false;
                 checkUserStatus(user);
 
                 if (user === null && !nonAuthRoutes.includes(currentPath)) {
+                    console.log("error on routes identity")
                     window.location.href = `${base}/`;
                     loginState = false;
                     readyExit = false;
@@ -269,6 +272,7 @@ let readyExit:Boolean = false;
                 }
 
                 if (AdminRoutes.includes(currentPath) && !$isAdmin.value) {
+                    console.log("error on routes identity")
                     window.location.href = `${base}/`;
                     loginState = false;
                     readyExit = false;

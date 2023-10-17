@@ -31,7 +31,7 @@
     export let passComponent
     export let loginState
     export let readyExit
-     console.log("props???",readyExit)
+    // console.log("props???",readyExit)
     // let isAdmin = data.isAdmin;
     //  let passComponent = data.;
     //  let loginState = data.;
