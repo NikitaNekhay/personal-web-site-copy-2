@@ -3,95 +3,23 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { deleteDoc, doc } from "firebase/firestore";
 import { writable } from "svelte/store"
 
-
-// function createLocalStorageStore(key, initialValue) {
-//   const storedValue = localStorage.getItem(key);
-//   let initialValueToUse;
-
-//   if (storedValue !== null) {
-//     try {
-//       initialValueToUse = JSON.parse(storedValue);
-//     } catch (error) {
-//       console.log("Error parsing stored value:", error);
-//     }
-//   } else {
-//     initialValueToUse = initialValue;
-//     localStorage.setItem(key, JSON.stringify(initialValue));
-//   }
-
-//   const { subscribe, set, update } = writable(initialValueToUse);
-
-//   return {
-//     subscribe,
-//     set(value) {
-//       set(value);
-//       localStorage.setItem(key, JSON.stringify(value));
-//     },
-//     update,
-//   };
-// }
-
-
-// export const authStore = createLocalStorageStore('auth',{
-//   user: null,
-//   loading: true,
-//   data: {
-//     name: "",
-//     email: "",
-//     phone: "",
-//     country: "",
-//     description: "",
-//     messages:[],
-//   },
-// });
-
 export enum Language {
   English = 'en',
   Russian = 'ru',
 }
-
-// if (typeof window !== 'undefined') {
-//   // Perform localStorage action
-//   localStorage.setItem("language",Language.English)
-
-// }
-
-
 
 export const currentLanguage = writable({
   language: Language.English
 })
 
 
-// export const language = derived<SessionStore, Language>(session, ($session, set)=>{})
-
-// export const currentLanguage = writable<Language>(Language.English, (set)=>{
-//   if(browser){
-//     const localStorageValue = window.localStorage.getItem(
-//       'language'
-//     ) as Language | null
-//     const value = localStorageValue
-//       ? localStorageValue
-//       : window.onlanguagechange
-//       ? Language.English
-//       : Language.Russian
-
-//     set(value)
-//   }
-// })
-
-// currentLanguage.subscribe((value)=>{
-//   if(browser){
-//     window.localStorage.setItem('language',value)
-//   }
-// })
 
 
 export const authStore = writable({
   user: null,
   loading: true,
   data: {
-    name: "",
+    name: "template",
     email: "",
     phone: "",
     country: "",
@@ -107,7 +35,7 @@ export const authStore = writable({
 //   adminDataClicks: 0,
 // });
 
-export const postsStore = writable({
+export const blogPost = writable({
   id: '',
   title: '',
   images: [] as string[],
@@ -118,6 +46,12 @@ export const postsStore = writable({
   date: new Date(),
 
 });
+
+export const isAdmin = writable({
+  value:false,
+});
+
+
 
 
 export const authHandlers = {

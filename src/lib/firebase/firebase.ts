@@ -3,6 +3,7 @@ import { deleteApp, getApp, getApps, initializeApp } from "firebase/app";
 import {getFirestore} from 'firebase/firestore'
 import {getAuth} from 'firebase/auth'
 import { getStorage } from "firebase/storage";
+//import {  PUBLIC_apiKey,  PUBLIC_authDomain,  PUBLIC_projectId,  PUBLIC_storageBucket,  PUBLIC_messagingSenderId,  PUBLIC_appId,  PUBLIC_measurementId} from '$env/static/public'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -14,6 +15,13 @@ const firebaseConfig = {
   messagingSenderId: "185564156502",
   appId: "1:185564156502:web:5ca8d28ee009ec015e21f7",
   measurementId: "G-R7KENNJDBP",
+  // apiKey:   PUBLIC_apiKey,
+  // authDomain:   PUBLIC_authDomain,
+  // projectId:    PUBLIC_projectId,
+  // messagingSenderId:   PUBLIC_messagingSenderId,
+  // storageBucket:  PUBLIC_storageBucket,
+  // appId:   PUBLIC_appId,
+  // measurementId:   PUBLIC_measurementId,
 };
 
 

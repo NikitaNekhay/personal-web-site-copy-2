@@ -1,5 +1,5 @@
 <script>
-    import { Language, authHandlers } from "../../store/store";
+    import { Language, authHandlers, authStore } from "../../store/store";
 
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../services/ru.json";
@@ -8,7 +8,8 @@
     import LoadingButton from "../Shared/LoadingButton.svelte";
 
     let sumbitClicked = false;
-    let isLoading = true;
+    let isLoading = $authStore.loading;
+    console.log("state of dynamic isloading",isLoading)
 
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;

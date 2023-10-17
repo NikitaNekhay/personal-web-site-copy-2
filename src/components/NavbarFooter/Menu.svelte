@@ -1,10 +1,7 @@
-<script>
+<script lang="ts">
   import { base } from "$app/paths";
-  import { onMount } from "svelte";
   import { clickOutside } from "../../services/clickOutside";
-  import { Language, authHandlers } from "../../store/store";
-  import { auth } from "$lib/firebase/firebase";
-  import { getUserProfile } from "../../routes/profile/user";
+  import { Language, authHandlers, authStore, isAdmin } from "../../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../../services/ru.json';
   import en from '../../services/en.json';
@@ -29,9 +26,17 @@
 
   export let isOpen = false
 
+let name_menu="";
+console.log($authStore.data.name)
+if($authStore.data.name === undefined){
+    name_menu = "template_name"
+    console.log("shit")
+} else{
+    name_menu=$authStore.data.name
+}
 
-
-  let isAdmin=false
+//   export let isAdmin
+   
 
   function handleClickOutside() {
     isOpen = false;
@@ -41,53 +46,13 @@
     isOpen = !isOpen
   }
 
-  let name = 'Mister';
-
-  let currentUser = {}
-
-    onMount(() => {
-
-        //console.log("getting the name of profile...")
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                //console.log("the user in menu.svelte",user)
-                let Ready_profile = await getUserProfile(user);
-                //console.log("got user profile in menu.svelte",Ready_profile)
-                if (user) {
-                    currentUser = user
-                    if(Ready_profile.name!==undefined){
-                        name = Ready_profile.name
-                    }
-                    isAdmin = user.email === "ktofreesapiens@gmail.com" || user.email === "vaper20041337@gmail.com"  ? true : false
- 
-                }
-        })
-        
-            return unsubscribe
-
-    });
-
-    // const a = onMount(async()=>{
-    //     const interval = setInterval(async() => {
-    //         console.log('beep')
-    //     }, 2000);
-    //     return () => clearInterval(interval);
-    // })
-
-    function handleClick() {
-  // Navigate to the detailed page of the selected blog post
-    //console.log(currentUser.uid)
-    
-    //window.location.href = `${base}/profile/`;
-  }
-
-
 
 </script>
 
 <div class="menu relative cursor-pointer">
     <div class="grid-column-auto grid-row-auto" on:click={openMenu} on:keydown={openMenu}>
         {#if !isOpen}
-            <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{name}</p>
+            <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{name_menu}</p>
             <!-- <div class="w-8 h-8 rounded-full overflow-hidden">
                 <img src="../../../static/favicon.ico" alt="NAME">
             </div> -->
@@ -103,7 +68,7 @@
             hover:text-yellow-0" target="_self" href='{base}/profile'>
                 {$t('Profile')} 
             </a>
-            {#if isAdmin}
+            {#if $isAdmin.value}
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/create'>
                 {$t('Create')} 

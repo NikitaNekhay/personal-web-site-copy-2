@@ -2,9 +2,7 @@
     // @ts-nocheck
 
     import { base } from "$app/paths";
-    import { onMount } from "svelte";
-    import { auth, db } from "../../lib/firebase/firebase";
-    import { getDoc, doc, setDoc } from "firebase/firestore";
+
     import { Language, authHandlers, authStore } from "../../store/store";
     import Menu from "./Menu.svelte";
 
@@ -12,7 +10,8 @@
     import ru from "../../services/ru.json";
     import en from "../../services/en.json";
     import { currentLanguagee } from "../../store/store_";
-    import { subscribe } from "svelte/internal";
+    import { setContext, subscribe } from "svelte/internal";
+
 
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
@@ -28,137 +27,16 @@
         addMessages(Language.English, en);
         locale.set(Language.English);
     }
+    //export let data
+    export let passComponent
+    export let loginState
+    export let readyExit
+     console.log("props???",readyExit)
+    // let isAdmin = data.isAdmin;
+    //  let passComponent = data.;
+    //  let loginState = data.;
+    //  let readyExit = data.;
 
-    let isAdmin = false;
-    let passComponent = false;
-    export let loginState = false;
-    export let readyExit = false;
-
-    const nonAuthRoutes = [
-        `${base}/`,
-        `${base}/about/`,
-        `${base}/contact/`,
-        `${base}/login/`,
-        `${base}/shop/`,
-        `${base}/works/`,
-    ];
-    const AdminRoutes = [
-        `${base}/dashboard/`,
-        `${base}/stat/`,
-        `${base}/create/`,
-        `${base}/posts/`,
-    ];
-
-    try {
-        onMount(() => {
-        
-            const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                const currentPath = window.location.pathname;
-
-                //console.log("we are hier: ",currentPath)
-                //console.log("is appropriate path for (no user): ",nonAuthRoutes.includes(currentPath))
-                if (user) {
-                    //console.log("there is a user: ",user)
-                    isAdmin =
-                        user.email === "ktofreesapiens@gmail.com" || "vaper20041337@gmail.com"
-                            ? true
-                            : false;
-                } else {
-                    //console.log("there is no user: ",user)
-                    isAdmin = false;
-                }
-
-                if (user === null && !nonAuthRoutes.includes(currentPath)) {
-                    window.location.href = `${base}/`;
-                    loginState = false;
-                    readyExit = false;
-                    return;
-                }
-
-                if (user !== null && currentPath === `${base}/login/`) {
-                    window.location.href = `${base}/profile/`;
-                    loginState = true;
-                    readyExit = false;
-                    // setTimeout(() => {
-                    //     location.reload();
-                    // }, 500);
-                    return;
-                }
-
-                // logout logic???????????
-                if (user && currentPath === `${base}/profile/}`) {
-                    readyExit = true;
-                    loginState = true;
-                    return;
-                }
-
-                if (!user) {
-                    loginState = false;
-                    readyExit = false;
-                    return;
-                } else {
-                    loginState = true;
-                }
-
-                let dataToSetToStore = {
-                    email: user.email,
-
-                    messages: [],
-                };
-
-                if (user) {
-                    const docRef = doc(db, "user", user.uid);
-
-                    const docSnap = await getDoc(docRef);
-                    if (!docSnap.exists()) {
-                        //initialize users document
-                        //console.log('Creating user')
-                        const userRef = doc(db, "user", user.uid);
-                        dataToSetToStore = {
-                            email: user.email,
-                            messages: [],
-                        };
-                        await setDoc(userRef, dataToSetToStore, {
-                            merge: true,
-                        });
-                        if (user.email === "ktofreesapiens@gmail.com")
-                            isAdmin = true;
-                    } else {
-                        //console.log("Fetching User");
-                        const userData = docSnap.data();
-
-                        dataToSetToStore = userData;
-                        if (
-                            dataToSetToStore.email ===
-                            "ktofreesapiens@gmail.com"
-                        )
-                            isAdmin = true;
-
-                        authStore.set((curr) => {
-                            // was update
-                            return {
-                                ...curr,
-                                user: user,
-                                data: {
-                                    ...curr.data,
-                                    email: dataToSetToStore.email,
-                                },
-                                loading: false,
-                            };
-                        });
-                    }
-                }
-            });
-            const interval = setInterval(() => {
-                //console.log('hi')
-                passComponent = true;
-            }, 1000);
-            return subscribe,() => clearInterval(interval);
-            
-        });
-    } catch (error) {
-        console.error("error while mounting", error);
-    }
 
 </script>
 
