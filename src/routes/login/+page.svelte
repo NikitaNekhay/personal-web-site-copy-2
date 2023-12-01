@@ -7,6 +7,8 @@
   import Login from '../../components/MainPages/Login.svelte'
 </script>
 
+
+
 <Login />
 
 <style>
