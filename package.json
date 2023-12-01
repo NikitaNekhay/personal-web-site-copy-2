@@ -38,10 +38,6 @@
 
 		"autoprefixer": "^10.4.14",
 
-		"eslint": "^8.37.0",
-
-		"eslint-plugin-svelte3": "^4.0.0",
-
 		"firebase": "^9.20.0",
 
 		"firebase-admin": "^11.7.0",
@@ -50,19 +46,17 @@
 
 		"postcss": "^8.4.23",
 
-		"prettier": "^2.8.7",
+		"prettier": "^3.1.0",
 
-		"prettier-plugin-svelte": "^2.10.0",
-
-		"prettier-plugin-tailwindcss": "^0.2.7",
+		"prettier-plugin-svelte": "^3.1.2",
 
 		"routify": "^1.2.7",
 
-		"svelte": "^4.2.5",
+		"svelte": "^4.2.8",
 
-		"svelte-check": "^3.0.1",
+		"eslint":"^8.54.0",
 
-		"svelte-i18n": "^3.6.0",
+		"svelte-i18n": "^4.0.0",
 
 		"svelte-routing": "^1.8.8",
 
