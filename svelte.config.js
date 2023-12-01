@@ -15,7 +15,7 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		paths: {
-			base: '',
+			base: dev ? '/Personal-Website' : '',
 		  },
 		prerender: {
 			entries: ['/','/login','/about','/contact','/works','/posts/[id]','/posts','/posts/[id]/edit','/profile','/profile/edit','/dashboard','/stat','/create','/shop'], 
