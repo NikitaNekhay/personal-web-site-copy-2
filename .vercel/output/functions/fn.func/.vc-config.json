@@ -1,0 +1,6 @@
+{
+	"runtime": "nodejs18.x",
+	"handler": "..\\..\\..\\..\\..\\..\\..\\..\\Universirty\\2 курс\\4 семестр\\курсач\\code\\project\\Personal-Website(pooled + big-update src)\\.svelte-kit\\vercel-tmp\\index.js",
+	"launcherType": "Nodejs",
+	"experimentalResponseStreaming": true
+}
