@@ -22,6 +22,15 @@ export interface UserDataType {
     cart:PostType[],
 } 
 
+export interface AuthStoreType {
+    name: string ,
+    email: string ,
+    phone: string ,
+    country: string ,
+    description: string,
+    messages: [],
+    cart:PostType[],
+} 
 
 export const nonAuthRoutes = [
     `${base}/`,

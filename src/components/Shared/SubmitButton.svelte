@@ -9,6 +9,7 @@ w-1/2 items-center justify-center overflow-hidden
 rounded-md border border-orange-0
 px-8 py-3 focus:outline-none focus:ring"
 on:click={passedfunction}
+on:keypress={passedfunction}
 type="button"
 >
 <span

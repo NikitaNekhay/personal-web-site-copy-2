@@ -31,11 +31,17 @@
 <div class="px-6 sm:px-0">
     <div class="grid items-center justify-items-center grid-rows-1 grid-cols-3">
       <div>
-        <div class=" justify-items-start">
+
+        <header class="text flex justify-items-start">
+          <h3 class="font-abril text-4xl text-blue-0">{$t('User Profile')} </h3>
+        </header>
+
+
+        <!-- <div class=" justify-items-start">
           <h3 class="text-base font-semibold leading-7 text-gray-900">{$t('Applicant Information')} 
             <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{$t('Personal details and application.')} </p>
             </h3>
-        </div>
+        </div> -->
       </div>
       
         <div class=" ml-16">
@@ -43,14 +49,20 @@
             {#if !isOpen}
 
             <div
+            
               class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1"
-              on:click={handleButtonClick} on:keypress={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true"
+              on:click={handleButtonClick} 
+              on:keypress={handleButtonClick} 
+              id="menu-button" 
+              aria-expanded="true" aria-haspopup="true"
+              role="button"
+              tabindex="0"
             >
               <span
                 class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               ></span>
 
-              <span class="relative block border border-current bg-white px-8 py-3">
+              <span class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400">
                 <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
   
                   <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -100,13 +112,19 @@
               </div> -->
               <div
               class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1"
-              on:click={handleButtonClick} on:keypress={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true"
+              on:click={handleButtonClick} 
+              on:keypress={handleButtonClick} 
+              id="menu-button" 
+              aria-expanded="true" 
+              aria-haspopup="true"
+              role="button"
+              tabindex="0"
             >
               <span
                 class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform group-hover:translate-y-0.5 group-hover:-translate-x-0.5"
               ></span>
 
-              <span class="relative block border border-current bg-white px-8 py-3">
+              <span class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400">
                 <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
   
                   <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -124,7 +142,7 @@
               aria-labelledby="menu-button" tabindex="-1"
               
               >
-                  <div class="py-1" role="none" use:clickOutside on:click_outside={handleClickOutside}>
+                  <div class="py-1" role="none" use:clickOutside on:clickOutside={handleClickOutside}>
                     <div class="p-2 border-1 shadow-white-2 shadow text-left">
                        <a href="{base}/profile" class="group text-gray-700 flex px-4 py-2 text-sm 
                       transition duration-200" 

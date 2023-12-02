@@ -50,7 +50,13 @@ if($authStore.data.name === undefined){
 </script>
 
 <div class="menu relative cursor-pointer">
-    <div class="grid-column-auto grid-row-auto" on:click={openMenu} on:keydown={openMenu}>
+    <div 
+        class="grid-column-auto grid-row-auto" 
+        on:click={openMenu} 
+        on:keydown={openMenu}
+        role="button"
+        tabindex="0"
+    >
         {#if !isOpen}
             <p class="col-span-full grid-row-auto transition duration-200 hover:text-yellow-0">{name_menu}</p>
             <!-- <div class="w-8 h-8 rounded-full overflow-hidden">
@@ -62,7 +68,7 @@ if($authStore.data.name === undefined){
             class="flex flex-col text-right rounded-lg
             text-black"
             use:clickOutside
-            on:click_outside={handleClickOutside}
+            on:clickOutside={handleClickOutside}
         >
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/profile'>

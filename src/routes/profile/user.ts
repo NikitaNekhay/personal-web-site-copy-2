@@ -39,7 +39,8 @@ export async function updateUserProfile(user: User | string, name: string, email
       //console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
 
       transaction.update(userDocRef, updatedUserData); // was update
-      console.log("we have really upaded user")
+      console.log("we have really upaded user",updatedUserData)
+
     });
 
   } catch (error) {
@@ -138,39 +139,31 @@ async function getRawUserProfiles() {
   }
 }
 
-export async function getUserShoppingCart(user: User) {
-  try {
-    console.log("getUserShoppingCart user: ",user)
-    const userDoc = doc(collection(db, "user"), user.uid);
-    const userSnapshot = await getDoc(userDoc);
+// export async function getUserShoppingCart(user: User) {
+//   try {
+//     console.log("getUserShoppingCart user: ",user)
+//     if(user){
+//       let userCart:PostType[];
+//       const userDoc = doc(collection(db, "user"), user.uid);
+//       const userSnapshot = await getDoc(userDoc);
+  
+//       const userData:UserDataType = userSnapshot.data() // added reling to post.ts
+  
+//       console.log("getUserShoppingCart, this is user data:",userData)
+  
+//       console.log("is user exists? ",userSnapshot.exists())
+//       userCart = userData.cart;
+//       return userSnapshot.exists() ? userCart: [];
+//     } else {
+//       console.log("getUserShoppingCart - there is no user to fetch his cart")
+//       return [];
+//     }
+   
+//   } catch (error) {
+//     console.error('Error fetching shopping cart:', error);
+//   }
 
-    const userData = userSnapshot.data() // added reling to post.ts
-    const emptyData = {
-      user: user.uid,
-      email: user.email,
-    }
-
-    console.log("getUserShoppingCart, this is user data:",userData)
-
-    // authStore.set({
-    //   user: user,
-    //   loading: true,
-    //   data: updatedUserData,
-
-    // })
-    // authStore.set({
-    //   user:userData.user,
-    //   loading:userData.loading,
-    //   data:userData.data
-    // }) // added reling to post.ts : all other data is missing for complete setting
-    console.log("is user exists? ",userSnapshot.exists())
-
-    return userSnapshot.exists() ? userSnapshot.data() : emptyData;
-  } catch (error) {
-    console.error('Error fetching user:', error);
-  }
-
-}
+// }
 
 export async function getUserProfiles() {
   let userProfileTemplate

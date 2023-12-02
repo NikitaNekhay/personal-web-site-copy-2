@@ -22,7 +22,7 @@
         isAdmin.set({ value: false });
 
         if (user) {
-            console.log("there is a user: ", user);
+            //console.log("there is a user: ", user);
             isUser = true;
             if (user.email === "ktofreesapiens@gmail.com" || user.email === "vaper20041337@gmail.com") {
                 isAdmin.set({ value: true });
@@ -32,7 +32,7 @@
                 // $isAdmin.value = true;
 
             } else {
-                console.log("no admin")
+              //  console.log("no admin")
                 isAdmin.set({ value: false });
                 //$isAdmin.value = false ;
             }

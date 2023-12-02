@@ -1,55 +1,96 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { PostType } from "../../../shared/types";
+    import type { AuthStoreType, PostType } from "../../../shared/types";
         import LoadingButton from "../../Shared/LoadingButton.svelte";
         import SubmitButton from "../../Shared/SubmitButton.svelte";
-    import { getUserShoppingCart } from "../../../routes/profile/user";
-    import { authStore } from "../../../store/store";
-    import type { User } from "firebase/auth";
-    import UserTable from "../UserTable.svelte";
 
+    import { Language, authStore } from "../../../store/store";
+    import type { User } from "firebase/auth";
+    import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
+    import { addMessages, locale, t } from "svelte-i18n";
+    import { handleDelete, updateUserProfile } from "../../../routes/profile/user";
+    import NoPosts from "../../Shared/NoPosts.svelte";
+    import { currentLanguagee } from "../../../store/store_";
+    import { base } from "$app/paths";
         let cartClicked = false;
 
         let productQuantities = new Map<string, number>();
-        let cartItems: PostType[] = [
-        // Example items - replace with actual data
-        // ...
-        ];
+        let cartItems: PostType[] = [];
+        let tempAuthStore:AuthStoreType;
+        let cartPrice:number = 0
 
-
+        
 
     onMount(async()=>{
         let templateUser:User;
-        // Fetch blog posts from the database
-        //console.log('Fetching blog posts from the database...')
-        // cartItems = await getBlogPosts();
-        // cartItems.forEach(item => {
-        // productQuantities.set(item.title, (productQuantities.get(item.title) || 0) + 1);
-        // });
 
-    const unsubscribe = authStore.subscribe((authStore) => {
-        console.log(authStore)
-        if(authStore.user!==null){
-            templateUser = authStore.user;
-        }
+        const unsubscribe = authStore.subscribe((authStore) => {
+            //console.log("authstore - in cart",authStore)
+            tempAuthStore = authStore;
+            cartItems = authStore.data.cart
+            cartItems.forEach(item=> {
+              console.log(item.price)
+              cartPrice += Number(item.price);
+            })
+        });
+        //
 
-    });
-    //console.log($authStore.user)
-    
-
-    await getUserShoppingCart(templateUser);
-
-    //return unsubscribe;
+        //console.log("cartitems - in cart - after await",$authStore.data.cart)
+        
+        return unsubscribe;
     })
         // Calculate the quantities of each product
         
 
+      async function handleDeleteItemFromCart(tempId:number){
+        if(tempAuthStore){
+          
+          const clickedItem:PostType = cartItems.find((obj) => {
+            return obj.id === cartItems[tempId].id;
+          });
+          //console.log("handleCart - clicked item is:",clickedItem)
+        
+          //console.log(cartItems.indexOf(clickedItem))
+          
+          //if (cartItems.indexOf(clickedItem) !== -1) {
+            cartItems.splice(cartItems.indexOf(clickedItem),1);
+            console.log(cartItems)
+            tempAuthStore.cart = cartItems;
+          //}
+          //console.log("handleClick - pushed value for cart:",cartItems)
+
+          // make map out of user's cart
+          cartItems.forEach(item => {
+          productQuantities.set(item.title, (productQuantities.get(item.title) || 0) + 1);
+          });
+
+          await updateUserProfile(
+            tempAuthStore.user,
+            tempAuthStore.data.name,
+            tempAuthStore.data.email,
+            tempAuthStore.data.phone,
+            tempAuthStore.data.country,
+            tempAuthStore.data.description,
+            tempAuthStore.data.messages,
+            tempAuthStore.cart )
+
+          } else {
+          console.log("cant handle cart because temoauthstore is empty")
+          }
+      }
 
         function handleCart (){
             cartClicked = !cartClicked;
-            console.log("handleCart cliekd")
+            //console.log("handleCart cliekd")
+            // make map out of user's cart
+            cartItems.forEach(item => {
+            productQuantities.set(item.title, (productQuantities.get(item.title) || 0) + 1);
+            });
+            //console.log("cartmap - in cart - after await",productQuantities)
             downloadCheck();
-            
+            setTimeout(()=>{
+              cartClicked = !cartClicked;
+            },2500)
             
         };
 
@@ -66,8 +107,11 @@
         }
 
         function generateCheck() {
+
+          if($currentLanguagee === 'en'){
             if (cartItems.length === 0) {
-                return "Your cart is currently empty. Please add some products before proceeding.";
+                
+                 return "Your cart is currently empty. Please add some products before proceeding.";
             }
 
             let checkText = "Hello user! This is your check with instructions, please follow them in order to purchase your goods:\n\n";
@@ -82,6 +126,26 @@
             const uniqueInstructions = Array.from(new Set(checkText.split('\n\n'))).join('\n\n');
 
             return uniqueInstructions;
+          } else {
+            if (cartItems.length === 0) {
+                
+                return "Ваша корзина временно пуста. Пожалуйста, выберите товары перед тем, как продолжить операцию.";
+           }
+
+           let checkText = "Приветствую вас! Вот ваш чек, пожалуйста. Покупка произаводится в индивидуальном порядке путем диалога с продавцом. Здесь представлены инструкции для покупки ваших товаров:\n\n";
+           
+           cartItems.forEach(item => {
+               const quantity = productQuantities.get(item.title) || 0;
+               checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: ${item.author}\nКонтактный email: ${item.authorEmail}\n\n`;
+               checkText += `Пожалуйства свяжитесь по email ${item.authorEmail} с целью покупки "${item.title}" также уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. Ведите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
+           });
+
+           // Remove duplicates if any
+           const uniqueInstructions = Array.from(new Set(checkText.split('\n\n'))).join('\n\n');
+
+           return uniqueInstructions;
+          }
+          
         }
 
 
@@ -92,188 +156,117 @@
 <section class="mt-40">
     <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <div class="mx-auto max-w-3xl">
-        <header class="text-center">
-          <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Your Cart</h1>
+
+        <header class="text mb-6 flex justify-center">
+          <h1 class="font-abril text-4xl text-blue-0">{$t('Your Cart')}</h1>
         </header>
+
+        <!-- <header class="text-center">
+          <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">{$t('Your Cart')} </h1>
+        </header> -->
   
         <div class="mt-8">
+          <!-- List of cart -->
+          {#if cartItems.length >0}
           <ul class="space-y-4">
-            <li class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-                alt=""
-                class="h-16 w-16 rounded object-cover"
-              />
-  
-              <div>
-                <h3 class="text-sm text-gray-900">Basic Tee 6-Pack</h3>
-  
-                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
-                  <div>
-                    <dt class="inline">Size:</dt>
-                    <dd class="inline">XXS</dd>
-                  </div>
-  
-                  <div>
-                    <dt class="inline">Color:</dt>
-                    <dd class="inline">White</dd>
-                  </div>
-                </dl>
-              </div>
-  
-              <div class="flex flex-1 items-center justify-end gap-2">
-                <form>
-                  <label for="Line1Qty" class="sr-only"> Quantity </label>
-  
-                  <input
-                    type="number"
-                    min="1"
-                    value="1"
-                    id="Line1Qty"
-                    class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                  />
-                </form>
-  
-                <button class="text-gray-600 transition hover:text-red-600">
-                  <span class="sr-only">Remove item</span>
-  
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-4 w-4"
+            {#each cartItems as item,index}
+              <li class="flex items-center gap-4">
+                <img
+                  src={item.images[0]}
+                  alt="item img"
+                  class="h-16 w-16 rounded object-cover"
+                />
+    
+                <div>
+                  <h3 class="text-sm text-gray-900">{item.title}</h3>
+    
+                  <!-- Block of item props -->
+                  <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                    <div>
+                      <dt class="inline">Size:</dt>
+                      <dd class="inline">Universal</dd>
+                    </div>
+                    <div>
+                      <dt class="inline">Price:</dt>
+                      <dd class="inline">{item.price} BYN</dd>
+                    </div>
+                    <!-- <div>
+                      <dt class="inline">Color:</dt>
+                      <dd class="inline">White</dd>
+                    </div> -->
+                  </dl>
+                </div>
+    
+                <div class="flex flex-1 items-center justify-end gap-2">
+
+    
+                  <!-- <button 
+                    class="text-gray-600 transition hover:text-red-600"
+                    on:click={() => handleDeleteItemFromCart(index)}
+                    on:keypress
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </li>
-  
-            <li class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-                alt=""
-                class="h-16 w-16 rounded object-cover"
-              />
-  
-              <div>
-                <h3 class="text-sm text-gray-900">Basic Tee 6-Pack</h3>
-  
-                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                    <span class="sr-only">Remove item</span>
+    
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-4 w-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                      />
+                    </svg>
+                  </button> -->
                   <div>
-                    <dt class="inline">Size:</dt>
-                    <dd class="inline">XXS</dd>
+                    <div
+                      class="group relative inline-block text-sm font-medium text-black-1
+                      hover:cursor-pointer focus:outline-none focus:ring active:text-black-1 "
+                      on:click={() => handleDeleteItemFromCart(index)}
+                      on:keypress={() => handleDeleteItemFromCart(index)}
+                      id="menu-button"
+                      aria-expanded="true"
+                      aria-haspopup="true"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span 
+                        class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform
+                    group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      />
+
+                      <span
+                        class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
+                      >
+                        <img
+                          class="mr-1"
+                          alt="setting"
+                          src="{base}/media/trash.svg"
+                        />
+                      </span>
+                    </div>
                   </div>
-  
-                  <div>
-                    <dt class="inline">Color:</dt>
-                    <dd class="inline">White</dd>
-                  </div>
-                </dl>
-              </div>
-  
-              <div class="flex flex-1 items-center justify-end gap-2">
-                <form>
-                  <label for="Line2Qty" class="sr-only"> Quantity </label>
-  
-                  <input
-                    type="number"
-                    min="1"
-                    value="1"
-                    id="Line2Qty"
-                    class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                  />
-                </form>
-  
-                <button class="text-gray-600 transition hover:text-red-600">
-                  <span class="sr-only">Remove item</span>
-  
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-4 w-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </li>
-  
-            <li class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-                alt=""
-                class="h-16 w-16 rounded object-cover"
-              />
-  
-              <div>
-                <h3 class="text-sm text-gray-900">Basic Tee 6-Pack</h3>
-  
-                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
-                  <div>
-                    <dt class="inline">Size:</dt>
-                    <dd class="inline">XXS</dd>
-                  </div>
-  
-                  <div>
-                    <dt class="inline">Color:</dt>
-                    <dd class="inline">White</dd>
-                  </div>
-                </dl>
-              </div>
-  
-              <div class="flex flex-1 items-center justify-end gap-2">
-                <form>
-                  <label for="Line3Qty" class="sr-only"> Quantity </label>
-  
-                  <input
-                    type="number"
-                    min="1"
-                    value="1"
-                    id="Line3Qty"
-                    class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                  />
-                </form>
-  
-                <button class="text-gray-600 transition hover:text-red-600">
-                  <span class="sr-only">Remove item</span>
-  
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-4 w-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </li>
+                </div>
+              </li>
+            {/each}
+            
           </ul>
+          {:else}
+          {$t("NO ITEMS IN CART | BROWSE THE SHOP!")}
+          {/if}
+          
   
+
+
+          <!-- Check info -->
           <div class="mt-8 flex justify-end border-t border-gray-100 pt-8">
             <div class="w-screen max-w-lg space-y-4">
               <dl class="space-y-0.5 text-sm text-gray-700">
-                <div class="flex justify-between">
+                <!-- <div class="flex justify-between">
                   <dt>Subtotal</dt>
                   <dd>£250</dd>
                 </div>
@@ -286,11 +279,11 @@
                 <div class="flex justify-between">
                   <dt>Discount</dt>
                   <dd>-£20</dd>
-                </div>
+                </div> -->
   
-                <div class="flex justify-between !text-base font-medium">
-                  <dt>Total</dt>
-                  <dd>£200</dd>
+                <div class="flex justify-end gap-6 text-base font-medium">
+                  <dt>{$t('Total')} :</dt>
+                  <dd>{cartPrice} BYN</dd>
                 </div>
               </dl>
   
@@ -313,16 +306,21 @@
                     />
                   </svg>
   
-                  <p class="whitespace-nowrap text-xs">2 Discounts Applied</p>
+                  <p class="whitespace-nowrap text-xs">0 {$t('Discounts Applied')} </p>
                 </span>
               </div>
-            {#if cartClicked}
-                <LoadingButton />
-            {:else}
-                <SubmitButton passedfunction={handleCart}/> 
-            {/if}
-              
+             
+
             </div>
+          </div>
+
+          <!-- Button -->
+          <div class="flex justify-center text-center">
+            {#if cartClicked}
+              <LoadingButton />
+            {:else}
+              <SubmitButton passedfunction={handleCart}/> 
+            {/if}
           </div>
         </div>
       </div>

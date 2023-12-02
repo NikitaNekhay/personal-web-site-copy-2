@@ -9,7 +9,7 @@
   import ProfileOptions from "./ProfileOptions.svelte";
   import { addMessages, locale, t } from "svelte-i18n";
   import ru from "../../../services/ru.json";
-  import ProfileEditDone from "./ProfileEditDone.svelte";
+  import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
   import en from "../../../services/en.json";
   import LoadingButton from "../../Shared/LoadingButton.svelte";
     import type { UserDataType } from "../../../shared/types";
@@ -42,22 +42,6 @@
           console.log("what we got from db getUserProfile:",Ready_profile);
           profileValue = Ready_profile;
           console.log("profileValue - what we got after assgingin:",profileValue);
-          // console.log("Restoring profileValue from user profile data",profileValue);
-            // profileValue.name = Ready_profile.name ?? profileValue.name;
-            // profileValue.email = Ready_profile.email ?? profileValue.email;
-            // profileValue.phone = Ready_profile.phone ?? profileValue.phone;
-            // profileValue.country = Ready_profile.country ?? profileValue.country;
-            // profileValue.description = Ready_profile.description ?? profileValue.description;
-            // profileValue.messages = Ready_profile.messages ?? profileValue.messages;
-
-            // profileValue.name = Ready_profile?.name ?? "template name";
-            // profileValue.email = Ready_profile.email ?? "template email";
-            // profileValue.phone = Ready_profile.phone ?? "template phone";
-            // profileValue.country = Ready_profile.country ?? "template country";
-            // profileValue.description = Ready_profile.description ?? "template country";
-            // profileValue.messages = Ready_profile.messages ?? [];
-            //profileValue = Ready_profile;
-            // profileValue.cart = Ready_profile.cart ?? [];
 
         } else {
           console.log("no user in Profile.svelte");
@@ -71,12 +55,11 @@
 
   async function handleSubmit(event) {
     event.preventDefault();
-    //const user = auth.currentUser;
     sumbitClicked = true;
-    console.log("authStore in prfile.svelte before handling",$authStore);
-    console.log("userCopy in prfile.svelte before handling",userCopy);
+    //console.log("authStore in prfile.svelte before handling",$authStore);
+    //console.log("userCopy in prfile.svelte before handling",userCopy);
 
-    console.log("profileValue in prfile.svelte before handling",profileValue);
+    //console.log("profileValue in prfile.svelte before handling",profileValue);
     if(userCopy){
       console.log("user exists so we can handle submit")
 
@@ -126,9 +109,9 @@
 </script>
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-  <!-- {#if isLoading}
+  {#if isLoading}
     <ProfileEditDone />
-  {/if} -->
+  {/if}
 
   <ProfileOptions />
 

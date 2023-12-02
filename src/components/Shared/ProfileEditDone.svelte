@@ -1,10 +1,9 @@
 <script>
   import { addMessages, locale, t } from 'svelte-i18n';
-  import ru from '../../../services/ru.json';
-  import ProfileEditDone from './ProfileEditDone.svelte';
-  import en from '../../../services/en.json';
+  import ru from '../../services/ru.json';
+  import en from '../../services/en.json';
   import { base } from "$app/paths";
-  import { currentLanguage } from '../../../store/store';
+  import { currentLanguage } from '../../store/store';
   import { onMount } from 'svelte';
 
 

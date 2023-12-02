@@ -70,8 +70,8 @@ function changeLanguage(){
             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
                 <p>
-                <span class="text-xs tracking-wide text-black-0 uppercase">
-                    Call us
+                <span class="text-xs tracking-wide text-black-0">
+                   {$t('CALL US')} 
                 </span>
         
                 <a
@@ -83,8 +83,8 @@ function changeLanguage(){
                 </p>
         
                 <ul class="mt-8 space-y-1 text-sm text-red-2">
-                <li>Monday to Friday: 10am - 5pm</li>
-                <li>Weekend: 10am - 3pm</li>
+                <li>{$t('Monday to Friday')} : 10am - 5pm</li>
+                <li>{$t('Weekend')} : 10am - 3pm</li>
                 </ul>
         
                 <ul class="flex gap-6 mt-8">
@@ -187,25 +187,27 @@ function changeLanguage(){
         
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                <p class="font-medium text-gray-700">Services</p>
+                <p class="font-medium text-gray-700">
+                    {$t('Services')}
+                </p>
         
                 <nav aria-label="Footer Navigation - Services" class="mt-6">
                     <ul class="space-y-4 text-sm">
                     <li>
                         <a href="{base}/" class="text-black-0 transition duration-200 hover:text-yellow-0">
-                        Individual sewing and designing
+                           {$t('Individual sewing and designing')} 
                         </a>
                     </li>
         
                     <li>
                         <a href="{base}/" class="text-black-0 transition duration-200 hover:text-yellow-0">
-                        Creative director
+                           {$t('Creative director')} 
                         </a>
                     </li>
         
                     <li>
                         <a href="https://www.behance.net/nekhaynikita" target="_blank" class="text-black-0 transition duration-200 hover:text-yellow-0">
-                        Photography
+                            {$t('Photography')} 
                         </a>
                     </li>
                     </ul>
@@ -213,19 +215,21 @@ function changeLanguage(){
                 </div>
         
                 <div>
-                <p class="font-medium text-gray-700">Company</p>
+                <p class="font-medium text-gray-700">
+                   {$t('Company')} 
+                </p>
         
                 <nav aria-label="Footer Navigation - Company" class="mt-6">
                     <ul class="space-y-4 text-sm">
                     <li>
                         <a href="{base}/about" class="text-black-0 transition duration-200 hover:text-yellow-0">
-                            About
+                           {$t('About')} 
                         </a>
                     </li>
         
                     <li>
                         <a href="{base}/" class="text-red-2 transition hover:opacity-75">
-                            Accounts Review
+                           {$t('Accounts Review')} 
                         </a>
                     </li>
                     </ul>
@@ -240,19 +244,19 @@ function changeLanguage(){
                 <ul class="flex flex-wrap gap-4 text-xs">
                     <li>
                     <a href="{base}/" class="text-red-2 transition hover:opacity-75">
-                        Terms & Conditions
+                       {$t('Terms & Conditions')} 
                     </a>
                     </li>
         
                     <li>
                     <a href="{base}/" class="text-red-2 transition hover:opacity-75">
-                        Privacy Policy
+                       {$t('Privacy Policy')} 
                     </a>
                     </li>
         
                     <li>
                     <a href="{base}/" class="text-red-2 transition hover:opacity-75">
-                        Cookies
+                      {$t('Cookies')} 
                     </a>
                     </li>
                     <li>
@@ -261,7 +265,7 @@ function changeLanguage(){
                         class="font-extrabold text-transparent bg-clip-text 
                         bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 
                         transition hover:opacity-75 hover:text-red-0">
-                            [language: {$currentLanguagee} :language]
+                            [{$t('language')}: {$currentLanguagee} :{$t('language')}]
                         </form> 
                     </button>
                    
@@ -271,7 +275,7 @@ function changeLanguage(){
         
                 <p class="mt-8 text-xs text-gray-700 sm:mt-0 text-transparent bg-clip-text 
                 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">
-                &copy; 2023. NIKITA NIAKHAI. All rights reserved.
+                &copy; 2023. NIKITA NIAKHAI. {$t('All rights reserved')}.
                 </p>
             </div>
             </div>

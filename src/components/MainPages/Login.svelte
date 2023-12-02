@@ -207,7 +207,6 @@
                                     placeholder="   Repeat password"
                                     name="rpassword"
                                     type="rpassword"
-                                    autocomplete="password"
                                     required
                                 />
                                 <span

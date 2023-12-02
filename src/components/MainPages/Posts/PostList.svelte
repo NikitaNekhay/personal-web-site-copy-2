@@ -159,7 +159,7 @@
                       />
 
                       <span
-                        class="relative block border border-current bg-white px-8 py-3"
+                        class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
                       >
                         <img
                           class="mr-1"
@@ -185,7 +185,7 @@
                       />
 
                       <span
-                        class="relative block border border-current bg-white px-8 py-3"
+                        class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
                       >
                         <img
                           class="mr-1"

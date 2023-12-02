@@ -38,6 +38,10 @@
 
 		"autoprefixer": "^10.4.14",
 
+		"caniuse-lite": "^1.0.30001565",
+
+		"eslint": "^8.54.0",
+
 		"firebase": "^9.20.0",
 
 		"firebase-admin": "^11.7.0",
@@ -53,8 +57,6 @@
 		"routify": "^1.2.7",
 
 		"svelte": "^4.2.8",
-
-		"eslint":"^8.54.0",
 
 		"svelte-i18n": "^4.0.0",
 
