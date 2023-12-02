@@ -25,6 +25,7 @@ export const authStore = writable({
     country: "",
     description: "",
     messages: [],
+    cart:[],
   },
 });
 

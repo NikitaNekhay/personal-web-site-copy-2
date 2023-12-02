@@ -106,10 +106,10 @@ export async function getBlogPosts() {
 
     // Extract the data from each blog post document
     const blogPosts = blogPostsSnapshot.docs.map((doc) => ({
-      id: doc.id,
+      id: String(doc.id),
       ...doc.data(),
     }));
-
+    console.log("blog posts from post.ts:",blogPosts)
     return blogPosts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);

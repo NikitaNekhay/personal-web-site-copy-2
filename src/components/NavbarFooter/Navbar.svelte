@@ -33,7 +33,7 @@
 
     onMount(()=>{
     const unsubscribe = authStore.subscribe((authStore) => {
-        console.log(authStore)
+        //console.log(authStore)
         if(authStore.user){
             isUser = true
         } else {
@@ -60,7 +60,7 @@
 //     })
 
 
-    console.log("is there any user at navbar",isUser)
+  //  console.log("is there any user at navbar",isUser)
 
 
 </script>

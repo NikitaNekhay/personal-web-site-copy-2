@@ -44,13 +44,15 @@
     // event.preventDefault();
     try {
       await updateUserProfile(
+        curentUser,
         userProfiles[userProfiles.indexOf(curentUser)].id,
         userProfiles[userProfiles.indexOf(curentUser)].name,
         userProfiles[userProfiles.indexOf(curentUser)].email,
         userProfiles[userProfiles.indexOf(curentUser)].phone,
         userProfiles[userProfiles.indexOf(curentUser)].country,
         userProfiles[userProfiles.indexOf(curentUser)].description,
-        userProfiles[userProfiles.indexOf(curentUser)].messages
+        userProfiles[userProfiles.indexOf(curentUser)].messages,
+        userProfiles[userProfiles.indexOf(curentUser)].cart
       )
         .then(() => {
           console.log("Profile updated successfully.");

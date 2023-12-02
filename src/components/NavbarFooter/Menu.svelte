@@ -27,10 +27,10 @@
   export let isOpen = false
 
 let name_menu="";
-console.log($authStore.data.name)
+//console.log($authStore.data.name)
 if($authStore.data.name === undefined){
     name_menu = "template_name"
-    console.log("shit")
+    //console.log("shit")
 } else{
     name_menu=$authStore.data.name
 }
@@ -67,6 +67,10 @@ if($authStore.data.name === undefined){
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/profile'>
                 {$t('Profile')} 
+            </a>
+            <a class="col-span-full grid-row-auto transition duration-200 
+            hover:text-yellow-0" target="_self" href='{base}/profile/shoppingcart'>
+                {$t('Shopping cart')} 
             </a>
             {#if $isAdmin.value}
             <a class="col-span-full grid-row-auto transition duration-200 

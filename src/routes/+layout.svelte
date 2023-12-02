@@ -11,24 +11,11 @@
     import { authStore, isAdmin } from "../store/store";
     import { writable } from "svelte/store";
     import { onDestroy } from "svelte";
+    import type { UserDataType  } from "../shared/types";
+    import {AdminRoutes,nonAuthRoutes} from "../shared/types";
+
 
     let isUser: boolean = false;
-
-    const nonAuthRoutes = [
-        `${base}/`,
-        `${base}/about`,
-        `${base}/contact`,
-        `${base}/login`,
-        `${base}/shop`,
-        `${base}/works`,
-        `${base}/posts`,
-    ];
-
-    const AdminRoutes = [
-        `${base}/dashboard`,
-        `${base}/stat`,
-        `${base}/create`,
-    ];
 
     const checkUserStatus = (user) => {
 
@@ -95,6 +82,11 @@
             return
         }
 
+        if (!user && currentPath === `${base}/profile/shoppingcart`) {
+            console.log("user haven't logged in")
+            window.location.href = `${base}/login`;
+            return
+        }
 
     };
 
@@ -107,15 +99,23 @@
                 checkUserStatus(user);
                 handleRedirect(user, currentPath);
 
-                let dataToSetToStore = {
+                // let dataToSetToStore = {
+                //     name: "template",
+                //     email: user ? user.email : "",
+                //     phone: "",
+                //     country: "",
+                //     description: "",
+                //     messages: [],
+                // };
+                let dataToSetToStore:UserDataType = {
                     name: "template",
                     email: user ? user.email : "",
                     phone: "",
                     country: "",
                     description: "",
                     messages: [],
-                };
-                
+                    cart: [],
+                }
                 if(user){
                     const docRef = doc(db, "user", user.uid);
                     const docSnap = await getDoc(docRef);
@@ -129,6 +129,7 @@
                             country: userRef.phone ?? "",
                             description: userRef.description ?? "",
                             messages: userRef.messages ?? [],
+                            cart: userRef.cart ?? [],
                         };
                         await setDoc(userRef, dataToSetToStore, {
                             merge: true,
@@ -141,7 +142,7 @@
                         });
                     } else {
                         const userData = docSnap.data();
-                        dataToSetToStore = {
+                        const dataToSetToStore:UserDataType = {
                             // name: userData.name || "template",
                             // phone: userData.phone || "",
                             // email: userData.email || dataToSetToStore.email,
@@ -154,6 +155,7 @@
                             country: userData.phone,
                             description: userData.description ,
                             messages: userData.messages,
+                            cart: userData.cart,
                         };
                        // console.log("value of user to put in authStore.user if snapshot exists",user)
                         authStore.set({

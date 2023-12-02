@@ -1,8 +1,4 @@
-<script>
 
-  import { base } from "$app/paths";
-
-</script>
 <svelte:head>
    <title>{'Works'}</title>
    <meta name="description" content="Recent vivid works">

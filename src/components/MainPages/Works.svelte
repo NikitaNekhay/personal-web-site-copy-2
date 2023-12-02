@@ -40,16 +40,16 @@
         </div>
         <div class="grid w-3/12 justify-center self-center font-anonymous text-2xl gap-y-20">
           <div>
-            <a class="transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/lmeIFdYuXjilAHVh7ClK/">{$t("longsleeve 'Polar bear'")}</a>
+            <a class="transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/FiBQiwdz8PGMbVZaX5SZ">{$t("longsleeve 'Polar bear'")}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/lmeIFdYuXjilAHVh7ClK/">{$t('jacket Channel')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/lmeIFdYuXjilAHVh7ClK">{$t('jacket Channel')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/7pnembg3O6YIsmaJWdbG/">{$t('assymetric longsleeve')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/7pnembg3O6YIsmaJWdbG">{$t('assymetric longsleeve')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/Y1JigqXUTUrLEYxmv2G2/">{$t('circled tank top')}</a>
+            <a class=" transition duration-200 hover:text-yellow-0" target="_blank" href="{base}/posts/Y1JigqXUTUrLEYxmv2G2">{$t('circled tank top')}</a>
           </div>
 
 

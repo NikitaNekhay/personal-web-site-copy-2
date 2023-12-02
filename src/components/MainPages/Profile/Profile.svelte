@@ -14,17 +14,19 @@
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
+    import type { UserDataType } from "../../../shared/types";
 
   let isLoading = true; // Initialize the loading state
 
-  let profileValue = {
-    name: "",
-    email: "",
-    phone: "",
-    country: "",
-    description: "",
-    messages: [],
-  };
+  // let profileValue = {
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   country: "",
+  //   description: "",
+  //   messages: [],
+  // };
+  let profileValue:UserDataType;
   let isthereadmin = false
   
 
@@ -35,20 +37,27 @@
     //  console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
-        let Ready_profile = await getUserProfile(user);
-        //  console.log("what we got from db getUserProfile:",Ready_profile)
-        if (user) {
-          // console.log("Restoring profileValue from user profile data");
-          profileValue.name = Ready_profile.name ?? profileValue.name;
-          profileValue.email = Ready_profile.email ?? profileValue.email;
-          profileValue.phone = Ready_profile.phone ?? profileValue.phone;
-          profileValue.country = Ready_profile.country ?? profileValue.country;
-          profileValue.description =
-            Ready_profile.description ?? profileValue.description;
-          profileValue.messages =
-            Ready_profile.messages ?? profileValue.messages;
+        if(user){
+          let Ready_profile:UserDataType = await getUserProfile(user);
+          console.log("what we got from db getUserProfile:",Ready_profile);
 
-          isLoading = false;
+          // console.log("Restoring profileValue from user profile data",profileValue);
+            // profileValue.name = Ready_profile.name ?? profileValue.name;
+            // profileValue.email = Ready_profile.email ?? profileValue.email;
+            // profileValue.phone = Ready_profile.phone ?? profileValue.phone;
+            // profileValue.country = Ready_profile.country ?? profileValue.country;
+            // profileValue.description = Ready_profile.description ?? profileValue.description;
+            // profileValue.messages = Ready_profile.messages ?? profileValue.messages;
+
+            // profileValue.name = Ready_profile?.name ?? "template name";
+            // profileValue.email = Ready_profile.email ?? "template email";
+            // profileValue.phone = Ready_profile.phone ?? "template phone";
+            // profileValue.country = Ready_profile.country ?? "template country";
+            // profileValue.description = Ready_profile.description ?? "template country";
+            // profileValue.messages = Ready_profile.messages ?? [];
+            profileValue = Ready_profile;
+            // profileValue.cart = Ready_profile.cart ?? [];
+            isLoading = false;
         } else {
           console.log("no user in Profile.svelte");
         }

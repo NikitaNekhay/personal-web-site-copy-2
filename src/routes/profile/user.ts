@@ -3,11 +3,12 @@ import { db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc } from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { base } from '$app/paths';
+import type { UserDataType,PostType } from '../../shared/types';
 
 
 export const prerender = 'auto'
 
-export async function updateUserProfile(user: User | string, name: string, email: string, phone: string, country: string, description: string, messages: []) {
+export async function updateUserProfile(user: User | string, name: string, email: string, phone: string, country: string, description: string, messages: [], cart:PostType[]) {
   try {
     let userDocRef:any;
     //console.log(typeof user)
@@ -24,25 +25,21 @@ export async function updateUserProfile(user: User | string, name: string, email
       }
 
       const userData = userDoc.data();
-      //console.log("WHAT WE HAVE FROM DOCUMENTS userData: ",userData)
-      const updatedUserData = {
-        name: name ?? userData.name,
+     // console.log("WHAT WE HAVE FROM DOCUMENTS userData: ",userData)
+     // console.log("WHAT WE HAVE FROM passing param cart: ",name)
+      const updatedUserData:UserDataType = {
+        name: name ?? userData.name ?? '',
         email: email ?? userData.email,
         phone: phone ?? userData.phone,
         country: country ?? userData.country,
         description: description ?? userData.description,
-        messages: messages ?? userData.messages,
+        messages: messages ?? userData.messages ?? [],
+        cart: cart ?? userData.cart ?? [],
       };
       //console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
-      // Update authStore to reflect changes in the user profile
-      
-    //   authStore.set({
-    //     user: user,
-    //     data: updatedUserData,
-    //     loading: false,
-    // })
-      transaction.update(userDocRef, updatedUserData); // was update
 
+      transaction.update(userDocRef, updatedUserData); // was update
+      console.log("we have really upaded user")
     });
 
   } catch (error) {
@@ -77,13 +74,6 @@ export async function refreshUserProfile(user: User) {
 
       // Update authStore to reflect changes in the user profile
       //set authStore to reflect changes in the user profile
-      // authStore.set({
-      //   user: user,
-      //   loading: true,
-      //   data: updatedUserData,
-
-      // })
-    
 
     });
   } catch (error) {
@@ -99,24 +89,30 @@ export async function getUserProfile(user: User) {
     const userSnapshot = await getDoc(userDoc);
 
     const userData = userSnapshot.data() // added reling to post.ts
-    const emptyData = {
+    const emptyData:UserDataType = {
       user: user.uid,
       email: user.email,
+      name: "",
+      phone: "",
+      country: "",
+      description: "",
+      messages: [],
+      cart:[],
     }
-    // authStore.set({
-    //   user: user,
-    //   loading: true,
-    //   data: updatedUserData,
 
-    // })
-    // authStore.set({
-    //   user:userData.user,
-    //   loading:userData.loading,
-    //   data:userData.data
-    // }) // added reling to post.ts : all other data is missing for complete setting
-    console.log("is user exists? ",userSnapshot.exists())
+    // console.log("is user exists? ",userSnapshot.exists())
+    // console.log("user existing? ",userSnapshot.data())
+    let checkExistance:boolean = false;
+    let temp:UserDataType;
+    temp = userSnapshot.data();
 
-    return userSnapshot.exists() ? userSnapshot.data() : emptyData;
+    if(temp.email==="" || temp.email === undefined || temp.email===null){
+      checkExistance = false
+    } else {
+      checkExistance = true
+    };
+
+    return checkExistance ? userSnapshot.data() : emptyData;
   } catch (error) {
     console.error('Error fetching user:', error);
   }
@@ -140,6 +136,40 @@ async function getRawUserProfiles() {
     console.error('Error fetching user profiles:', error);
     return [];
   }
+}
+
+export async function getUserShoppingCart(user: User) {
+  try {
+    console.log("getUserShoppingCart user: ",user)
+    const userDoc = doc(collection(db, "user"), user.uid);
+    const userSnapshot = await getDoc(userDoc);
+
+    const userData = userSnapshot.data() // added reling to post.ts
+    const emptyData = {
+      user: user.uid,
+      email: user.email,
+    }
+
+    console.log("getUserShoppingCart, this is user data:",userData)
+
+    // authStore.set({
+    //   user: user,
+    //   loading: true,
+    //   data: updatedUserData,
+
+    // })
+    // authStore.set({
+    //   user:userData.user,
+    //   loading:userData.loading,
+    //   data:userData.data
+    // }) // added reling to post.ts : all other data is missing for complete setting
+    console.log("is user exists? ",userSnapshot.exists())
+
+    return userSnapshot.exists() ? userSnapshot.data() : emptyData;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+  }
+
 }
 
 export async function getUserProfiles() {

@@ -10,6 +10,7 @@
   import en from "../../services/en.json";
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
+    import type { PostType } from "../../shared/types";
 
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
@@ -33,7 +34,7 @@
   let isLoading = true;
   let isEmpty = false;
   let passComponent = false;
-  let blogPosts = [];
+  let blogPosts:PostType[];
 
   onMount(async () => {
     isLoading = true;

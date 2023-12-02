@@ -12,68 +12,58 @@
   import ProfileEditDone from "./ProfileEditDone.svelte";
   import en from "../../../services/en.json";
   import LoadingButton from "../../Shared/LoadingButton.svelte";
+    import type { UserDataType } from "../../../shared/types";
 
   let sumbitClicked = false;
   let isLoading = false;
 
-  let profileValue = {
-    name: "",
-    email: "",
-    phone: "",
-    country: "",
-    description: "",
-    messages: [],
-  };
+  // let profileValue = {
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   country: "",
+  //   description: "",
+  //   messages: [],
+  // };
+  let profileValue:UserDataType;
+  let isthereadmin = false
+  let userCopy;
+  
 
   onMount(() => {
-    //console.log("updating profile...")
-    isLoading = false;
-    //console.log("authStore in prfile.svelte before everything",$authStore);
-
+     console.log("updating profile...")
+    //  console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      let Ready_profile = await getUserProfile(user);
-      if (user) {
-        //  console.log("Restoring profileValue from user profile data");
-        profileValue.name = Ready_profile.name ?? profileValue.name;
-        profileValue.email = Ready_profile.email ?? profileValue.email;
-        profileValue.phone = Ready_profile.phone ?? profileValue.phone;
-        profileValue.country = Ready_profile.country ?? profileValue.country;
-        profileValue.description =
-          Ready_profile.description ?? profileValue.description;
-        profileValue.messages = Ready_profile.messages ?? profileValue.messages;
+      try {
+        if(user){
+          userCopy=user;
 
-        //   console.log($authStore)
-        //   if (!$authStore.data) {
-        //   // Restore profileValue from user profile data
-        //   profileValue.name = Ready_profile.name;
-        //   profileValue.email = Ready_profile.email;
-        //   profileValue.phone = Ready_profile.phone;
-        //   profileValue.country = Ready_profile.country;
-        //   profileValue.description = Ready_profile.description;
-        //   profileValue.messages = Ready_profile.messages;
-        // } else {
-        //   // Use the values from authStore
-        //   profileValue.name = $authStore.data.name;
-        //   profileValue.email = $authStore.data.email;
-        //   profileValue.phone = $authStore.data.phone;
-        //   profileValue.country = $authStore.data.country;
-        //   profileValue.description = $authStore.data.description;
-        //   profileValue.messages = $authStore.data.messages;
-        // }
+          let Ready_profile:UserDataType = await getUserProfile(user);
+          console.log("what we got from db getUserProfile:",Ready_profile);
+          profileValue = Ready_profile;
+          console.log("profileValue - what we got after assgingin:",profileValue);
+          // console.log("Restoring profileValue from user profile data",profileValue);
+            // profileValue.name = Ready_profile.name ?? profileValue.name;
+            // profileValue.email = Ready_profile.email ?? profileValue.email;
+            // profileValue.phone = Ready_profile.phone ?? profileValue.phone;
+            // profileValue.country = Ready_profile.country ?? profileValue.country;
+            // profileValue.description = Ready_profile.description ?? profileValue.description;
+            // profileValue.messages = Ready_profile.messages ?? profileValue.messages;
 
-        // updateUserProfile(
-        //   user,
-        //   profileValue.name,
-        //   profileValue.email,
-        //   profileValue.phone,
-        //   profileValue.country,
-        //   profileValue.description,
-        //   profileValue.messages
-        // );
+            // profileValue.name = Ready_profile?.name ?? "template name";
+            // profileValue.email = Ready_profile.email ?? "template email";
+            // profileValue.phone = Ready_profile.phone ?? "template phone";
+            // profileValue.country = Ready_profile.country ?? "template country";
+            // profileValue.description = Ready_profile.description ?? "template country";
+            // profileValue.messages = Ready_profile.messages ?? [];
+            //profileValue = Ready_profile;
+            // profileValue.cart = Ready_profile.cart ?? [];
 
-        //  console.log("after onMount",isLoading)
-      } else {
-        console.log("no user in Profile.svelte");
+        } else {
+          console.log("no user in Profile.svelte");
+        }
+      } catch (error) {
+        console.error("error while updating profile", error);
       }
     });
     return unsubscribe;
@@ -81,19 +71,26 @@
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const user = auth.currentUser;
+    //const user = auth.currentUser;
     sumbitClicked = true;
-    //console.log("authStore in prfile.svelte before handling",$authStore.data);
-    try {
-      await updateUserProfile(
-        user,
-        profileValue.name,
-        profileValue.email,
-        profileValue.phone,
-        profileValue.country,
-        profileValue.description,
-        profileValue.messages
-      )
+    console.log("authStore in prfile.svelte before handling",$authStore);
+    console.log("userCopy in prfile.svelte before handling",userCopy);
+
+    console.log("profileValue in prfile.svelte before handling",profileValue);
+    if(userCopy){
+      console.log("user exists so we can handle submit")
+
+      try {
+        await updateUserProfile(
+          userCopy,
+          profileValue.name,
+          profileValue.email,
+          profileValue.phone,
+          profileValue.country,
+          profileValue.description,
+          profileValue.messages,
+          profileValue.cart
+        )
         .then(() => {
           console.log("Profile updated successfully.");
         })
@@ -106,8 +103,22 @@
       window.location.href = `${base}/profile/#`;
       //window.location.href = `${base}/profile/edit/`
     } catch (error) {
-      console.error(error);
+      console.error("error while updating profile",error);
+
+    } finally {
+      setTimeout(() => {
+          // Calculate and set the new scroll position based on the previous percentage
+          sumbitClicked = false;
+      }, 2500);
     }
+    } else {
+      console.log("user dont exists so we cant handle submit")
+      setTimeout(() => {
+          // Calculate and set the new scroll position based on the previous percentage
+          sumbitClicked = false;
+      }, 2500);
+    }
+   
     // console.log("authStore in prfile.svelte after handling",$authStore.data);
   }
 
@@ -127,6 +138,8 @@
         <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT PROFILE")}</h1>
       </div>
 
+      {#if profileValue}
+     
       <div class="-mx-3 mb-6 flex flex-wrap">
         <div class="w-full px-3">
           <label
@@ -305,7 +318,9 @@
           </span>
         </button>
       {/if}
+      {/if}
 
     </form>
   </div>
+  
 </div>
