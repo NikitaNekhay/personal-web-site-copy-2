@@ -12,7 +12,7 @@
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
     import { Language, type PostType } from "../../shared/types";
     import { updateUserProfile } from "../../routes/profile/user";
-    
+
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
     // Switch the language value
@@ -118,6 +118,7 @@
       <div
         class="grid grid-cols-3 gap-x-48 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >
+      {#key blogPosts}
         {#each blogPosts as post}
           <div class="mt-44 flex">
             <div>
@@ -217,7 +218,9 @@
             </div>
           </div>
         {/each}
+        {/key}
       </div>
     {/if}
   </div>
 </div>
+

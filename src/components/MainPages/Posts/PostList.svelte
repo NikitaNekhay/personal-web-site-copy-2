@@ -16,15 +16,14 @@
   let isEmpty = false;
   let passComponent = false;
 
-  onMount(() => {
+  onMount(async() => {
     try {
       // Fetch blog posts from the database
       isLoading = true;
       isEmpty = false;
       passComponent = false;
-
+      blogPosts = await getBlogPosts();
       const interval = setInterval(async () => {
-        blogPosts = await getBlogPosts();
         //  console.log("length of the blog posts", blogPosts.length);
         if (isLoading && blogPosts.length === 0) {
           isEmpty = true;
@@ -79,6 +78,15 @@
   }
 
 
+  function handleRate(event){
+    if(blogPosts){
+      blogPosts = blogPosts.sort((obj1,obj2)=>{
+        return (Number(obj1.price)-Number(obj2.price));
+      })
+    }
+  }
+
+
 </script>
 
 <div class="h-full bg-white">
@@ -88,9 +96,19 @@
     {:else if isEmpty}
       <NoPosts />
     {:else}
+      <div class="text-center flex justify-center w-full mt-6">
+          <button class="bg-yellow-0 rounded-md py-3 px-8 border-x-4 border-orange-90 transition-colors duration-500 hover:bg-yellow-300"
+          on:click={(event)=>{handleRate(event)}}>
+          Get rating of posts
+        </button>
+
+      </div>
       <div
         class="grid grid-cols-3 gap-x-48 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >
+        {#key blogPosts}
+          
+     
         {#each blogPosts as post}
           <div
             class="mt-44 flex gap-x-6 gap-y-10 shadow-white-2 drop-shadow-2xl"
@@ -201,6 +219,7 @@
             </div>
           </div>
         {/each}
+        {/key}
       </div>
     {/if}
   </div>

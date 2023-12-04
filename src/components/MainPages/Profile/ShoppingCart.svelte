@@ -167,6 +167,7 @@
   
         <div class="mt-8">
           <!-- List of cart -->
+          {#key tempAuthStore}
           {#if cartItems.length >0}
           <ul class="space-y-4">
             {#each cartItems as item,index}
@@ -258,6 +259,8 @@
           {:else}
           {$t("NO ITEMS IN CART | BROWSE THE SHOP!")}
           {/if}
+          {/key}
+          
           
   
 

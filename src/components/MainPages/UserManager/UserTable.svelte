@@ -20,6 +20,13 @@
   let isEmpty = false;
   let passComponent = false;
   let l_userProfiles = 0; 
+
+
+	// Somewhat clean but weird hack to force rerender on event.
+	// Await immediately resolved promise to react to value change.
+	const forceUpdate = async (_) => {};
+
+
   onMount(async() => {
     try {
       // Fetch blog posts from the database
@@ -44,7 +51,7 @@
     }
 
     //console.log(userProfiles)
-  },[]);
+  });
 
 
 
@@ -330,8 +337,9 @@
             </h1>
           </div>
           {:else}
-
-            <UserList bind:latestProfiles bind:userProfiles/>
+          {#await forceUpdate(latestProfiles) then _}
+            <UserList latestProfiles={latestProfiles} userProfiles={userProfiles} on:change={()=>{latestProfiles}}/>
+            {/await}
               {/if}
             {/if}
           </tbody>

@@ -4,6 +4,7 @@
     import { handleDelete, updateUserProfile } from "../../../routes/profile/user";
     import type { UserDataType } from "../../../shared/types";
     import { t } from "svelte-i18n";
+    import { authStore } from "../../../store/store";
 
     export let userProfiles:UserDataType[];
     export let latestProfiles:UserDataType[];
@@ -56,6 +57,7 @@
    
   }
 </script>
+
 
 {#each latestProfiles as user, i}
 <tr>
@@ -205,14 +207,11 @@
           on:click={() => {
             handleDelete(user.id);
             console.log("clicked delete");
-            window.location.href = `${base}/dashboard/#`;
-            location.reload()
           }}
           on:keypress={() => {
             handleDelete(user.id);
             console.log("clicked delete");
-            window.location.href = `${base}/dashboard/#`;
-            location.reload()
+
           }}
           id="menu-button"
           aria-expanded="true"
