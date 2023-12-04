@@ -3,16 +3,16 @@
   import { onMount } from "svelte";
   import { getBlogPosts } from "../../routes/posts/post";
   import { base } from "$app/paths";
-  import { Language, authStore, blogPost } from "../../store/store";
+  import { authStore, blogPost } from "../../store/store";
   import { addMessages, locale, t } from "svelte-i18n";
   import { currentLanguagee } from "../../store/store_";
   import ru from "../../services/ru.json";
   import en from "../../services/en.json";
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
-    import type { PostType } from "../../shared/types";
+    import { Language, type PostType } from "../../shared/types";
     import { updateUserProfile } from "../../routes/profile/user";
-
+    
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
     // Switch the language value

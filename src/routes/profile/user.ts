@@ -1,5 +1,5 @@
-import type { User } from 'firebase/auth';
-import { db } from '../../lib/firebase/firebase';
+import { getAuth, type User } from 'firebase/auth';
+import { auth, db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc } from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { base } from '$app/paths';
@@ -8,14 +8,19 @@ import type { UserDataType,PostType } from '../../shared/types';
 
 export const prerender = 'auto'
 
-export async function updateUserProfile(user: User | string, name: string, email: string, phone: string, country: string, description: string, messages: [], cart:PostType[]) {
+export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string, description: string, messages: [], cart:PostType[]) {
   try {
     let userDocRef:any;
-    //console.log(typeof user)
-    if (typeof user !== 'string')
+    console.log(user)
+    
+    if(user.id){
+      userDocRef = doc(collection(db, "user"), user.id);
+    }  else if (user.uid) {
       userDocRef = doc(collection(db, "user"), user.uid);
-    else
-      userDocRef = doc(collection(db, "user"), user);
+    } else {
+      throw new Error("User does not exist, can't find his id");
+    }
+
     await runTransaction(db, async (transaction) => {
       const userDoc = await transaction.get(userDocRef);
       //console.log("userDoc is existing?",userDoc)
@@ -222,16 +227,31 @@ export async function getUserProfiles() {
 
 export async function handleDelete(id: string) {
   try {
-   
-    const postDocRef = doc(collection(db, 'user'), id);
-    await deleteDoc(postDocRef);
-    // console.log('user is deleted:', id);
 
+   
+    try {
+      
+      //deleteDoc()
+    } catch (error) {
+      console.log("error while deleting user from firebase of managing users",error)
+    }
+
+    try {
+
+      const postDocRef = doc(collection(db, 'user'), id);
+      setTimeout(()=>{
+        // console.log(auth.name)
+        
+      },2500)
+      await deleteDoc(postDocRef);
+    } catch (error) {
+      console.log("error while deleting user from firesrote db",error)
+    }
   
 
 
   } catch (error) {
-    console.error('Error deleting blog post:', error);
+    console.error('Error deleting user:', error);
   }
   
   

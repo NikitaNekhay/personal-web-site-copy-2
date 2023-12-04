@@ -9,8 +9,9 @@
   import en from "../../../services/en.json";
   import NoPosts from "../../Shared/NoPosts.svelte";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
+    import type { PostType } from "../../../shared/types";
 
-  let blogPosts = [];
+  let blogPosts:PostType[] = [];
   let isLoading = true;
   let isEmpty = false;
   let passComponent = false;

@@ -14,8 +14,9 @@
   import { currentLanguagee } from "../../../store/store_";
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
-  import { Language } from "../../../store/store";
+
   import LoadingButton from "../../Shared/LoadingButton.svelte";
+    import { Language } from "../../../shared/types";
 
   export let post;
 

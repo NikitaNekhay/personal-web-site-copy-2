@@ -3,7 +3,7 @@
 
     import { base } from "$app/paths";
 
-    import { Language, authHandlers, authStore,isAdmin } from "../../store/store";
+    import { authHandlers, authStore,isAdmin } from "../../store/store";
     import Menu from "./Menu.svelte";
 
     import { addMessages, locale, t } from "svelte-i18n";
@@ -12,7 +12,9 @@
     import { currentLanguagee } from "../../store/store_";
     import { setContext, subscribe } from "svelte/internal";
     import { onDestroy, onMount } from "svelte";
+    import { Language } from "../../shared/types";
 
+    
 
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;

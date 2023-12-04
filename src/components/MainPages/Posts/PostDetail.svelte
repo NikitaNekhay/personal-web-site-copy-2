@@ -8,8 +8,7 @@
   import { currentLanguagee } from "../../../store/store_";
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
-  import { Language } from "../../../store/store";
-  import type { PostType } from "../../../shared/types";
+  import { Language, type PostType } from "../../../shared/types";
   import NoPosts from "../../Shared/NoPosts.svelte";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
 

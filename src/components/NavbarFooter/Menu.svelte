@@ -1,12 +1,14 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { clickOutside } from "../../services/clickOutside";
-  import { Language, authHandlers, authStore, isAdmin } from "../../store/store";
+  import {authHandlers, authStore, isAdmin } from "../../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../../services/ru.json';
   import en from '../../services/en.json';
   import { currentLanguagee } from "../../store/store_";
+    import { Language } from "../../shared/types";
 
+  
   if($currentLanguagee!==undefined){
         const currentValue = $currentLanguagee;
         // Switch the language value

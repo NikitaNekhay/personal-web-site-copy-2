@@ -1,5 +1,6 @@
 import type { Writable } from "svelte/store"
-import { Language } from "../store/store"
+import { Language } from "../shared/types"
+
 
 
 export type SessionData = {language: Language}

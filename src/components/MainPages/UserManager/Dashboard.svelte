@@ -1,5 +1,7 @@
 <script>
-  import UserTable from "./UserTable.svelte";
+    import UserTable from "./UserTable.svelte";
+
+ 
 </script>
 <main>
   <div class="grid h-screen px-4 bg-white place-content-center gap-y-20">
@@ -9,7 +11,7 @@
       <h1>
     </div>
     <div>
-      <UserTable />
+      <UserTable/>
     </div>
   </div> 
 

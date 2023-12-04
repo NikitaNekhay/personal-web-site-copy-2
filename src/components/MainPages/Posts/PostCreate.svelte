@@ -6,9 +6,10 @@
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
   import { currentLanguagee } from "../../../store/store_";
-  import { Language } from "../../../store/store";
+
   import LoadingButton from "../../Shared/LoadingButton.svelte";
     import { beforeUpdate } from "svelte";
+    import { Language } from "../../../shared/types";
 
   // if($currentLanguagee!==undefined){
   //     const currentValue = $currentLanguagee;

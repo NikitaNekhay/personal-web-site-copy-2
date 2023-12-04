@@ -44,8 +44,6 @@
 
 		"firebase": "^9.20.0",
 
-		"firebase-admin": "^11.7.0",
-
 		"gh-pages": "^3.0.0",
 
 		"postcss": "^8.4.23",

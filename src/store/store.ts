@@ -2,11 +2,8 @@ import { auth, db } from "$lib/firebase/firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { deleteDoc, doc } from "firebase/firestore";
 import { writable } from "svelte/store"
+import { Language } from "../shared/types";
 
-export enum Language {
-  English = 'en',
-  Russian = 'ru',
-}
 
 export const currentLanguage = writable({
   language: Language.English

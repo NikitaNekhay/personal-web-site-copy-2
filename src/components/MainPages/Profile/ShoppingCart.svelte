@@ -1,10 +1,10 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { AuthStoreType, PostType } from "../../../shared/types";
+    import { Language, type AuthStoreType, type PostType } from "../../../shared/types";
         import LoadingButton from "../../Shared/LoadingButton.svelte";
         import SubmitButton from "../../Shared/SubmitButton.svelte";
 
-    import { Language, authStore } from "../../../store/store";
+    import {  authStore } from "../../../store/store";
     import type { User } from "firebase/auth";
     import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
     import { addMessages, locale, t } from "svelte-i18n";

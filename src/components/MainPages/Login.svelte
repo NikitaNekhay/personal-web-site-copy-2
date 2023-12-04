@@ -1,6 +1,5 @@
 <script>
-    import { Language, authHandlers, authStore } from "../../store/store";
-
+    import {  authHandlers, authStore } from "../../store/store";
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../services/ru.json";
     import en from "../../services/en.json";
@@ -10,6 +9,7 @@
     import { onDestroy } from "svelte";
     import { page } from "$app/stores";
     import { applyAction } from "$app/forms";
+    import { Language } from "../../shared/types";
 
     let sumbitClicked = false;
     let isLoading = true

@@ -4,7 +4,7 @@
 </svelte:head>
 
 <script >
-  import Dashboard from '../../components/MainPages/Dashboard.svelte'
+  import Dashboard from '../../components/MainPages/UserManager/Dashboard.svelte'
 </script>
 
 <Dashboard />

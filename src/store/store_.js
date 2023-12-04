@@ -1,5 +1,6 @@
 import { writable } from "svelte/store"
-import { Language } from "./store"
+import { Language } from "../shared/types";
+
 
 export const persistLanguageStore = (key,initial) => {
     if (typeof window !== "undefined") {
