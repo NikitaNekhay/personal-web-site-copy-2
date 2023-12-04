@@ -83,7 +83,7 @@ function changeLanguage(){
                 </a>
                 </p>
         
-                <ul class="mt-8 space-y-1 text-sm text-red-2">
+                <ul class="mt-8 space-y-1 text-sm text-black-0">
                 <li>{$t('Monday to Friday')} : 10am - 5pm</li>
                 <li>{$t('Weekend')} : 10am - 3pm</li>
                 </ul>
@@ -195,13 +195,13 @@ function changeLanguage(){
                 <nav aria-label="Footer Navigation - Services" class="mt-6">
                     <ul class="space-y-4 text-sm">
                     <li>
-                        <a href="{base}/" class="text-black-0 transition duration-200 hover:text-yellow-0">
+                        <a href="{base}/" class="text-red-2 transition duration-200 hover:text-yellow-0">
                            {$t('Individual sewing and designing')} 
                         </a>
                     </li>
         
                     <li>
-                        <a href="{base}/" class="text-black-0 transition duration-200 hover:text-yellow-0">
+                        <a href="{base}/" class="text-red-2 transition duration-200 hover:text-yellow-0">
                            {$t('Creative director')} 
                         </a>
                     </li>
