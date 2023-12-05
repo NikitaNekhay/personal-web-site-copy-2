@@ -25,6 +25,13 @@ export interface PostType {
 
 } 
 
+    export interface MessageType {
+        cid:string,
+        id:string,
+        comment:string,
+        post:string,
+    }
+
 export interface UserDataType {
     id:string,
     name: string ,
@@ -32,7 +39,7 @@ export interface UserDataType {
     phone: string ,
     country: string ,
     description: string,
-    messages: [],
+    messages: MessageType[],
     cart:PostType[],
 } 
 

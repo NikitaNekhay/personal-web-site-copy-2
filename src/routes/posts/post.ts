@@ -29,7 +29,6 @@ export async function updateBlogPost(
                                     date: Date){
   try{
 
-    //const postDocRef = doc(blogsCollection, id);
     const postDocRef = doc(collection(db, "blogs"), id);
     
     await runTransaction(db, async (transaction) => {
@@ -39,8 +38,6 @@ export async function updateBlogPost(
       }
       
       const postData = postDoc.data();
-     // console.log("this is temp value of data by method .data():",postData)
-     // console.log("this is temp value of images passed to function:",images)
       const updatedPostData = {     
         id:id ?? postData.id,
         title:title ?? postData.title,
@@ -54,8 +51,6 @@ export async function updateBlogPost(
 
       // Update user document
       transaction.update(postDocRef, updatedPostData);
-     // console.log("this is updated temp value of data:",updatedPostData)
-     // console.log("this is what happens with roots of value for temp value after update: ", postDoc.data())
     });
 
     

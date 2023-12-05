@@ -8,27 +8,30 @@
   import { currentLanguagee } from "../../../store/store_";
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
-  import { Language, type PostType } from "../../../shared/types";
+  import {type PostType } from "../../../shared/types";
   import NoPosts from "../../Shared/NoPosts.svelte";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
+    import Comment from "./Comment.svelte";
+    import CommentList from "./CommentList.svelte";
+    import { authStore } from "../../../store/store";
 
   export let post: PostType;
   //export let post = $page.params
   //console.log("this is the post:", post);
   let isLoading = true; // Initialize the loading state
 
-  onMount(async () => {
-    // Fetch the blog post details
-    isLoading = true;
-    const sliderLine = document.querySelector(".slider-line");
-    // try {
-    //   post = await getBlogPost(id);
-    //   console.log(post)
-    //   isLoading = false; // Set the loading state to false once data is loaded
-    // } catch (error) {
-    //   console.log("error fetching the blog post with id:", id)
-    // }
-  });
+  // onMount(async () => {
+  //   // Fetch the blog post details
+  //   isLoading = true;
+  //   const sliderLine = document.querySelector(".slider-line");
+  //   // try {
+  //   //   post = await getBlogPost(id);
+  //   //   console.log(post)
+  //   //   isLoading = false; // Set the loading state to false once data is loaded
+  //   // } catch (error) {
+  //   //   console.log("error fetching the blog post with id:", id)
+  //   // }
+  // });
 
   //Dispatch custom events for swiping
   const dispatch = createEventDispatcher();
@@ -124,6 +127,11 @@
       >{$t("SEND EMAIL TO AUTHOR")}
     </a>
   </div>
+
+  {#if $authStore.user}
+    <Comment />
+  {/if}
+    <CommentList />
 {/if}
 
 
