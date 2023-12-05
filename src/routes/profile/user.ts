@@ -238,7 +238,7 @@ export async function handleDelete(id: string) {
       //   })
       //   .catch((error) => {
       //     console.log('Error fetching user data:', error);
-  });
+  // });
       //deleteDoc()
     } catch (error) {
       console.log("error while deleting user from firebase of managing users",error)
