@@ -13,7 +13,8 @@
     import { onDestroy } from "svelte";
     import type { UserDataType  } from "../shared/types";
     import {AdminRoutes,nonAuthRoutes} from "../shared/types";
-
+    import Analytics from "../lib/Analytics.svelte";
+    Analytics
 
     let isUser: boolean = false;
 
@@ -187,10 +188,13 @@
     catch (error) {
         console.error("error while mounting", error);
     }
+
+
+
 </script>
 
 
-
+<Analytics />
 <Navbar />
 {#if $page.error}
   <EmptyPage />
