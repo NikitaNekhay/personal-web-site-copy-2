@@ -25,7 +25,6 @@ const firebaseConfig = {
 };
 
 
-
 // Initialize Firebase
 let firebaseApp
 if(!getApps().length){
@@ -41,3 +40,25 @@ export const auth = getAuth(firebaseApp)
 
 // Get the Firebase Storage instance
 export const storage = getStorage(firebaseApp);
+
+// intialize firebase admin sdk
+
+
+//  //var admin = require("firebase-admin");
+//  const serviceAccount:ServiceAccount = json;
+
+// import admin, { type ServiceAccount } from "firebase-admin";
+// // admin.initializeApp({
+// //   credential: admin.credential.cert(serviceAccount),
+// //   databaseURL: "https://personal-website-with-svelte-default-rtdb.firebaseio.com"
+// // });
+
+// // Initialize Firebase Admin SDK
+// //const serviceAccount = require('path/to/serviceAccountKey.json'); // Replace with the path to your service account key JSON file
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://personal-website-with-svelte-default-rtdb.firebaseio.com", // Replace with your project's database URL
+// });
+
+// export { admin }; // Export the admin SDK for use in other parts of your code
