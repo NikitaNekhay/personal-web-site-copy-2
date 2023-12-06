@@ -34,7 +34,7 @@
       <strong class="block font-medium text-gray-900"> {$t('Changes saved')} </strong>
 
       <p class="mt-1 text-sm text-gray-700">
-        {$t('Your product changes have been saved.')}
+        {$t('Your changes have been saved.')}
       </p>
 
       <div class="mt-4 flex gap-2">
