@@ -66,6 +66,7 @@
             if (!register) {
                 //console.log("in !",register)
                 await authHandlers.login(email, password);
+                
             } else {
                 //console.log("in else",register)
                 await authHandlers.signup(email, password);

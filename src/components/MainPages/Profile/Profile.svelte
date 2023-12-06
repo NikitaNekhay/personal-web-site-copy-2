@@ -44,6 +44,8 @@
             profileValue = Ready_profile;
 
             isLoading = false;
+          } else {
+            window.location.href = `${base}/profile`;
           }
           // console.log("Restoring profileValue from user profile data",profileValue);
  
