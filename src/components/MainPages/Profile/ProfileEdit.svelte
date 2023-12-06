@@ -83,8 +83,7 @@
 
       isLoading = true;
       //console.log("after submit",isLoading)
-      window.location.href = `${base}/profile/#`;
-      //window.location.href = `${base}/profile/edit/`
+
     } catch (error) {
       console.error("error while updating profile",error);
 
