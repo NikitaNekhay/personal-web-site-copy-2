@@ -101,4 +101,5 @@ export const AdminRoutes = [
     `${base}/dashboard`,
     `${base}/stat`,
     `${base}/create`,
+    `${base}/posts`,
 ];
