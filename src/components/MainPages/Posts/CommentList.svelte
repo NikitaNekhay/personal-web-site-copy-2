@@ -3,30 +3,43 @@
     import type { MessageType } from "../../../shared/types";
     import { deleteComment, getComments, updateComment } from "../../../routes/posts/comments";
     import { page } from "$app/stores";
-    import { authStore, isAdmin } from "../../../store/store";
+    import { authStore, isAdmin, triggerComments } from "../../../store/store";
     import { comment } from "postcss";
     import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
 
     let commentaries:MessageType[] = [];
     
-    let editClicked:boolean = false;
+    let editClicked = {
+        value:false,
+        index:-1,
+    }
     let isLoading:boolean = true;
+    let showTrigger:boolean;
+    
 
     onMount(async()=>{
         commentaries = await getComments()
         commentaries= commentaries.filter((obj) => obj.post === $page.params.id);
-
+        console.log($triggerComments.value);
+        // if($triggerComments.value){
+        //     $triggerComments.value = false;
+        // }
         const unsubscribe = authStore.subscribe((authStore)=>{
             if($authStore.loading)
                 isLoading = false
             else
                 isLoading = true
+            
 
         })
-        return unsubscribe;
+        //const unsubscribeComments = triggerComments.subscribe((triggerComments)=>{showTrigger = triggerComments.value})//return unsubscribe;
         
     })
 
+    afterUpdate(async()=>{
+        showTrigger = $triggerComments.value;
+        console.log(showTrigger)
+    })
 
     function checkUserRight(comment:MessageType){
 
@@ -50,24 +63,33 @@
         try {
             updateComment(comment)
             console.log(comment)
+            $triggerComments.value = true;
+
+            setTimeout(()=>{
+            $triggerComments.value = false;
+            console.log($triggerComments.value)
+
+            },1500)
         } catch (error) {
             console.log("error while crud comment")
         }
        
     }
 
-    function handleEdit(event){
-        editClicked = !editClicked;
-        try {
-            
-        } catch (error) {
-            console.log("error while crud comment")
-        }
-       
+    function handleEdit(event,commentIndex){
+        editClicked.value = !(editClicked.value);
+        editClicked.index = commentIndex;
     }   
 
     function handleDelete(event,cid:string){
         try {
+            $triggerComments.value = true;
+
+            setTimeout(()=>{
+            $triggerComments.value = false;
+            console.log($triggerComments.value)
+
+            },1500)
             deleteComment(cid);
         } catch (error) {
             console.log("error while crud comment")
@@ -80,10 +102,11 @@
 
 </script>
 
+
 <div>
     <h1 class="text-center w-full mt-4">Commentaries:</h1>
 </div>
-{#key commentaries}
+{#key triggerComments}
 {#if commentaries}
 <ul>
 {#each commentaries as comment, i}
@@ -98,7 +121,8 @@
     {#if isLoading}
     <div class="flex items-center justify-end gap-2 bg-white p-3">
         {#if checkUserRight(comment)}
-            {#if editClicked}
+            <p>What to do with your comment?</p>
+            {#if editClicked && editClicked.index===i}
             <input type="text" bind:value={comment.comment} />
             <button
                 type="button"
@@ -111,7 +135,7 @@
             <button
                 type="button"
                 class="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
-                on:click={(event)=>{handleEdit(event)}}
+                on:click={(event)=>{handleEdit(event,i)}}
             >
                 Edit
             </button>

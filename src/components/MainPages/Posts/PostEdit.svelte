@@ -25,6 +25,7 @@
   let isLoading = true;
   let submitClicked = false;
   let submitImageClicked = false;
+  let cartTable:boolean = false;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -116,7 +117,6 @@
     <div class=" mb-6 flex justify-center">
       <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT POST")}</h1>
     </div>
-
     <div class="-mx-3 mb-6 flex flex-wrap">
       <div class="w-full px-3">
         <label
@@ -154,8 +154,8 @@
         focus-within:ring-white-2"
           for="description"
         >
-          <input
-            class="peer h-8 w-full border-none bg-transparent
+          <textarea
+            class="peer h-52 py-4 w-full border-none bg-transparent
           bg-white-1 p-0 placeholder-transparent
           focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             id="description"

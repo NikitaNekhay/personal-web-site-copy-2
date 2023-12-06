@@ -13,7 +13,7 @@
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
     import Comment from "./Comment.svelte";
     import CommentList from "./CommentList.svelte";
-    import { authStore } from "../../../store/store";
+    import { authStore, triggerComments } from "../../../store/store";
 
   export let post: PostType;
   //export let post = $page.params
@@ -113,9 +113,10 @@
     </div>
   </div>
 
-  <div class="bore mt-4 content-center items-center justify-center text-center">
+  <div class=" mt-4 grid content-center place-content-center">
     <h1>{post.title}</h1>
-    <p>{post.description}</p>
+
+    {post.description}
     <p>{$t("Author")} : {post.author}</p>
     <p>{$t("Author Email")} : {post.authorEmail}</p>
     <p>{$t("Price")} : {post.price}</p>
@@ -126,12 +127,17 @@
       class="transition duration-200 hover:text-blue-0"
       >{$t("SEND EMAIL TO AUTHOR")}
     </a>
-  </div>
 
-  {#if $authStore.user}
+
+    <div class="mt-6">
+    {#if $authStore.user}
     <Comment />
-  {/if}
-    <CommentList />
+    {/if}
+    {#key $triggerComments.value}
+      <CommentList />
+    {/key}
+  </div>
+  </div>
 {/if}
 
 

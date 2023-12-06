@@ -1,5 +1,5 @@
 import { auth, db } from "$lib/firebase/firebase"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from "firebase/auth"
 import { deleteDoc, doc } from "firebase/firestore";
 import { writable } from "svelte/store"
 import { Language } from "../shared/types";
@@ -49,6 +49,9 @@ export const isAdmin = writable({
   value:false,
 });
 
+export const triggerComments = writable({
+  value:false,
+});
 
 
 
@@ -73,6 +76,12 @@ export const authHandlers = {
     // console.log("signing out")
     await signOut(auth)
 
+  },
+  changeCredentials: async(user,email, pass)=>{
+    //const user  = auth.currentUser;
+    updatePassword(user,pass);
+    updateEmail(user,email)
+    
   },
   deactivate: async () => {
     //  console.log("deactivating account...")

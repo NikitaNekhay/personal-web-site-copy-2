@@ -77,17 +77,16 @@
             return
         }
 
-        if (!user && currentPath === `${base}/profile`) {
+        if (!user && (currentPath === `${base}/profile/shoppingcart` 
+            || currentPath === `${base}/profile/shoppingcart`
+            || currentPath === `${base}/profile`
+            || currentPath === `${base}/profile/edit/credentials`
+            || currentPath === `${base}/profile/edit`)) {
             console.log("user haven't logged in")
             window.location.href = `${base}/login`;
             return
         }
-
-        if (!user && currentPath === `${base}/profile/shoppingcart`) {
-            console.log("user haven't logged in")
-            window.location.href = `${base}/login`;
-            return
-        }
+        
 
     };
 
@@ -99,18 +98,11 @@
                 const currentPath = window.location.pathname;
                 checkUserStatus(user);
                 handleRedirect(user, currentPath);
-
-                // let dataToSetToStore = {
-                //     name: "template",
-                //     email: user ? user.email : "",
-                //     phone: "",
-                //     country: "",
-                //     description: "",
-                //     messages: [],
-                // };
+                
                 let dataToSetToStore:UserDataType = {
+                    id: "",
                     name: "template",
-                    email: user ? user.email : "",
+                    email: "",
                     phone: "",
                     country: "",
                     description: "",
@@ -124,6 +116,7 @@
                     if (!docSnap.exists()) {
                         const userRef = doc(db, "user", user.uid);
                         dataToSetToStore = {
+                            id: userRef.name ?? "",
                             name: userRef.name ?? "template",
                             email: userRef.email ?? "",
                             phone: userRef.phone ?? "",
@@ -143,13 +136,8 @@
                         });
                     } else {
                         const userData = docSnap.data();
-                        const dataToSetToStore:UserDataType = {
-                            // name: userData.name || "template",
-                            // phone: userData.phone || "",
-                            // email: userData.email || dataToSetToStore.email,
-                            // country: userData.phone || "",
-                            // description: userData.description || "",
-                            // messages: userData.messages || [],
+                        dataToSetToStore = {
+                            id: userData.id,
                             name: userData.name ,
                             phone: userData.phone ,
                             email: userData.email ,

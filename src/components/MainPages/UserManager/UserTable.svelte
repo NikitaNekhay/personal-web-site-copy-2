@@ -216,8 +216,7 @@
 
   }
 </script>
-
-<div class=" w-full rounded-md bg-white-1 p-8 font-anonymous">
+<div class=" w-full rounded-md bg-white-1 p-8 font-anonymous sm:mt-0 lg:mt-7">
   <div class=" flex items-center justify-between pb-6">
     <div>
       <h2 class="font-semibold text-gray-600">{$t("Table of users")}</h2>

@@ -5,6 +5,40 @@ export enum Language {
     Russian = 'ru',
   }
 
+  export enum Errors {
+    VerifyPass = "Error while verifying your current pass!",
+    RepeatPass = "Your passwords don't match each other!",
+    Authentication = "Error while Authenticating user! Please check your credentials, again.",
+    Register = "",
+    Logout = "",
+
+    EditProfile = "error while updating profile",
+    EditCredentialProfile = "",
+    DeleteProfile="",
+    
+    AddComment ="",
+    EditComment = "",
+    DeleteComment = "",
+
+    CreatePost = "",
+    EditPost="",
+    DeletePost = "",
+
+    AddToCart = "",
+    DeleteAtCart = "",
+    GetCheckAtCart ="",
+    PurchasePost = "",
+
+    FetchUser = "no user",
+    FetchUsers = "",
+    FetchProfile ="",
+    FetchPost = "",
+    FetchPosts = "",
+    FetchComments = "",
+    FetchCart = "",
+
+  }
+
 export enum SortMethod{
     Default = 0,
     NameAlpha = 1,

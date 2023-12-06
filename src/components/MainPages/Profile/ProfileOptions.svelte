@@ -156,6 +156,12 @@
                         <img class="mr-2 group-hover:text-yellow-0 stroke-current" src="{base}/media/user-edit.svg" alt="user edit icon">
                         <p class="self-center group-hover:text-yellow-0">{$t('Edit')}</p>
                       </a> 
+                      <a href="{base}/profile/edit/credentials" class="flex text-gray-700 px-4 py-2 text-sm 
+                      transition duration-200 group" 
+                      role="menuitem" tabindex="-1" id="menu-item-0">
+                        <img class="mr-2 group-hover:text-yellow-0 stroke-current" src="{base}/media/user-edit.svg" alt="user edit icon">
+                        <p class="self-center group-hover:text-yellow-0">{$t('Edit credentials')}</p>
+                      </a> 
                     </div>
                     <div class="p-2">
                       <a on:click={ensureDeactivate} on:keypress={ensureDeactivate} class="cursor-pointer 

@@ -206,7 +206,7 @@
                                     id="rpassword"
                                     placeholder="   Repeat password"
                                     name="rpassword"
-                                    type="rpassword"
+                                    type="password"
                                     required
                                 />
                                 <span
