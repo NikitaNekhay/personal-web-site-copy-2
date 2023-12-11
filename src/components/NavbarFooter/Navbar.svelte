@@ -75,7 +75,7 @@
 
         <div
             class="mx-auto flex items-center justify-between border-x-4 border-navy-1
-             bg-white-1 shadow-white-2 drop-shadow-2xl
+             bg-white-1 shadow-white-2 drop-shadow-2xl sm:border-x-[6px] md:border-x-[6px]
             sm:w-12/12 md:w-12/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 3xl:w-11/12"
         >
             <div

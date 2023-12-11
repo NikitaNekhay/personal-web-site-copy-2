@@ -7,6 +7,8 @@
   import { currentLanguagee } from '../../store/store_';
     import { Language } from '../../shared/types';
 
+    let innerWidth = 0
+    let innerHeight = 0
 
   if($currentLanguagee!==undefined){
         const currentValue = $currentLanguagee;
@@ -57,9 +59,19 @@ function changeLanguage(){
 
 </script>
 
-<footer aria-label="Site Footer" class="relative bg-white-1  lg:grid lg:grid-cols-5 font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
+<svelte:window bind:innerWidth bind:innerHeight />
 
-        <div class="relative block h-32  lg:col-span-2 lg:h-full">
+<footer aria-label="Site Footer" class="relative bg-white-1  
+sm:grid sm:grid-cols-1
+md:grid md:grid-cols-2
+lg:grid lg:grid-cols-6 
+xl:grid xl:grid-cols-6
+2xl:grid 2xl:grid-cols-6
+3xl:grid 3xl:grid-cols-6
+font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
+
+        <div class="relative block h-32  
+        sm: md:col-span-2 lg:col-span-4 xl:col-span-4 lg:h-full xl:h-full 2xl:col-span-3 2xl:h-full 3xl:col-span-3 3xl:h-full">
             <img
             src="https://lh3.googleusercontent.com/pw/AJFCJaWk73NiFqnvmE4ERdCThcHS_cjkfnjyMZT77oTLttHPaAYfRT2E0vWixrFc_Yk_PkkbBO6EunYTPi65rkik7TkcgBi1Av-UeGfMTcww1syn7ZlhRpU=w2400"
             alt="pink flower in lake"
@@ -67,8 +79,13 @@ function changeLanguage(){
             />
         </div>
         
-        <div class="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8">
-            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <div class="px-4 sm:px-4 md:px-6 lg:px-8 2xl:px-16 3xl:px-16
+            py-16 
+             sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-2 
+             2xl:col-span-3 3xl:col-span-3">
+            <div class="grid grid-cols-1 gap-8 
+            sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 
+            2xl:gap-0 3xl:gap-0 md:gap-0 xl:gap-8">
             <div>
                 <p>
                 <span class="text-xs tracking-wide text-black-0">
@@ -79,6 +96,11 @@ function changeLanguage(){
                     href="tel:+375445785057"
                     class="block text-2xl font-medium text-black-1 transition duration-200 hover:opacity-75 hover:text-blue-0 sm:text-3xl"
                 >
+                    <!-- {#if innerWidth > 374 && innerWidth<414}
+                    +37544...
+                    {:else}
+                    +375445785057
+                    {/if} -->
                     +375445785057
                 </a>
                 </p>
@@ -88,7 +110,7 @@ function changeLanguage(){
                 <li>{$t('Weekend')} : 10am - 3pm</li>
                 </ul>
         
-                <ul class="flex gap-6 mt-8">
+                <ul class="flex gap-6 mt-8 sm:grid-cols-2 sm:grid">
                 <li>
                     <a
                     href="{base}/"
@@ -186,9 +208,10 @@ function changeLanguage(){
                 </ul>
             </div>
         
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="grid grid-cols-1 gap-4 sm:gap-8 2xl:gap-8 
+            sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 3xl:grid-cols-2  3xl:">
                 <div>
-                <p class="font-medium text-gray-700">
+                <p class="font-medium text-gray-700 lg:grid lg:place-items-end ">
                     {$t('Services')}
                 </p>
         
@@ -216,7 +239,7 @@ function changeLanguage(){
                 </div>
         
                 <div>
-                <p class="font-medium text-gray-700">
+                <p class="font-medium text-gray-700 lg:grid lg:place-items-end">
                    {$t('Company')} 
                 </p>
         

@@ -5,10 +5,10 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     screens: {
-      'sm': {'min':'374px','max': '799px'}, //'414px',  
+      'sm': {'min':'374px','max': '414px'}, //'414px',  
       // => @media (min-width: 640px) { ... }
 
-      'md':  {'min': '800px', 'max': '1023px'},
+      'md':  {'min': '415px', 'max': '1023px'},
       // => @media (min-width: 800px) { ... }
 
       'lg':  {'min': '1024px', 'max': '1279px'}, //'1024px',
