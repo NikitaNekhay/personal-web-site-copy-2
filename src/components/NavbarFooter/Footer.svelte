@@ -61,7 +61,9 @@ function changeLanguage(){
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<footer aria-label="Site Footer" class="relative bg-white-1  
+<footer aria-label="Site Footer" class="
+w-screen 
+relative bg-white-1  
 sm:grid sm:grid-cols-1
 md:grid md:grid-cols-2
 lg:grid lg:grid-cols-6 
