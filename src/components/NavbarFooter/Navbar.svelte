@@ -98,7 +98,7 @@
                 <!-- Links(Center) -->
                 <div
                     class="flex items-center justify-between drop-shadow 
-                    sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                    sm:mx-0 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
                     "
                 >
                     <div class="border-r-2 border-navy-2 sm:flex sm:flex-col">
