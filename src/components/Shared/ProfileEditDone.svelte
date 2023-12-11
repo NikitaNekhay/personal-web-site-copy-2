@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
   import { addMessages, locale, t } from 'svelte-i18n';
   import ru from '../../services/ru.json';
   import en from '../../services/en.json';
   import { base } from "$app/paths";
   import { currentLanguage } from '../../store/store';
   import { onMount } from 'svelte';
+    import { handleDelete } from '../../routes/profile/user';
 
+  export let isChanged:boolean;
+  function changeState(){
+    isChanged = !isChanged;
+  }
 
 </script>
 <div
@@ -38,9 +43,9 @@
       </p>
 
       <div class="mt-4 flex gap-2">
-        <a
-          href="{base}/profile"
-          class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0"
+        <button
+          on:click={()=>{window.location.href=`${base}/profile`;}}
+          class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0 transition-colors duration-200"
         >
           <span class="text-sm"> {$t('Preview')} </span>
 
@@ -58,17 +63,19 @@
               d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
             />
           </svg>
-        </a>
+        </button>
 
-        <button
+        <!-- <button
           class="block rounded-lg px-4 py-2 text-gray-700 transition hover:bg-gray-100"
         >
-          <span class="text-sm">{$t('Revert')}</span>
-        </button>
+          <span class="text-sm">123</span>
+        </button> -->
       </div>
     </div>
 
-    <button class="text-gray-500 transition hover:text-gray-600">
+    <button  class="text-gray-500 transition hover:text-gray-600"
+      on:click={()=>{changeState()}}
+    >
       <span class="sr-only">{$t('Dismiss popup')}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"

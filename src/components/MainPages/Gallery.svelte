@@ -12,6 +12,7 @@
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
     import { Language, type PostType } from "../../shared/types";
     import { updateUserProfile } from "../../routes/profile/user";
+    import CartAdded from "../Shared/CartAdded.svelte";
 
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
@@ -32,11 +33,12 @@
   // in the blogs collection and update the page in
   // real-time whenever a new blog is added, edited, or deleted.
 
-  let isLoading = true;
-  let isEmpty = false;
+  let isLoading:boolean = true;
+  let isEmpty:boolean = false;
   let passComponent = false;
   let blogPosts:PostType[];
   let tempAuthStore;
+  let isChanged:boolean = false;
 
   onMount(async () => {
     isLoading = true;
@@ -86,10 +88,10 @@
       //console.log("tempp autho",tempAuthStore.data.cart)
       const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
 
-      console.log("temparr is",tempArr)
+      //console.log("temparr is",tempArr)
       tempArr.push(clickedItem);
       tempAuthStore.cart = tempArr;
-      console.log("handleClick - pushed value for cart:",tempArr)
+      //console.log("handleClick - pushed value for cart:",tempArr)
       await updateUserProfile(
         tempAuthStore.user,
         tempAuthStore.data.name,
@@ -99,7 +101,7 @@
         tempAuthStore.data.description,
         tempAuthStore.data.messages,
         tempAuthStore.cart )
-      
+      isChanged = !isChanged;
     } else {
       console.log("cant handle cart because temoauthstore is empty")
     }
@@ -115,6 +117,9 @@
     {:else if isEmpty}
       <NoPosts />
     {:else}
+      {#if isChanged}
+        <CartAdded bind:isChanged />
+      {/if}
       <div
         class="grid grid-cols-3 gap-x-48 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >

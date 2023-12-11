@@ -13,7 +13,7 @@
 
     <div class="col-span-full ">
       <div class="posts flex  h-screen">
-        <div class=" w-1/12">
+        <div class=" text-transparent w-1/12">
           1
         </div > 
         <div class=" w-4/12 justify-center self-center font-anonymous text-2xl ">

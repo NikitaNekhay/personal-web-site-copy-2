@@ -78,14 +78,6 @@
   }
 
 
-  function handleRate(event){
-    if(blogPosts){
-      blogPosts = blogPosts.sort((obj1,obj2)=>{
-        return (Number(obj1.price)-Number(obj2.price));
-      })
-    }
-  }
-
 
 </script>
 
@@ -97,10 +89,6 @@
       <NoPosts />
     {:else}
       <div class="text-center flex justify-center w-full mt-6">
-          <button class="bg-yellow-0 rounded-md py-3 px-8 border-x-4 border-orange-90 transition-colors duration-500 hover:bg-yellow-300"
-          on:click={(event)=>{handleRate(event)}}>
-          Get rating of posts
-        </button>
 
       </div>
       <div

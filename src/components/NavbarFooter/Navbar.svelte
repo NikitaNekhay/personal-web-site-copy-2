@@ -70,11 +70,17 @@
 <nav class="flex w-screen font-anonymous">
     <!--The form itself  -->
     <div class="fixed top-0 z-30 w-full">
+
+
+
         <div
-            class="mx-auto flex w-11/12 items-center justify-between border-x-4 border-navy-1 bg-white-1 shadow-white-2 drop-shadow-2xl"
+            class="mx-auto flex items-center justify-between border-x-4 border-navy-1
+             bg-white-1 shadow-white-2 drop-shadow-2xl
+            sm:w-12/12 md:w-12/12 lg:w-11/12 xl:w-11/12 2xl:w-11/12 3xl:w-11/12"
         >
             <div
-                class="mx-2 flex w-full items-center justify-between sm:gap-0 md:gap-8 lg:gap-16"
+                class="mx-2 flex w-full items-center justify-between 
+                sm:gap-0 md:gap-8 lg:gap-16 xl:gap-16 2xl:gap-16 3x:gap-16"
             >
                 <!-- Logo(Left side) -->
                 <div class="text-2xl">
@@ -91,35 +97,43 @@
                 </div>
                 <!-- Links(Center) -->
                 <div
-                    class="flex items-center justify-between drop-shadow sm:mx-8 md:mx-12 lg:mx-20"
+                    class="flex items-center justify-between drop-shadow 
+                    sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                    "
                 >
-                    <div class="border-r-2 border-navy-2">
+                    <div class="border-r-2 border-navy-2 sm:flex sm:flex-col">
                         <a
                             class="text-black no-underline
-                        underline-offset-4 hover:underline"
+                        underline-offset-4 hover:underline
+                        sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20 
+                        "
                             target="_self"
                             href="{base}/about"
                             >{$t("About")}
                         </a>
                         <a
-                            class="text-black no-underline underline-offset-4 hover:underline sm:mx-8
-                        md:mx-12 lg:mx-20"
+                            class="text-black no-underline underline-offset-4 hover:underline 
+                            sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                            "
                             target="_self"
                             href="{base}/contact"
                             >{$t("Contact")}
                         </a>
                     </div>
-                    <div class="border-l-2 border-navy-2">
+                    <div class="border-l-2 border-navy-2 sm:flex sm:flex-col sm:justify-end">
                         <a
-                            class="text-black no-underline underline-offset-4 hover:underline sm:mx-8
-                        md:mx-12 lg:mx-20"
+                            class="text-black no-underline underline-offset-4 hover:underline 
+                            sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                            "
                             target="_self"
                             href="{base}/shop"
                             >{$t("Shop")}
                         </a>
                         <a
                             class="text-black no-underline
-                        underline-offset-4 hover:underline"
+                        underline-offset-4 hover:underline 
+                        sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                        "
                             target="_self"
                             href="{base}/works"
                             >{$t("Works")}

@@ -89,9 +89,12 @@
         "NEXT":"NEXT",
     "Stat":"Stat",
     "Shop":"Shop",
+        "Go to profile page":"Go to profile page",
         "Revert":"Revert",
+        "Item in the cart":"Item in the cart",
+        "You have added item to your cart!":"You have added item to your cart!",
         "Dismiss popup":"Dismiss popup",
-        "Preview":"Dismiss popup",
+        "Preview":"Preview",
         "Your changes have been saved.":"Your changes have been saved.",
         "Changes saved":"Changes saved",
 

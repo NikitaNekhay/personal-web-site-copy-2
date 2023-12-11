@@ -15,16 +15,8 @@
     import type { UserDataType } from "../../../shared/types";
 
   let sumbitClicked = false;
-  let isLoading = false;
+  let isChanged = false;
 
-  // let profileValue = {
-  //   name: "",
-  //   email: "",
-  //   phone: "",
-  //   country: "",
-  //   description: "",
-  //   messages: [],
-  // };
   let profileValue:UserDataType;
   let isthereadmin = false
   let userCopy;
@@ -32,7 +24,7 @@
 
   onMount(() => {
      console.log("updating profile...")
-    //  console.log("authStore in prfile.svelte before everything",$authStore.data);
+  
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
         if(user){
@@ -56,10 +48,7 @@
   async function handleSubmit(event) {
     event.preventDefault();
     sumbitClicked = true;
-    //console.log("authStore in prfile.svelte before handling",$authStore);
-    //console.log("userCopy in prfile.svelte before handling",userCopy);
 
-    //console.log("profileValue in prfile.svelte before handling",profileValue);
     if(userCopy){
       console.log("user exists so we can handle submit")
 
@@ -81,8 +70,8 @@
           console.error("Error updating profile:", error.message);
         });
 
-      isLoading = true;
-      //console.log("after submit",isLoading)
+      isChanged = true;
+
 
     } catch (error) {
       console.error("error while updating profile",error);
@@ -107,8 +96,8 @@
 </script>
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-  {#if isLoading}
-    <ProfileEditDone />
+  {#if isChanged }
+    <ProfileEditDone bind:isChanged />
   {/if}
 
   <ProfileOptions />
@@ -274,7 +263,7 @@
         </div>
       </div>
 
-      {#if sumbitClicked && !isLoading}
+      {#if sumbitClicked && !isChanged}
         <LoadingButton />
       {:else}
         <button

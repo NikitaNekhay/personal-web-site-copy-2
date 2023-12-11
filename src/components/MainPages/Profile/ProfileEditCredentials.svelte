@@ -14,9 +14,9 @@
     import LoadingButton from "../../Shared/LoadingButton.svelte";
       import { Errors, type UserDataType } from "../../../shared/types";
   
-    let sumbitClicked = false;
-    let isLoading = false;
-    let isthereadmin = false
+    let sumbitClicked:boolean = false;
+    let isChanged:boolean = false;
+    let isthereadmin:boolean = false
 
     let profileValue:UserDataType;
     const profileCredentials = {
@@ -39,6 +39,7 @@
             profileValue = await getUserProfile(user);
             profileCredentials.email = profileValue.email;
             console.log("what we got from db getUserProfile:",profileValue);
+          
           } else {
             console.error(Errors.FetchUser);
           }
@@ -52,13 +53,10 @@
     async function handleSubmit(event) {
       event.preventDefault();
       sumbitClicked = true;
-      //console.log("authStore in prfile.svelte before handling",$authStore);
-      //console.log("userCopy in prfile.svelte before handling",userCopy);
-  
-      //console.log("profileValue in prfile.svelte before handling",profileValue);
+
       if(userCopy && profileValue){
         console.log("user exists so we can handle submit")
-  
+        
         
 
 
@@ -83,16 +81,16 @@
 
 
           if(verifyPassword()){
+            
             await authHandlers.changeCredentials(userCopy,profileValue.email, profileCredentials.password);
-            //await authHandlers.login(profileCredentials.email,profileCredentials.password)
+  
           } else {
             throw Error(Errors.VerifyPass)
           }
 
           
-          isLoading = true;
-        //console.log("after submit",isLoading)
-        //window.location.href = `${base}/profile/#`;
+          isChanged = true;
+
 
       } catch (error) {
         console.error("error while updating profile",error);
@@ -111,7 +109,6 @@
         }, 2500);
       }
      
-      // console.log("authStore in prfile.svelte after handling",$authStore.data);
     }
   
     function verifyPassword(){
@@ -129,8 +126,8 @@
   </script>
   
   <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-    {#if isLoading}
-      <ProfileEditDone />
+    {#if isChanged }
+    <ProfileEditDone bind:isChanged />
     {/if}
   
     <ProfileOptions />
@@ -243,7 +240,7 @@
       
     
   
-        {#if sumbitClicked && !isLoading}
+        {#if sumbitClicked && !isChanged}
           <LoadingButton />
         {:else}
           <button

@@ -14,7 +14,8 @@
     import type { UserDataType  } from "../shared/types";
     import {AdminRoutes,nonAuthRoutes} from "../shared/types";
     import Analytics from "../lib/Analytics.svelte";
-    Analytics
+    import NavbarSm from "../components/NavbarFooter/NavbarSM.svelte";
+    
 
     let isUser: boolean = false;
 
@@ -184,6 +185,7 @@
 
 <Analytics />
 <Navbar />
+<!-- <NavbarSm /> -->
 {#if $page.error}
   <EmptyPage />
 {:else}
