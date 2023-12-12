@@ -21,10 +21,10 @@
       <div class="flex ">
         <img src="https://lh3.googleusercontent.com/pw/AJFCJaV-M3Nn0qHBrDNRQQ4e9b-N8qc9CIx02_HG5pDHWD22yCeSbpVpYebhR19qs0Cc_wpcuEoQRYUsnGfyWrZcURhFhR4hd4JwgfgxDwLCjTWxUX4TxOg=w2400" 
         alt="polar bear 1" title="polar bear 1" 
-        class=" h-3/12 w-5/12">
+        class=" h-3/12 w-4/12">
         <img src="https://lh3.googleusercontent.com/pw/AJFCJaVHekBNOjPVxp_1sDKg2x0lnHYdeD6W1Uw7P-CYZtNvMVb3c59vAZREj5-Rad5Tscon3v3EoAjpVBG-STfmqzJwJFCsRHAU86cHE9M6WOfHoMcURdI=w2400" 
         alt="polar bear 2" title="polar bear 2" 
-        class="h-5/12 w-5/12">
+        class="h-5/12 w-4/12">
         <div class=" bg-cover bg-top w-6/12 h-3/12 bg-[url('https://lh3.googleusercontent.com/pw/AJFCJaVEQUnLA4ikpKxj4HyL84AYwH1dl2V22jNmpkjOOtTN-2nSbKIw1JP2gilpBsHXj834zS_cjqyvFmms51ooQx8NirpNN8klV0j2ntn3pjKMJLLglD8=w2400')]">
         
       </div>
@@ -47,26 +47,26 @@
     
       <img src="https://lh3.googleusercontent.com/7iP5TOv6XA9Tt6YMJwIJ5rPk6N-PuIZiwSKJR960lmcv22pzgP_tQsKmOu2D_xMnub4qMcvR3wF7SrnxQlfkBmcwDEd6PZvY4mbCS9jrLQW5WL-m0Sv5IUCScMfs8RmYwFzNNgDuEw=w2400" 
       alt="black 1" title="black 1"  
-      class="h-6/12 w-6/12">
+      class="h-6/12 w-4/12">
     
       <img src="https://lh3.googleusercontent.com/pw/AJFCJaXNJYHmbsFzdxyQHdnmOxipFFmEiavoYzP_IpT5sqW0tcSdfpFVO_USgnpl_b1zxL94or3RYMfp3JZHFo4xs-L2IeLTPBSL2yYkwJvU3zbPU0ldGpY=w2400" 
       alt="black 2" title="black 2"  
-      class="h-6/12 w-6/12">
+      class="h-6/12 w-4/12">
     
   </div>
   <div class="flex justify-center">
     
     <img src="https://lh3.googleusercontent.com/I5xvTDQQaLkBipQksD7O02OtjBu0Bb3jUG3H0S7bEqKeO9GovQkF66dS1ZW_Xr2B5BtIwAmFBlxZ7590NOQoIiu7g8qXY3hy9CAVWYUgNO41tqxIUt9GFcKySWqdFcag4xb5fXjRNA=w2400" 
     alt="tank 1" title="tank 1"  
-    class="h-6/12 w-5/12">
+    class="h-6/12 w-4/12">
   
     <img src="https://lh3.googleusercontent.com/AEs9uGffV9Ie4KZoNo5f6ykdIRBM968xjamb3zNlFZQ0KlXHOokOpdTm1JPDgFPFv_2adC6lTNv0S4P5HZtQcaqf_tG8aFKS4qilaoVukeTK-91LbygHwtlFOKdXXZCimy2QiMv4YQ=w2400" 
     alt="tank 2" title="tank 2"  
-    class="h-6/12 w-5/12">
+    class="h-6/12 w-4/12">
 
     <img src="https://lh3.googleusercontent.com/z2ebtCAt5Vrc7loda-LbpH0dtxCx1wRAezzsK3nqYX8egPQTuAe60lFy2kxhyE8dSq_N8A4_4vz0n3sTGUjn6wxscU0G7SmtfCO00fWdKxPMWEjanAQLGFqFQj61iwqOxol8Q7fEDQ=w2400" 
     alt="tank 3" title="tank 3"  
-    class="h-6/12 w-5/12">
+    class="h-6/12 w-4/12">
   
 </div>
 </div>

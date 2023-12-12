@@ -111,7 +111,7 @@
 </script>
 
 <div class="bg-white">
-  <div class=" lg: sm:px-6 sm:py-12 lg:px-8">
+  <div class=" sm:px-6 sm:py-12 lg:px-8">
     {#if isLoading}
       <LoadingSpinner />
     {:else if isEmpty}
@@ -121,7 +121,7 @@
         <CartAdded bind:isChanged />
       {/if}
       <div
-        class="grid grid-cols-3 gap-x-48 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+        class="grid grid-cols-3 gap-x-48 sm:gap-x-24 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >
       {#key blogPosts}
         {#each blogPosts as post}
@@ -132,7 +132,7 @@
                 on:keypress={() => handleClick(post.id)}
                 class="min-h-80 overflow-hidden
                   bg-gray-200 hover:cursor-pointer
-                  hover:opacity-80"
+                  hover:opacity-80 w-[100%]"
                 aria-expanded="true"
                 aria-haspopup="true"
                 role="button"
@@ -142,9 +142,10 @@
                   src={post.images[0]}
                   alt="Blog Post"
                   class="object-center"
+                  
                 />
               </div>
-              <div class="mt-2 flex justify-between">
+              <div class="mt-2 flex sm:flex-col md:flex-col justify-between">
                 <div class=" flex-row">
                   <div>
                     <h3 class=" text-sm text-gray-700">
@@ -161,7 +162,7 @@
                 </div>
 
                 <div
-                  class="mx-6 flex max-w-sm sm:place-items-start md:place-items-start"
+                  class="sm:mx-6 md:mx-8 lg:mx-12 flex sm:flex-row sm:place-items-start md:place-items-start"
                 >
                   <h2 class="  text-gray-700">
                     {post.description.substring(
@@ -172,23 +173,16 @@
                 </div>
 
                 <div
-                  class="grid-rows grid max-h-fit max-w-fit items-center justify-items-end"
+                  class="grid-rows sm:grid-cols-2 sm:gap-x-[120px] md:gap-x-[120px] grid max-h-fit max-w-fit items-center justify-items-end sm:justify-items-start md:justify-items-start"
                 >
-                  <div>
+                  <div class=" sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
                     <p
                       class="font-anonymous text-3xl font-medium text-gray-900"
                     >
                       {post.price}BYN
                     </p>
                   </div>
-                  <div>
-                    <!-- <button 
-                      class="hover:text-yellow-0"
-                      on:click={() => handleCart(post.id)}
-                      on:keypress
-                    >
-                    {$t('add to bucket')}  
-                    </button> -->
+                  <div class="sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
                     <div >
                       <div
                         class=" group relative inline-block text-sm font-medium text-black-1
