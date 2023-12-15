@@ -15,8 +15,8 @@
     import {AdminRoutes,nonAuthRoutes} from "../shared/types";
     import Analytics from "../lib/Analytics.svelte";
     import NavbarSm from "../components/NavbarFooter/NavbarSM.svelte";
+    import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
     
-
     let isUser: boolean = false;
 
     const checkUserStatus = (user) => {
@@ -178,7 +178,7 @@
         console.error("error while mounting", error);
     }
 
-
+    injectSpeedInsights(); // function to check speed of site
 
 </script>
 
