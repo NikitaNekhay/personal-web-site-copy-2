@@ -1,4 +1,5 @@
 import { base } from "$app/paths";
+import type { User } from "firebase/auth";
 
 export enum Language {
     English = 'en',
@@ -8,6 +9,7 @@ export enum Language {
   export enum Errors {
     VerifyPass = "Error while verifying your current pass!",
     RepeatPass = "Your passwords don't match each other!",
+    EmptyInput = "Your input is empty, fill it the right way!",
     Authentication = "Error while Authenticating user! Please check your credentials, again.",
     Register = "",
     Logout = "",
@@ -17,25 +19,29 @@ export enum Language {
     DeleteProfile="",
     
     AddComment ="",
-    EditComment = "",
-    DeleteComment = "",
+    SaveComment = "Error while saving comments!",
+    EditComment = "Error while editing comments!",
+    DeleteComment = "Error while deleting comments!",
 
     CreatePost = "",
     EditPost="",
     DeletePost = "",
 
-    AddToCart = "",
+    NoUserToAddToCart = "Error while adding item to cart, because there is no user",
+    AddToCart = "Error while adding item to cart!",
     DeleteAtCart = "",
     GetCheckAtCart ="",
     PurchasePost = "",
 
-    FetchUser = "no user",
-    FetchUsers = "",
+    FetchUser = "Error while fetching user's info!",
+    FetchUsers = "Error while fetching info about users!",
     FetchProfile ="",
-    FetchPost = "",
-    FetchPosts = "",
-    FetchComments = "",
+    FetchPost = "Error while fetching the post's info!",
+    FetchPosts = "Error while fetching posts!",
+    FetchComments = "Error while fetching comments!",
     FetchCart = "",
+
+    InternalError = "This is internal error, please, contact admin to fix the error",
 
   }
 
@@ -59,12 +65,18 @@ export interface PostType {
 
 } 
 
-    export interface MessageType {
-        cid:string,
-        id:string,
-        comment:string,
-        post:string,
-    }
+export interface MessageType {
+    cid:string,
+    id:string,
+    comment:string,
+    post:string,
+}
+
+export interface AuthStoreType {
+    user:User | null,
+    loading:boolean,
+    data:UserDataType,
+} 
 
 export interface UserDataType {
     id:string,
@@ -77,15 +89,7 @@ export interface UserDataType {
     cart:PostType[],
 } 
 
-export interface AuthStoreType {
-    name: string ,
-    email: string ,
-    phone: string ,
-    country: string ,
-    description: string,
-    messages: [],
-    cart:PostType[],
-} 
+
 
 export const nonAuthRoutes = [
     `${base}/`,

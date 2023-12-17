@@ -2,33 +2,8 @@
     import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
     import { authStore , isAdmin} from '../../store/store';
-
-
-
- // async function updateStatisticsCollection() {
-        // try {
-        //     console.log("statistic store before click", $statisticsStore)
-        //     $statisticsStore.adminDataClicks += 1
-        //     console.log("statistic store after click", $statisticsStore)
-        //     const statisticsCollectionRef = collection(db, "statistics");
-        //     const newDocRef = doc(statisticsCollectionRef); // Create a reference to a new document
-        //     console.log("what we got from db:",newDocRef)
-        //     // update if not empty
-        
-           
-        //     // // to ensure that the data fits
-        //     // const updatedData = {
-        //     //     authorEmailClicks: $statisticsStore.authorEmailClicks,
-        //     //     adminDataClicks: $statisticsStore.authorEmailClicks,
-        //     // };
-        //     // console.log("updatedData:",updatedData)
-        //     // // set the value to store
-        //     console.log("value of statisticsStore after updating: ",$statisticsStore)
-        //     await setDoc(newDocRef, $statisticsStore);
-        // } catch (error) {
-        //     console.error("Error updating statistics collection:", error);
-        // }
-   // }
+    import { error } from '@sveltejs/kit';
+    import { Errors } from '../../shared/types';
 
 </script>
 

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import {  authHandlers, authStore } from "../../store/store";
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../services/ru.json";
@@ -9,11 +9,23 @@
     import { onDestroy } from "svelte";
     import { page } from "$app/stores";
     import { applyAction } from "$app/forms";
-    import { Language } from "../../shared/types";
+    import { Errors, Language } from "../../shared/types";
+    import { error } from "@sveltejs/kit";
+    import CommonPopUp from "../Shared/CommonPopUp.svelte";
 
     let sumbitClicked = false;
     let isLoading = true
-    console.log("state of dynamic isloading",isLoading)
+    
+    let register = false;
+    let authenticating = false;
+    
+    let isChanged:boolean = false;
+    let msg:String ="";
+    let smmsg:String = "Something went wrong while creating your account."
+
+    let email = "";
+    let password = "";
+    let rpassword = "";
 
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
@@ -30,82 +42,75 @@
         locale.set(Language.English);
     }
 
-    let email = "";
-    let password = "";
-    let rpassword = "";
-    let errore = false;
-    let register = false;
-    let authenticating = false;
-
     async function handleAuthenticate() {
+        try {
         sumbitClicked = true;
         isLoading = true;
         if (authenticating) {
             isLoading = false;
             return;
         }
-        if (!email || !password || (register && !rpassword)) {
-            errore = true;
-            isLoading = false;
-            setTimeout(() => {
-                // Calculate and set the new scroll position based on the previous percentage
-                isLoading = true;    
-                errore = false;
-                sumbitClicked = false;
-            }, 2500);
-            return;
+
+        if(rpassword!==password && register){
+            throw Errors.RepeatPass
+        }
+
+        if((email.length ===0 || password.length ===0 || rpassword.length ===0) && register){
+            throw Errors.EmptyInput
         }
 
         authenticating = true;
         isLoading = false;
 
         try {
-            //console.log("before",register)
-            // await authHandlers.login(email,password)
-            
             if (!register) {
-                //console.log("in !",register)
                 await authHandlers.login(email, password);
-                
             } else {
-                //console.log("in else",register)
                 await authHandlers.signup(email, password);
             }
-            
+    
         } catch (err) {
+            throw err;
+        }
+    } catch (err) {
+            if(typeof(err)==="string"){
+                msg = err;
+            } else if(err.message !== undefined){
+                msg = err.message;
+            } else {
+                msg = Errors.Authentication
+            }
+            isChanged = true
 
-            console.error("auth error", err);
             isLoading = false;
-            errore = true;
             authenticating = false;
             
             setTimeout(() => {
                 // Calculate and set the new scroll position based on the previous percentage
                 sumbitClicked = false
-                errore = false;
             }, 2500);
+
         }
+
     }
+
 
     function handleRegister() {
         register = !register;
     }
 </script>
-
+{#if isChanged}
+    <CommonPopUp bind:isChanged isPreviev={false} message={msg} smallMessage={smmsg}  />
+{/if}
 <div class="containerAuth">
     <div class="flex max-h-screen w-2/6" />
     <div class="mb-6 table-column h-fit w-2/6">
+
         <div class=" mb-6 h-2/6 justify-center text-center">
             <h1 class="font-abril text-4xl text-blue-0">
                 {register ? $t("REGISTER") : $t("LOGIN")}
             </h1>
-            {#if errore}
-                <div class=" my-6 flex justify-center">
-                    <h1 class=" errore font-abril text-4xl">
-                        {$t("The info is incorrect!")}
-                    </h1>
-                </div>
-            {/if}
+
         </div>
         <div class="flex h-2/6">
             <form class="w-full max-w-lg">
@@ -125,8 +130,6 @@
                                 id="email"
                                 name="email"
                                 type="email"
-                                autocomplete="email"
-                                placeholder="email@mail-service.com"
                                 required
                                 bind:value={email}
                             />

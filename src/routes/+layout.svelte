@@ -4,22 +4,27 @@
     import "../app.css";
     import Footer from "../components/NavbarFooter/Footer.svelte";
     import { page } from "$app/stores";
-    import { onMount, setContext, subscribe } from "svelte/internal";
+
     import { doc, getDoc, setDoc } from "firebase/firestore";
     import { auth, db } from "$lib/firebase/firebase";
     import { base } from "$app/paths";
     import { authStore, isAdmin } from "../store/store";
     import { writable } from "svelte/store";
-    import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import type { UserDataType  } from "../shared/types";
-    import {AdminRoutes,nonAuthRoutes} from "../shared/types";
+    import {AdminRoutes,Errors,nonAuthRoutes} from "../shared/types";
     import Analytics from "../lib/Analytics.svelte";
-    import NavbarSm from "../components/NavbarFooter/NavbarSM.svelte";
+   
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
+    import { error } from "@sveltejs/kit";
+    import CommonPopUp from "../components/Shared/CommonPopUp.svelte";
+    
     
     let isUser: boolean = false;
+    let isChanged:boolead = false;
 
     const checkUserStatus = (user) => {
+        
 
         isAdmin.set({ value: false });
 
@@ -192,3 +197,4 @@
   <slot />
 {/if}
 <Footer />
+

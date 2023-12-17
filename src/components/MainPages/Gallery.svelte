@@ -10,9 +10,23 @@
   import en from "../../services/en.json";
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
-    import { Language, type PostType } from "../../shared/types";
+    import { Errors, Language, type PostType } from "../../shared/types";
     import { updateUserProfile } from "../../routes/profile/user";
     import CartAdded from "../Shared/CartAdded.svelte";
+    import { error } from "@sveltejs/kit";
+    import { applyAction } from "$app/forms";
+    import CommonPopUp from "../Shared/CommonPopUp.svelte";
+
+  let isLoading:boolean = true;
+  let isEmpty:boolean = false;
+  let passComponent = false;
+  let blogPosts:PostType[];
+  let tempAuthStore:AuthStoreType;
+  let isChangedCart:boolean = false;
+
+  let isChanged:boolean = false;
+  let msg:String ="";
+  let smmsg:String = "Something went wrong while scrolling the shop."
 
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
@@ -29,43 +43,42 @@
     locale.set(Language.English);
   }
 
-  // use Firestore's onSnapshot method to listen for changes
-  // in the blogs collection and update the page in
-  // real-time whenever a new blog is added, edited, or deleted.
-
-  let isLoading:boolean = true;
-  let isEmpty:boolean = false;
-  let passComponent = false;
-  let blogPosts:PostType[];
-  let tempAuthStore;
-  let isChanged:boolean = false;
 
   onMount(async () => {
-    isLoading = true;
-    isEmpty = false;
-    passComponent = false;
+    try {
+      isLoading = true;
+      isEmpty = false;
+      passComponent = false;
 
-    const unsubscribe = authStore.subscribe((authStore)=>{
-      // get user info for cart
-      tempAuthStore = authStore;
-    })
+      
+      const unsubscribe = authStore.subscribe((authStore)=>{
+        // get user info for cart
+        tempAuthStore = authStore;
+        console.log(tempAuthStore)
+      })
 
-    // Fetch blog posts from the database
-    //console.log('Fetching blog posts from the database...')
-    blogPosts = await getBlogPosts();
-    if (blogPosts.length === 0) {
-      isEmpty = true;
+      // Fetch blog posts from the database
+      blogPosts = await getBlogPosts();
+      if (blogPosts.length === 0) {
+        isEmpty = true;
+
+
+      }
+      isLoading = false;
+      //console.log(blogPosts)
+      if(!passComponent){
+            const interval = setInterval(() => {
+      // console.log("gall");
+        passComponent = true;
+      },1000);
+      return () => clearInterval(interval);
+      }
+
+    } catch (error) {
+      
     }
-    isLoading = false;
-    //console.log(blogPosts)
-    if(!passComponent){
-          const interval = setInterval(() => {
-     // console.log("gall");
-      passComponent = true;
-    },1000);
-    return () => clearInterval(interval);
-    }
-
+    
+    
     
     
   });
@@ -79,32 +92,45 @@
   }
 
   async function  handleCart(tempId: string){
-    if(tempAuthStore){
+    try {
+      if(tempAuthStore.user !== null && !(tempAuthStore.loading)){
 
-      const clickedItem:PostType = blogPosts.find((obj) => {
-        return obj.id === tempId;
-      });
-      //console.log("handleCart - clicked item is:",clickedItem)
-      //console.log("tempp autho",tempAuthStore.data.cart)
-      const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
+        const clickedItem:PostType = blogPosts.find((obj) => {
+          return obj.id === tempId;
+        });
+        //console.log("handleCart - clicked item is:",clickedItem)
+        //console.log("tempp autho",tempAuthStore.data.cart)
+        const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
 
-      //console.log("temparr is",tempArr)
-      tempArr.push(clickedItem);
-      tempAuthStore.cart = tempArr;
-      //console.log("handleClick - pushed value for cart:",tempArr)
-      await updateUserProfile(
-        tempAuthStore.user,
-        tempAuthStore.data.name,
-        tempAuthStore.data.email,
-        tempAuthStore.data.phone,
-        tempAuthStore.data.country,
-        tempAuthStore.data.description,
-        tempAuthStore.data.messages,
-        tempAuthStore.cart )
-      isChanged = !isChanged;
-    } else {
-      console.log("cant handle cart because temoauthstore is empty")
+        //console.log("temparr is",tempArr)
+        tempArr.push(clickedItem);
+        tempAuthStore.data.cart = tempArr;
+        //console.log("handleClick - pushed value for cart:",tempArr)
+        await updateUserProfile(
+          tempAuthStore.user,
+          tempAuthStore.data.name,
+          tempAuthStore.data.email,
+          tempAuthStore.data.phone,
+          tempAuthStore.data.country,
+          tempAuthStore.data.description,
+          tempAuthStore.data.messages,
+          tempAuthStore.cart )
+          isChangedCart = !isChangedCart;
+        } else {
+          throw Errors.NoUserToAddToCart;
+        }
+    } catch (err) {
+      
+      if(typeof(err)==="string"){
+          msg = err;
+      } else if(err.message !== undefined){
+          msg = err.message;
+      } else {
+          msg = Errors.AddToCart
+      }
+      isChanged = true
     }
+
 
   }
 
@@ -117,12 +143,16 @@
     {:else if isEmpty}
       <NoPosts />
     {:else}
-      {#if isChanged}
-        <CartAdded bind:isChanged />
+      {#if isChangedCart}
+        <CartAdded bind:isChangedCart />
       {/if}
-      <div
+      {#if isChanged}
+        <CommonPopUp bind:isChanged isError={true} isPreviev={false} message={msg} smallMessage={smmsg}  />
+      {/if}
+        <div
         class="grid grid-cols-3 gap-x-48 sm:gap-x-24 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >
+
       {#key blogPosts}
         {#each blogPosts as post}
           <div class="mt-44 flex">

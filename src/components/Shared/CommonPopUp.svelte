@@ -7,48 +7,74 @@
     import { onMount } from 'svelte';
       import { handleDelete } from '../../routes/profile/user';
   
-    export let isChangedCart:boolean;
+    export let isChanged:boolean;
+    export let smallMessage:String;
+    export let message:String;
+    export let isPreviev:boolean;
+    export let isError:boolean;
     function changeState(){
-      isChangedCart = !isChangedCart;
+      isChanged = !
+      isChanged;
     }
   
   </script>
   <div
     role="alert"
-    class="fixed top-[12%] left-0 right-0 rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16
+    class="fixed rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16 top-[10%] 
     left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
   >
     <div class="flex items-start gap-4">
-      <span class="text-green-600">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-6 w-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </span>
+      {#if isError}
+        <span class=" text-red-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </span>
+      {:else}
+        <span class="text-green-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </span>
+      {/if}
+
   
       <div class="flex-1">
-        <strong class="block font-medium text-gray-900"> {$t('Item in the cart')} </strong>
+        <strong class="block font-medium text-gray-900">{smallMessage} </strong>
   
         <p class="mt-1 text-sm text-gray-700">
-          {$t('You have added item to your cart!')}
+            {message}
         </p>
-  
+        {#if isPreviev}
         <div class="mt-4 flex gap-2">
           <button
-            on:click={()=>{window.location.href=`${base}/profile/shoppingcart`;}}
-            class="inline-flex items-center gap-2 rounded-lg bg-yellow-0 px-4 py-2 text-white-0 hover:bg-orange-0 transition-colors duration-200"
+            on:click={()=>{window.location.href=`${base}/profile`;}}
+            class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0 transition-colors duration-200"
           >
-            <span class="text-sm"> {$t('Preview cart')} </span>
+            <span class="text-sm"> {$t('Preview')} </span>
+  
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -66,6 +92,7 @@
           </button>
   
         </div>
+        {/if}
       </div>
   
       <button  class="text-gray-500 transition hover:text-gray-600"

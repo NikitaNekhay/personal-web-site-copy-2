@@ -5,8 +5,10 @@
 </svelte:head>
 
 <script lang='ts'>
+    import { error } from '@sveltejs/kit';
 import About from '../../components/MainPages/About.svelte'
-   
+    import { Errors } from '../../shared/types';
+
 </script>
 
 <div class="grid-item-content mt-[200px] mb-[420px]">

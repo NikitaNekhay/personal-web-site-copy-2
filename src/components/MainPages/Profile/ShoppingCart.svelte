@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Language, type AuthStoreType, type PostType } from "../../../shared/types";
+
         import LoadingButton from "../../Shared/LoadingButton.svelte";
         import SubmitButton from "../../Shared/SubmitButton.svelte";
 
@@ -12,12 +12,14 @@
     import NoPosts from "../../Shared/NoPosts.svelte";
     import { currentLanguagee } from "../../../store/store_";
     import { base } from "$app/paths";
-        let cartClicked = false;
+    import type { AuthStoreType, PostType } from "../../../shared/types";
 
-        let productQuantities = new Map<string, number>();
-        let cartItems: PostType[] = [];
-        let tempAuthStore:AuthStoreType;
-        let cartPrice:number = 0
+    let cartClicked = false;
+
+    let productQuantities = new Map<string, number>();
+    let cartItems: PostType[] = [];
+    let tempAuthStore:AuthStoreType;
+    let cartPrice:number = 0
 
         
 

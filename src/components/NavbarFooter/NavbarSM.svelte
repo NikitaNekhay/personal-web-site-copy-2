@@ -12,7 +12,6 @@
     import { setContext, subscribe } from "svelte/internal";
     import { onDestroy, onMount } from "svelte";
     import { Language } from "../../shared/types";
-    import AlignRight from "../../../static/media/align-right.svg";
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
         // Switch the language value
@@ -66,7 +65,7 @@
 
             <!-- Logo(Left side) -->
 
-            <img class="mt-2" alt="navbar" src="{base}/media/align-right.svg" />
+            <img class="mt-2" alt="navbar" src="{base}/media/align_right.svg" />
 
 
             <!-- Links(Center) -->

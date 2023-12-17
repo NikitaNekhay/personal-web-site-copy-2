@@ -98,7 +98,7 @@
         "Your changes have been saved.":"Your changes have been saved.",
         "Changes saved":"Changes saved",
 
-    "Logout":"Logout"
-   
+    "Logout":"Logout",
+    "Error while verifying your current pass!":"Error while verifying your current pass!"
 
 }

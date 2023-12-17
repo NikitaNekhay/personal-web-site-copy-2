@@ -1,11 +1,12 @@
 <script lang="ts">
     import { afterUpdate, onMount } from "svelte";
-    import type { MessageType } from "../../../shared/types";
+    import { Errors, type MessageType } from "../../../shared/types";
     import { deleteComment, getComments, updateComment } from "../../../routes/posts/comments";
     import { page } from "$app/stores";
     import { authStore, isAdmin, triggerComments } from "../../../store/store";
     import { comment } from "postcss";
     import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
+    import Error from "../../../routes/+error.svelte";
 
     let commentaries:MessageType[] = [];
     
@@ -15,24 +16,42 @@
     }
     let isLoading:boolean = true;
     let showTrigger:boolean;
-    
+
+    let isChangedError:boolean = false;
+    let msg:String ="";
+    let smmsg:String = "Something went wrong while handling item."
 
     onMount(async()=>{
-        commentaries = await getComments()
-        commentaries= commentaries.filter((obj) => obj.post === $page.params.id);
-        console.log($triggerComments.value);
-        // if($triggerComments.value){
-        //     $triggerComments.value = false;
-        // }
-        const unsubscribe = authStore.subscribe((authStore)=>{
-            if($authStore.loading)
-                isLoading = false
-            else
-                isLoading = true
-            
+        try {
+            try {
+                commentaries = await getComments()
+                commentaries= commentaries.filter((obj) => obj.post === $page.params.id);
+                console.log($triggerComments.value);
+                // if($triggerComments.value){
+                //     $triggerComments.value = false;
+                // }
+            } catch (error) {
+                throw Errors.FetchComments;
+            }
 
-        })
-        //const unsubscribeComments = triggerComments.subscribe((triggerComments)=>{showTrigger = triggerComments.value})//return unsubscribe;
+            const unsubscribe = authStore.subscribe((authStore)=>{
+                if($authStore.loading)
+                    isLoading = false
+                else
+                    isLoading = true
+            })
+            isLoading = false
+        } catch (err) {
+            if(typeof(err)==="string"){
+                msg = err;
+            } else if(err.message !== undefined){
+                msg = err.message;
+            } else {
+                msg = Errors.FetchPost
+            }
+            isChangedError= true
+            isLoading = false
+        }
         
     })
 
@@ -42,7 +61,6 @@
     })
 
     function checkUserRight(comment:MessageType){
-
         if($authStore.user){
             if($authStore.user.uid === comment.id || $isAdmin.value){
                 return true
@@ -50,7 +68,8 @@
                 return false
             }
         } else {
-            console.error("error while checking users rights")
+            console.error("no user to check the rights")
+            isLoading = false
             return false
         }
         
@@ -71,7 +90,8 @@
 
             },1500)
         } catch (error) {
-            console.log("error while crud comment")
+            console.log("error while save comment")
+            throw Errors.SaveComment;
         }
        
     }
@@ -92,7 +112,8 @@
             },1500)
             deleteComment(cid);
         } catch (error) {
-            console.log("error while crud comment")
+            throw Errors.DeleteComment;
+            console.log("error while delete comment")
         }
        
     }  
@@ -106,6 +127,7 @@
 <div>
     <h1 class="text-center w-full mt-4">Commentaries:</h1>
 </div>
+
 {#key triggerComments}
 {#if commentaries}
 <ul>
@@ -118,7 +140,6 @@
     <li>Someone thinks: {comment.comment}</li> 
     {/if}
 
-    {#if isLoading}
     <div class="flex items-center justify-end gap-2 bg-white p-3">
         {#if checkUserRight(comment)}
             <p>What to do with your comment?</p>
@@ -150,9 +171,7 @@
             </button>
         {/if}
       </div>
-    {:else}
-        <LoadingSpinner />
-    {/if}
+
 
 
 {/each}
