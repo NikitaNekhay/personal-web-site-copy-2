@@ -6,7 +6,6 @@
 
     import {  authStore } from "../../../store/store";
     import type { User } from "firebase/auth";
-    import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
     import { addMessages, locale, t } from "svelte-i18n";
     import { handleDelete, updateUserProfile } from "../../../routes/profile/user";
     import NoPosts from "../../Shared/NoPosts.svelte";
