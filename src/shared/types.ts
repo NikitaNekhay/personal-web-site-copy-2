@@ -9,12 +9,13 @@ export enum Language {
   export enum Errors {
     VerifyPass = "Error while verifying your current pass!",
     RepeatPass = "Your passwords don't match each other!",
+    SmallPass = "Your passwords must contain out of 6 symbols!",
     EmptyInput = "Your input is empty, fill it the right way!",
     Authentication = "Error while Authenticating user! Please check your credentials, again.",
     Register = "",
     Logout = "",
 
-    EditProfile = "error while updating profile",
+    EditProfile = "Error while editing profile!",
     EditCredentialProfile = "",
     DeleteProfile="Error while deleting the user!",
     DeleteProfileAuth = "Error while deleting user's credential!",
@@ -38,7 +39,7 @@ export enum Language {
 
     FetchUser = "Error while fetching user's info!",
     FetchUsers = "Error while fetching info about users!",
-    FetchProfile ="",
+    FetchProfile ="Error while fetching user's profile!",
     FetchPost = "Error while fetching the post's info!",
     FetchPosts = "Error while fetching posts!",
     FetchComments = "Error while fetching comments!",

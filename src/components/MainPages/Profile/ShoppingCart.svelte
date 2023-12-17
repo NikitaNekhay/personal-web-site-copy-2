@@ -221,7 +221,7 @@
                       />
 
                       <span
-                        class="relative block border border-current bg-white px-8 py-3 sm:px-6 sm:py-2 duration-500 active:bg-gray-400"
+                        class="relative block border border-current bg-white px-8 py-3 sm:px-6 sm:py-2 transition-transform duration-500 active:bg-gray-400"
                       >
                         <img
                           class="mr-1"

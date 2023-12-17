@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import Gallery from "../../components/MainPages/Gallery.svelte";
   import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
-    import Shop from "../../components/MainPages/Shop.svelte";
   let passComponent = false;
   onMount(() => {
     const interval = setInterval(() => {

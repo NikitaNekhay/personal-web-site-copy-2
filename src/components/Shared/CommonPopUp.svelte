@@ -6,7 +6,7 @@
     import { currentLanguage } from '../../store/store';
     import { onMount } from 'svelte';
       import { handleDelete } from '../../routes/profile/user';
-  
+
     export let isChanged:boolean;
     export let smallMessage:String;
     export let message:String;
@@ -14,8 +14,7 @@
     export let isError:boolean;
     export let href:string;
     function changeState(){
-      isChanged = !
-      isChanged;
+      isChanged = !isChanged;
     }
   
   </script>

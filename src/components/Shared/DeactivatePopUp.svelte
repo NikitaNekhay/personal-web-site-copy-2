@@ -8,6 +8,16 @@
     function changeDeactivate(){
         isDeactivate = !isDeactivate;
     }
+
+    function deleteCurrentUser(){
+      try {
+        authHandlers.deactivate()
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+
+    }
 </script>
 
 <div
@@ -34,7 +44,7 @@ left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
     </p>
     <div class="mt-4 flex gap-2">
       <button
-        on:click={()=>{authHandlers.deactivate()}} 
+        on:click={()=>{deleteCurrentUser()}} 
         class="inline-flex items-center gap-2 rounded-lg bg-red-0 px-4 py-2 text-white hover:bg-yellow-0 transition-colors duration-200"
       >
         <span class="text-sm"> {$t('Deactivate')}  </span>

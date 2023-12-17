@@ -78,9 +78,15 @@ export const authHandlers = {
 
   },
   changeCredentials: async(user,email, pass)=>{
-    //const user  = auth.currentUser;
-    updatePassword(user,pass);
-    updateEmail(user,email)
+    try {
+          //const user  = auth.currentUser;
+      updatePassword(user,pass);
+      updateEmail(user,email)
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+
     
   },
   deactivate: async () => {

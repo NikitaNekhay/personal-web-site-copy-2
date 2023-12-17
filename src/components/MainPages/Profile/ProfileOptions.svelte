@@ -123,7 +123,7 @@
               </span>
             </div>
 
-              <div class="absolute z-0 md:ml-[672px] 
+              <div class="absolute z-0 md:ml-[330px] 
               w-50 h-42 origin-center bg-white-0 
               shadow-lg ring-1 ring-black ring-opacity-5 
               focus:outline-none border-x-4 border-navy-1"

@@ -10,16 +10,19 @@
   import {t } from "svelte-i18n";
 
   import LoadingButton from "../../Shared/LoadingButton.svelte";
-    import type { UserDataType } from "../../../shared/types";
+    import { Errors, type UserDataType } from "../../../shared/types";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import type { DocumentData } from "firebase/firestore";
     import type { User } from "firebase/auth";
 
   let sumbitClicked = false;
   let isChanged = false;
-
+  let msgT:String ="Your changes have been saved.";
   let msg:String ="Your changes have been saved.";
   let smmsg:String = "Changes saved!";
+  let smmsgE:String = "Error while editing profile!";
+  let smmsgT:String = "Changes saved!";
+  let isError:boolean = false;
   let href = `${base}/profile`;
 
   let profileValue:UserDataType;
@@ -28,35 +31,61 @@
   
 
   onMount(() => {
-     console.log("updating profile...")
+    try {
+      console.log("updating profile...")
   
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      try {
-        if(user){
-          userCopy=user;
+      const unsubscribe = auth.onAuthStateChanged(async (user) => {
+        try {
+          if(user){
+            userCopy=user;
 
-          let Ready_profile:UserDataType = await getUserProfile(user);
-          console.log("what we got from db getUserProfile:",Ready_profile);
-          profileValue = Ready_profile;
-          console.log("profileValue - what we got after assgingin:",profileValue);
-
-        } else {
-          console.log("no user in Profile.svelte");
+            let Ready_profile:UserDataType = await getUserProfile(user);
+            console.log("what we got from db getUserProfile:",Ready_profile);
+            profileValue = Ready_profile;
+            console.log("profileValue - what we got after assgingin:",profileValue);
+            msg = msgT;
+            smmsg = smmsgT;
+            isError = false;
+          } else {
+            console.log("no user in Profile.svelte");
+          }
+        } catch (error) {
+          console.error("error while fetching profile", error);
+          throw error;
+          
         }
-      } catch (error) {
-        console.error("error while updating profile", error);
-      }
-    });
-    return unsubscribe;
+      });
+      return unsubscribe;
+    } catch (err) {
+      isError = true;
+      smmsg = smmsgE;
+      if(typeof(err)==="string"){
+                msg = err;
+            } else if(err.message !== undefined){
+                msg = err.message;
+            } else {
+                msg = Errors.FetchProfile
+            }
+            isChanged= true
+    }
+    
   });
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    try {
+      event.preventDefault();
     sumbitClicked = true;
 
-    if(userCopy){
-      console.log("user exists so we can handle submit")
+    if(profileValue.name === "" || !(profileValue.name)){
+      msg = Errors.EmptyInput;
+      isChanged= true;
+      smmsg = smmsgE;
+      isError = true;
+      throw Errors.EmptyInput;
+    }
 
+    if(userCopy){
+     
       try {
         await updateUserProfile(
           userCopy,
@@ -70,16 +99,25 @@
         )
         .then(() => {
           console.log("Profile updated successfully.");
+          isChanged = true;
+          msg = msgT;
+          smmsg = smmsgT;
+          isError = false;
         })
         .catch((error) => {
           console.error("Error updating profile:", error.message);
+          throw Errors.EditProfile;
+          
         });
-
-      isChanged = true;
-
 
     } catch (error) {
       console.error("error while updating profile",error);
+      msg = Errors.EditProfile;
+      smmsg = smmsgE;
+      isError = true;
+      isChanged = true;
+      throw Errors.EditProfile;
+      
 
     } finally {
       setTimeout(() => {
@@ -93,24 +131,38 @@
           // Calculate and set the new scroll position based on the previous percentage
           sumbitClicked = false;
       }, 2500);
+      msg = Errors.EditProfile;
+      smmsg = smmsgE;
+      isError = true;
+      isChanged = true;
+      throw Errors.EditProfile;
     }
    
     // console.log("authStore in prfile.svelte after handling",$authStore.data);
+    } catch (error) {
+      msg = Errors.EditProfile;
+      smmsg = smmsgE;
+      isError = true;
+      isChanged = true;
+      throw Errors.EditProfile;
+    }
+
   }
 
 </script>
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
   {#if isChanged }
-    <CommonPopUp bind:isChanged href={href} isError={false} isPreviev={true} message={msg} smallMessage={smmsg} />
+    <CommonPopUp bind:isChanged href={href} isError={isError} isPreviev={true} message={msg} smallMessage={smmsg} />
   {/if}
 
   <ProfileOptions />
 
   <div class="place mt-40 flex place-content-center">
     <form class="w-full max-w-lg">
-      <div class=" mb-6 flex justify-center">
-        <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT PROFILE")}</h1>
+
+      <div class=" mb-6 flex justify-center ">
+        <h1 class="font-abril text-4xl text-blue-0  ">{$t("EDIT PROFILE")}</h1>
       </div>
 
       {#if profileValue}
@@ -272,7 +324,7 @@
         <LoadingButton />
       {:else}
         <button
-          class="group relative mx-[136px] flex
+          class="group relative mx-[136px] sm:mx-[25%] flex
     w-1/2 items-center justify-center overflow-hidden
      rounded-md border border-orange-0
     px-8 py-3 focus:outline-none"

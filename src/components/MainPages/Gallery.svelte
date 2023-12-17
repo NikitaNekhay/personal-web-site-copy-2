@@ -169,8 +169,11 @@
                 on:click={() => handleClick(post.id)}
                 on:keypress={() => handleClick(post.id)}
                 class="min-h-80 overflow-hidden
+                object-cover
                   bg-gray-200 hover:cursor-pointer
-                  hover:opacity-80 w-[100%]"
+                  hover:opacity-80 w-[100%]
+                  transition duration-200 hover:scale-105
+                  "
                 aria-expanded="true"
                 aria-haspopup="true"
                 role="button"
@@ -179,7 +182,7 @@
                 <img
                   src={post.images[0]}
                   alt="Blog Post"
-                  class="object-center"
+                  class="object-center "
                   
                 />
               </div>

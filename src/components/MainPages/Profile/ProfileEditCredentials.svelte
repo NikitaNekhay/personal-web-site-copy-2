@@ -13,12 +13,18 @@
     import LoadingButton from "../../Shared/LoadingButton.svelte";
       import { Errors, type UserDataType } from "../../../shared/types";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+    import Error from "../../../routes/+error.svelte";
   
     let sumbitClicked:boolean = false;
-    let isChanged:boolean = false;
     let isthereadmin:boolean = false;
+
+    let isChanged = false;
+    let msgT:String ="Your changes have been saved.";
     let msg:String ="Your changes have been saved.";
     let smmsg:String = "Changes saved!";
+    let smmsgE:String = "Error while editing profile!";
+    let smmsgT:String = "Changes saved!";
+    let isError:boolean = false;
     let href = `${base}/profile`;
 
 
@@ -45,10 +51,20 @@
             console.log("what we got from db getUserProfile:",profileValue);
           
           } else {
-            console.error(Errors.FetchUser);
+            throw Errors.FetchUser;
           }
-        } catch (error) {
-          console.error(Errors.EditProfile, error);
+        } catch (err) {
+          console.error( err);
+          if(typeof(err)==="string"){
+                msg = err;
+            } else if(err.message !== undefined){
+                msg = err.message;
+            } else {
+                msg = Errors.FetchUser
+            }
+            isChanged= true
+            isError = true;
+            smmsg = smmsgE;
         }
       });
       return unsubscribe;
@@ -61,44 +77,51 @@
       if(userCopy && profileValue){
         console.log("user exists so we can handle submit")
         
-        
-
-
         try {
             // YOU CAN'T CHANGE YOUR EMAIL!
-          await updateUserProfile(
-            userCopy,
-            profileValue.name,
-            profileValue.email,
-            profileValue.phone,
-            profileValue.country,
-            profileValue.description,
-            profileValue.messages,
-            profileValue.cart
-          )
-          .then(() => {
-            console.log("Profile updated successfully.");
-          })
-          .catch((error) => {
-            console.error(Errors.EditProfile, error);
-          });
+          // await updateUserProfile(
+          //   userCopy,
+          //   profileValue.name,
+          //   profileValue.email,
+          //   profileValue.phone,
+          //   profileValue.country,
+          //   profileValue.description,
+          //   profileValue.messages,
+          //   profileValue.cart
+          // )
+          // .then(() => {
+          //   console.log("Profile updated successfully.");
+          // })
+          // .catch((error) => {
+          //   console.error(Errors.EditProfile, error);
+          // });
 
 
           if(verifyPassword()){
+
+              await authHandlers.changeCredentials(userCopy,profileValue.email, profileCredentials.password);
             
-            await authHandlers.changeCredentials(userCopy,profileValue.email, profileCredentials.password);
-  
           } else {
-            throw Error(Errors.VerifyPass)
+            throw Errors.VerifyPass;
           }
-
-          
+          msg= msgT;
+          smmsg = smmsgT;
           isChanged = true;
+          isError = false;
 
-
-      } catch (error) {
-        console.error("error while updating profile",error);
-  
+      } catch (err) {
+        console.error("error while updating profile",err);
+        if(typeof(err)==="string"){
+                msg = err;
+            } else if(err.message !== undefined){
+                msg = err.message;
+            } else {
+                msg = Errors.EditProfile
+            }
+            isChanged= true
+            isError = true;
+            smmsg = smmsgE;
+            throw msg;
       } finally {
         setTimeout(() => {
             // Calculate and set the new scroll position based on the previous percentage
@@ -111,37 +134,42 @@
             // Calculate and set the new scroll position based on the previous percentage
             sumbitClicked = false;
         }, 2500);
+        isChanged= true
+        isError = true;
+        smmsg = smmsgE;
+        msg = Errors.FetchUser
+        throw Errors.FetchUser;
+
+        
       }
      
     }
   
     function verifyPassword(){
-        try {
             if(!(rpassword === profileCredentials.password)){
-                throw Error(Errors.RepeatPass)
+                throw Errors.RepeatPass
+            } else if (rpassword.length < 6){
+                throw Errors.SmallPass
             }
-            
             return 1;
-        } catch (error) {
-            console.error(Errors.VerifyPass,error)
-        }
     }
 
   </script>
   
   <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
     {#if isChanged }
-    <CommonPopUp bind:isChanged href={href} isError={false} isPreviev={true} message={msg} smallMessage={smmsg} />
+    <CommonPopUp bind:isChanged href={href} isError={isError} isPreviev={true} message={msg} smallMessage={smmsg} />
     {/if}
   
     <ProfileOptions />
   
     <div class="place mt-40 flex place-content-center">
-      <form class="w-full max-w-lg">
-        <div class=" mb-6 flex justify-center">
+      <form class="w-full max-w-lg ">
+
+        <div class=" mb-6 flex justify-center text-center">
           <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT CREDENTIALS")}</h1>
         </div>
-  
+
         {#if profileValue && userCopy}
          
         <div class="-mx-3 mb-6 flex flex-wrap">
@@ -248,7 +276,7 @@
           <LoadingButton />
         {:else}
           <button
-            class="group relative mx-[136px] flex
+            class="group relative mx-[136px] sm:mx-[25%] flex
       w-1/2 items-center justify-center overflow-hidden
        rounded-md border border-orange-0
       px-8 py-3 focus:outline-none"
@@ -269,9 +297,9 @@
             </span>
           </button>
         {/if}
-            <div class="text center flex justify-center mt-4">
-                <p>{$t("After changing password you will be logged out!")}</p>
-
+            <div class="text-center flex justify-center mt-4">
+                <p>{$t('Temporary the change of email is not available.')} <br>
+                   {$t("After changing password you will be logged out!")}</p>
             </div>
         {/if}
   
