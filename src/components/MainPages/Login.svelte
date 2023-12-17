@@ -22,7 +22,7 @@
     let isChanged:boolean = false;
     let msg:String ="";
     let smmsg:String = "Something went wrong while creating your account."
-
+    
     let email = "";
     let password = "";
     let rpassword = "";

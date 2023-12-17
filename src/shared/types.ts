@@ -16,8 +16,11 @@ export enum Language {
 
     EditProfile = "error while updating profile",
     EditCredentialProfile = "",
-    DeleteProfile="",
-    
+    DeleteProfile="Error while deleting the user!",
+    DeleteProfileAuth = "Error while deleting user's credential!",
+    DeleteProfileStore = "Error while deleting user in db!",
+
+
     AddComment ="",
     SaveComment = "Error while saving comments!",
     EditComment = "Error while editing comments!",

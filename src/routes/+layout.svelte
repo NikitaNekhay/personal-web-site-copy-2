@@ -122,9 +122,9 @@
                     if (!docSnap.exists()) {
                         const userRef = doc(db, "user", user.uid);
                         dataToSetToStore = {
-                            id: userRef.name ?? "",
+                            id: userRef.id ?? user.uid,
                             name: userRef.name ?? "template",
-                            email: userRef.email ?? "",
+                            email: userRef.email ?? user.email,
                             phone: userRef.phone ?? "",
                             country: userRef.phone ?? "",
                             description: userRef.description ?? "",

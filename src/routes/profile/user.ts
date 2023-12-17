@@ -1,9 +1,9 @@
 import { getAuth, type User } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase/firebase';
-import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc, query } from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { base } from '$app/paths';
-import type { UserDataType,PostType } from '../../shared/types';
+import { type UserDataType,type PostType, Errors } from '../../shared/types';
 
 
 export const prerender = 'auto'
@@ -171,65 +171,27 @@ async function getRawUserProfiles() {
 // }
 
 export async function getUserProfiles() {
-  let userProfileTemplate
-  const userDocs = collection(db, 'user');
+  var userProfiles:UserDataType[] = [];
+  const userDocs = query(collection(db, 'user'));
   const userSnapshots = await getDocs(userDocs);
+  
+  userSnapshots.docs.forEach((doc,index)=>{
+      const tempDoc:UserDataType = doc.data();
+      tempDoc.id = doc.id;
+      //userProfiles[index] = (tempDoc);
+      userProfiles.push(tempDoc);
+      // console.log(doc.id, "=>", doc.data())
+  })
+  
+  return userProfiles
 
-  // Extract the data from each blog post document
-  let userProfiles = userSnapshots.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-
-  let i = 0
-  for (i = 0; i < userProfiles.length; i++) {
-
-    let tempData
-    let tempStatus
-
-    try {
-      // console.log(userProfiles)
-      // const promises = userProfiles.map(async (profile) => {
-      //   try {
-      //     const userCredential = await auth.getUser(userProfiles.id);
-      //    // const user = userCredential.data();
-      //    console.log(userCredential)
-      //    // const userData = {
-      //    //   userId: profile.userId,
-      //    //   emailVerified: user.emailVerified,
-      //    //   // Add any other user data you want to fetch from Firebase Authentication
-      //    // };
-
-      //    // return userData;
-      //   } catch (error) {
-      //     console.log(`Error retrieving user data for user with ID ${profile.userId}:`, error);
-      //     return null;
-      //   }
-      // });
-
-      // const userDataArray = await Promise.all(promises);
-      // const filteredUserDataArray = userDataArray.filter((userData) => userData !== null);
-      // userProfileTemplate = {
-      //   userProfiles,
-      //   filteredUserDataArray,
-      // }
-      return userProfiles
-    } catch (error) {
-      console.error("error while adding additional info for each user", error)
-    }
-
-
-
-
-  }
 }
 
 export async function handleDelete(id: string) {
   try {
 
    
-    try {
+    // try {
       // getAuth()
       //   .getUser(uid)
       //   .then((userRecord) => {
@@ -240,26 +202,28 @@ export async function handleDelete(id: string) {
       //     console.log('Error fetching user data:', error);
   // });
       //deleteDoc()
-    } catch (error) {
-      console.log("error while deleting user from firebase of managing users",error)
-    }
+
+
+    //   const userDocRef = doc(db, "user", id);
+    //   await deleteDoc(userDocRef);
+    // } catch (error) {
+    //    throw Errors.DeleteProfileAuth;
+    // }
 
     try {
 
       const postDocRef = doc(collection(db, 'user'), id);
-      setTimeout(()=>{
-        // console.log(auth.name)
-        
-      },2500)
       await deleteDoc(postDocRef);
     } catch (error) {
-      console.log("error while deleting user from firesrote db",error)
+      console.error(error);
+      throw Errors.DeleteProfileStore;
+      
     }
   
 
 
   } catch (error) {
-    console.error('Error deleting user:', error);
+    throw error
   }
   
   

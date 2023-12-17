@@ -1,8 +1,8 @@
 import { auth, db } from "$lib/firebase/firebase"
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, type User } from "firebase/auth"
 import { deleteDoc, doc } from "firebase/firestore";
 import { writable } from "svelte/store"
-import { Language } from "../shared/types";
+import { Errors, Language } from "../shared/types";
 
 
 export const currentLanguage = writable({
@@ -84,15 +84,26 @@ export const authHandlers = {
     
   },
   deactivate: async () => {
-    //  console.log("deactivating account...")
-    // Delete the user from Firestore
-    const userDocRef = doc(db, "user", auth.currentUser.uid);
-    await deleteDoc(userDocRef);
-    await db.collection("user").doc(auth.currentUser?.uid).delete();
+      try {
+        if(auth.currentUser){
+          console.log("deactivating account...",auth.currentUser.uid)
+          let user:User = auth.currentUser;
+          // Delete the user from Firestore
+          const userDocRef = doc(db, "user", auth.currentUser.uid);
+          await deleteDoc(userDocRef);
 
-    // Delete user from Firebase Authentication
-    await auth.currentUser?.delete()
-    //  console.log('User successfully deactivated');
+          // Delete user from Firebase Authentication
+          user?.delete;
+
+          await auth.currentUser?.delete()
+          //  console.log('User successfully deactivated');
+        }
+
+    
+      } catch (error) {
+        console.error(error)
+        throw Errors.DeleteProfile
+      }
 
   },
 

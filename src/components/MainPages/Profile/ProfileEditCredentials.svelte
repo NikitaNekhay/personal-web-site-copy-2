@@ -9,14 +9,18 @@
     import ProfileOptions from "./ProfileOptions.svelte";
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../../services/ru.json";
-    import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
     import en from "../../../services/en.json";
     import LoadingButton from "../../Shared/LoadingButton.svelte";
       import { Errors, type UserDataType } from "../../../shared/types";
+    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
   
     let sumbitClicked:boolean = false;
     let isChanged:boolean = false;
-    let isthereadmin:boolean = false
+    let isthereadmin:boolean = false;
+    let msg:String ="Your changes have been saved.";
+    let smmsg:String = "Changes saved!";
+    let href = `${base}/profile`;
+
 
     let profileValue:UserDataType;
     const profileCredentials = {
@@ -127,7 +131,7 @@
   
   <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
     {#if isChanged }
-    <ProfileEditDone bind:isChanged />
+    <CommonPopUp bind:isChanged href={href} isError={false} isPreviev={true} message={msg} smallMessage={smmsg} />
     {/if}
   
     <ProfileOptions />

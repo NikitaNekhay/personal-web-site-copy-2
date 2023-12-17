@@ -1,25 +1,30 @@
 <script lang="ts">
-  import { onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
   import { getUserProfile, updateUserProfile } from "../../../routes/profile/user";
-  import type { User } from "firebase/auth";
-  import { auth, db } from "../../../lib/firebase/firebase";
-  import { authHandlers, authStore, currentLanguage } from "../../../store/store";
+
+  import { auth } from "../../../lib/firebase/firebase";
+
   import { base } from "$app/paths";
-  import { clickOutside } from "../../../services/clickOutside";
+
   import ProfileOptions from "./ProfileOptions.svelte";
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../../services/ru.json";
-  import ProfileEditDone from "../../Shared/ProfileEditDone.svelte";
-  import en from "../../../services/en.json";
+  import {t } from "svelte-i18n";
+
   import LoadingButton from "../../Shared/LoadingButton.svelte";
     import type { UserDataType } from "../../../shared/types";
+    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+    import type { DocumentData } from "firebase/firestore";
+    import type { User } from "firebase/auth";
 
   let sumbitClicked = false;
   let isChanged = false;
 
+  let msg:String ="Your changes have been saved.";
+  let smmsg:String = "Changes saved!";
+  let href = `${base}/profile`;
+
   let profileValue:UserDataType;
   let isthereadmin = false
-  let userCopy;
+  let userCopy:User|null;
   
 
   onMount(() => {
@@ -97,7 +102,7 @@
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
   {#if isChanged }
-    <ProfileEditDone bind:isChanged />
+    <CommonPopUp bind:isChanged href={href} isError={false} isPreviev={true} message={msg} smallMessage={smmsg} />
   {/if}
 
   <ProfileOptions />

@@ -1,27 +1,16 @@
 <script lang="ts">
     import { base } from "$app/paths";
-    import { afterUpdate, onMount } from "svelte";
-    import { handleDelete, updateUserProfile } from "../../../routes/profile/user";
+    import { SvelteComponent, afterUpdate, onMount } from "svelte";
+    import { getUserProfiles, handleDelete, updateUserProfile } from "../../../routes/profile/user";
     import type { UserDataType } from "../../../shared/types";
     import { t } from "svelte-i18n";
     import { authStore } from "../../../store/store";
 
     export let userProfiles:UserDataType[];
     export let latestProfiles:UserDataType[];
-
-    let userMountingProfiles:UserDataType[];
-    let latestMountingProfiles:UserDataType[];
-    //console.log(latestProfiles)
-    //console.log(userProfiles)
+    let triggerProfiles:UserDataType[]=[];
 
 
-
-    afterUpdate(()=>{
-        //console.log(userProfiles)
-        //console.log(latestProfiles)
-        userMountingProfiles = userProfiles;
-        latestMountingProfiles = latestProfiles;
-    })
 
     async function handleSubmit(curentUser) {
     // event.preventDefault();
@@ -58,7 +47,7 @@
   }
 </script>
 
-
+{#key userProfiles}
 {#each latestProfiles as user, i}
 <tr>
   <td
@@ -207,11 +196,12 @@
           on:click={() => {
             handleDelete(user.id);
             console.log("clicked delete");
+            userProfiles = userProfiles.filter(item => item !== user);
           }}
           on:keypress={() => {
             handleDelete(user.id);
             console.log("clicked delete");
-
+            userProfiles = userProfiles.filter(item => item !== user);
           }}
           id="menu-button"
           aria-expanded="true"
@@ -239,3 +229,4 @@
   </td>
 </tr>
 {/each}
+{/key}

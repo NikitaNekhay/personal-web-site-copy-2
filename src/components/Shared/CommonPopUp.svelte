@@ -12,6 +12,7 @@
     export let message:String;
     export let isPreviev:boolean;
     export let isError:boolean;
+    export let href:string;
     function changeState(){
       isChanged = !
       isChanged;
@@ -70,7 +71,7 @@
         {#if isPreviev}
         <div class="mt-4 flex gap-2">
           <button
-            on:click={()=>{window.location.href=`${base}/profile`;}}
+            on:click={()=>{window.location.href=href;}}
             class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0 transition-colors duration-200"
           >
             <span class="text-sm"> {$t('Preview')} </span>
