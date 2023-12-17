@@ -14,10 +14,10 @@ export default {
       'lg':  {'min': '1024px', 'max': '1279px'}, //'1024px',
       // => @media (min-width: 1024px) { ... }
 
-      'xl': {'min': '1280px', 'max': '1535px'}, //'1280px',
+      'xl': {'min': '1280px', 'max': '1536px'}, //'1280px',
       // => @media (min-width: 1280px) { ... }
 
-      '2xl': '1536px',
+      '2xl': '1537px',
       // => @media (min-width: 1536px) { ... }
       '3xl': '1920px',
       // => @media (min-width: 1536px) { ... }

@@ -102,9 +102,11 @@
         //console.log("tempp autho",tempAuthStore.data.cart)
         const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
 
-        //console.log("temparr is",tempArr)
+        
         tempArr.push(clickedItem);
+        
         tempAuthStore.data.cart = tempArr;
+        console.log("tempAuthStore is",tempAuthStore)
         //console.log("handleClick - pushed value for cart:",tempArr)
         await updateUserProfile(
           tempAuthStore.user,
@@ -114,7 +116,7 @@
           tempAuthStore.data.country,
           tempAuthStore.data.description,
           tempAuthStore.data.messages,
-          tempAuthStore.cart )
+          tempAuthStore.data.cart )
           isChangedCart = !isChangedCart;
         } else {
           throw Errors.NoUserToAddToCart;
@@ -136,8 +138,10 @@
 
 </script>
 
-<div class="bg-white">
-  <div class=" sm:px-6 sm:py-12 lg:px-8">
+<section class="bg-white">
+  <div class="px-8 py-28  
+  sm:py-28 md:py-28 xl:py-28 2xl:py-32 3xl:py-32
+  sm:px-4 md:px-6 lg:px-11 xl:px-14 2xl:px-20"> 
     {#if isLoading}
       <LoadingSpinner />
     {:else if isEmpty}
@@ -150,12 +154,16 @@
         <CommonPopUp bind:isChanged isError={true} isPreviev={false} message={msg} smallMessage={smmsg}  />
       {/if}
         <div
-        class="grid grid-cols-3 gap-x-48 sm:gap-x-24 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+        class="grid grid-cols-3 
+        sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3
+        gap-x-24  sm:gap-x-24 xl:gap-x-16 2xl:gap-x-20
+        gap-y-6 xl:gap-y-20
+        "
       >
 
       {#key blogPosts}
         {#each blogPosts as post}
-          <div class="mt-44 flex">
+          <div class="flex">
             <div>
               <div
                 on:click={() => handleClick(post.id)}
@@ -192,7 +200,7 @@
                 </div>
 
                 <div
-                  class="sm:mx-6 md:mx-8 lg:mx-12 flex sm:flex-row sm:place-items-start md:place-items-start"
+                  class=" sm:mx-6 md:mx-8 lg:mx-12 flex sm:flex-row sm:place-items-start md:place-items-start"
                 >
                   <h2 class="  text-gray-700">
                     {post.description.substring(
@@ -251,5 +259,5 @@
       </div>
     {/if}
   </div>
-</div>
+</section>
 

@@ -8,10 +8,10 @@ import { type UserDataType,type PostType, Errors } from '../../shared/types';
 
 export const prerender = 'auto'
 
-export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string, description: string, messages: [], cart:PostType[]) {
+export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string, description: string, messages: [], cart:[]) {
   try {
     let userDocRef:any;
-    console.log(user)
+    console.log(cart)
     
     if(user.id){
       userDocRef = doc(collection(db, "user"), user.id);
