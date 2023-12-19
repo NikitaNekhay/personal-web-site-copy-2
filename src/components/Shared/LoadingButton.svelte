@@ -1,5 +1,5 @@
 <button
-class="relative mx-[136px] flex w-1/2
+class="relative flex w-48 sm:w-36
 items-center justify-center overflow-hidden
 rounded-md border border-orange-0
 px-8 py-3 focus:outline-none "

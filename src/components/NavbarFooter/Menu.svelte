@@ -32,8 +32,9 @@ let name_menu="";
 //console.log($authStore.data.name)
 if($authStore.data.name === undefined){
     name_menu = "template_name"
-    //console.log("shit")
+    
 } else{
+    console.log($authStore.data)
     name_menu=$authStore.data.name
 }
 
@@ -78,7 +79,7 @@ if($authStore.data.name === undefined){
             </a>
             <a class="col-span-full grid-row-auto transition duration-200 
             hover:text-yellow-0" target="_self" href='{base}/profile/shoppingcart'>
-                {$t('Shopping cart')} 
+                {$t('Shopping cart')} : {($authStore.data.cart).length}
             </a>
             {#if $isAdmin.value}
             <a class="col-span-full grid-row-auto transition duration-200 

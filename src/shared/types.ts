@@ -22,7 +22,7 @@ export enum Language {
     DeleteProfileStore = "Error while deleting user in db!",
 
 
-    AddComment ="",
+    AddComment ="Error while adding a comment!",
     SaveComment = "Error while saving comments!",
     EditComment = "Error while editing comments!",
     DeleteComment = "Error while deleting comments!",

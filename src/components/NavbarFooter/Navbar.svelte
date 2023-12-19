@@ -156,7 +156,9 @@
                                 {$t("Login")}
                             </a>
                         {:else}
+
                             <Menu />
+                           
                         {/if}
                     </div>
                 </div>

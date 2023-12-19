@@ -14,8 +14,9 @@
       import { Errors, type UserDataType } from "../../../shared/types";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import Error from "../../../routes/+error.svelte";
+    import SubmitButton from "../../Shared/SubmitButton.svelte";
   
-    let sumbitClicked:boolean = false;
+    let submitClicked:boolean = false;
     let isthereadmin:boolean = false;
 
     let isChanged = false;
@@ -70,9 +71,9 @@
       return unsubscribe;
     });
   
-    async function handleSubmit(event) {
-      event.preventDefault();
-      sumbitClicked = true;
+    async function handleSubmit() {
+      //event.preventDefault();
+      submitClicked = true;
 
       if(userCopy && profileValue){
         console.log("user exists so we can handle submit")
@@ -125,14 +126,14 @@
       } finally {
         setTimeout(() => {
             // Calculate and set the new scroll position based on the previous percentage
-            sumbitClicked = false;
+            submitClicked = false;
         }, 2500);
       }
       } else {
         console.log("user dont exists so we cant handle submit")
         setTimeout(() => {
             // Calculate and set the new scroll position based on the previous percentage
-            sumbitClicked = false;
+            submitClicked = false;
         }, 2500);
         isChanged= true
         isError = true;
@@ -164,7 +165,9 @@
     <ProfileOptions />
   
     <div class="place mt-40 flex place-content-center">
-      <form class="w-full max-w-lg ">
+      <form class="w-full max-w-lg  flex flex-col justify-center items-center">
+
+
 
         <div class=" mb-6 flex justify-center text-center">
           <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT CREDENTIALS")}</h1>
@@ -172,7 +175,7 @@
 
         {#if profileValue && userCopy}
          
-        <div class="-mx-3 mb-6 flex flex-wrap">
+        <div class="-mx-3 mb-6 flex flex-wrap w-full">
           <div class="w-full px-3">
             <label
               class="relative block overflow-hidden rounded-md
@@ -207,7 +210,7 @@
           
         </div>
 
-        <div class="-mx-3 mb-6 flex flex-wrap">
+        <div class="-mx-3 mb-6 flex flex-wrap w-full">
             <div class="w-full px-3">
               <label
                 class="relative block overflow-hidden rounded-md
@@ -238,7 +241,7 @@
             </div>
           </div>
 
-          <div class="-mx-3 mb-6 flex flex-wrap">
+          <div class="-mx-3 mb-6 flex flex-wrap w-full">
             <div class="w-full px-3">
               <label
                 class="relative block overflow-hidden rounded-md
@@ -268,41 +271,18 @@
               </label>
             </div>
           </div>
-  
+          {/if}
       
-    
-  
-        {#if sumbitClicked && !isChanged}
-          <LoadingButton />
-        {:else}
-          <button
-            class="group relative mx-[136px] sm:mx-[25%] flex
-      w-1/2 items-center justify-center overflow-hidden
-       rounded-md border border-orange-0
-      px-8 py-3 focus:outline-none"
-            type="button"
-            on:click={handleSubmit}
-          >
-            <span
-              class="absolute inset-x-0 bottom-0 h-[2px]
-        bg-orange-0 transition-all group-hover:h-full
-        group-active:bg-orange-0"
-            />
-  
-            <span
-              class="relative text-sm font-medium
-        text-orange-0 transition-colors group-hover:text-white"
-            >
-              {$t("Submit")}
-            </span>
-          </button>
-        {/if}
+          <div>
+            <SubmitButton bind:submitClicked bind:isChanged passedfunction={handleSubmit} text={"Submit"}/>
+          </div>
+          
             <div class="text-center flex justify-center mt-4">
                 <p>{$t('Temporary the change of email is not available.')} <br>
                    {$t("After changing password you will be logged out!")}</p>
             </div>
-        {/if}
-  
+ 
+
       </form>
     </div>
   </div>

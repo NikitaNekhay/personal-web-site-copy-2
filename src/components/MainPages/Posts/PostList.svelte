@@ -12,6 +12,8 @@
     import type { PostType } from "../../../shared/types";
 
   let blogPosts:PostType[] = [];
+  export let triggerPosts:boolean;
+  export let handleTriggerDelete: () => void;
   let isLoading = true;
   let isEmpty = false;
   let passComponent = false;
@@ -54,6 +56,8 @@
     window.location.href = `${base}/posts/${id}/edit`;
   }
 
+
+
   function handleDelete(id: string) {
     // Store the previous scroll position percentage
     const previousScrollPercentage =
@@ -62,14 +66,7 @@
         document.documentElement.clientHeight);
     // Delete the blog post and navigate back to the gallery page
     deleteBlogPost(id);
-    // console.log("Deleted blog post:", id);
-    window.location.href = `${base}/posts/#`;
-    // setTimeout(() => {
-    //   // Calculate and set the new scroll position based on the previous percentage
-    //   //location.reload();
-      
-    // }, 500);
-
+    handleTriggerDelete();
     const newScrollPosition =
       previousScrollPercentage *
       (document.documentElement.scrollHeight -
@@ -81,30 +78,35 @@
 
 </script>
 
-<div class="h-full bg-white">
+
+<div  class="h-full bg-white">
   <div class="sm:px-6 sm:py-24 lg:px-8">
     {#if isLoading}
       <LoadingSpinner />
     {:else if isEmpty}
       <NoPosts />
     {:else}
+
       <div class="text-center flex justify-center w-full mt-6">
 
       </div>
       <div
         class="grid grid-cols-3 gap-x-48 gap-y-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       >
-        {#key blogPosts}
+
           
      
         {#each blogPosts as post}
+
           <div
             class="mt-44 flex gap-x-6 gap-y-10 shadow-white-2 drop-shadow-2xl"
           >
             <div>
+              <!-- svelte-ignore a11y-<code> -->
               <div
+                tabindex="0" role="button" aria-pressed="false"
                 on:click={() => handleClick(post.id)}
-                on:keypress
+                on:keydown={() => handleClick(post.id)}
                 class="min-h-80 overflow-hidden
               bg-gray-200 hover:cursor-pointer hover:opacity-80
                "
@@ -152,6 +154,7 @@
                   </div>
                   <div>
                     <div
+                      tabindex="0" role="button" aria-pressed="false"
                       class="group relative inline-block text-sm font-medium text-black-1
                   hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
                       on:click={() => handleEdit(post.id)}
@@ -178,9 +181,10 @@
                   </div>
                   <div>
                     <div
+                      tabindex="0" role="button" aria-pressed="false"
                       class="group relative inline-block text-sm font-medium text-black-1
                     hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
-                      on:click={() => handleDelete(post.id)}
+                      on:click={() => handleDelete(post.id) }
                       on:keypress={() => handleDelete(post.id)}
                       id="menu-button"
                       aria-expanded="true"
@@ -206,9 +210,12 @@
               </div>
             </div>
           </div>
+
         {/each}
-        {/key}
+
       </div>
+
     {/if}
   </div>
 </div>
+

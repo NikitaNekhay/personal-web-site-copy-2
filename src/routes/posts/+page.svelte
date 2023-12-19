@@ -20,6 +20,11 @@
     return unsubscribe;
   });
 
+  let triggerPosts=false
+
+  function handleTriggerDelete(){
+    triggerPosts = !triggerPosts;
+  }
   
 </script>
 
@@ -30,7 +35,10 @@
 
 <!-- {#if passComponent} -->
 {#if $isAdmin.value}
-  <PostList />
+{#key triggerPosts}
+  <PostList bind:triggerPosts handleTriggerDelete={handleTriggerDelete}/>
+{/key}
+
 {:else}
   <LoadingSpinner />
 {/if}

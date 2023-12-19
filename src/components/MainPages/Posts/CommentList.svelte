@@ -7,6 +7,8 @@
     import { comment } from "postcss";
     import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
     import Error from "../../../routes/+error.svelte";
+    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+    import type { User } from "firebase/auth";
 
     let commentaries:MessageType[] = [];
     
@@ -17,16 +19,33 @@
     let isLoading:boolean = true;
     let showTrigger:boolean;
 
-    let isChangedError:boolean = false;
-    let msg:String ="";
-    let smmsg:String = "Something went wrong while handling item."
-
+    let isChanged:boolean = false;
+    let msgT:String ="Your changes have been saved.";
+    let msg:String ="Your changes have been saved.";
+    let smmsg:String = "Changes saved!";
+    let smmsgE:String = "Error while editing commentaries!";
+    let smmsgT:String = "Changes saved!";
+    let isError:boolean = false;
+    
     onMount(async()=>{
         try {
+
+            const unsubscribe = authStore.subscribe((authStore)=>{
+                
+                
+                if($authStore.loading)
+                    isLoading = false
+                else
+                    isLoading = true
+            })
+
             try {
-                commentaries = await getComments()
+                commentaries = await getComments();
+                
                 commentaries= commentaries.filter((obj) => obj.post === $page.params.id);
                 console.log($triggerComments.value);
+                //$triggerComments.value = false
+                console.log(commentaries)
                 // if($triggerComments.value){
                 //     $triggerComments.value = false;
                 // }
@@ -34,12 +53,7 @@
                 throw Errors.FetchComments;
             }
 
-            const unsubscribe = authStore.subscribe((authStore)=>{
-                if($authStore.loading)
-                    isLoading = false
-                else
-                    isLoading = true
-            })
+
             isLoading = false
         } catch (err) {
             if(typeof(err)==="string"){
@@ -49,7 +63,9 @@
             } else {
                 msg = Errors.FetchPost
             }
-            isChangedError= true
+            isChanged= true
+            isError = true;
+            smmsg = smmsgE; 
             isLoading = false
         }
         
@@ -57,10 +73,11 @@
 
     afterUpdate(async()=>{
         showTrigger = $triggerComments.value;
-        console.log(showTrigger)
+        //console.log(showTrigger)
     })
 
     function checkUserRight(comment:MessageType){
+        console.log($authStore.user)
         if($authStore.user){
             if($authStore.user.uid === comment.id || $isAdmin.value){
                 return true
@@ -89,6 +106,10 @@
             console.log($triggerComments.value)
 
             },1500)
+            isChanged = true;
+            isError = false;
+            msg = msgT;
+            smmsg = smmsgT;
         } catch (error) {
             console.log("error while save comment")
             throw Errors.SaveComment;
@@ -111,6 +132,10 @@
 
             },1500)
             deleteComment(cid);
+            isChanged = true;
+            isError = false;
+            msg = msgT;
+            smmsg = smmsgT;
         } catch (error) {
             throw Errors.DeleteComment;
             console.log("error while delete comment")
@@ -123,13 +148,16 @@
 
 </script>
 
+{#if isChanged}
+    <CommonPopUp bind:isChanged isError={isError} isPreviev={false} message={msg} smallMessage={smmsg} href=""/>
+{/if}
 
 <div>
     <h1 class="text-center w-full mt-4">Commentaries:</h1>
 </div>
 
 {#key triggerComments}
-{#if commentaries}
+{#if commentaries.length !== 0}
 <ul>
 {#each commentaries as comment, i}
 

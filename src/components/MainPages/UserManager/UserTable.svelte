@@ -21,6 +21,7 @@
   let passComponent = false;
   let l_userProfiles = 0; 
 
+
   onMount(async() => {
     try {
       // Fetch blog posts from the database

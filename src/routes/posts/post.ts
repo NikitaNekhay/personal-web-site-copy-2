@@ -116,7 +116,7 @@ export async function deleteBlogPost(id:string){
   try {
     const postDocRef = doc(collection(db, 'blogs'), id);
     await deleteDoc(postDocRef);
-   // console.log('Blog post deleted:', id);
+    console.log('Blog post deleted:', id);
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }

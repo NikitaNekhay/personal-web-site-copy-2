@@ -14,8 +14,9 @@
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import type { DocumentData } from "firebase/firestore";
     import type { User } from "firebase/auth";
+    import SubmitButton from "../../Shared/SubmitButton.svelte";
 
-  let sumbitClicked = false;
+  let submitClicked = false;
   let isChanged = false;
   let msgT:String ="Your changes have been saved.";
   let msg:String ="Your changes have been saved.";
@@ -71,10 +72,10 @@
     
   });
 
-  async function handleSubmit(event) {
+  async function handleSubmit() {
     try {
-      event.preventDefault();
-    sumbitClicked = true;
+      //event.preventDefault();
+    submitClicked = true;
 
     if(profileValue.name === "" || !(profileValue.name)){
       msg = Errors.EmptyInput;
@@ -122,14 +123,14 @@
     } finally {
       setTimeout(() => {
           // Calculate and set the new scroll position based on the previous percentage
-          sumbitClicked = false;
+          submitClicked = false;
       }, 2500);
     }
     } else {
       console.log("user dont exists so we cant handle submit")
       setTimeout(() => {
           // Calculate and set the new scroll position based on the previous percentage
-          sumbitClicked = false;
+          submitClicked = false;
       }, 2500);
       msg = Errors.EditProfile;
       smmsg = smmsgE;
@@ -159,7 +160,7 @@
   <ProfileOptions />
 
   <div class="place mt-40 flex place-content-center">
-    <form class="w-full max-w-lg">
+    <form class="w-full max-w-lg flex flex-col justify-center items-center">
 
       <div class=" mb-6 flex justify-center ">
         <h1 class="font-abril text-4xl text-blue-0  ">{$t("EDIT PROFILE")}</h1>
@@ -167,7 +168,7 @@
 
       {#if profileValue}
      
-      <div class="-mx-3 mb-6 flex flex-wrap">
+      <div class="-mx-3 mb-6 flex flex-wrap w-full">
         <div class="w-full px-3">
           <label
             class="relative block overflow-hidden rounded-md
@@ -195,7 +196,7 @@
           </label>
         </div>
       </div>
-      <div class="-mx-3 mb-4 flex flex-wrap">
+      <div class="-mx-3 mb-4 flex flex-wrap w-full">
         <div class="h-full w-full px-3">
           <label
             class="relative block overflow-hidden rounded-md
@@ -257,7 +258,7 @@
         </div>
       </div> -->
 
-      <div class="-mx-3 mb-6 flex flex-wrap">
+      <div class="-mx-3 mb-6 flex flex-wrap w-full">
         <div class=" w-1/2 px-3">
           <label
             class="relative block overflow-hidden rounded-md
@@ -319,32 +320,7 @@
           </label>
         </div>
       </div>
-
-      {#if sumbitClicked && !isChanged}
-        <LoadingButton />
-      {:else}
-        <button
-          class="group relative mx-[136px] sm:mx-[25%] flex
-    w-1/2 items-center justify-center overflow-hidden
-     rounded-md border border-orange-0
-    px-8 py-3 focus:outline-none"
-          type="button"
-          on:click={handleSubmit}
-        >
-          <span
-            class="absolute inset-x-0 bottom-0 h-[2px]
-      bg-orange-0 transition-all group-hover:h-full
-      group-active:bg-orange-0"
-          />
-
-          <span
-            class="relative text-sm font-medium
-      text-orange-0 transition-colors group-hover:text-white"
-          >
-            {$t("Submit")}
-          </span>
-        </button>
-      {/if}
+      <SubmitButton bind:submitClicked bind:isChanged passedfunction={handleSubmit} text={"Submit"}/>
       {/if}
 
     </form>

@@ -3,7 +3,7 @@
     import ru from '../../services/ru.json';
     import en from '../../services/en.json';
     import { base } from "$app/paths";
-    import { currentLanguage } from '../../store/store';
+    import { authStore, currentLanguage } from '../../store/store';
     import { onMount } from 'svelte';
       import { handleDelete } from '../../routes/profile/user';
   
@@ -41,6 +41,7 @@
   
         <p class="mt-1 text-sm text-gray-700">
           {$t('You have added item to your cart!')}
+          <br> {$t('Currently you have')} {($authStore.data.cart).length} {$t('items in the cart.')}
         </p>
   
         <div class="mt-4 flex gap-2">

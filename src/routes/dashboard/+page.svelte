@@ -5,7 +5,11 @@
 
 <script >
   import Dashboard from '../../components/MainPages/UserManager/Dashboard.svelte'
+
 </script>
 
+
 <Dashboard />
+
+
 

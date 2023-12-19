@@ -197,11 +197,13 @@
             handleDelete(user.id);
             console.log("clicked delete");
             userProfiles = userProfiles.filter(item => item !== user);
+
           }}
           on:keypress={() => {
             handleDelete(user.id);
             console.log("clicked delete");
             userProfiles = userProfiles.filter(item => item !== user);
+
           }}
           id="menu-button"
           aria-expanded="true"

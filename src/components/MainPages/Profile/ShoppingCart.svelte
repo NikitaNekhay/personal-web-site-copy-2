@@ -13,8 +13,8 @@
     import { base } from "$app/paths";
     import type { AuthStoreType, PostType } from "../../../shared/types";
 
-    let cartClicked = false;
-
+    let submitClicked  = false;
+    let isLoading = false;
     let productQuantities = new Map<string, number>();
     let cartItems: PostType[] = [];
     let tempAuthStore:AuthStoreType;
@@ -28,11 +28,12 @@
         const unsubscribe = authStore.subscribe((authStore) => {
             console.log("authstore - in cart",authStore)
             tempAuthStore = authStore;
-            cartItems = authStore.data.cart
-            cartItems.forEach(item=> {
-              console.log(item.price)
-              cartPrice += Number(item.price);
-            })
+            cartPrice = countPrice();
+            // cartPrice = authStore.data.cart
+            // cartItems.forEach(item=> {
+            //   console.log(item.price)
+            //   cartPrice += Number(item.price);
+            // })
         });
         //
 
@@ -42,6 +43,15 @@
     })
         // Calculate the quantities of each product
         
+    function countPrice(){
+      cartPrice = 0;
+      cartItems = tempAuthStore.data.cart
+            cartItems.forEach(item=> {
+              console.log(item.price)
+              cartPrice += Number(item.price);
+            })
+      return cartPrice
+    }
 
       async function handleDeleteItemFromCart(tempId:number){
         if(tempAuthStore){
@@ -75,13 +85,14 @@
             tempAuthStore.data.messages,
             tempAuthStore.cart )
 
+          cartPrice = countPrice();
           } else {
           console.log("cant handle cart because temoauthstore is empty")
           }
       }
 
         function handleCart (){
-            cartClicked = !cartClicked;
+            submitClicked  = !submitClicked ;
             //console.log("handleCart cliekd")
             // make map out of user's cart
             cartItems.forEach(item => {
@@ -90,7 +101,8 @@
             //console.log("cartmap - in cart - after await",productQuantities)
             downloadCheck();
             setTimeout(()=>{
-              cartClicked = !cartClicked;
+              submitClicked  = !submitClicked ;
+              isLoading = false;
             },2500)
             
         };
@@ -207,7 +219,7 @@
                     <div
                       class="group relative inline-block text-sm font-medium text-black-1
                       hover:cursor-pointer focus:outline-none focus:ring active:text-black-1 "
-                      on:click={() => handleDeleteItemFromCart(index)}
+                      on:click={() => handleDeleteItemFromCart(index) }
                       on:keypress={() => handleDeleteItemFromCart(index)}
                       id="menu-button"
                       aria-expanded="true"
@@ -239,7 +251,7 @@
           {:else}
           {$t("NO ITEMS IN CART | BROWSE THE SHOP!")}
           {/if}
-          {/key}
+
           
           
   
@@ -264,13 +276,14 @@
                   <dd>-£20</dd>
                 </div> -->
   
-                <div class="flex justify-end gap-6 text-base font-medium">
+                <div class="flex justify-end gap-6 text-base font-medium mb-8">
                   <dt>{$t('Total')} :</dt>
                   <dd>{cartPrice} BYN</dd>
                 </div>
               </dl>
   
-              <div class="flex justify-end">
+              <!-- DISCOUNT BANNER -->
+              <!-- <div class="flex justify-end">
                 <span
                   class="inline-flex items-center justify-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-indigo-700"
                 >
@@ -291,20 +304,20 @@
   
                   <p class="whitespace-nowrap text-xs">0 {$t('Discounts Applied')} </p>
                 </span>
-              </div>
+              </div> -->
              
-
             </div>
           </div>
-
+          {/key}
           <!-- Button -->
           <div class="flex justify-center text-center">
-            {#if cartClicked}
+            <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={"Purchase"}/>
+            <!-- {#if submitClicked }
               <LoadingButton />
             {:else}
               <SubmitButton passedfunction={handleCart}/> 
             {/if}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
