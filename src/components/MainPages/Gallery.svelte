@@ -1,7 +1,7 @@
 <script lang="ts">
   // import states
   import { onMount } from "svelte";
-  import { getBlogPosts } from "../../routes/posts/post";
+  import { getBlogPosts, handleCart } from "../../routes/posts/post";
   import { base } from "$app/paths";
   import { authStore, blogPost } from "../../store/store";
   import { addMessages, locale, t } from "svelte-i18n";
@@ -10,7 +10,7 @@
   import en from "../../services/en.json";
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
-    import { Errors, Language, type PostType } from "../../shared/types";
+    import { Errors, Language, type AuthStoreType, type PostType } from "../../shared/types";
     import { updateUserProfile } from "../../routes/profile/user";
     import CartAdded from "../Shared/CartAdded.svelte";
     import { error } from "@sveltejs/kit";
@@ -91,54 +91,30 @@
     window.location.href = `${base}/posts/${id}`;
   }
 
-  async function  handleCart(tempId: string){
+  async function handleCartClicked(post:PostType){
     try {
-      if(tempAuthStore.user !== null && !(tempAuthStore.loading)){
 
-        const clickedItem:PostType = blogPosts.find((obj) => {
-          return obj.id === tempId;
-        });
-        //console.log("handleCart - clicked item is:",clickedItem)
-        //console.log("tempp autho",tempAuthStore.data.cart)
-        const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
-
-        
-        tempArr.push(clickedItem);
-        
-        tempAuthStore.data.cart = tempArr;
-        console.log("tempAuthStore is",tempAuthStore)
-        //console.log("handleClick - pushed value for cart:",tempArr)
-        await updateUserProfile(
-          tempAuthStore.user,
-          tempAuthStore.data.name,
-          tempAuthStore.data.email,
-          tempAuthStore.data.phone,
-          tempAuthStore.data.country,
-          tempAuthStore.data.description,
-          tempAuthStore.data.messages,
-          tempAuthStore.data.cart )
-          isChangedCart = !isChangedCart;
-        } else {
-          throw Errors.NoUserToAddToCart;
-        }
+    await handleCart(post,tempAuthStore);
+    isChangedCart = !isChangedCart;
     } catch (err) {
-      
-      if(typeof(err)==="string"){
-          msg = err;
-      } else if(err.message !== undefined){
-          msg = err.message;
-      } else {
-          msg = Errors.AddToCart
-      }
-      isChanged = true
+      console.log("error in gallery")
+    if(typeof(err)==="string"){
+        msg = err;
+    } else if(err.message !== undefined){
+        msg = err.message;
+    } else {
+        msg = Errors.AddToCart
     }
+    isChanged = true
+    throw msg
 
-
+    } 
   }
+
 
 </script>
 
-<section class="bg-white">
+<section class="bg-white ">
   <div class="px-8 py-28  
   sm:py-28 md:py-28 xl:py-28 2xl:py-32 3xl:py-32
   sm:px-4 md:px-6 lg:px-11 xl:px-14 2xl:px-20"> 
@@ -147,12 +123,7 @@
     {:else if isEmpty}
       <NoPosts />
     {:else}
-      {#if isChangedCart}
-        <CartAdded bind:isChangedCart />
-      {/if}
-      {#if isChanged}
-        <CommonPopUp bind:isChanged isError={true} isPreviev={false} message={msg} smallMessage={smmsg}  />
-      {/if}
+
         <div
         class="grid grid-cols-3 
         sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3
@@ -160,18 +131,24 @@
         gap-y-6 xl:gap-y-20
         "
       >
-
+      {#if isChangedCart}
+      <CartAdded bind:isChangedCart />
+      {/if}
+      {#if isChanged}
+      <CommonPopUp bind:isChanged isError={true} isPreviev={false} message={msg} smallMessage={smmsg}  />
+      {/if}
       {#key blogPosts}
         {#each blogPosts as post}
+
           <div class="flex">
             <div>
               <div
                 on:click={() => handleClick(post.id)}
                 on:keypress={() => handleClick(post.id)}
-                class="min-h-80 overflow-hidden
+                class=" min-h-80 overflow-hidden
                 object-cover
                   bg-gray-200 hover:cursor-pointer
-                  hover:opacity-80 w-[100%]
+                  hover:opacity-80 w-[100%] 
                   transition duration-200 hover:scale-105
                   "
                 aria-expanded="true"
@@ -224,12 +201,33 @@
                     </p>
                   </div>
                   <div class="sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
+
                     <div >
                       <div
                         class=" group relative inline-block text-sm font-medium text-black-1
                     hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
-                        on:click={() => handleCart(post.id)}
-                        on:keypress={() => handleCart(post.id)}
+                        on:click={() => handleCartClicked(post)
+                                  }
+                        on:keypress={() => {
+                                            try {
+
+                                              handleCart(post,tempAuthStore);
+                                              //isChangedCart = !isChangedCart;
+                                            } catch (err) {
+    
+                                              if(typeof(err)==="string"){
+                                                  msg = err;
+                                              } else if(err.message !== undefined){
+                                                  msg = err.message;
+                                              } else {
+                                                  msg = Errors.AddToCart
+                                              }
+                                              isChanged = true
+                                              throw msg
+
+                                            }
+                                            }
+                                      }
                         id="menu-button"
                         aria-expanded="true"
                         aria-haspopup="true"

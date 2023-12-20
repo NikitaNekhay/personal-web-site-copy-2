@@ -4,7 +4,7 @@
 
   import {  onMount } from "svelte/internal";
   import { auth } from "$lib/firebase/firebase";
-    import { isAdmin } from "../../store/store";
+    import { authStore, isAdmin } from "../../store/store";
     import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
 
 
@@ -14,7 +14,6 @@
   onMount(() => {
     console.log("mounting in posts...");
     const unsubscribe = isAdmin.subscribe((value) => {
-      
     });
     // passComponent = true;
     return unsubscribe;

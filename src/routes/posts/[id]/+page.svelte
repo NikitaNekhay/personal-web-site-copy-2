@@ -11,10 +11,11 @@
   import type { PostType } from "../../../shared/types";
   import LoadingButton from "../../../components/Shared/LoadingButton.svelte";
     import LoadingSpinner from "../../../components/Shared/LoadingSpinner.svelte";
+    import PostDetail2 from "../../../components/MainPages/Posts/PostDetail2.svelte";
 
   let isLoading = true; // Initialize the loading state
 
-  let post;
+  let post:PostType;
   export let data;
 
   if (data.post !== undefined && data.post !== null) {
@@ -41,7 +42,8 @@
 {#if isLoading}
   <LoadingSpinner />
 {:else}
-  <PostDetail {post} />
+  <!-- <PostDetail {post} /> -->
+  <PostDetail2 {post}/>
 {/if}
 <!-- </Route>
 </Router> -->

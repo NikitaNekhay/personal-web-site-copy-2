@@ -15,7 +15,7 @@
   </script>
   <div
     role="alert"
-    class="fixed top-[12%] left-0 right-0 rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16
+    class="absolute top-[12%] rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16
     left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
   >
     <div class="flex items-start gap-4">

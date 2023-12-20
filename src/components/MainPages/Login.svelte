@@ -101,21 +101,21 @@
     }
 </script>
 {#if isChanged}
-    <CommonPopUp bind:isChanged isPreviev={false} message={msg} smallMessage={smmsg}  />
+    <CommonPopUp bind:isChanged isPreviev={false} isError={true} message={msg} smallMessage={smmsg}  />
 {/if}
-<section class="pt-[18%] flex justify-items-center h-screen w-screen">
-    <div class=" w-[38%]" />
-        <div class=" table-column sm:pt-[40%] md:pt-[40%] " >
+<section class="h-auto w-screen 3xl:pb-[40%] ">
+    <div class="flex place-content-center px-[20%] py-[14%]   sm:px-6 sm:py-[40%] lg:px-8 xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt" />
+        <div class="  " >
 
-            <div class="mb-6 justify-center text-center">
+            <header class="mb-6 justify-center text-center ">
                 <h1 class="font-abril text-4xl text-blue-0">
                     {register ? $t("REGISTER") : $t("LOGIN")}
                 </h1>
-            </div>
+            </header>
 
-            <div class="flex sm:px-[10%]">
-                <form class="w-full max-w-lg ">
-                    <div class="-mx-3 mb-6 flex flex-wrap">
+            <div class="flex sm:px-[10%] place-content-center">
+                <form class="w-full max-w-lg flex flex-col justify-center items-center">
+                    <div class="-mx-3 mb-6 flex flex-wrap w-full">
                         <div class="w-full px-3">
                             <label
                                 class="relative block overflow-hidden rounded-md
@@ -145,7 +145,7 @@
                         </div>
                     </div>
 
-                    <div class="-mx-3 mb-3 flex flex-wrap">
+                    <div class="-mx-3 mb-3 flex flex-wrap w-full">
                         <div class="w-full px-3">
                             <label
                                 class="relative block overflow-hidden rounded-md

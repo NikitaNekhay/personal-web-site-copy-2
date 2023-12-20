@@ -1,6 +1,8 @@
 import { db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction,  getDocs, addDoc, deleteDoc} from "firebase/firestore";
 import { blogPost } from '../../store/store';
+import { Errors, type AuthStoreType, type PostType } from '../../shared/types';
+import { updateUserProfile } from '../profile/user';
 
 export const blogsCollection = collection(db, "blogs");
 
@@ -120,4 +122,31 @@ export async function deleteBlogPost(id:string){
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }
+}
+
+export async function  handleCart(post: PostType, tempAuthStore:AuthStoreType){
+
+    if(tempAuthStore.user !== null && !(tempAuthStore.loading)){
+      const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
+      tempArr.push(post);
+      
+      tempAuthStore.data.cart = tempArr;
+      //console.log("tempAuthStore is",tempAuthStore)
+      //console.log("handleClick - pushed value for cart:",tempArr)
+      await updateUserProfile(
+        tempAuthStore.user,
+        tempAuthStore.data.name,
+        tempAuthStore.data.email,
+        tempAuthStore.data.phone,
+        tempAuthStore.data.country,
+        tempAuthStore.data.description,
+        tempAuthStore.data.messages,
+        tempAuthStore.data.cart )
+
+      } else {
+        throw Errors.NoUserToAddToCart;
+      }
+
+
+
 }
