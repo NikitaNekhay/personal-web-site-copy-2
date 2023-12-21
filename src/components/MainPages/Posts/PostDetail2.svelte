@@ -1,12 +1,13 @@
-<script lang="ts">
+<script lang="ts" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer>
     import { base } from "$app/paths";
+    import { t } from "svelte-i18n";
     import { handleCart } from "../../../routes/posts/post";
-    import { Errors, type PostType } from "../../../shared/types";
+    import { Errors, type PostType, type Slide } from "../../../shared/types";
     import { authStore } from "../../../store/store";
     import CartAdded from "../../Shared/CartAdded.svelte";
 import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import SubmitButton from "../../Shared/SubmitButton.svelte";
-
+    import { writable } from 'svelte/store';
 
     export let post:PostType;
     let isChanged:boolean = false;
@@ -15,12 +16,17 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     let smmsg:String = "Something went wrong while fetching the data."
     let href:String = `${base}/shop`;
     let isError:boolean = true;
-
+    const slides: Slide[] =[];
     if(post === undefined) {
         isChanged = true;
         msg = Errors.FetchPost;
     } else {
-        console.log(post)
+        post.images.forEach((image)=>{
+            
+            slides.push({"img":image})
+        })
+        console.log(slides)
+        
     }
 
     async function handleCartClicked(){
@@ -43,6 +49,47 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
 
     } 
   }
+
+
+
+
+  let localCurrentIndex = 0; // Local variable to track the index
+const currentIndex = writable(0);
+
+let touchstartX = 0;
+let touchendX = 0;
+
+function handleSwipe(): void {
+    const touchDifference = touchstartX - touchendX;
+    console.log('Swipe detected', touchDifference);
+
+    if (Math.abs(touchDifference) < 10) {
+        console.log('Swipe too small');
+        return;
+    }
+
+    if (touchDifference > 0) {
+        console.log('Swipe left');
+        localCurrentIndex = Math.min(slides.length - 1, localCurrentIndex + 1);
+    } else {
+        console.log('Swipe right');
+        localCurrentIndex = Math.max(0, localCurrentIndex - 1);
+    }
+
+    console.log('New index', localCurrentIndex);
+    currentIndex.set(localCurrentIndex);
+}
+
+  function onPointerDown(e: PointerEvent): void {
+    touchstartX = e.screenX;
+    console.log('Pointer down', touchstartX);
+}
+
+function onPointerUp(e: PointerEvent): void {
+    touchendX = e.screenX;
+    console.log('Pointer up', touchendX);
+    handleSwipe();
+}
 </script>
 
       <!-- <div class="slider-line" style="transform: translateX({offset}px);">
@@ -92,8 +139,9 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             md:flex-col md:justify-center 
             ">
         <!-- LEFT SIDE FOR IMAGE -->
-        <div class="w-[50%] h-auto sm:h-[70%] sm:">
-            {#if post.images}
+        <div class="w-[50%] h-auto sm:h-[70%] cursor-g">
+            
+            <!-- {#if post.images}
             {#each post.images as imag}
               <img src={imag} alt={post.title} class="w-100 h-100" />
             {/each}
@@ -101,8 +149,32 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             <div>
               <p>NO images</p>
             </div>
-          {/if}
-        </div>
+          {/if} -->
+
+
+            <div class="w-full mx-auto shadow-lg bg-white px-10 pt-16 pb-10 text-gray-600" style="max-width: 350px">
+              <div class="overflow-hidden relative mb-10">
+                <div class="overflow-hidden relative cursor-grab"
+                on:pointerdown={(e) => touchstartX = e.screenX}
+                on:pointerup={(e) => { touchendX = e.screenX; handleSwipe(); }}>
+             {#each slides as item, index}
+               {#if $currentIndex === index} <!-- Display the current image -->
+                 <div class="overflow-hidden text-center select-none transition duration-300 transform ease">
+                   <img src={item.img} alt="" class="w-full">
+                 </div>
+               {/if}
+             {/each}
+           </div>
+              </div>
+              <!-- Navigation Dots -->
+              <div class="flex justify-center">
+                {#each slides as _, index}
+                  <span class="w-2 h-2 rounded-full mx-1" class:bg-indigo-500={$currentIndex === index } class:bg-gray-200={$currentIndex !== index}></span>
+                {/each}
+              </div>
+            </div>
+          </div>
+
         <!-- RIGHT SIDE FOR ABOUT -->
         <div class="flex flex-col items-center
             sm:flex-row
@@ -110,7 +182,7 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             <!-- TITLE + SMALL DESCRIPTION -->
             <div>
                 <header>
-                    <h1 class="">{post.title}</h1>
+                    <h1 class="font-abril text-4xl text-blue-0">{$t(post.title)}</h1>
                 </header>
             </div>
             <!-- COLOR AVAILABLE -->
@@ -132,13 +204,17 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             <div class=" ">
                 <!-- PRICE -->
                 <div>
-
+                    <p>{$t("Price")} : {post.price} BYN</p>
                 </div>
                 <button                         
                     class=" "
                     on:click={() => handleCartClicked()}
                     on:keypress={() => handleCartClicked()}> ADD TO CART </button>
                 <!-- <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={""}/> -->
+            </div>
+            <!-- DESCRIPTION -->
+            <div>
+                {post.description}
             </div>
         </div>
     </div>

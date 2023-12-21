@@ -6,6 +6,10 @@ export enum Language {
     Russian = 'ru',
   }
 
+  export type Slide = {
+    img: string;
+  };
+
   export enum Errors {
     VerifyPass = "Error while verifying your current pass!",
     RepeatPass = "Your passwords don't match each other!",
