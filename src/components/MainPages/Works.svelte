@@ -15,7 +15,7 @@
     </div>
 </section>
 {#if innerWidth <=700}
-<section class="h-screen w-screen mb-96 md:mb-[660px]">
+<section class="h-screen w-screen mb-44 sm:mb-0 md:mb-[400px]">
   <div class="">
     <div>      
       <div class="flex ">
@@ -73,13 +73,13 @@
 </div>
 </section>
 {/if}
-<section class="h-screen">
-    <div class="col-span-full ">
-      <div class="posts flex  ">
+<section class="h-screen w-screen mb-44 lg:mb-20 xl:mb-80 md:mb-[460px] ">
+    <div class="col-span-full sm:h-full">
+      <div class="posts flex  sm:h-full sm:self-center">
         <div class=" text-transparent w-1/12 ">
-          1
+          
         </div > 
-        <div class=" w-4/12 sm:w-6/12 mb-20 sm:-mb-40 justify-center self-center font-anonymous 
+        <div class="h-auto w-4/12 sm:w-6/12 mb-20 sm:mb-0 sm:place-content-center justify-center self-center font-anonymous 
         text-2xl sm:text-sm md:text-xl lg:text-xl">
           <article>
             <p>
@@ -98,11 +98,11 @@
         <!-- <div class=" w-1/6 ">
           3
         </div >  -->
-        <div class="flex w-1/12 sm:w-2/12 ">
-          <div class=" w-1/2 sm:w-0 h-auto border-r-2 border-navy-2"></div>
-          <div class=" w-1/2 sm:w-0 h-auto border-l-2 border-navy-2"></div>
+        <div class="flex w-1/12">
+          <div class=" w-1/2  sm:w-[30%]  border-r-2 border-navy-2"></div>
+          <div class=" w-1/2 sm:w-[30%] border-l-2 border-navy-2"></div>
         </div>
-        <div class="grid w-3/12 sm:gap-y-30 justify-center sm:justify-end self-center font-anonymous text-2xl sm:text-lg gap-y-20">
+        <div class="h-auto grid w-3/12 md:w-6/12 sm:gap-y-30 justify-center sm:justify-end self-center font-anonymous text-2xl sm:text-lg gap-y-20">
           <div>
             <a class="transition duration-200 hover:text-yellow-0"  href="{base}/posts/FiBQiwdz8PGMbVZaX5SZ">{$t("longsleeve 'Polar bear'")}</a>
           </div>

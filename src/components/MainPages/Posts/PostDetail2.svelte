@@ -25,8 +25,7 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             
             slides.push({"img":image})
         })
-        console.log(slides)
-        
+        preloadImages();
     }
 
     async function handleCartClicked(){
@@ -50,66 +49,31 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     } 
   }
 
-
-
-
   let localCurrentIndex = 0; // Local variable to track the index
 const currentIndex = writable(0);
 
 let touchstartX = 0;
 let touchendX = 0;
 
-function handleSwipe(): void {
-    const touchDifference = touchstartX - touchendX;
-    console.log('Swipe detected', touchDifference);
+  // Preload images
+  function preloadImages() {
+    for (const slide of slides) {
 
-    if (Math.abs(touchDifference) < 10) {
-        console.log('Swipe too small');
-        return;
     }
+  }
 
-    if (touchDifference > 0) {
-        console.log('Swipe left');
-        localCurrentIndex = Math.min(slides.length - 1, localCurrentIndex + 1);
+  function handleSwipe(direction: 'left' | 'right'): void {
+    if (direction === 'left') {
+      localCurrentIndex = Math.max(0, localCurrentIndex - 1);
     } else {
-        console.log('Swipe right');
-        localCurrentIndex = Math.max(0, localCurrentIndex - 1);
+      localCurrentIndex = Math.min(slides.length - 1, localCurrentIndex + 1);
     }
 
-    console.log('New index', localCurrentIndex);
     currentIndex.set(localCurrentIndex);
-}
+  }
 
-  function onPointerDown(e: PointerEvent): void {
-    touchstartX = e.screenX;
-    console.log('Pointer down', touchstartX);
-}
-
-function onPointerUp(e: PointerEvent): void {
-    touchendX = e.screenX;
-    console.log('Pointer up', touchendX);
-    handleSwipe();
-}
 </script>
 
-      <!-- <div class="slider-line" style="transform: translateX({offset}px);">
-        {#if post.images}
-          {#each post.images as imag}
-            <img src={imag} alt={post.title} class="w-100 h-100" />
-          {/each}
-        {:else}
-          <div>
-            <p>NO images</p>
-          </div>
-        {/if}
-      </div> -->
-
-
-    <!-- {post.description}
-    <p>{$t("Author")} : {post.author}</p>
-    <p>{$t("Author Email")} : {post.authorEmail}</p>
-    <p>{$t("Price")} : {post.price}</p>
-    <p>{$t("Date")} : {post.date}:{post.date}:{post.date}</p> -->
 
     <!-- <a
       href="mailto:{post.authorEmail}"
@@ -133,56 +97,64 @@ function onPointerUp(e: PointerEvent): void {
       <CartAdded bind:isChangedCart />
 {/if}
 
- <section class="w-screen h-auto mt-40 sm:mt-20">
-    <div class="flex 
-            sm:flex-col sm:justify-center 
-            md:flex-col md:justify-center 
+ <section class="w-screen h-auto]">
+    <div class="
+            mt-28 mx-12 sm:mt-20 md:mt-20 sm:mx-0 md:mx-0
+            flex 
+            sm:flex-col sm:justify-center sm:items-center sm:gap-y-4
+            md:flex-col md:justify-center md:items-center md:gap-y-4
+            
             ">
         <!-- LEFT SIDE FOR IMAGE -->
-        <div class="w-[50%] h-auto sm:h-[70%] cursor-g">
-            
-            <!-- {#if post.images}
-            {#each post.images as imag}
-              <img src={imag} alt={post.title} class="w-100 h-100" />
-            {/each}
-          {:else}
-            <div>
-              <p>NO images</p>
+        <div class="w-[60%] sm:w-[80%] md:w-[80%] h-auto">
+            <div class="w-full mx-auto shadow-lg max-w-md relative">
+                {#if slides.length > 0}
+                        <div class="overflow-hidden text-center select-none transition duration-300 transform ease relative">
+                            <!-- Left clickable area for swiping left -->
+                            <div 
+                                class="absolute left-0 top-0 bottom-0 w-5/12 " 
+                                on:click={() => handleSwipe('left')}>
+                            </div>
+        
+                            <!-- Image -->
+                            <img 
+                                src={slides[$currentIndex].img} 
+                                alt="" 
+                                class="w-full mx-auto overflow-hidden bg-cover bg-center cursor-grab"
+                                on:pointerdown={(e) => touchstartX = e.screenX}
+                                on:pointerup={(e) => { touchendX = e.screenX; handleSwipe('right'); }}>
+                            
+                            <!-- Right clickable area for swiping right -->
+                            <div 
+                                class="absolute right-0 top-0 bottom-0 w-5/12 cursor-pointer" 
+                                on:click={() => handleSwipe('right')}>
+                            </div>
+                        </div>
+                    {/if}
             </div>
-          {/if} -->
-
-
-            <div class="w-full mx-auto shadow-lg bg-white px-10 pt-16 pb-10 text-gray-600" style="max-width: 350px">
-              <div class="overflow-hidden relative mb-10">
-                <div class="overflow-hidden relative cursor-grab"
-                on:pointerdown={(e) => touchstartX = e.screenX}
-                on:pointerup={(e) => { touchendX = e.screenX; handleSwipe(); }}>
-             {#each slides as item, index}
-               {#if $currentIndex === index} <!-- Display the current image -->
-                 <div class="overflow-hidden text-center select-none transition duration-300 transform ease">
-                   <img src={item.img} alt="" class="w-full">
-                 </div>
-               {/if}
-             {/each}
-           </div>
-              </div>
               <!-- Navigation Dots -->
-              <div class="flex justify-center">
+              <div class="flex justify-center mt-4">
                 {#each slides as _, index}
-                  <span class="w-2 h-2 rounded-full mx-1" class:bg-indigo-500={$currentIndex === index } class:bg-gray-200={$currentIndex !== index}></span>
-                {/each}
+                <span 
+                    class="w-4 h-1 mx-1"
+                    class:bg-yellow-0={$currentIndex === index }
+                    class:bg-red-0={$currentIndex !== index}
+                    class:w-[8px]={$currentIndex !== index}>
+                </span>
+            {/each}
               </div>
             </div>
-          </div>
+          
 
         <!-- RIGHT SIDE FOR ABOUT -->
-        <div class="flex flex-col items-center
-            sm:flex-row
+        <div class="flex flex-col items-center place-content-center
+        text-black-1 uppercase font-anonymous text-2xl
+             gap-y-12 sm:gap-y-6 md:gap-y-6 sm:mx-4 md:mx-6
             ">
             <!-- TITLE + SMALL DESCRIPTION -->
             <div>
                 <header>
-                    <h1 class="font-abril text-4xl text-blue-0">{$t(post.title)}</h1>
+                    <h1 class="font-abril text-6xl text-blue-0">{$t(post.title)}</h1>
                 </header>
             </div>
             <!-- COLOR AVAILABLE -->
@@ -190,18 +162,18 @@ function onPointerUp(e: PointerEvent): void {
 
             </div>
             <!-- SIZE'S INFO -->
-            <div>
+            <div class=" flex flex-col gap-y-4 text-center">
                 <!-- SIZE GUIDE -->
                 <div>
-
+                    SIZE GUIDE
                 </div>
                 <!-- LIST OF SIZES -->
                 <div>
-
+                    LIST OF SIZES
                 </div>
             </div>
             <!-- PURCHASE BUTTONS -->
-            <div class=" ">
+            <div class="flex flex-col gap-y-4 ">
                 <!-- PRICE -->
                 <div>
                     <p>{$t("Price")} : {post.price} BYN</p>

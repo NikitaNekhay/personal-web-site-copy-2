@@ -140,7 +140,7 @@
       {#key blogPosts}
         {#each blogPosts as post}
 
-          <div class="flex">
+          <div class="flex ">
             <div>
               <div
                 on:click={() => handleClick(post.id)}
