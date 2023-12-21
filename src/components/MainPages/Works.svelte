@@ -14,7 +14,7 @@
       
     </div>
 </section>
-{#if innerWidth <=700}
+{#if innerWidth <=820}
 <section class="h-screen w-screen mb-44 md:mb-[400px]">
   <div class="">
     <div>      
@@ -118,7 +118,7 @@
 
 
         </div>
-        {#if innerWidth>700}
+        {#if innerWidth>820}
           <div class="w-3/12 sm:w-0 relative -top-0">
             <div>
               <div class="">
