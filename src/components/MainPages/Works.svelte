@@ -15,7 +15,7 @@
     </div>
 </section>
 {#if innerWidth <=700}
-<section class="h-screen w-screen mb-44 sm:mb-0 md:mb-[400px]">
+<section class="h-screen w-screen mb-44 md:mb-[400px]">
   <div class="">
     <div>      
       <div class="flex ">
