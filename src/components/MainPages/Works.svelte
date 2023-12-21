@@ -3,6 +3,10 @@
     import { t } from "svelte-i18n";
     let innerWidth = 0
     let innerHeight = 0
+    let reverseDisplay = "h-screen w-screen mb-44 md:mb-[400px]";
+    if( innerHeight <600 ){
+      reverseDisplay = "h-screen w-screen mb-44 md:mb-[1000px]";
+    }
 </script>
 <svelte:window bind:innerWidth bind:innerHeight />
 <main>
@@ -14,8 +18,8 @@
       
     </div>
 </section>
-{#if innerWidth <=820}
-<section class="h-screen w-screen mb-44 md:mb-[400px]">
+{#if innerWidth <=700}
+<section class={reverseDisplay}>
   <div class="">
     <div>      
       <div class="flex ">
@@ -118,7 +122,7 @@
 
 
         </div>
-        {#if innerWidth>820}
+        {#if innerWidth>700}
           <div class="w-3/12 sm:w-0 relative -top-0">
             <div>
               <div class="">
