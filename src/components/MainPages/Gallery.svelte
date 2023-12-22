@@ -16,6 +16,7 @@
     import { error } from "@sveltejs/kit";
     import { applyAction } from "$app/forms";
     import CommonPopUp from "../Shared/CommonPopUp.svelte";
+    import SquareButton from "../Shared/SquareButton.svelte";
 
   let isLoading:boolean = true;
   let isEmpty:boolean = false;
@@ -201,55 +202,7 @@
                     </p>
                   </div>
                   <div class="sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
-
-                    <div >
-                      <div
-                        class=" group relative inline-block text-sm font-medium text-black-1
-                    hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
-                        on:click={() => handleCartClicked(post)
-                                  }
-                        on:keypress={() => {
-                                            try {
-
-                                              handleCart(post,tempAuthStore);
-                                              //isChangedCart = !isChangedCart;
-                                            } catch (err) {
-    
-                                              if(typeof(err)==="string"){
-                                                  msg = err;
-                                              } else if(err.message !== undefined){
-                                                  msg = err.message;
-                                              } else {
-                                                  msg = Errors.AddToCart
-                                              }
-                                              isChanged = true
-                                              throw msg
-
-                                            }
-                                            }
-                                      }
-                        id="menu-button"
-                        aria-expanded="true"
-                        aria-haspopup="true"
-                        role="button"
-                        tabindex="0"
-                      >
-                        <span
-                          class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform
-                      group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        />
-  
-                        <span
-                          class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
-                        >
-                          <img
-                            class="mr-1"
-                            alt="setting"
-                            src="{base}/media/shopping-cart.svg"
-                          />
-                        </span>
-                      </div>
-                    </div>
+                    <SquareButton passedfunction={()=>{handleCartClicked(post)}} typeSquare="cart" />
                   </div>
                 </div>
               </div>

@@ -23,7 +23,7 @@ export const persistLanguageStore = (key,initial) => {
 }
 
    const currentLanguageData ={
-    language: Language.English, 
+    language: Language.Russian, 
   }
 
   export let currentLanguagee = persistLanguageStore("language",currentLanguageData.language)

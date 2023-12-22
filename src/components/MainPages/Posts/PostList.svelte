@@ -10,6 +10,7 @@
   import NoPosts from "../../Shared/NoPosts.svelte";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
     import type { PostType } from "../../../shared/types";
+    import SquareButton from "../../Shared/SquareButton.svelte";
 
   let blogPosts:PostType[] = [];
   export let triggerPosts:boolean;
@@ -152,7 +153,8 @@
                       {post.price}
                     </p>
                   </div>
-                  <div>
+                  <SquareButton passedfunction={handleEdit(post.id)} typeSquare="edit" />
+                  <!-- <div>
                     <div
                       tabindex="0" role="button" aria-pressed="false"
                       class="group relative inline-block text-sm font-medium text-black-1
@@ -178,7 +180,8 @@
                         />
                       </span>
                     </div>
-                  </div>
+                  </div> -->
+
                   <div>
                     <div
                       tabindex="0" role="button" aria-pressed="false"

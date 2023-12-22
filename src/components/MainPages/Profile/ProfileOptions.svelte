@@ -12,7 +12,6 @@
   let isDeactivate = false;
   let isOpen = false
 
-
   function handleButtonClick(){
   isOpen = !isOpen
   }
@@ -24,16 +23,16 @@
 </script>
 
 <div class="px-6 sm:px-0">
-    <div class="grid items-center justify-items-center grid-rows-1 grid-cols-3">
-      <div>
+    <div class="grid items-center justify-items-between grid-cols-3 sm:grid-cols-2 md:grid-cols-2">
+      <div class="w-[100%]">
 
-        <header class="text flex justify-items-start">
-          <h3 class="font-abril text-4xl text-blue-0">{$t('User Profile')} </h3>
+        <header class="  text flex justify-items-start " >
+          <h3 class="font-abril text-4xl text-blue-0 hyphens-auto" lang={$currentLanguage.language}>{$t('User Profile')} </h3>
         </header>
 
       </div>
       
-        <div class=" ml-16">
+        <div class="ml-16 sm:ml-0 md:ml-16">
           <div class="grid justify-items-center">
             {#if !isOpen}
 
@@ -86,19 +85,6 @@
                   To: "transform opacity-0 scale-95"
                 -->
               {:else}
-              <!-- <div class=" border-t-4 border-navy-1">
-                <button type="button" class="inline-flex w-full justify-center 
-                gap-x-1.5 bg-white px-3 py-2 text-sm font-semibold 
-                text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
-                on:click={handleButtonClick} id="menu-button" aria-expanded="true" aria-haspopup="true">
-                  <img class="mr-1" alt="setting" src="{base}/media/settings.svg" />
-  
-                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
-                    clip-rule="evenodd" />
-                  </svg>
-                </button>
-              </div> -->
               <div
               class="group relative inline-block text-sm font-medium text-black-1 focus:outline-none focus:ring active:text-black-1"
               on:click={handleButtonClick} 
@@ -123,7 +109,7 @@
               </span>
             </div>
 
-              <div class="absolute z-0 md:ml-[330px] 
+              <div class="absolute z-0 md:mr-[50%] md:w-52 sm:right-8 sm:left-8
               w-50 h-42 origin-center bg-white-0 
               shadow-lg ring-1 ring-black ring-opacity-5 
               focus:outline-none border-x-4 border-navy-1"
@@ -169,13 +155,13 @@
           </div>
         </div>
         
-      <div>
+      <!-- <div>
         <div class="flex">
           <h3 class="text-base font-semibold leading-7 text-transparent">{$t('Applicant Information')} 
             <p class="mt-1 max-w-2xl text-sm leading-6 text-transparent">{$t('Personal details and application.')} </p>
             </h3>
         </div>
-      </div>
+      </div> -->
      
         
   

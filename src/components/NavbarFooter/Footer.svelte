@@ -33,7 +33,7 @@ function changeLanguage(){
     // Get the current value of the store
     if($currentLanguagee!==undefined){
         const currentValue = $currentLanguagee;
-        let newLanguage = Language.English
+        let newLanguage = Language.Russian
         // Switch the language value
         if(currentValue === Language.English){
             newLanguage = Language.Russian

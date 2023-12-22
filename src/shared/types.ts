@@ -50,7 +50,7 @@ export enum Language {
     FetchCart = "",
 
     InternalError = "This is internal error, please, contact admin to fix the error",
-
+    BadPass ="Error while creating svelte component (passing values)",
   }
 
 export enum SortMethod{

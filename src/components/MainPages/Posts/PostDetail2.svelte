@@ -8,6 +8,7 @@
 import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import SubmitButton from "../../Shared/SubmitButton.svelte";
     import { writable } from 'svelte/store';
+    import SquareButton from "../../Shared/SquareButton.svelte";
 
     export let post:PostType;
     let isChanged:boolean = false;
@@ -147,47 +148,59 @@ let touchendX = 0;
           
 
         <!-- RIGHT SIDE FOR ABOUT -->
-        <div class="flex flex-col items-center place-content-center
+        <div class=" m-12 flex flex-col items-center place-content-center
         text-black-1 uppercase font-anonymous text-2xl
-             gap-y-12 sm:gap-y-6 md:gap-y-6 sm:mx-4 md:mx-6
+             gap-y-12 w-[80%]
             ">
             <!-- TITLE + SMALL DESCRIPTION -->
-            <div>
+            <div class="w-[100%]">
                 <header>
-                    <h1 class="font-abril text-6xl text-blue-0">{$t(post.title)}</h1>
+                    <h1 class="font-abril text-center hyphens-auto text-6xl text-black-0 " lang="de">{$t(post.title)}</h1>
                 </header>
             </div>
-            <!-- COLOR AVAILABLE -->
-            <div>
+            <div class="flex flex-col items-center place-content-center 
+                        
+                        gap-y-6 sm:gap-y-6 md:gap-y-6 sm:mx-4 md:mx-6">
+                <!-- COLOR AVAILABLE -->
+                <div>
+                    Colors:
+                </div>
+                <!-- SIZE'S INFO -->
+                <div class=" flex flex-col gap-y-4 text-center">
+                    <!-- SIZE GUIDE -->
+                    <div>
+                        SIZE GUIDE
+                    </div>
+                    <!-- LIST OF SIZES -->
+                    <div>
+                        LIST OF SIZES:
+                    </div>
+                </div>
 
-            </div>
-            <!-- SIZE'S INFO -->
-            <div class=" flex flex-col gap-y-4 text-center">
-                <!-- SIZE GUIDE -->
-                <div>
-                    SIZE GUIDE
+                <!-- PURCHASE BUTTONS -->
+                <div class="flex flex-row gap-x-4">
+                    <!-- PRICE -->
+                    <div class="flex self-center">
+                        <p>{$t("Price")} : {post.price} BYN</p>
+                    </div>
+                    <div class="">
+                        <SquareButton passedfunction={handleCartClicked} typeSquare="cart" />
+                    </div>
+                    
+                    <!-- <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={""}/> -->
                 </div>
-                <!-- LIST OF SIZES -->
+
+                <!-- DESCRIPTION -->
                 <div>
-                    LIST OF SIZES
+                    DESCRIPTION: {post.description}
+                </div>
+                <!-- PAYMENT METHODS AND KLARNA -->
+                <div>
+                    PAYMENT METHODS:
                 </div>
             </div>
-            <!-- PURCHASE BUTTONS -->
-            <div class="flex flex-col gap-y-4 ">
-                <!-- PRICE -->
-                <div>
-                    <p>{$t("Price")} : {post.price} BYN</p>
-                </div>
-                <button                         
-                    class=" "
-                    on:click={() => handleCartClicked()}
-                    on:keypress={() => handleCartClicked()}> ADD TO CART </button>
-                <!-- <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={""}/> -->
-            </div>
-            <!-- DESCRIPTION -->
-            <div>
-                {post.description}
-            </div>
+            
+
         </div>
     </div>
  </section>

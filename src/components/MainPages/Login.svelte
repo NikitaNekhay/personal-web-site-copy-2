@@ -132,6 +132,8 @@
                                     name="email"
                                     type="email"
                                     required
+                                    placeholder="email"
+                                    autocomplete="email"
                                     bind:value={email}
                                 />
                                 <span
@@ -173,28 +175,17 @@
                                 >
                                     {$t("Password")}
                                 </span>
+
                             </label>
+                            <p class="mt-3 text-xs italic text-gray-600">
+                                {$t("Password must consist at least from 6 symbols")}
+                              </p>
                         </div>
+
                     </div>
 
-                    <!-- <div>
-                        <label for="password" class="block text-sm font-medium 
-                        leading-6 text-gray-900">
-                            {$t('Password')} 
-                        </label>
-                        <div class="mt-2">
-                        <input bind:value={password} id="password" 
-                        placeholder="Password" name="password" 
-                        type="password" autocomplete="current-password" 
-                        required class="block w-full rounded-md border-0 py-1.5 
-                        text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
-                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-                        focus:ring-black-1 sm:text-sm sm:leading-6">
-                        </div>
-                    </div> -->
-
                     {#if register}
-                        <div class="-mx-3 mb-3 flex flex-wrap">
+                        <div class="-mx-3 mb-3 flex flex-wrap w-full">
                             <div class="w-full px-3">
                                 <label
                                     class="relative block overflow-hidden rounded-md

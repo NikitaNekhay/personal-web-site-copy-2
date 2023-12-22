@@ -24,6 +24,8 @@
         "Already have an account?":"Уже есть учётная запись?",
         "Register":"Регистрация",
         "The info is incorrect!":"Информация неверна!",
+        "EDIT PROFILE":"РЕДАКТИРОВАТЬ ПРОФИЛЬ",
+        "Password must consist at least from 6 symbols":"Пароль должен состоять мининмум из 6 символов",
         "LOGIN":"ВОЙТИ",
         "REGISTER":"РЕГИСТРАЦИЯ",
         "Repeat Password":"Повтор пароля",

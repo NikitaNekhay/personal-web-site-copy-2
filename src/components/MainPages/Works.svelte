@@ -1,6 +1,7 @@
 <script>
     import { base } from "$app/paths";
     import { t } from "svelte-i18n";
+    import { currentLanguage } from "../../store/store";
     let innerWidth = 0
     let innerHeight = 0
     let reverseDisplay = "h-screen w-screen mb-44 md:mb-[400px]";
@@ -85,7 +86,7 @@
         </div > 
         <div class="h-auto w-4/12 sm:w-6/12 mb-20 sm:mb-0 sm:place-content-center justify-center self-center font-anonymous 
         text-2xl sm:text-sm md:text-xl lg:text-xl">
-          <article>
+          <article class="hyphens-auto" lang={$currentLanguage.language}>
             <p>
               {$t("This is a presentation of first capsule collection made by my hands. Also it is my early experience in clothes' making.")}
               <br><br>

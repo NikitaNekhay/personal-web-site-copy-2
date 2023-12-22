@@ -68,8 +68,8 @@ if($authStore.data.name === undefined){
     
         {:else}
         <div
-            class="flex flex-col text-center rounded-lg
-            text-black"
+            class="flex flex-col text-center sm:text-start  rounded-lg
+            text-black sm:truncate"
             use:clickOutside
             on:clickOutside={handleClickOutside}
         >
