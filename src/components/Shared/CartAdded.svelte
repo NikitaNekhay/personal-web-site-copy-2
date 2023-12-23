@@ -15,26 +15,11 @@
   </script>
   <div
     role="alert"
-    class="absolute top-[12%] rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16
+    class="fixed z-10 top-[12%] rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16
     left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
   >
     <div class="flex items-start gap-4">
-      <span class="text-green-600">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-6 w-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </span>
+    <img class=" place-self-center" src="{base}/media/cart-check.svg" alt="">
   
       <div class="flex-1">
         <strong class="block font-medium text-gray-900"> {$t('Item in the cart')} </strong>

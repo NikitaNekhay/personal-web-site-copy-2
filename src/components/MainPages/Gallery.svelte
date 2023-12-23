@@ -181,9 +181,11 @@
                 </div>
 
                 <div
-                  class=" sm:mx-6 md:mx-8 lg:mx-12 flex sm:flex-row sm:place-items-start md:place-items-start"
+                  class="mx-3 sm:mx-0 md:mx-0 lg:mx-6
+                  flex
+                  sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                 >
-                  <h2 class="  text-gray-700">
+                  <h2 class=" hyphens-auto text-gray-700" lang={$currentLanguagee.language}>
                     {post.description.substring(
                       0,
                       post.description.indexOf(`.`)
@@ -192,16 +194,19 @@
                 </div>
 
                 <div
-                  class="grid-rows sm:grid-cols-2 sm:gap-x-[120px] md:gap-x-[120px] grid max-h-fit max-w-fit items-center justify-items-end sm:justify-items-start md:justify-items-start"
+                  class="grid-rows grid items-center justify-items-end 
+                  sm:grid-cols-2 sm:justify-items-stretch 
+                  md:grid-cols-2 md:justify-items-stretch"
                 >
-                  <div class=" sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
+                  <div class=" sm:grid-col-1 sm:col-span-1 md:grid-col-1 md:col-span-1 ">
                     <p
                       class="font-anonymous text-3xl font-medium text-gray-900"
                     >
                       {post.price}BYN
                     </p>
                   </div>
-                  <div class="sm:grid-cols-1 sm:col-span-1 md:grid-cols-1 md:col-span-1">
+                  <div class="md:grid md:justify-items-end md:grid-col-2 md:grid-col-span-1
+                  sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1">
                     <SquareButton passedfunction={()=>{handleCartClicked(post)}} typeSquare="cart" />
                   </div>
                 </div>

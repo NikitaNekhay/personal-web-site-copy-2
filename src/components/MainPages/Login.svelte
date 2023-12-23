@@ -103,8 +103,8 @@
 {#if isChanged}
     <CommonPopUp bind:isChanged isPreviev={false} isError={true} message={msg} smallMessage={smmsg}  />
 {/if}
-<section class="h-auto w-screen 3xl:pb-[40%] ">
-    <div class="flex place-content-center px-[20%] py-[14%]   sm:px-6 sm:py-[40%] lg:px-8 xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt" />
+<section class="h-screen w-screen 3xl:pb-[40%] ">
+    <div class="flex place-content-center px-[20%] py-[14%] sm:px-6 sm:py-[25%] md:py-[25%] lg:px-8 xl:py-[8%] 2xl:py-[8%] 3xl:py-[9%]" />
         <div class="  " >
 
             <header class="mb-6 justify-center text-center ">

@@ -20,44 +20,15 @@
   </script>
   <div
     role="alert"
-    class="fixed rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16 top-[10%] 
+    data-popover="popover"
+    class="fixed z-10 rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16 top-[10%] 
     left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
   >
     <div class="flex items-start gap-4">
       {#if isError}
-        <span class=" text-red-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </span>
+          <img class="place-self-center" src="{base}/media/alert.svg" alt="alert icon">
       {:else}
-        <span class="text-green-600">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </span>
+      <img class=" place-self-center" src="{base}/media/check.svg" alt="check icon">
       {/if}
 
   
@@ -71,7 +42,7 @@
         <div class="mt-4 flex gap-2">
           <button
             on:click={()=>{window.location.href=href;}}
-            class="inline-flex items-center gap-2 rounded-lg bg-navy-1 px-4 py-2 text-white hover:bg-blue-0 transition-colors duration-200"
+            class="inline-flex items-center gap-2 rounded-lg bg-blue-0 px-4 py-2 text-white hover:bg-navy-1 transition-colors duration-200"
           >
             <span class="text-sm"> {$t('Preview')} </span>
   

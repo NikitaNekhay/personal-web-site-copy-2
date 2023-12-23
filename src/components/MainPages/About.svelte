@@ -8,6 +8,8 @@
 </script>
 
 
+
+
 <p class="short_info">
     {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design, photography, videography. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.')}<br>
 </p>
