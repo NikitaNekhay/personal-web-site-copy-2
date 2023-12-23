@@ -153,34 +153,7 @@
                       {post.price}
                     </p>
                   </div>
-                  <SquareButton passedfunction={handleEdit(post.id)} typeSquare="edit" />
-                  <!-- <div>
-                    <div
-                      tabindex="0" role="button" aria-pressed="false"
-                      class="group relative inline-block text-sm font-medium text-black-1
-                  hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
-                      on:click={() => handleEdit(post.id)}
-                      on:keypress={() => handleEdit(post.id)}
-                      id="menu-button"
-                      aria-expanded="true"
-                      aria-haspopup="true"
-                    >
-                      <span
-                        class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform
-                    group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      />
-
-                      <span
-                        class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
-                      >
-                        <img
-                          class="mr-1"
-                          alt="setting"
-                          src="{base}/media/edit.svg"
-                        />
-                      </span>
-                    </div>
-                  </div> -->
+                  <SquareButton passedfunction={()=>{handleEdit(post.id)}} typeSquare="edit" />
 
                   <div>
                     <div

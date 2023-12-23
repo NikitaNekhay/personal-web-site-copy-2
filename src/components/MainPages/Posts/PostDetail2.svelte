@@ -9,6 +9,7 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import SubmitButton from "../../Shared/SubmitButton.svelte";
     import { writable } from 'svelte/store';
     import SquareButton from "../../Shared/SquareButton.svelte";
+    import { onMount } from "svelte";
 
     export let post:PostType;
     let isChanged:boolean = false;
@@ -18,6 +19,17 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     let href:String = `${base}/shop`;
     let isError:boolean = true;
     const slides: Slide[] =[];
+    onMount(()=>{
+        try {
+            
+     
+
+} catch (error) {
+            
+        }
+    })
+
+
     if(post === undefined) {
         isChanged = true;
         msg = Errors.FetchPost;
@@ -26,17 +38,16 @@ import CommonPopUp from "../../Shared/CommonPopUp.svelte";
             
             slides.push({"img":image})
         })
-        preloadImages();
     }
 
     async function handleCartClicked(){
     try {
         console.log($authStore)
-    await handleCart(post,$authStore);
+        await handleCart(post,$authStore);
 
-    isChangedCart = !isChangedCart;
+        isChangedCart = !isChangedCart;
     } catch (err) {
-      console.log("error in gallery")
+      console.log("error in postdetail2")
     if(typeof(err)==="string"){
         msg = err;
     } else if(err.message !== undefined){
@@ -56,12 +67,6 @@ const currentIndex = writable(0);
 let touchstartX = 0;
 let touchendX = 0;
 
-  // Preload images
-  function preloadImages() {
-    for (const slide of slides) {
-
-    }
-  }
 
   function handleSwipe(direction: 'left' | 'right'): void {
     if (direction === 'left') {
@@ -97,7 +102,7 @@ let touchendX = 0;
 {#if isChangedCart}
       <CartAdded bind:isChangedCart />
 {/if}
-
+{/if}
  <section class="w-screen h-auto]">
     <div class="
             mt-28 mx-12 sm:mt-20 md:mt-20 sm:mx-0 md:mx-0
@@ -206,4 +211,4 @@ let touchendX = 0;
  </section>
 
 
-{/if}
+
