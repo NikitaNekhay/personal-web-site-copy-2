@@ -1,18 +1,19 @@
 import { db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction,  getDocs, addDoc, deleteDoc} from "firebase/firestore";
-import { blogPost } from '../../store/store';
-import { Errors, type AuthStoreType, type PostType } from '../../shared/types';
+import { productStore } from '../../store/store';
+import { Errors, type AuthStoreType, type ProductType } from '../../shared/types';
 import { updateUserProfile } from '../profile/user';
 
-export const blogsCollection = collection(db, "blogs");
+export const blogsCollection = collection(db, "products");
 
 
-export async function addBlogPost(tempPost){
+export async function addProduct(obj:ProductType){
   try {
    // console.log('Temp post:', tempPost)
-    const docRef = await addDoc(blogsCollection, tempPost);
-   // console.log("New blog added with ID: ", docRef.id);
-    updateBlogPost(docRef.id,tempPost.title,tempPost.images,tempPost.author,tempPost.authorEmail,tempPost.description,tempPost.price,tempPost.date)
+    const docRef = await addDoc(blogsCollection, obj);
+    obj.id = docRef.id;
+    console.log("New blog added with ID: ", docRef.id);
+    updateProduct(obj);
   } catch (error) {
     console.error("error while adding blog post",error)
   }
@@ -20,18 +21,10 @@ export async function addBlogPost(tempPost){
 
 
 
-export async function updateBlogPost(  
-                                    id:string,
-                                    title:string,
-                                    images: string[],
-                                    author: string,
-                                    authorEmail: string,
-                                    description: string,
-                                    price: number,
-                                    date: Date){
+export async function updateProduct(obj:ProductType){
   try{
 
-    const postDocRef = doc(collection(db, "blogs"), id);
+    const postDocRef = doc(collection(db, "products"), obj.id);
     
     await runTransaction(db, async (transaction) => {
       const postDoc = await transaction.get(postDocRef);
@@ -41,14 +34,13 @@ export async function updateBlogPost(
       
       const postData = postDoc.data();
       const updatedPostData = {     
-        id:id ?? postData.id,
-        title:title ?? postData.title,
-        images: images ?? postData.images,
-        author: author ?? postData.author,
-        authorEmail: authorEmail ?? postData.authorEmail,
-        description: description ?? postData.description,
-        price: price ?? postData.price,
-        date: date ?? postData.date,
+        id:obj.id ?? postData.id,
+        title:obj.title ?? postData.title,
+        images: obj.images ?? postData.images,
+        description: obj.description ?? postData.description,
+        price: obj.price ?? postData.price,
+        isArchive:obj.isArchive ?? postData.isArchive,
+        section:obj.section ?? postData.section,
       };
 
       // Update user document
@@ -62,27 +54,26 @@ export async function updateBlogPost(
   
 }
 
-export async function getBlogPost(id:string){
+export async function getProduct(id:string){
   try{
    // console.log("this is id passed to function for db call: ", id)
-    const postDoc = doc(collection(db, "blogs"), id);
+    const postDoc = doc(collection(db, "products"), id);
     const postSnapshot = await getDoc(postDoc);
     // put the value in store
     if (postSnapshot.exists()) {
         const postData = postSnapshot.data()
         // to ensure that the data fits
-        const updatedData = {
-            id: postData.id ?? 0,
-            title: postData.title ?? '',
-            images: postData.images ?? [],
-            author: postData.author ?? 'John Berkley',
-            authorEmail: postData.authorEmail ?? 'john.example@gmail.com',
-            description: postData.description ?? 'Lorem ipsum',
-            price: postData.price ?? 1,
-            date: postData.date ?? new Date(),
-        };
+        // const updatedData:ProductType = {
+        //     id: postData.id ?? 0,
+        //     title: postData.title ?? '',
+        //     images: postData.images ?? [],
+        //     description: postData.description ?? 'Lorem ipsum',
+        //     price: postData.price ?? 1,
+        //     date: postData.date ?? new Date(),
+        // };
+        const updatedData:ProductType = postData;
         // set the value to store
-        blogPost.set(updatedData)
+        productStore.set(updatedData)
         /// return postSnapshot.data(); // работало заебись, но рещил соотнести с неработающей частью профиля юзера
         return postSnapshot.exists() ? postSnapshot.data() : null;
       } else {
@@ -95,10 +86,10 @@ export async function getBlogPost(id:string){
   }
 }
 
-export async function getBlogPosts() {
+export async function getProducts() {
   try {
     
-    const blogPostsCollection = collection(db, 'blogs');
+    const blogPostsCollection = collection(db, 'products');
     const blogPostsSnapshot = await getDocs(blogPostsCollection);
 
     // Extract the data from each blog post document
@@ -114,20 +105,20 @@ export async function getBlogPosts() {
   }
 }
 
-export async function deleteBlogPost(id:string){
+export async function deleteProduct(id:string){
   try {
-    const postDocRef = doc(collection(db, 'blogs'), id);
+    const postDocRef = doc(collection(db, 'products'), id);
     await deleteDoc(postDocRef);
-    console.log('Blog post deleted:', id);
+    console.log('product deleted:', id);
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }
 }
 
-export async function  handleCart(post: PostType, tempAuthStore:AuthStoreType){
+export async function  handleCart(post: ProductType, tempAuthStore:AuthStoreType){
 
     if(tempAuthStore.user !== null && !(tempAuthStore.loading)){
-      const tempArr:PostType[] = tempAuthStore.data.cart ?? [];
+      const tempArr:ProductType[] = tempAuthStore.data.cart ?? [];
       tempArr.push(post);
       
       tempAuthStore.data.cart = tempArr;
@@ -150,3 +141,4 @@ export async function  handleCart(post: PostType, tempAuthStore:AuthStoreType){
 
 
 }
+

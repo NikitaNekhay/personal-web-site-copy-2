@@ -61,17 +61,18 @@ export enum SortMethod{
     CartHigh = 4,
 }
 
-export interface PostType {
-    author: string,
-    authorEmail:string,
-    date:Date,
-    description:string,
+export interface ProductType {
     id:string,
     images:string[],
     price:string,
     title:string,
+    description: Map<string,string|string[]>,
+    isArchive:boolean,
+    section:string,
 
 } 
+
+
 
 export interface MessageType {
     cid:string,
@@ -94,7 +95,7 @@ export interface UserDataType {
     country: string ,
     description: string,
     messages: MessageType[],
-    cart:PostType[],
+    cart:ProductType[],
 } 
 
 

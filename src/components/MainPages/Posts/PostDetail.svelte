@@ -1,169 +1,233 @@
-<script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
-  import { getBlogPost } from "../../../routes/posts/post";
+<script
+    lang="ts"
+    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+    defer
+>
+    import { base } from "$app/paths";
+    import { t } from "svelte-i18n";
+    import { handleCart } from "../../../routes/posts/post";
+    import {
+        Errors,
+        type ProductType,
+        type Slide,
+    } from "../../../shared/types";
+    import { authStore } from "../../../store/store";
+    import CartAdded from "../../Shared/CartAdded.svelte";
+    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+    import SubmitButton from "../../Shared/SubmitButton.svelte";
+    import { writable } from "svelte/store";
+    import SquareButton from "../../Shared/SquareButton.svelte";
+    import { onMount } from "svelte";
 
-  import { page } from "$app/stores";
+    export let post: ProductType;
+    let isChanged: boolean = false;
+    let isChangedCart: boolean = false;
+    let msg: String = "";
+    let smmsg: String = "Something went wrong while fetching the data.";
+    let href: String = `${base}/shop`;
+    let isError: boolean = true;
+    const slides: Slide[] = [];
+    // onMount(() => {
+    //     try {
+    //     } catch (error) {}
+    // });
 
-  import { addMessages, locale, t } from "svelte-i18n";
-  import { currentLanguagee } from "../../../store/store_";
-  import ru from "../../../services/ru.json";
-  import en from "../../../services/en.json";
-  import {type PostType } from "../../../shared/types";
-  import NoPosts from "../../Shared/NoPosts.svelte";
-  import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
-    import Comment from "./Comment.svelte";
-    import CommentList from "./CommentList.svelte";
-    import { authStore, triggerComments } from "../../../store/store";
-
-  export let post: PostType;
-  //export let post = $page.params
-  //console.log("this is the post:", post);
-  let isLoading = true; // Initialize the loading state
-
-  // onMount(async () => {
-  //   // Fetch the blog post details
-  //   isLoading = true;
-  //   const sliderLine = document.querySelector(".slider-line");
-  //   // try {
-  //   //   post = await getBlogPost(id);
-  //   //   console.log(post)
-  //   //   isLoading = false; // Set the loading state to false once data is loaded
-  //   // } catch (error) {
-  //   //   console.log("error fetching the blog post with id:", id)
-  //   // }
-  // });
-
-  //Dispatch custom events for swiping
-  const dispatch = createEventDispatcher();
-
-  let offset = 0; // Initialize the offset variable
-
-  // Handle next click
-  function handleNextClick() {
-    offset += 400;
-    if (offset > (post.images.length - 1) * 100) {
-      offset = 0;
+    if (post === undefined) {
+        isChanged = true;
+        msg = Errors.FetchPost;
+    } else {
+        post.images.forEach((image) => {
+            slides.push({ img: image });
+        });
     }
-    dispatch("swipe", { direction: "next", offset });
-  }
 
-  // Handle back click
-  function handleBackClick() {
-    offset -= 400;
-    if (offset < 0) {
-      offset = (post.images.length - 1) * 100;
+    async function handleCartClicked() {
+        try {
+            console.log($authStore);
+            await handleCart(post, $authStore);
+
+            isChangedCart = !isChangedCart;
+        } catch (err) {
+            console.log("error in PostDetail");
+            if (typeof err === "string") {
+                msg = err;
+            } else if (err.message !== undefined) {
+                msg = err.message;
+            } else {
+                msg = Errors.AddToCart;
+            }
+            isChanged = true;
+            throw msg;
+        }
     }
-    dispatch("swipe", { direction: "back", offset });
-  }
 
-  // Detect swipes
-  let startX;
-  let endX;
-  const MIN_SWIPE_DISTANCE = 50;
+    let localCurrentIndex = 0; // Local variable to track the index
+    const currentIndex = writable(0);
 
-  function handleTouchStart(event) {
-    startX = event.touches[0].clientX;
-  }
+    let touchstartX = 0;
+    let touchendX = 0;
 
-  function handleTouchEnd(event) {
-    endX = event.changedTouches[0].clientX;
-    const distance = startX - endX;
+    function handleSwipe(direction: "left" | "right"): void {
+        if (direction === "left") {
+            localCurrentIndex = Math.max(0, localCurrentIndex - 1);
+        } else {
+            localCurrentIndex = Math.min(
+                slides.length - 1,
+                localCurrentIndex + 1,
+            );
+        }
 
-    if (Math.abs(distance) > MIN_SWIPE_DISTANCE) {
-      if (distance > 0) {
-        handleNextClick();
-      } else {
-        handleBackClick();
-      }
+        currentIndex.set(localCurrentIndex);
     }
-  }
 </script>
 
-<link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
-
-{#if !isLoading}
-  <LoadingSpinner />
-{:else if post == undefined}
-  <NoPosts />
-{:else}
-  <div class="container_slider mt-56">
-    <div class="slider">
-      <div class="slider-line" style="transform: translateX({offset}px);">
-        {#if post.images}
-          {#each post.images as imag}
-            <img src={imag} alt={post.title} class="w-100 h-100" />
-          {/each}
-        {:else}
-          <div>
-            <p>NO images</p>
-          </div>
-        {/if}
-      </div>
-    </div>
-    <div class="buttons content-center items-center justify-center text-center">
-      <button
-        class="slider-back transition duration-200 hover:text-orange-0"
-        on:click={handleNextClick}
-        >&larr; {$t("BACK")}
-      </button>
-      <button
-        class="slider-next transition duration-200 hover:text-orange-0"
-        on:click={handleBackClick}>{$t("NEXT")} &rarr;</button
-      >
-    </div>
-  </div>
-
-  <div class=" mt-4 grid content-center place-content-center">
-    <h1>{post.title}</h1>
-
-    {post.description}
-    <p>{$t("Author")} : {post.author}</p>
-    <p>{$t("Author Email")} : {post.authorEmail}</p>
-    <p>{$t("Price")} : {post.price}</p>
-    <p>{$t("Date")} : {post.date}:{post.date}:{post.date}</p>
-
-    <a
-      href="mailto:{post.authorEmail}"
-      class="transition duration-200 hover:text-blue-0"
-      >{$t("SEND EMAIL TO AUTHOR")}
-    </a>
-
-
-    <div class="mt-6">
-    {#if $authStore.user}
-    <Comment />
-    {/if}
-    {#key $triggerComments.value}
-      <CommentList />
-    {/key}
-  </div>
-  </div>
+{#if isChanged}
+    <CommonPopUp
+        bind:isChanged
+        {href}
+        {isError}
+        isPreviev={false}
+        message={msg}
+        smallMessage={smmsg}
+    />
+{:else if isChangedCart}
+    <CartAdded bind:isChangedCart />
 {/if}
+<section class="w-screen h-auto]">
+    <div
+        class="
+            mt-28 mx-12 sm:mt-20 md:mt-20 sm:mx-0 md:mx-0
+            flex
+            sm:flex-col sm:justify-center sm:items-center sm:gap-y-4
+            md:flex-col md:justify-center md:items-center md:gap-y-4
+            
+            "
+    >
+        <!-- LEFT SIDE FOR IMAGE -->
+        <div class="w-[60%] sm:w-[80%] md:w-[80%] h-auto place-self-center   ">
+            <div class="w-full mx-auto shadow-lg max-w-md relative ">
+                {#if slides.length > 0}
+                    <div
+                        class="overflow-hidden text-center select-none transition duration-300 transform ease relative"
+                    >
+                        <!-- Left clickable area for swiping left -->
+                        <div
+                            class="absolute left-0 top-0 bottom-0 w-5/12"
+                            on:click={() => handleSwipe("left")}
+                        ></div>
 
+                        <!-- Image -->
+                        <img
+                            src={slides[$currentIndex].img}
+                            alt=""
+                            class="w-full mx-auto overflow-hidden bg-cover bg-center cursor-grab"
+                            on:pointerdown={(e) => (touchstartX = e.screenX)}
+                            on:pointerup={(e) => {
+                                touchendX = e.screenX;
+                                handleSwipe("right");
+                            }}
+                        />
 
+                        <!-- Right clickable area for swiping right -->
+                        <div
+                            class="absolute right-0 top-0 bottom-0 w-5/12 cursor-pointer"
+                            on:click={() => handleSwipe("right")}
+                        ></div>
+                    </div>
+                {/if}
+            </div>
+            <!-- Navigation Dots -->
+            <div class="flex justify-center mt-4">
+                {#each slides as _, index}
+                    <span
+                        class="w-4 h-1 mx-1"
+                        class:bg-yellow-0={$currentIndex === index}
+                        class:bg-red-0={$currentIndex !== index}
+                        class:w-[8px]={$currentIndex !== index}
+                    >
+                    </span>
+                {/each}
+            </div>
+        </div>
 
+        <!-- RIGHT SIDE FOR ABOUT -->
+        <div
+            class=" m-12 flex flex-col items-center place-content-center 
+        text-black-1 uppercase font-anonymous text-2xl
+             gap-y-12 w-[80%]
+            "
+        >
+            <!-- TITLE + SMALL DESCRIPTION -->
+            <div class="w-[100%]">
+                <header>
+                    <h1
+                        class="font-abril text-center hyphens-auto text-6xl text-black-0"
+                        lang="de"
+                    >
+                        {$t(post.title)}
+                    </h1>
+                </header>
+            </div>
+            <div
+                class="flex flex-col items-center place-content-center
+                        
+                        gap-y-6 sm:gap-y-6 md:gap-y-6 sm:mx-4 md:mx-6"
+            >
+                <!-- COLOR AVAILABLE -->
+                <div class="text-center">
+                    <p>Colors:</p>
+                    <div class="flex flex-row gap-3 place-content-center">
+                        {#each post.description["colors"] as colorItem}
+                            <div>{colorItem}</div>
+                        {/each}
+                    </div>
+                </div>
+                <!-- SIZE'S INFO -->
+                <div class=" flex flex-col gap-y-4 text-center">
+                    <!-- SIZE GUIDE -->
+                    <div>SIZE GUIDE</div>
+                    <!-- LIST OF SIZES -->
+                    <div>
+                        <p>LIST OF SIZES:</p>
+                        <div class="flex flex-row gap-3 place-content-center">
+                            {#each post.description["sizes"] as sizeItem}
+                                <p>{sizeItem}</p>
+                            {/each}
+                        </div>
+                    </div>
+                </div>
 
-<style>
-  .slider {
-    display: flex;
-    width: 800px;
-    height: 500px;
-    border: 2px solid royalblue;
-    margin: 30px auto;
-    overflow: hidden;
-  }
+                <!-- PURCHASE BUTTONS -->
+                <div class="flex flex-row gap-x-4">
+                    <!-- PRICE -->
+                    <div class="flex self-center">
+                        <p>{$t("Price")} : {post.price} BYN</p>
+                    </div>
+                    <div class="">
+                        <SquareButton
+                            passedfunction={handleCartClicked}
+                            typeSquare="cart"
+                        />
+                    </div>
 
-  .slider-line {
-    position: relative;
-    display: flex;
-    height: 500px;
-    background-color: darkorange;
-    left: 0px;
-    transition: all ease 1s;
-  }
+                    <!-- <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={""}/> -->
+                </div>
 
-  img {
-    width: 800px;
-    height: 500px;
-  }
-</style>
+                <!-- DESCRIPTION -->
+                <div>
+                    DESCRIPTION: {post.description["bigDescription"]}
+                </div>
+                <!-- MATERIALS -->
+                <div>
+                    MATERIALS: {post.description["materialsDescription"]}
+                </div>
+                <!-- MODEL -->
+                <div>
+                    MODEL: {post.description["modelDescription"]}
+                </div>
+                <!-- PAYMENT METHODS AND KLARNA -->
+                <div>PAYMENT METHODS:</div>
+            </div>
+        </div>
+    </div>
+</section>

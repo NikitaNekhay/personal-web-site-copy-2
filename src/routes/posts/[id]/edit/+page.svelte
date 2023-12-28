@@ -2,14 +2,15 @@
   import PostEdit from "../../../../components/MainPages/Posts/PostEdit.svelte";
   import { Router, Route } from "svelte-routing";
   import { base } from "$app/paths";
-  import { getBlogPost } from "../../post";
+  import { getProduct } from "../../post";
   import { page } from "$app/stores";
-  import { blogPost } from "../../../../store/store";
+  import { productStore } from "../../../../store/store";
   import LoadingSpinner from "../../../../components/Shared/LoadingSpinner.svelte";
+    import type { ProductType } from "../../../../shared/types";
 
   let isLoading = true; // Initialize the loading state
 
-  let post;
+  let post:ProductType;
   export let data;
 
   if (data.post !== undefined && data.post !== null) {
@@ -38,7 +39,7 @@
     {#if isLoading}
       <LoadingSpinner />
     {:else}
-      <PostEdit {post} />
+      <PostEdit typeCRUD={"EDIT POST"} post={post}/>
     {/if}
   </Route>
 </Router>

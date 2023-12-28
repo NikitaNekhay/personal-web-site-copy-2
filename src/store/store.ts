@@ -33,16 +33,21 @@ export const authStore = writable({
 //   adminDataClicks: 0,
 // });
 
-export const blogPost = writable({
-  id: '',
-  title: '',
+export const productStore = writable({
+  id: "",
+  title: "",
   images: [] as string[],
-  author: 'John Berkley',
-  authorEmail: 'john.example@gmail.com',
-  description: 'Lorem ipsum',
-  price: 1,
-  date: new Date(),
-
+  description: {
+    smallDescription:"",
+    bigDescription:"",
+    modelDescription:"",
+    materialsDescription:"",
+    colors:[""],
+    sizes:[""],
+  },
+  price: 0,
+  isArchive:false,
+  section:"",
 });
 
 export const isAdmin = writable({

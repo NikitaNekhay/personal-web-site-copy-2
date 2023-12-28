@@ -3,7 +3,7 @@ import { auth, db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc, query } from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { base } from '$app/paths';
-import { type UserDataType,type PostType, Errors } from '../../shared/types';
+import { type UserDataType,type ProductType, Errors } from '../../shared/types';
 
 
 export const prerender = 'auto'
@@ -144,31 +144,7 @@ async function getRawUserProfiles() {
   }
 }
 
-// export async function getUserShoppingCart(user: User) {
-//   try {
-//     console.log("getUserShoppingCart user: ",user)
-//     if(user){
-//       let userCart:PostType[];
-//       const userDoc = doc(collection(db, "user"), user.uid);
-//       const userSnapshot = await getDoc(userDoc);
-  
-//       const userData:UserDataType = userSnapshot.data() // added reling to post.ts
-  
-//       console.log("getUserShoppingCart, this is user data:",userData)
-  
-//       console.log("is user exists? ",userSnapshot.exists())
-//       userCart = userData.cart;
-//       return userSnapshot.exists() ? userCart: [];
-//     } else {
-//       console.log("getUserShoppingCart - there is no user to fetch his cart")
-//       return [];
-//     }
-   
-//   } catch (error) {
-//     console.error('Error fetching shopping cart:', error);
-//   }
 
-// }
 
 export async function getUserProfiles() {
   var userProfiles:UserDataType[] = [];

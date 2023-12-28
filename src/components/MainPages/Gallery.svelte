@@ -1,33 +1,42 @@
 <script lang="ts">
   // import states
   import { onMount } from "svelte";
-  import { getBlogPosts, handleCart } from "../../routes/posts/post";
+  import {
+    deleteProduct,
+    getProducts,
+    handleCart,
+  } from "../../routes/posts/post";
   import { base } from "$app/paths";
-  import { authStore, blogPost } from "../../store/store";
+  import { authStore, isAdmin, productStore } from "../../store/store";
   import { addMessages, locale, t } from "svelte-i18n";
   import { currentLanguagee } from "../../store/store_";
   import ru from "../../services/ru.json";
   import en from "../../services/en.json";
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
-    import { Errors, Language, type AuthStoreType, type PostType } from "../../shared/types";
-    import { updateUserProfile } from "../../routes/profile/user";
-    import CartAdded from "../Shared/CartAdded.svelte";
-    import { error } from "@sveltejs/kit";
-    import { applyAction } from "$app/forms";
-    import CommonPopUp from "../Shared/CommonPopUp.svelte";
-    import SquareButton from "../Shared/SquareButton.svelte";
+  import {
+    Errors,
+    Language,
+    type AuthStoreType,
+    type ProductType,
+  } from "../../shared/types";
+  import { updateUserProfile } from "../../routes/profile/user";
+  import CartAdded from "../Shared/CartAdded.svelte";
+  import { error } from "@sveltejs/kit";
+  import { applyAction } from "$app/forms";
+  import CommonPopUp from "../Shared/CommonPopUp.svelte";
+  import SquareButton from "../Shared/SquareButton.svelte";
 
-  let isLoading:boolean = true;
-  let isEmpty:boolean = false;
+  let isLoading: boolean = true;
+  let isEmpty: boolean = false;
   let passComponent = false;
-  let blogPosts:PostType[];
-  let tempAuthStore:AuthStoreType;
-  let isChangedCart:boolean = false;
-
-  let isChanged:boolean = false;
-  let msg:String ="";
-  let smmsg:String = "Something went wrong while scrolling the shop."
+  export let tempProductStore: ProductType[];
+  let tempAuthStore: AuthStoreType;
+  let isChangedCart: boolean = false;
+  export let triggerReload: boolean;
+  let isChanged: boolean = false;
+  let msg: String = "";
+  let smmsg: String = "Something went wrong while scrolling the shop.";
 
   if ($currentLanguagee !== undefined) {
     const currentValue = $currentLanguagee;
@@ -44,179 +53,260 @@
     locale.set(Language.English);
   }
 
-
   onMount(async () => {
     try {
       isLoading = true;
       isEmpty = false;
       passComponent = false;
 
-      
-      const unsubscribe = authStore.subscribe((authStore)=>{
+      const unsubscribe = authStore.subscribe((authStore) => {
         // get user info for cart
         tempAuthStore = authStore;
-        console.log(tempAuthStore)
-      })
+        console.log(tempAuthStore);
+      });
 
       // Fetch blog posts from the database
-      blogPosts = await getBlogPosts();
-      if (blogPosts.length === 0) {
+      //tempProductStore = await getProducts();
+      if (tempProductStore.length === 0) {
         isEmpty = true;
-
-
       }
       isLoading = false;
-      //console.log(blogPosts)
-      if(!passComponent){
-            const interval = setInterval(() => {
-      // console.log("gall");
-        passComponent = true;
-      },1000);
-      return () => clearInterval(interval);
+      //console.log(tempProductStore);
+      if (!passComponent) {
+        const interval = setInterval(() => {
+          // console.log("gall");
+          passComponent = true;
+        }, 1000);
+        return () => clearInterval(interval);
       }
-
-    } catch (error) {
-      
-    }
-    
-    
-    
-    
+    } catch (error) {}
   });
 
   function handleClick(id: string) {
     // Navigate to the detailed page of the selected blog post
-    console.log("handle click for ",id);
-    $blogPost.id = id;
-    //console.log($blogPost.id);
+    console.log("handle click for ", id);
+    $productStore.id = id;
+    //console.log($productStore.id);
     window.location.href = `${base}/posts/${id}`;
   }
 
-  async function handleCartClicked(post:PostType){
+  async function handleCartClicked(post: ProductType) {
     try {
-
-    await handleCart(post,tempAuthStore);
-    isChangedCart = !isChangedCart;
+      await handleCart(post, tempAuthStore);
+      isChangedCart = !isChangedCart;
     } catch (err) {
-      console.log("error in gallery")
-    if(typeof(err)==="string"){
+      console.log("error in gallery");
+      if (typeof err === "string") {
         msg = err;
-    } else if(err.message !== undefined){
+      } else if (err.message !== undefined) {
         msg = err.message;
-    } else {
-        msg = Errors.AddToCart
+      } else {
+        msg = Errors.AddToCart;
+      }
+      isChanged = true;
+      throw msg;
     }
-    isChanged = true
-    throw msg
-
-    } 
   }
 
+  function handleEdit(id: string) {
+    // Navigate to the edit page of the selected blog post
+    $productStore.id = id;
+    window.location.href = `${base}/posts/${id}/edit`;
+  }
 
+  function handleDelete(id: string) {
+    // Store the previous scroll position percentage
+    const previousScrollPercentage =
+      (window.pageYOffset || document.documentElement.scrollTop) /
+      (document.documentElement.scrollHeight -
+        document.documentElement.clientHeight);
+    // Delete the blog post and navigate back to the gallery page
+    deleteProduct(id);
+    const newScrollPosition =
+      previousScrollPercentage *
+      (document.documentElement.scrollHeight -
+        document.documentElement.clientHeight);
+    window.scrollTo(0, newScrollPosition);
+
+    setTimeout(() => {
+      triggerReload = !triggerReload;
+      location.reload();
+    }, 2000);
+  }
 </script>
 
-<section class="bg-white ">
-  <div class="px-8 py-28  
+<section class="bg-white">
+  <div
+    class="px-8 py-28
   sm:py-28 md:py-28 xl:py-28 2xl:py-32 3xl:py-32
-  sm:px-4 md:px-6 lg:px-11 xl:px-14 2xl:px-20"> 
+  sm:px-4 md:px-6 lg:px-11 xl:px-14 2xl:px-20"
+  >
     {#if isLoading}
       <LoadingSpinner />
     {:else if isEmpty}
       <NoPosts />
     {:else}
-
-        <div
-        class="grid grid-cols-3 
+      <div
+        class="grid grid-cols-3
         sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3
-        gap-x-24  sm:gap-x-24 xl:gap-x-16 2xl:gap-x-20
+        gap-x-24 sm:gap-x-24 xl:gap-x-16 2xl:gap-x-20
         gap-y-6 xl:gap-y-20
         "
       >
-      {#if isChangedCart}
-      <CartAdded bind:isChangedCart />
-      {/if}
-      {#if isChanged}
-      <CommonPopUp bind:isChanged isError={true} isPreviev={false} message={msg} smallMessage={smmsg}  />
-      {/if}
-      {#key blogPosts}
-        {#each blogPosts as post}
-
-          <div class="flex ">
-            <div>
-              <div
-                on:click={() => handleClick(post.id)}
-                on:keypress={() => handleClick(post.id)}
-                class=" min-h-80 overflow-hidden
+        {#if isChangedCart}
+          <CartAdded bind:isChangedCart />
+        {/if}
+        {#if isChanged}
+          <CommonPopUp
+            bind:isChanged
+            isError={true}
+            isPreviev={false}
+            message={msg}
+            smallMessage={smmsg}
+          />
+        {/if}
+        {#key tempProductStore.length}
+          {#each tempProductStore as post}
+            {#if !post.isArchive || $isAdmin.value}
+              <div class="flex">
+                <div>
+                  <div
+                    on:click={() => handleClick(post.id)}
+                    on:keypress={() => handleClick(post.id)}
+                    class=" min-h-80 overflow-hidden
                 object-cover
                   bg-gray-200 hover:cursor-pointer
-                  hover:opacity-80 w-[100%] 
+                  hover:opacity-80 w-[100%]
                   transition duration-200 hover:scale-105
                   "
-                aria-expanded="true"
-                aria-haspopup="true"
-                role="button"
-                tabindex="0"
-              >
-                <img
-                  src={post.images[0]}
-                  alt="Blog Post"
-                  class="object-center "
-                  
-                />
-              </div>
-              <div class="mt-2 flex sm:flex-col md:flex-col justify-between">
-                <div class=" flex-row">
-                  <div>
-                    <h3 class=" text-sm text-gray-700">
-                      <p class="">
-                        {post.author}
-                      </p>
-                    </h3>
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <img
+                      src={post.images[0]}
+                      alt="Blog Post"
+                      class="object-center"
+                    />
                   </div>
-                  <div>
-                    <h3 class=" text-lg font-bold text-gray-900 sm:text-xl">
-                      {post.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <div
-                  class="mx-3 sm:mx-0 md:mx-0 lg:mx-6
-                  flex
-                  sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
-                >
-                  <h2 class=" hyphens-auto text-gray-700" lang={$currentLanguagee.language}>
-                    {post.description.substring(
-                      0,
-                      post.description.indexOf(`.`)
-                    )}
-                  </h2>
-                </div>
-
-                <div
-                  class="grid-rows grid items-center justify-items-end 
-                  sm:grid-cols-2 sm:justify-items-stretch 
-                  md:grid-cols-2 md:justify-items-stretch"
-                >
-                  <div class=" sm:grid-col-1 sm:col-span-1 md:grid-col-1 md:col-span-1 ">
-                    <p
-                      class="font-anonymous text-3xl font-medium text-gray-900"
+                  <div
+                    class="mt-2 flex sm:flex-col md:flex-col justify-between"
+                  >
+                    <div class=" flex-row">
+                      <div>
+                        <h3 class=" text-sm text-gray-700">
+                          <div class="flex flex-row gap-x-4">
+                            {#each post.description["sizes"] as sizeItem}
+                              <p>{sizeItem}</p>
+                            {/each}
+                          </div>
+                        </h3>
+                      </div>
+                      <div>
+                        <h3 class=" text-lg font-bold text-gray-900 sm:text-xl">
+                          {post.title}
+                        </h3>
+                      </div>
+                      {#if post.isArchive}
+                      <div class="flex justify-center sm:justify-end md:justify-end">
+                        <img src="{base}/media/archive.svg" alt="archive icon">
+                      </div>
+                      {/if}
+                    </div>
+                    <div
+                      class="mx-3 sm:mx-0 md:mx-0 lg:mx-6
+            flex
+            sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                     >
-                      {post.price}BYN
-                    </p>
-                  </div>
-                  <div class="md:grid md:justify-items-end md:grid-col-2 md:grid-col-span-1
-                  sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1">
-                    <SquareButton passedfunction={()=>{handleCartClicked(post)}} typeSquare="cart" />
+                      <h2
+                        class=" hyphens-auto text-gray-700 text-center self-center sm:self-start md:self-start"
+                        lang={$currentLanguagee.language}
+                      >
+                        {post.description["smallDescription"]}
+                      </h2>
+                    </div>
+                    {#if $isAdmin.value}
+                      <div
+                        class="flex flex-col md:flex-row md:justify-around sm:flex-row sm:justify-around"
+                      >
+                        <SquareButton
+                          passedfunction={() => {
+                            handleEdit(post.id);
+                          }}
+                          typeSquare="edit"
+                        />
+                        <SquareButton
+                          passedfunction={() => {
+                            handleDelete(post.id);
+                          }}
+                          typeSquare="delete"
+                        />
+                        <!-- <div>
+                        <div
+                          tabindex="0"
+                          role="button"
+                          aria-pressed="false"
+                          class="group relative inline-block text-sm font-medium text-black-1
+                        hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
+                          on:click={() => handleDelete(post.id)}
+                          on:keypress={() => handleDelete(post.id)}
+                          id="menu-button"
+                          aria-expanded="true"
+                          aria-haspopup="true"
+                        >
+                          <span
+                            class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform
+                        group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                          />
+
+                          <span
+                            class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
+                          >
+                            <img
+                              class="mr-1"
+                              alt="setting"
+                              src="{base}/media/trash.svg"
+                            />
+                          </span>
+                        </div>
+                      </div> -->
+                      </div>
+                    {:else}
+                      <div
+                        class="grid-rows grid items-center justify-items-end
+                    sm:grid-cols-2 sm:justify-items-stretch
+                    md:grid-cols-2 md:justify-items-stretch"
+                      >
+                        <div
+                          class=" sm:grid-col-1 sm:col-span-1 md:grid-col-1 md:col-span-1"
+                        >
+                          <p
+                            class="font-anonymous text-3xl font-medium text-gray-900"
+                          >
+                            {post.price}BYN
+                          </p>
+                        </div>
+                        <div
+                          class="md:grid md:justify-items-end md:grid-col-2 md:grid-col-span-1
+                      sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1"
+                        >
+                          <SquareButton
+                            passedfunction={() => {
+                              handleCartClicked(post);
+                            }}
+                            typeSquare="cart"
+                          />
+                        </div>
+                      </div>
+                    {/if}
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        {/each}
+            {/if}
+          {/each}
         {/key}
       </div>
     {/if}
   </div>
 </section>
-

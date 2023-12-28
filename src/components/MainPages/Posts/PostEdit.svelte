@@ -1,123 +1,92 @@
 <script lang="ts">
   import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
   import { auth, storage } from "$lib/firebase/firebase";
-  import { onMount } from "svelte";
-  import {
-    addBlogPost,
-    blogsCollection,
-    getBlogPost,
-    updateBlogPost,
-  } from "../../../routes/posts/post";
-  import { page } from "$app/stores";
+  import { addProduct, updateProduct } from "../../../routes/posts/post";
   import { addMessages, locale, t } from "svelte-i18n";
-  import { currentLanguagee } from "../../../store/store_";
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
+  import { currentLanguagee } from "../../../store/store_";
 
   import LoadingButton from "../../Shared/LoadingButton.svelte";
-    import { Language } from "../../../shared/types";
-
-  export let post;
-
-  let tempPost = post;
+  import { beforeUpdate } from "svelte";
+  import SubmitButton from "../../Shared/SubmitButton.svelte";
+  import { productStore } from "../../../store/store";
+  import type { ProductType } from "../../../shared/types";
+  import Comment from "./Comment.svelte";
+  import DragAndDrop from "./DragAndDrop.svelte";
+  import EmptyPage from "../../Shared/EmptyPage.svelte";
+  import { processColorsString } from "../../../services/help";
+  import { writable, type Writable } from "svelte/store";
+    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+    import { base } from "$app/paths";
+  let isError:boolean = false;
+  let isChanged: boolean = false;
+  let msg: String = "Check your post in the shop!";
+  let smmsg: String = "Post is edited/created!";
+  let href: string = `${base}/shop`;
 
   let isLoading = true;
   let submitClicked = false;
-  let submitImageClicked = false;
-  let cartTable:boolean = false;
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  let tempProductStore: ProductType;
+  let files: Writable<Array<{ file: File; url: string }>> = writable([]);
+  export let typeCRUD: string;
+  export let post: ProductType | null;
+
+  if (post === null || post === undefined) {
+    tempProductStore = $productStore;
+  } else {
+    tempProductStore = post;
+  }
+
+  async function handleSubmit() {
     const user = auth.currentUser;
-    submitClicked = true;
+    submitClicked = !submitClicked;
     isLoading = true;
     try {
-      if (submitImageClicked) {
-        //console.log("these are tempPost.images",tempPost.images)
-        const imageUrls: string[] = [];
-        // console.log('typeof imageURLS',tempPost)
-        // console.log(tempPost.images.length)
-        for (let i = 0; i < tempPost.images.length; i++) {
-          const tempURL = await uploadImage(tempPost.images);
-          // imageUrls[i].push(tempURL);
-        }
+      tempProductStore.description["colors"] = processColorsString(
+        tempProductStore.description["colors"],
+      );
 
-        // console.log("These are imageUrls in handleSumbit",imageUrls)
-        // Update the tempPost object with the download URLs
-        tempPost.images = imageUrls;
-        // if(typeof(tempPost.images)==='string'){
-        //   tempPost.images=['',]
-        //   console.log('type of uploaded images is just a string not an array')
-        // }
-        // console.log("tempPost.images after promise from uploadImage",tempPost.images)
-        updateBlogPost(
-          tempPost.id,
-          tempPost.title,
-          tempPost.images,
-          tempPost.author,
-          tempPost.authorEmail,
-          tempPost.description,
-          tempPost.price,
-          tempPost.date
-        );
-        isLoading = false;
-        submitClicked = false;
-        //  console.log("Form submitted");
+      if (typeCRUD === "CREATE POST") {
+        addProduct(tempProductStore);
+        console.log("createed");
       } else {
-        //  console.log("haven't touch images")
-        // if there is error in 1 and second ways of updating, then console on images there
-        updateBlogPost(
-          tempPost.id,
-          tempPost.title,
-          tempPost.images,
-          tempPost.author,
-          tempPost.authorEmail,
-          tempPost.description,
-          tempPost.price,
-          tempPost.date
-        );
-        isLoading = false;
+        updateProduct(tempProductStore);
+        console.log("updated");
       }
+      isChanged = !isChanged;
 
-      //console.log('Form submitted')
-    } catch (error) {
-      console.error("auth error", error);
-    }
-  }
-
-  async function uploadImage(image) {
-    try {
-      const storageRef = ref(storage, `images/${image.name}`);
-      await uploadBytes(storageRef, image);
-      const downloadURL = await getDownloadURL(storageRef);
-      // console.log('URL of Images:', downloadURL)
-      return downloadURL;
-    } catch (error) {
-      console.error("uploadImage error", error);
-    }
-  }
-
-  function handleImageUpload(event) {
-    try {
-      submitImageClicked = true;
-      const files = event.target.files;
-      // coorect
-      tempPost.images = [];
-      tempPost.images = [...tempPost.images, ...Array.from(files)];
-      //  console.log("these are your files for tempPost.images:",tempPost.images)
-    } catch (error) {
-      console.error("handleImageUpload error", error);
+      isLoading = false;
+    } catch (err) {
+      console.error("auth error", err);
+    } finally {
+      setTimeout(() => {
+        // Calculate and set the new scroll position based on the previous percentage
+        submitClicked = false;
+        // isLoading = false;
+      }, 2500);
     }
   }
 </script>
 
 <div class="place flex place-content-center pt-60">
-  <form class="w-full max-w-lg">
+  {#if isChanged}
+    <CommonPopUp
+      bind:isChanged
+      {href}
+      {isError}
+      isPreviev={true}
+      message={msg}
+      smallMessage={smmsg}
+    />
+  {/if}
+  <form class="w-full max-w-lg flex flex-col justify-center items-center">
     <div class=" mb-6 flex justify-center">
-      <h1 class="font-abril text-4xl text-blue-0">{$t("EDIT POST")}</h1>
+      <h1 class="font-abril text-4xl text-blue-0">{typeCRUD}</h1>
     </div>
-    <div class="-mx-3 mb-6 flex flex-wrap">
+
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
       <div class="w-full px-3">
         <label
           class="relative block overflow-hidden rounded-md
@@ -131,7 +100,7 @@
         focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             type="text"
             id="title"
-            bind:value={tempPost.title}
+            bind:value={tempProductStore.title}
             required
             placeholder="Title"
           />
@@ -145,179 +114,351 @@
         </label>
       </div>
     </div>
-    <div class="-mx-3 mb-4 flex flex-wrap">
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
       <div class="h-full w-full px-3">
         <label
           class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
         focus-within:ring-white-2"
-          for="description"
-        >
-          <textarea
-            class="peer h-52 py-4 w-full border-none bg-transparent
-          bg-white-1 p-0 placeholder-transparent
-          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            id="description"
-            bind:value={tempPost.description}
-            placeholder="Description"
-          />
-          <span
-            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-          >
-            {$t("Description")}
-          </span>
-        </label>
-        <p class="mt-3 text-xs italic text-gray-600">
-          {$t("Make it as simple as informative")}
-        </p>
-      </div>
-    </div>
-
-    <div class="-mx-3 mb-6 flex flex-wrap">
-      <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-        <label
-          class="relative block overflow-hidden rounded-md
-        border border-gray-200 bg-white-1
-        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2"
-          for="author"
+          for="smallDescription"
         >
           <input
             class="peer h-8 w-full border-none bg-transparent
           bg-white-1 p-0 placeholder-transparent
           focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            type="text"
-            id="author"
-            bind:value={tempPost.author}
-            placeholder="Author"
-            required
+            id="smallDescription"
+            bind:value={tempProductStore.description["smallDescription"]}
+            placeholder="Small Description"
           />
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
           peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
           >
-            {$t("Author Name")}
-          </span>
-        </label>
-      </div>
-      <div class="w-full px-3 md:w-1/2">
-        <label
-          class="relative block overflow-hidden rounded-md
-        border border-gray-200 bg-white-1
-        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2"
-          for="authorEmail"
-        >
-          <input
-            class="peer h-8 w-full border-none bg-transparent
-          bg-white-1 p-0 placeholder-transparent
-          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            type="email"
-            id="authorEmail"
-            bind:value={tempPost.authorEmail}
-            placeholder="email@web.net"
-            required
-          />
-          <span
-            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-          >
-            {$t("Author Email")}
+            {$t("Small description")}
           </span>
         </label>
       </div>
     </div>
-
-    <div class="-mx-3 mb-2 ms-0 flex flex-wrap">
-      <div class=" mb-6 w-2/5">
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
+      <div class="h-full w-full px-3">
         <label
           class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
         focus-within:ring-white-2"
-          for="price"
+          for="bigDescription"
         >
           <input
             class="peer h-8 w-full border-none bg-transparent
-        bg-white-1 p-0 placeholder-transparent
-        focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            type="text"
-            id="price"
-            bind:value={tempPost.price}
-            placeholder="400$"
-            required
+          bg-white-1 p-0 placeholder-transparent
+          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+            id="bigDescription"
+            bind:value={tempProductStore.description["bigDescription"]}
+            placeholder="Big Description"
           />
           <span
-            class="absolute start-3 top-3 -translate-y-1/2 cursor-text
-        bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-        peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
           >
-            {$t("Price")}
+            {$t("Big description")}
           </span>
         </label>
       </div>
-      <div class="mb-3 h-1/2 px-3 md:mb-3 md:w-3/5">
+    </div>
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
+      <div class="h-full w-full px-3">
+        <label
+          class="relative block overflow-hidden rounded-md
+        border border-gray-200 bg-white-1
+        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+        focus-within:ring-white-2"
+          for="modelDescription"
+        >
+          <input
+            class="peer h-8 w-full border-none bg-transparent
+          bg-white-1 p-0 placeholder-transparent
+          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+            id="modelDescription"
+            bind:value={tempProductStore.description["modelDescription"]}
+            placeholder="Description of model"
+          />
+          <span
+            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          >
+            {$t("Description of model")}
+          </span>
+        </label>
+      </div>
+    </div>
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
+      <div class="h-full w-full px-3">
+        <label
+          class="relative block overflow-hidden rounded-md
+        border border-gray-200 bg-white-1
+        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+        focus-within:ring-white-2"
+          for="materialsDescription"
+        >
+          <input
+            class="peer h-8 w-full border-none bg-transparent
+          bg-white-1 p-0 placeholder-transparent
+          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+            id="materialsDescription"
+            bind:value={tempProductStore.description["materialsDescription"]}
+            placeholder="Description of materials"
+          />
+          <span
+            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          >
+            {$t("Description of materials")}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="-mx-3 mb-4 flex flex-wrap w-full h-auto">
+      <div class="h-full w-full px-3 text-gray-700 text-sm">
+        <fieldset
+          class="flex justify-evenly px-3 pt-3 relative overflow-hidden rounded-md
+        border border-gray-200 bg-white-1 shadow-sm focus-within:border-white-2 focus-within:ring-1
+        focus-within:ring-white-2"
+        >
+          <legend class="">{$t("Sizes")}</legend>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="XS"
+              value="XS"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="scales">XS</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="S"
+              value="S"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="horns">S</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="M"
+              value="M"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="horns">M</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="L"
+              value="L"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="horns">L</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="XL"
+              value="XL"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="horns">XL</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="One size"
+              value="One size"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="horns">One size</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="-mx-3 mb-4 flex flex-wrap w-full h-auto">
+      <div class="flex flex-row gap-3 mx-3">
+        <div class=" mb-6 w-[50%] h-full">
+          <label
+            class="relative block overflow-hidden rounded-md
+            border border-gray-200 bg-white-1
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+            focus-within:ring-white-2"
+            for="price"
+          >
+            <input
+              class="peer h-8 w-full border-none bg-transparent
+            bg-white-1 p-0 placeholder-transparent
+            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              type="text"
+              id="price"
+              bind:value={tempProductStore.price}
+              placeholder=""
+              required
+            />
+            <span
+              class="absolute start-3 top-3 -translate-y-1/2 cursor-text
+            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            >
+              {$t("Price")}
+            </span>
+          </label>
+          <p class="mt-3 text-xs italic text-gray-600">
+            {$t("Input only numbers")}
+          </p>
+        </div>
+        <div class=" mb-6 w-[50%] h-full">
+          <label
+            class="relative block overflow-hidden rounded-md
+          border border-gray-200 bg-white-1
+          px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+          focus-within:ring-white-2"
+            for="colors"
+          >
+            <input
+              class="peer h-8 w-full border-none bg-transparent
+          bg-white-1 p-0 placeholder-transparent
+          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              type="text"
+              id="price"
+              bind:value={tempProductStore.description["colors"]}
+              placeholder="400$"
+              required
+            />
+            <span
+              class="absolute start-3 top-3 -translate-y-1/2 cursor-text
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            >
+              {$t("Colors")}
+            </span>
+          </label>
+          <p class="mt-3 text-xs italic text-gray-600 break-words">
+            {$t(
+              "Input colors through a spacebar or coma and each word should start with a capital letter",
+            )}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="-mx-3 mb-4 flex flex-wrap w-full h-auto">
+      <div class="flex mx-3 flex-row gap-3 w-full self-center">
+        <div class=" mb-6 w-[50%] h-full mt-2.5">
+          <label
+            class="relative block overflow-hidden rounded-md
+            border border-gray-200 bg-white-1
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+            focus-within:ring-white-2"
+            for="section"
+          >
+            <input
+              class="peer h-8 w-full border-none bg-transparent
+            bg-white-1 p-0 placeholder-transparent
+            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              type="text"
+              id="section"
+              bind:value={tempProductStore.section}
+              placeholder=""
+              required
+            />
+            <span
+              class="absolute start-3 top-3 -translate-y-1/2 cursor-text
+            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            >
+              {$t("Section")}
+            </span>
+          </label>
+          <p class="mt-3 text-xs italic text-gray-600">
+            {$t("Input section in wardrobe")}
+          </p>
+        </div>
+        <div class=" mb-6 w-[50%] h-full">
+          <fieldset
+            class=" flex text-gray-700 text-sm justify-evenly px-3 pt-3 relative overflow-hidden rounded-md
+        border border-gray-200 bg-white-1 shadow-sm focus-within:border-white-2 focus-within:ring-1
+        focus-within:ring-white-2"
+          >
+            <legend class="">{$t("Is archived item?")}</legend>
+
+            <div class="flex flex-col">
+              <input
+                class="focus:ring-green-0 focus:text-green-0 text-green-0"
+                type="checkbox"
+                id="isArchive"
+                value="isArchive"
+                bind:checked={tempProductStore.isArchive}
+              />
+              <label for="isArchive">YES</label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div class="-mx-3 mb-4 flex flex-wrap w-full">
+      <DragAndDrop bind:tempProductStore />
+
+      <!-- <div class="mx-3 md:mb-12 w-full">
         <label
           class=" relative block overflow-hidden rounded-md
-        border border-gray-200 bg-white-1
-        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2"
+            border border-gray-200 bg-white-1
+            px-3 pt-8 shadow-sm self-center focus-within:border-white-2 focus-within:ring-1
+            focus-within:ring-white-2"
           for="files"
         >
           <input
-            class=" transparent peer block h-8 w-full border-none bg-transparent bg-white-1
-          p-0 text-center placeholder-transparent
-          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+            class=" transparent peer mb-8 h-full w-full border-none bg-transparent bg-white-1
+              text-center placeholder-transparent
+              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             type="file"
             id="images"
             on:change={handleImageUpload}
-            bind:value={tempPost.images}
             multiple
             placeholder="Files"
           />
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
           />
         </label>
-        {#if !submitImageClicked}
-          <p class="mt-3 text-xs italic text-gray-600">
-            {$t("Quantity of images")}:{tempPost.images.length}
-          </p>
-        {/if}
-      </div>
+      </div> -->
     </div>
-
-    {#if submitClicked && isLoading}
-      <LoadingButton />
-    {:else}
-      <button
-        class="group relative mx-[136px] flex
-w-1/2 items-center justify-center overflow-hidden
- rounded-md border border-orange-0
-px-8 py-3 focus:outline-none"
-        type="button"
-        on:click={handleSubmit}
-      >
-        <span
-          class="absolute inset-x-0 bottom-0 h-[2px]
-  bg-orange-0 transition-all group-hover:h-full
-  group-active:bg-orange-0"
-        />
-
-        <span
-          class="relative text-sm font-medium
-  text-orange-0 transition-colors group-hover:text-white"
-        >
-          {$t("Submit")}
-        </span>
-      </button>
-    {/if}
+    <div class="">
+      <SubmitButton
+        bind:submitClicked
+        bind:isLoading
+        passedfunction={handleSubmit}
+        text={"Submit"}
+      />
+    </div>
   </form>
 </div>

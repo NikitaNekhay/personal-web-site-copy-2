@@ -132,9 +132,14 @@
         "Quantity of images":"Количество файлов",
         "Currently you have":"Сейчас у вас",
         "item(s) in the cart.":"товар(ов) в корзине",
-        " ":" ",
-        " ":" ",
-        " ":" ",
-        " ":" ",
+        "Description of materials":"Описание материалов",
+        "Description of model":"Описание модели на фото",
+        "Small description":"Маленькое описание",
+        "Big description":"Большое описание",
+        "Sizes":"Размеры",
+        "Colors":"Цвета",
+        "Input only numbers":"Вводите только числа",
+        "Input colors through a spacebar or coma and each word should start with a capital letter":"Вводите цвета через пробел или запятую, а каждое слово должно начинаться с заглавной буквы",
+        "":"",
         "":""      
 }

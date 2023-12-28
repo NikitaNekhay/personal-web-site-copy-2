@@ -1,11 +1,9 @@
 <script>
     import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
-    import { authStore , isAdmin} from '../../store/store';
-    import { error } from '@sveltejs/kit';
-    import { Errors } from '../../shared/types';
 
 </script>
+
 
 
 

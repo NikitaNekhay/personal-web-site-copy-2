@@ -1,43 +1,36 @@
-<script>
+<script lang="ts">
 
-  import PostList from "../../components/MainPages/Posts/PostList.svelte";
 
-  import {  onMount } from "svelte/internal";
+  import {  onMount } from "svelte";
   import { auth } from "$lib/firebase/firebase";
-    import { authStore, isAdmin } from "../../store/store";
+    import { authStore, isAdmin, productStore } from "../../store/store";
     import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
+    import Gallery from "../../components/MainPages/Gallery.svelte";
+    import type { ProductType } from "../../shared/types";
+    import { getProducts } from "./post";
 
 
-
+    let triggerReload:boolean = false;
   let passComponent = false;
+  let tempProductStore:ProductType[];
   console.log("mounting in posts...");
-  onMount(() => {
-    console.log("mounting in posts...");
-    const unsubscribe = isAdmin.subscribe((value) => {
-    });
-    // passComponent = true;
-    return unsubscribe;
-  });
+  onMount(async() => {
+    tempProductStore = await getProducts();
 
-  let triggerPosts=false
+    passComponent = true;
+  })
 
-  function handleTriggerDelete(){
-    triggerPosts = !triggerPosts;
-  }
-  
 </script>
 
 <svelte:head>
   <title>{"Posts of the blog"}</title>
-  <meta name="post list" content="List of blogs" />
+  <meta name="post list" content="List of products" />
 </svelte:head>
 
-<!-- {#if passComponent} -->
-{#if $isAdmin.value}
-{#key triggerPosts}
-  <PostList bind:triggerPosts handleTriggerDelete={handleTriggerDelete}/>
+{#if passComponent}
+{#key triggerReload}
+  <Gallery tempProductStore={tempProductStore} bind:triggerReload/>
 {/key}
-
 {:else}
   <LoadingSpinner />
 {/if}

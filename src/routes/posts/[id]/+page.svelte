@@ -1,34 +1,34 @@
 <script lang="ts">
   import { Router, Route } from "svelte-routing";
-  import PostDetail from "../../../components/MainPages/Posts/PostDetail.svelte";
 
   import { base } from "$app/paths";
-  import { getBlogPost } from "../post";
+  import { getProduct } from "../post";
   import { page } from "$app/stores";
-  import { blogPost } from "../../../store/store";
-  import PostEdit from "../../../components/MainPages/Posts/PostEdit.svelte";
+  import { productStore } from "../../../store/store";
   import { onMount } from "svelte";
-  import type { PostType } from "../../../shared/types";
+  import type { ProductType } from "../../../shared/types";
   import LoadingButton from "../../../components/Shared/LoadingButton.svelte";
     import LoadingSpinner from "../../../components/Shared/LoadingSpinner.svelte";
-    import PostDetail2 from "../../../components/MainPages/Posts/PostDetail2.svelte";
+    import PostDetail from "../../../components/MainPages/Posts/PostDetail.svelte";
 
   let isLoading = true; // Initialize the loading state
 
-  let post:PostType;
+  let post:ProductType;
   export let data;
 
   if (data.post !== undefined && data.post !== null) {
     isLoading = false;
+      console.log("entered +page.svelte", data.post);
     post = data.post;
   } else if ($page.params !== undefined && $page.params !== null) {
     post = $page.params;
+    console.log("entered +page.svelte",$page.params);
     isLoading = false;
   } else {
     isLoading = true;
     console.error("error getting params for posts page");
   }
-  console.log("entered +page.svelte", post);
+
 </script>
 
 <svelte:head>
@@ -43,7 +43,7 @@
   <LoadingSpinner />
 {:else}
   <!-- <PostDetail {post} /> -->
-  <PostDetail2 {post}/>
+  <PostDetail {post}/>
 {/if}
 <!-- </Route>
 </Router> -->

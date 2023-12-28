@@ -11,12 +11,12 @@
     import NoPosts from "../../Shared/NoPosts.svelte";
     import { currentLanguagee } from "../../../store/store_";
     import { base } from "$app/paths";
-    import type { AuthStoreType, PostType } from "../../../shared/types";
+    import type { AuthStoreType, ProductType } from "../../../shared/types";
 
     let submitClicked  = false;
     let isLoading = false;
     let productQuantities = new Map<string, number>();
-    let cartItems: PostType[] = [];
+    let cartItems: ProductType[] = [];
     let tempAuthStore:AuthStoreType;
     let cartPrice:number = 0
 
@@ -56,7 +56,7 @@
       async function handleDeleteItemFromCart(tempId:number){
         if(tempAuthStore){
           
-          const clickedItem:PostType = cartItems.find((obj) => {
+          const clickedItem:ProductType = cartItems.find((obj) => {
             return obj.id === cartItems[tempId].id;
           });
           //console.log("handleCart - clicked item is:",clickedItem)

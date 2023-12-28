@@ -1,14 +1,17 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import Gallery from "../../components/MainPages/Gallery.svelte";
   import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
+    import type { ProductType } from "../../shared/types";
+    import { getProducts } from "../posts/post";
   let passComponent = false;
-  onMount(() => {
-    const interval = setInterval(() => {
-      passComponent = true;
-    }, 2000);
+  let tempProductStore:ProductType[];
+let triggerReload:boolean = false;
+  onMount(async() => {
+    console.log("mounting in posts...");
+    tempProductStore = await getProducts();
+    passComponent = true;
 
-    return () => clearInterval(interval);
   });
 </script>
 
@@ -18,7 +21,9 @@
 </svelte:head>
 
 {#if passComponent}
-  <Gallery />
+{#key triggerReload} 
+  <Gallery tempProductStore={tempProductStore} bind:triggerReload/>
+  {/key}
 {:else}
   <LoadingSpinner />
 {/if}

@@ -3,12 +3,8 @@
    <meta name="sandbox" content="Admin dashboard, manage posts">
 </svelte:head>
 
-<script >
-  import PostCreate from '../../components/MainPages/Posts/PostCreate.svelte'
+<script lang="ts">
+  import PostEdit from '../../components/MainPages/Posts/PostEdit.svelte'
 </script>
 
-<PostCreate />
-
-<style>
-
-</style>
+<PostEdit typeCRUD={"CREATE POST"} post={null}/>
