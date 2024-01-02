@@ -109,16 +109,16 @@
         </div>
         <div class="h-auto grid w-3/12 md:w-6/12 sm:gap-y-30 justify-center sm:justify-end self-center font-anonymous text-2xl sm:text-lg gap-y-20">
           <div>
-            <a class="transition duration-200 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/CgF16bXhfrKo5WmhEwgZ">{$t("'Polar bear' longsleeve")}</a>
+            <a class="transition duration-300 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/CgF16bXhfrKo5WmhEwgZ">{$t("'Polar bear' longsleeve")}</a>
           </div>
           <div>
-            <a class=" transition duration-200 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/js65QLblGNmOhZVTl6W5">{$t('Channel jacket')}</a>
+            <a class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/js65QLblGNmOhZVTl6W5">{$t('Channel jacket')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/5qv9ICdoxyPrFvc4aqEP">{$t('assymetric longsleeve')}</a>
+            <a class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/5qv9ICdoxyPrFvc4aqEP">{$t('assymetric longsleeve')}</a>
           </div>
           <div>
-            <a class=" transition duration-200 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/kBH4EnTSf0vXOR0tGU94">{$t('circled tank top')}</a>
+            <a class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"  href="{base}/posts/kBH4EnTSf0vXOR0tGU94">{$t('circled tank top')}</a>
           </div>
 
 

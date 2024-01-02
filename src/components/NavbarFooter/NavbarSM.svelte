@@ -48,7 +48,7 @@
     <!--The form itself  -->
     <div class=" mx-4 my-4 flex justify-items-end text-2xl">
         <a
-            class=" transition duration-200 delay-100 hover:text-yellow-0 "
+            class=" transition duration-300 delay-100 hover:text-yellow-0 "
             target="_self"
             href="{base}/"
         >
@@ -80,7 +80,7 @@
                                     <a
                                         on:click={authHandlers.login}
                                         class="grid-row-auto
-                                    col-span-full transition duration-200 delay-100
+                                    col-span-full transition duration-300 delay-100
                                     hover:text-yellow-0"
                                         target="_self"
                                         href="{base}/login"
@@ -95,7 +95,7 @@
                         <div class="flex border-t-2 border-navy-2  text-black sm:mx-8
                         md:mx-12 lg:mx-20">
                             <a
-                            class="mt-4 border-navy-2  text-blacktransition duration-200 delay-100 
+                            class="mt-4 border-navy-2  text-blacktransition duration-300 delay-100 
                             hover:text-yellow-0 sm:mx-8
                             md:mx-12 lg:mx-20"
                             target="_self"
@@ -107,7 +107,7 @@
                         <div class="flex border-t-2 border-navy-2  text-black sm:mx-8
                         md:mx-12 lg:mx-20">
                             <a
-                            class="mt-4 transition duration-200 delay-100 
+                            class="mt-4 transition duration-300 delay-100 
                             hover:text-yellow-0"
                             target="_self"
                             href="{base}/works"
@@ -118,7 +118,7 @@
                         <div class="flex border-t-2 border-navy-2  text-black sm:mx-8
                         md:mx-12 lg:mx-20">
                             <a
-                            class="mt-4 border-navy-2  text-black transition duration-200 delay-100 
+                            class="mt-4 border-navy-2  text-black transition duration-300 delay-100 
                             hover:text-yellow-0 sm:mx-8
                             md:mx-12 lg:mx-20"
                             target="_self"
@@ -131,7 +131,7 @@
                         <div class="  mb-3 flex border-t-2 border-navy-2  text-black 
                         sm:mx-8 md:mx-12 lg:mx-20">
                             <a
-                            class="mt-4 transition duration-200 delay-100 
+                            class="mt-4 transition duration-300 delay-100 
                             hover:text-yellow-0"
                             target="_self"
                             href="{base}/contact"

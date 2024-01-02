@@ -83,7 +83,7 @@
                 sm:gap-0 md:gap-8 lg:gap-16 xl:gap-16 2xl:gap-16 3x:gap-16"
             >
                 <!-- Logo(Left side) -->
-                <div class="text-2xl transition duration-200 delay-100 hover:text-yellow-0">
+                <div class="text-2xl transition duration-300 delay-100 hover:text-yellow-0 hover:animate-pulse">
                     <a
                         class=""
                         target="_self"
@@ -131,7 +131,7 @@
                         </a>
                         <a
                             class="text-black no-underline
-                        underline-offset-4 hover:underline 
+                        underline-offset-4 hover:underline  
                         sm:mx-4 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
                         "
                             target="_self"
@@ -148,8 +148,8 @@
                             <a
                                 on:click={authHandlers.login}
                                 class="grid-row-auto
-                            col-span-full transition duration-200 delay-100
-                            hover:text-yellow-0"
+                            col-span-full transition duration-300 delay-100
+                            hover:text-yellow-0 hover:animate-pulse"
                                 target="_self"
                                 href="{base}/login"
                             >
