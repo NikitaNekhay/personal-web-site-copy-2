@@ -123,7 +123,7 @@
                         <div
                             class="mx-auto shadow-lg sm:w-[100%] max-w-md h-max w-max relative"
                             in:fly={{
-                                x: isRightSwipe ? 500 : -500,
+                                x: isRightSwipe ? 10 : -10,
                                 duration: 2000,
                             }}
                         >
