@@ -100,7 +100,7 @@
     <CartAdded bind:isChangedCart />
 {/if}
 
-<section class="w-screen h-auto">
+<section class="w-screen h-auto sm:w-screen">
     <div
         class="
             mt-28 mx-12 sm:mt-20 md:mt-20 sm:mx-0 md:mx-0
@@ -112,11 +112,11 @@
     >
         <!-- LEFT SIDE FOR IMAGE -->
         <div
-            class="w-[80%] h-[80%] sm:w-[90%] md:w-[80%]
+            class="w-[80%] h-[80%] sm:w-screen md:w-[80%]
                     place-self-center"
         >
             <div
-                class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[100%]  mx-auto shadow-lg"
+                class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[90%]  mx-auto shadow-lg"
             >
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
@@ -151,7 +151,7 @@
                             <img
                                 src={slide.img}
                                 alt="imgs"
-                                class=" w-full sm:w-[90%] h-full object-cover"
+                                class=" w-full sm:w-[100%] h-full object-cover"
                                 on:pointerdown={(e) =>
                                     (touchstartX = e.screenX)}
                                 on:pointerup={(e) => {
