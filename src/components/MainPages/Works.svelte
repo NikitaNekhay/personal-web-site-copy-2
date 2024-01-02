@@ -142,7 +142,7 @@
         </div>
         <div
           class="h-auto grid w-3/12 md:w-6/12 sm:w-5/12 break-words sm:gap-y-30 justify-center self-center font-anonymous text-2xl sm:text-lg gap-y-20"
-          lang={$currentLanguagee.language}
+         
         >
           <div class="sm:w-10/12">
             <a

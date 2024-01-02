@@ -112,11 +112,11 @@
     >
         <!-- LEFT SIDE FOR IMAGE -->
         <div
-            class="w-[80%] h-[80%] sm:w-[80%] md:w-[80%]
+            class="w-[80%] h-[80%] sm:w-[90%] md:w-[80%]
                     place-self-center"
         >
             <div
-                class=" grid grid-flow-col relative max-w-md  mx-auto shadow-lg"
+                class=" grid grid-flow-col relative max-w-md sm:w-[100%] mx-auto shadow-lg"
             >
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
