@@ -20,7 +20,6 @@
     import { onMount } from "svelte";
     import { fade, fly } from "svelte/transition";
 
-
     export let post: ProductType;
     let isChanged: boolean = false;
     let isChangedCart: boolean = false;
@@ -39,7 +38,7 @@
         try {
             console.log($authStore);
             await handleCart(post, $authStore);
-            
+
             // HANDLE DOUBLE CLICK
             if (isChangedCart) {
                 isChangedCart = false;
@@ -49,7 +48,6 @@
             } else {
                 isChangedCart = !isChangedCart;
             }
-
         } catch (err) {
             console.log("error in PostDetail");
             if (typeof err === "string") {
@@ -70,6 +68,8 @@
     let touchstartX = 0;
     let touchendX = 0;
     let isRightSwipe: boolean = true;
+    let innerWidth = 0;
+    let innerHeight = 0;
 
     function handleSwipe(direction: "left" | "right"): void {
         if (direction === "left") {
@@ -99,7 +99,7 @@
 {:else if isChangedCart}
     <CartAdded bind:isChangedCart />
 {/if}
-
+<svelte:window bind:innerWidth bind:innerHeight />
 <section class="w-screen h-auto sm:w-screen">
     <div
         class="
@@ -116,14 +116,14 @@
                     place-self-center"
         >
             <div
-                class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[90%]  mx-auto shadow-lg"
+                class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[90%] mx-auto shadow-lg"
             >
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
                         <div
                             class="mx-auto shadow-lg sm:w-[100%] max-w-md h-max w-max relative"
                             in:fly={{
-                                x: isRightSwipe ? 10 : -10,
+                                x: innerWidth>1024 ? (isRightSwipe ? 10 : -10) : (isRightSwipe ? 500 : -500),
                                 duration: 2000,
                             }}
                         >
