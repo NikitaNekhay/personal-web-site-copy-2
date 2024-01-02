@@ -121,7 +121,7 @@
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
                         <div
-                            class="mx-auto shadow-lg sm:w-auto max-w-md h-max w-max relative"
+                            class="mx-auto shadow-lg sm:w-[100%] max-w-md h-max w-max relative"
                             in:fly={{
                                 x: isRightSwipe ? 500 : -500,
                                 duration: 2000,
