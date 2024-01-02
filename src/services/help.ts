@@ -23,3 +23,4 @@ export function processColorsString(input: string | string[]): string[] {
    return processedWords;
 }
 
+

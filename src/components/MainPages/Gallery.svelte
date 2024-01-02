@@ -73,7 +73,7 @@
       //console.log(tempProductStore);
       if (!passComponent) {
         const interval = setTimeout(() => {
-           console.log("gall");
+          console.log("gall");
           passComponent = true;
         }, 2000);
       }
@@ -91,7 +91,15 @@
   async function handleCartClicked(post: ProductType) {
     try {
       await handleCart(post, tempAuthStore);
-      isChangedCart = !isChangedCart;
+      // HANDLE DOUBLE CLICK
+      if (isChangedCart) {
+        isChangedCart = false;
+        setTimeout(() => {
+          isChangedCart = true;
+        }, 700);
+      } else {
+        isChangedCart = !isChangedCart;
+      }
     } catch (err) {
       console.log("error in gallery");
       if (typeof err === "string") {
@@ -202,21 +210,25 @@
                         </h3>
                       </div>
                       <div>
-                        <h3 class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl">
+                        <h3
+                          class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
+                        >
                           <div class="sm:col-span-1 md:col-span-1 break-auto">
                             {post.title}
                           </div>
-                         
+
                           {#if post.isArchive}
-                          <div class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end">
-                            <img  src="{base}/media/archive.svg" alt="archive icon">
-                          </div>
-                         
-                        {/if}
+                            <div
+                              class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end"
+                            >
+                              <img
+                                src="{base}/media/archive.svg"
+                                alt="archive icon"
+                              />
+                            </div>
+                          {/if}
                         </h3>
-
                       </div>
-
                     </div>
                     <div
                       class="mx-3 sm:mx-0 md:mx-0 lg:mx-6

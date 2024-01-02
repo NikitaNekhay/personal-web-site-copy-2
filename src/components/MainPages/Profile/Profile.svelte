@@ -15,6 +15,7 @@
   import en from "../../../services/en.json";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
     import type { UserDataType } from "../../../shared/types";
+    import { fade } from "svelte/transition";
 
   let isLoading = true; // Initialize the loading state
 

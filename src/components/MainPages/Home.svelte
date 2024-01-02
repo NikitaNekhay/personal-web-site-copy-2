@@ -1,18 +1,28 @@
+<script>
+
+    import { fade, fly, slide } from "svelte/transition";
+    let triggerAnimate = false;
+    setTimeout(()=>{triggerAnimate =true},100)
+</script>
 
 <svelte:head>
    <title>{'Works'}</title>
    <meta name="description" content="Recent vivid works">
 </svelte:head>
 
+{#if triggerAnimate}
 <div class="">
-    <div id="img1">
+    <div id="img1" in:fade
+    >
         <img src="https://lh3.googleusercontent.com/pw/AJFCJaUwN3AhGFTVGV_tpIrTBp09YiYOfLnQdm79wmXowCFlYxMHFWV4TR3jWBS44_BNz4wlomvDeP5otsxNGhVq2udIahgjWl67cdgNm1JnkRRYz-yh5vQ=w2400"
         alt="contrast colors"
         title="contrast colors werk kazan" 
         data-anchor-target="#img1" 
         class="object-scale-down h-5/6 w-4/6" style="margin-left: 2px; opacity: 1; 
-        transition: none 0s ease 0s; top: 50px;">
+        transition: none 0s ease 0s; top: 50px;"
+        >
     </div>
+  
     <div id="img2" class=" mt-60">
         <img src="https://lh3.googleusercontent.com/Z516X6_C1_5qbfaQPqwgWjuNS1PzLLfhiXppje6BKZDjXnBfr6LXHiq6bKz2EuFb1bssVC4livOCXSFbuXHrWIxs102aVcyZRP5afauUedXuKTAsFNzRt4fsFpclPX88xDNuWUi05g=w2400" 
         class="absolute top-0  right-0 object-scale-down h-4/6 w-3/6"
@@ -60,7 +70,7 @@
         </div>
     </div>
     
-    <div id="img8" class="relative">
+    <div id="img8" class="relative"  in:fade>
         <img src="https://lh3.googleusercontent.com/m2wYnpz4cmRze0bMcVEojtAcpU0iIan1Nhnkq96KE2tHxP20lY8a4sV2HX3gpbJ_dGeNDgGzI_pcA2eZ1n9HDjC_9WXwWFV_dOTo53qWXY-l0ZtxMxzlUlXUOy7dNzRvo6tbmyAlLQ=w2400"  
         alt="table sheet"
         title="table sheet" 
@@ -451,4 +461,4 @@
 
 
 </div>
-<br>
+{/if}
