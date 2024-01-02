@@ -83,9 +83,9 @@
                 sm:gap-0 md:gap-8 lg:gap-16 xl:gap-16 2xl:gap-16 3x:gap-16"
             >
                 <!-- Logo(Left side) -->
-                <div class="text-2xl">
+                <div class="text-2xl transition duration-200 delay-100 hover:text-yellow-0">
                     <a
-                        class="transition duration-200 hover:text-yellow-0"
+                        class=""
                         target="_self"
                         href="{base}/"
                     >
@@ -148,7 +148,7 @@
                             <a
                                 on:click={authHandlers.login}
                                 class="grid-row-auto
-                            col-span-full transition duration-200
+                            col-span-full transition duration-200 delay-100
                             hover:text-yellow-0"
                                 target="_self"
                                 href="{base}/login"

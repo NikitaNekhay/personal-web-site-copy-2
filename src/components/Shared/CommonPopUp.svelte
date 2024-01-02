@@ -42,7 +42,7 @@
         <div class="mt-4 flex gap-2">
           <button
             on:click={()=>{window.location.href=href;}}
-            class="inline-flex items-center gap-2 rounded-lg bg-blue-0 px-4 py-2 text-white hover:bg-navy-1 transition-colors duration-200"
+            class=" hover:animate-pulse inline-flex items-center gap-2 rounded-lg bg-blue-0 px-4 py-2 text-white hover:bg-navy-1 transition-colors duration-200"
           >
             <span class="text-sm"> {$t('Preview')} </span>
   

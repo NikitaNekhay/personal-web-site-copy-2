@@ -40,7 +40,7 @@ left-1/4 right-1/4  sm:left-10 sm:right-10 md:left-10 md:right-10"
     <div class="mt-4 flex gap-2">
       <button
         on:click={()=>{deleteCurrentUser()}} 
-        class="inline-flex items-center gap-2 rounded-lg bg-red-2 px-4 py-2 text-white hover:bg-red-1 transition-colors duration-200"
+        class="hover:animate-pulse inline-flex items-center gap-2 rounded-lg bg-red-2 px-4 py-2 text-white hover:bg-red-1 transition-colors duration-200"
       >
         <span class="text-sm"> {$t('Deactivate')}  </span>
 

@@ -18,8 +18,7 @@
     tempProductStore = await getProducts();
 
     passComponent = true;
-  })
-
+  })  
 </script>
 
 <svelte:head>

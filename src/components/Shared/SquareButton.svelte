@@ -59,11 +59,11 @@
     group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
     />
     {#if innerWidth < 550 && innerWidth > 414}
-      <span class="relative block md:flex border border-current bg-white px-4 py-3 duration-500 active:bg-gray-400">
+      <span class="relative block md:flex border border-current bg-white px-4 py-3 ">
         <img class="" alt="setting" src={SvgPath} />
       </span>
     {:else}
-      <span class="relative block md:flex border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400">
+      <span class="relative block md:flex border border-current bg-white px-8 py-3 ">
         <img class="" alt="setting" src={SvgPath} />
       </span>
     {/if}

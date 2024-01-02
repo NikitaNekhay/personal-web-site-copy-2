@@ -32,7 +32,7 @@
         <div class="mt-4 flex gap-2">
           <button
             on:click={()=>{window.location.href=`${base}/profile/shoppingcart`;}}
-            class="inline-flex items-center gap-2 rounded-lg bg-yellow-0 px-4 py-2 text-white-0 hover:bg-orange-0 transition-colors duration-200"
+            class="hover:animate-pulse inline-flex items-center gap-2 rounded-lg bg-yellow-0 px-4 py-2 text-white-0 hover:bg-orange-0 transition-colors duration-200"
           >
             <span class="text-sm"> {$t('Preview cart')} </span>
             <svg

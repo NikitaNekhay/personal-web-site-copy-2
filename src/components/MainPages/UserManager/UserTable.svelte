@@ -356,16 +356,16 @@
           </span>
           <div class="xs:mt-0 mt-2 inline-flex">
             <button
-              class="rounded-l bg-indigo-600 px-4 py-2
-                                  text-sm font-semibold text-indigo-50 transition duration-150 hover:bg-indigo-500"
+              class="rounded-l bg-blue-0 px-4 py-2
+                                  text-sm font-semibold text-indigo-50 transition duration-200 delay-100 hover:bg-blue-500"
               on:click={backClick(latestProfiles[0])}
             >
               {$t("BACK")}
             </button>
             &nbsp; &nbsp;
             <button
-              class="rounded-r bg-indigo-600 px-4 py-2
-                                  text-sm font-semibold text-indigo-50 transition duration-150 hover:bg-indigo-500"
+              class="rounded-r bg-blue-0 px-4 py-2
+                                  text-sm font-semibold text-indigo-50 transition duration-200 delay-100 hover:bg-blue-500"
               on:click={nextClick(latestProfiles[latestProfiles.length - 1])}
             >
               {$t("NEXT")}

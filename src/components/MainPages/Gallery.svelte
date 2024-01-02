@@ -66,18 +66,16 @@
       });
 
       // Fetch blog posts from the database
-      //tempProductStore = await getProducts();
       if (tempProductStore.length === 0) {
         isEmpty = true;
       }
       isLoading = false;
       //console.log(tempProductStore);
       if (!passComponent) {
-        const interval = setInterval(() => {
-          // console.log("gall");
+        const interval = setTimeout(() => {
+           console.log("gall");
           passComponent = true;
-        }, 1000);
-        return () => clearInterval(interval);
+        }, 2000);
       }
     } catch (error) {}
   });
@@ -176,8 +174,8 @@
                     class=" min-h-80 overflow-hidden
                 object-cover
                   bg-gray-200 hover:cursor-pointer
-                  hover:opacity-80 w-[100%]
-                  transition duration-200 hover:scale-105
+                   w-[100%]
+                   transition duration-200 delay-100 hover:scale-105 hover:animate-pulse
                   "
                     aria-expanded="true"
                     aria-haspopup="true"
@@ -204,15 +202,21 @@
                         </h3>
                       </div>
                       <div>
-                        <h3 class=" text-lg font-bold text-gray-900 sm:text-xl">
-                          {post.title}
+                        <h3 class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl">
+                          <div class="sm:col-span-1 md:col-span-1 break-auto">
+                            {post.title}
+                          </div>
+                         
+                          {#if post.isArchive}
+                          <div class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end">
+                            <img  src="{base}/media/archive.svg" alt="archive icon">
+                          </div>
+                         
+                        {/if}
                         </h3>
+
                       </div>
-                      {#if post.isArchive}
-                      <div class="flex justify-center sm:justify-end md:justify-end">
-                        <img src="{base}/media/archive.svg" alt="archive icon">
-                      </div>
-                      {/if}
+
                     </div>
                     <div
                       class="mx-3 sm:mx-0 md:mx-0 lg:mx-6

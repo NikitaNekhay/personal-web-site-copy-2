@@ -18,6 +18,7 @@
     import { writable } from "svelte/store";
     import SquareButton from "../../Shared/SquareButton.svelte";
     import { onMount } from "svelte";
+    import { fade, fly } from "svelte/transition";
 
     export let post: ProductType;
     let isChanged: boolean = false;
@@ -26,19 +27,11 @@
     let smmsg: String = "Something went wrong while fetching the data.";
     let href: String = `${base}/shop`;
     let isError: boolean = true;
-    const slides: Slide[] = [];
-    // onMount(() => {
-    //     try {
-    //     } catch (error) {}
-    // });
+    export let slides: Slide[];
 
     if (post === undefined) {
         isChanged = true;
         msg = Errors.FetchPost;
-    } else {
-        post.images.forEach((image) => {
-            slides.push({ img: image });
-        });
     }
 
     async function handleCartClicked() {
@@ -66,19 +59,23 @@
 
     let touchstartX = 0;
     let touchendX = 0;
+    let isRightSwipe:boolean = true;
 
     function handleSwipe(direction: "left" | "right"): void {
         if (direction === "left") {
             localCurrentIndex = Math.max(0, localCurrentIndex - 1);
+            isRightSwipe = false;
         } else {
             localCurrentIndex = Math.min(
                 slides.length - 1,
                 localCurrentIndex + 1,
             );
+            isRightSwipe = true;
         }
 
         currentIndex.set(localCurrentIndex);
     }
+
 </script>
 
 {#if isChanged}
@@ -93,7 +90,8 @@
 {:else if isChangedCart}
     <CartAdded bind:isChangedCart />
 {/if}
-<section class="w-screen h-auto]">
+
+<section class="w-screen h-auto">
     <div
         class="
             mt-28 mx-12 sm:mt-20 md:mt-20 sm:mx-0 md:mx-0
@@ -104,40 +102,80 @@
             "
     >
         <!-- LEFT SIDE FOR IMAGE -->
-        <div class="w-[60%] sm:w-[80%] md:w-[80%] h-auto place-self-center   ">
-            <div class="w-full mx-auto shadow-lg max-w-md relative ">
-                {#if slides.length > 0}
-                    <div
-                        class="overflow-hidden text-center select-none transition duration-300 transform ease relative"
-                    >
-                        <!-- Left clickable area for swiping left -->
-                        <div
-                            class="absolute left-0 top-0 bottom-0 w-5/12"
-                            on:click={() => handleSwipe("left")}
-                        ></div>
+        <div class="w-[80%] h-[80%] sm:w-[80%] md:w-[80%]  
+                    place-self-center">
+            <div class=" grid grid-flow-col relative max-w-md mx-auto shadow-lg ">
+                
+                    {#each slides as slide, index}
+                        
+                            {#if index === $currentIndex}
+                            <div
+                                class="mx-auto shadow-lg max-w-md h-max w-max relative"
+                                in:fly={{ x: isRightSwipe ? 500 : -500, duration: 2000 }}
 
-                        <!-- Image -->
-                        <img
-                            src={slides[$currentIndex].img}
-                            alt=""
-                            class="w-full mx-auto overflow-hidden bg-cover bg-center cursor-grab"
-                            on:pointerdown={(e) => (touchstartX = e.screenX)}
-                            on:pointerup={(e) => {
-                                touchendX = e.screenX;
-                                handleSwipe("right");
-                            }}
-                        />
-
-                        <!-- Right clickable area for swiping right -->
-                        <div
-                            class="absolute right-0 top-0 bottom-0 w-5/12 cursor-pointer"
-                            on:click={() => handleSwipe("right")}
-                        ></div>
-                    </div>
-                {/if}
+                            >
+                                <!-- Left clickable area for swiping left -->
+                                <div
+                                    role="button"
+                                    tabindex="0"
+                                    class="absolute left-0 top-0 bottom-0 w-3/12 group"
+                                    on:click={() => handleSwipe("left")}
+                                    on:keyup={() => handleSwipe("left")}
+                                >
+                                    <div
+                                        class="absolute justify-center top-[50%] right-[50%] transition-all duration-200 group-hover:scale-150 animate-pulse"
+                                    >
+                                        <img
+                                            class=""
+                                            src="{base}/media/chevrons-left.svg"
+                                            alt="right icon"
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <!-- Image -->
+                                
+                                    <img
+                                        src={slide.img}
+                                        alt="imgs"
+                                        class=" w-full h-full object-cover "
+             
+                                        on:pointerdown={(e) =>
+                                            (touchstartX = e.screenX)}
+                                        on:pointerup={(e) => {
+                                            touchendX = e.screenX;
+                                            handleSwipe("right");
+                                        }}
+                                    />
+                              
+        
+                                <!-- Right clickable area for swiping right -->
+                                <div
+                                    role="button"
+                                    tabindex="0"
+                                    class="absolute right-0 top-0 bottom-0 w-3/12 cursor-pointer group"
+                                    on:click={() => handleSwipe("right")}
+                                    on:keyup={() => handleSwipe("right")}
+                                >
+                                    <div
+                                        class="absolute justify-center top-[50%] left-[50%] group-hover:scale-150 transition-all duration-200 animate-pulse"
+                                    >
+                                        <img
+                                            src="{base}/media/chevrons-right.svg"
+                                            alt="right icon"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                        
+                    
+                    {/each}
+                
+                
             </div>
             <!-- Navigation Dots -->
-            <div class="flex justify-center mt-4">
+            <div class="flex justify-center mt-4 relative">
                 {#each slides as _, index}
                     <span
                         class="w-4 h-1 mx-1"
@@ -152,8 +190,8 @@
 
         <!-- RIGHT SIDE FOR ABOUT -->
         <div
-            class=" m-12 flex flex-col items-center place-content-center 
-        text-black-1 uppercase font-anonymous text-2xl
+            class=" m-12 flex flex-col items-center place-content-center
+        text-black-1 uppercase font-anonymous text-2xl md:m-6 sm:m-6
              gap-y-12 w-[80%]
             "
         >
