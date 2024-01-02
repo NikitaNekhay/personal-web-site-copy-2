@@ -112,7 +112,7 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
                 <li>{$t('Weekend')} : 10am - 3pm</li>
                 </ul>
         
-                <ul class="flex gap-6 mt-8 sm:grid-cols-2 sm:grid">
+                <ul class="flex gap-6 mt-8">
                 <!-- <li>
                     <a
                     href="{base}/"
