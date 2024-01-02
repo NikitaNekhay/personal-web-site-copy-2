@@ -116,7 +116,7 @@
                     place-self-center"
         >
             <div
-                class=" grid grid-flow-col relative max-w-md sm:w-[100%] mx-auto shadow-lg"
+                class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[100%]  mx-auto shadow-lg"
             >
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
@@ -151,7 +151,7 @@
                             <img
                                 src={slide.img}
                                 alt="imgs"
-                                class=" w-full sm:w-fit h-full object-cover"
+                                class=" w-full sm:w-[90%] h-full object-cover"
                                 on:pointerdown={(e) =>
                                     (touchstartX = e.screenX)}
                                 on:pointerup={(e) => {
