@@ -116,12 +116,12 @@
                     place-self-center"
         >
             <div
-                class=" grid grid-flow-col relative max-w-md mx-auto shadow-lg"
+                class=" grid grid-flow-col relative max-w-md  mx-auto shadow-lg"
             >
                 {#each slides as slide, index}
                     {#if index === $currentIndex}
                         <div
-                            class="mx-auto shadow-lg max-w-md h-max w-max relative"
+                            class="mx-auto shadow-lg sm:w-auto max-w-md h-max w-max relative"
                             in:fly={{
                                 x: isRightSwipe ? 500 : -500,
                                 duration: 2000,
@@ -151,7 +151,7 @@
                             <img
                                 src={slide.img}
                                 alt="imgs"
-                                class=" w-full h-full object-cover"
+                                class=" w-full sm:w-fit h-full object-cover"
                                 on:pointerdown={(e) =>
                                     (touchstartX = e.screenX)}
                                 on:pointerup={(e) => {
