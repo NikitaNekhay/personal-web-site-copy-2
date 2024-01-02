@@ -124,7 +124,7 @@
                             class="mx-auto shadow-lg sm:w-[100%] max-w-md h-max w-max relative"
                             in:fly={{
                                 x: innerWidth>1024 ? (isRightSwipe ? 500 : -500) : (isRightSwipe ? 10 : -10),
-                                duration: 2000,0
+                                duration: 2000
                             }}
                         >
                             <!-- Left clickable area for swiping left -->
