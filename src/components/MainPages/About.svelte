@@ -9,7 +9,7 @@
 
 
 <p class="short_info">
-    {$t('Individual sewing and design.')}<br>
+    {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.')}<br>
 </p>
 
 
@@ -28,7 +28,7 @@
         <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://youtu.be/aJqHTiAQ560" >Conceptual video "Campus tour"</a></li>
         <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://youtu.be/WdUAxi6tISg" >Short cut film "The Whole"</a></li>
         <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://www.instagram.com/nekhaynikita/">Capsule collection 2022</a></li> -->
-        <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://www.behance.net/nekhaynikita">Phography and 3D Design</a></li>
+        <!-- <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://www.behance.net/nekhaynikita">Phography and 3D Design</a></li> -->
     </ul>
 </div>
 
