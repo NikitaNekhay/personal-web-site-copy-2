@@ -221,7 +221,11 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
                            {$t('About')} 
                         </a>
                     </li>
-        
+                    <li>
+                        <a href="{base}/contact" class="text-black-0 transition duration-300 delay-100 hover:text-yellow-0">
+                           {$t('Contact')} 
+                        </a>
+                    </li>
                     <!-- <li>
                         <a href="{base}/" class="text-red-2 transition hover:opacity-75">
                            {$t('Accounts Review')} 
@@ -238,19 +242,19 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
                 <nav aria-label="Footer Navigation - Support">
                 <ul class="flex flex-wrap gap-4 text-xs">
                     <li>
-                    <a href="{base}/" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
-                       {$t('Terms & Conditions')} 
+                    <a href="{base}/purchase" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
+                       {$t('Purchase Conditions')} 
                     </a>
                     </li>
         
                     <li>
-                    <a href="{base}/" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
+                    <a href="{base}/policy" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
                        {$t('Privacy Policy')} 
                     </a>
                     </li>
         
                     <li>
-                    <a href="{base}/" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
+                    <a href="{base}/cookies" class="text-red-2 transition duration-300 delay-100 hover:opacity-75">
                       {$t('Cookies')} 
                     </a>
                     </li>
