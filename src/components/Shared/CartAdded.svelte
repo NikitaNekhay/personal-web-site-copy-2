@@ -36,7 +36,7 @@
         <br />
         {$t("Currently you have")}
         {$authStore.data.cart.length}
-        {$t("items in the cart.")}
+        {$t("item(s) in the cart")}.
       </p>
 
       <div class="mt-4 flex gap-2">

@@ -154,7 +154,7 @@
           <div class="sm:w-10/12">
             <a
               class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"
-              href="{base}/posts/js65QLblGNmOhZVTl6W5">{$t("Channel jacket")}</a
+              href="{base}/posts/js65QLblGNmOhZVTl6W5">{$t("Chanel jacket")}</a
             >
           </div>
           <div class="sm:w-10/12">

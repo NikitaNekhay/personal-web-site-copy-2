@@ -5,22 +5,17 @@ function capitalize(word: string): string {
 
 // Main function to process the input string
 export function processColorsString(input: string | string[]): string[] {
-    
-    if(typeof(input) === "object"){
+
+    // If input is an array, join it into a string
+    if (Array.isArray(input)) {
         input = input.join(" ");
     }
-   // Remove punctuation and split the string by spaces
-   const words = input.replace(/[.,/;]+/g, '').split(` `);
 
-   // Capitalize each word
-   const capitalizedWords = words.map(word => capitalize(word));
+    // Remove special characters and split the string into words
+    const words = input.replace(/[^a-zA-Z ]/g, "").split(/\s+/);
 
-   // Optionally, you can bold some words based on a condition
-   // For demonstration, let's bold every third word
-   const processedWords = capitalizedWords.map((word, index) => 
-       (index + 1) % 3 === 0 ? ` ${word} ` : word);
-
-   return processedWords;
+    // Capitalize each word and filter out empty strings
+    return words.map(capitalize).filter(Boolean);
 }
 
 

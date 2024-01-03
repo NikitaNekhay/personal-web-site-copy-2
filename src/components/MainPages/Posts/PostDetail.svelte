@@ -220,7 +220,7 @@
                     </h1>
                 </header>
                 <p class="text-center text-xl break-words" lang={$currentLanguage.language}>
-                    {post.description["smallDescription"]}
+                   {$t(post.description["smallDescription"])} 
                 </p>
             </div>
             <div
@@ -230,10 +230,10 @@
             >
                 <!-- COLOR AVAILABLE -->
                 <div class="text-center w-[100%] pb-3 shadow-xl">
-                    <p class="text-navy-1 text-3xl">Colors:</p>
+                    <p class="text-navy-1 text-3xl">{$t('COLORS')}:</p>
                     <div class="flex flex-row gap-3 place-content-center">
                         {#each post.description["colors"] as colorItem}
-                            <div class="">{colorItem}</div>
+                            <div class="">{$t(colorItem)} </div>
                         {/each}
                     </div>
                 </div>
@@ -244,7 +244,7 @@
                 >
                     <!-- SIZE GUIDE -->
 
-                    <p class="text-3xl select-none">SIZE GUIDE</p>
+                    <p class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0 hover:cursor-pointer">{$t('SIZE GUIDE')}</p>
                     <!-- LIST OF SIZES -->
                     <div class="flex flex-row gap-3 place-content-center">
                         {#each post.description["sizes"] as sizeItem}
@@ -287,7 +287,7 @@
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none"
-                                        >DESCRIPTION</span
+                                        >{$t('DESCRIPTION')}</span
                                     >
                                     <span
                                         class="transition group-open:rotate-180"
@@ -310,7 +310,8 @@
                                 <p
                                     class="text-gray-700 mx-4 mt-3 group-open:animate-fadeIn"
                                 >
-                                    {post.description["bigDescription"]}
+                                {$t(post.description["bigDescription"])}
+                                
                                 </p>
                             </details>
                         </div>
@@ -323,7 +324,7 @@
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
-                                        MATERIALS</span
+                                       {$t('MATERIALS')} </span
                                     >
                                     <span
                                         class="transition group-open:rotate-180"
@@ -347,10 +348,7 @@
                                     in:fly={{ x: 200, duration: 700 }}
                                     class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                                 >
-                                    {post.description["materialsDescription"]}
-                                    <!-- We offers a variety of billing options, including monthly and annual subscription plans,
-                                as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
-                                card or other secure online payment method. -->
+                                {$t(post.description["materialsDescription"])}
                                 </p>
                             </details>
                         </div>
@@ -363,7 +361,7 @@
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
-                                        MODEL
+                                        {$t('MODEL')}
                                     </span>
                                     <span
                                         class="transition group-open:rotate-180"
@@ -386,7 +384,7 @@
                                 <p
                                     class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                                 >
-                                    {post.description["modelDescription"]}
+                                   {$t(post.description["modelDescription"])}
                                     <!-- We offers a variety of billing options, including monthly and annual subscription plans,
                             as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
                             card or other secure online payment method. -->
@@ -402,7 +400,7 @@
                                 class="flex justify-between items-center font-medium cursor-pointer list-none"
                             >
                                 <span class="text-3xl select-none">
-                                    PAYMENT METHODS
+                                    {$t('PAYMENT METHODS')}
                                 </span>
                                 <span class="transition group-open:rotate-180">
                                     <svg
@@ -423,11 +421,19 @@
                             <p
                                 class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                             >
-                                We offer a variety of billing options, including
-                                monthly and annual subscription plans, as well
-                                as pay-as-you-go pricing for certain services.
-                                Payment is typically made through a credit card
-                                or other secure online payment method.
+                            {$t('We accept cash, cashless payments. Order is performed only with a prepayment. Return conditions vary.')}
+                            <br><br>
+                            {$t('We suggest some shipping solutions:')}<br>
+                            {$t('Minsk: Self-delivery/Delivery by our courier to your door;')}<br>
+                            {$t("RB: Self-delivery from any Evropochta's office;")}<br>
+                            {$t('RF: Self-delivery from SDEK;')}<br>
+                            {$t('Other countries: Belpochta or any personal agreements.')}<br>
+                            <em>{$t('* Price of mail services will be included in the order price.')}</em><br>
+                            <br>
+                            {$t('More detailed description of shipping, purchase, return conditions and policy:')}
+                            <a href="{base}/purchase" class="underline transition duration-300 delay-100 hover:text-yellow-0">{$t('forward link')}</a>
+                   
+                                
                             </p>
                         </details>
                     </div>

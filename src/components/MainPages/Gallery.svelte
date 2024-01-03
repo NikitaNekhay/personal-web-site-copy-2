@@ -214,7 +214,7 @@
                           class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
                         >
                           <div class="sm:col-span-1 md:col-span-1 break-auto">
-                            {post.title}
+                            {$t(post.title)} 
                           </div>
 
                           {#if post.isArchive}
@@ -239,7 +239,7 @@
                         class=" hyphens-auto text-gray-700 text-center self-center sm:self-start md:self-start"
                         lang={$currentLanguagee.language}
                       >
-                        {post.description["smallDescription"]}
+                      {$t(post.description["smallDescription"])}
                       </h2>
                     </div>
                     {#if $isAdmin.value}
@@ -259,35 +259,6 @@
                           }}
                           typeSquare="delete"
                         />
-                        <!-- <div>
-                        <div
-                          tabindex="0"
-                          role="button"
-                          aria-pressed="false"
-                          class="group relative inline-block text-sm font-medium text-black-1
-                        hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
-                          on:click={() => handleDelete(post.id)}
-                          on:keypress={() => handleDelete(post.id)}
-                          id="menu-button"
-                          aria-expanded="true"
-                          aria-haspopup="true"
-                        >
-                          <span
-                            class="absolute inset-0 translate-x-0 translate-y-0 bg-navy-1 transition-transform
-                        group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                          />
-
-                          <span
-                            class="relative block border border-current bg-white px-8 py-3 duration-500 active:bg-gray-400"
-                          >
-                            <img
-                              class="mr-1"
-                              alt="setting"
-                              src="{base}/media/trash.svg"
-                            />
-                          </span>
-                        </div>
-                      </div> -->
                       </div>
                     {:else}
                       <div
