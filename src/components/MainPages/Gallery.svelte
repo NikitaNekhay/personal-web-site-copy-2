@@ -236,7 +236,7 @@
             sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                     >
                       <h2
-                        class=" hyphens-auto text-gray-700 text-center self-center sm:self-start md:self-start"
+                        class="break-words text-gray-700 text-center self-center sm:self-start sm:text-left md:self-start"
                         lang={$currentLanguagee.language}
                       >
                       {$t(post.description["smallDescription"])}
