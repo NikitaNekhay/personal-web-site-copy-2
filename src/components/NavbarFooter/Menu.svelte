@@ -1,7 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { clickOutside } from "../../services/clickOutside";
-  import {authHandlers, authStore, isAdmin } from "../../store/store";
+  import {authHandlers, authStore, currentLanguage, isAdmin } from "../../store/store";
   import { addMessages, locale, t } from 'svelte-i18n';
     import ru from '../../services/ru.json';
   import en from '../../services/en.json';
@@ -72,6 +72,7 @@ if($authStore.data.name === undefined){
             text-black break-words"
             use:clickOutside
             on:clickOutside={handleClickOutside}
+            lang={$currentLanguage.language}
         >
             <a class="col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/profile'>

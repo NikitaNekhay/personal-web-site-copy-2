@@ -10,7 +10,7 @@
   import LoadingButton from "../../Shared/LoadingButton.svelte";
   import { beforeUpdate } from "svelte";
   import SubmitButton from "../../Shared/SubmitButton.svelte";
-  import { productStore } from "../../../store/store";
+  import { currentLanguage, productStore } from "../../../store/store";
   import type { ProductType } from "../../../shared/types";
   import Comment from "./Comment.svelte";
   import DragAndDrop from "./DragAndDrop.svelte";
@@ -359,7 +359,7 @@
               {$t("Colors")}
             </span>
           </label>
-          <p class="mt-3 text-xs italic text-gray-600 break-words">
+          <p class="mt-3 text-xs italic text-gray-600 break-words" lang={$currentLanguage.language}>
             {$t(
               "Input colors through a spacebar or coma and each word should start with a capital letter",
             )}

@@ -11,7 +11,7 @@
         type ProductType,
         type Slide,
     } from "../../../shared/types";
-    import { authStore } from "../../../store/store";
+    import { authStore, currentLanguage } from "../../../store/store";
     import CartAdded from "../../Shared/CartAdded.svelte";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import SubmitButton from "../../Shared/SubmitButton.svelte";
@@ -214,12 +214,12 @@
                 <header>
                     <h1
                         class="font-abril text-center hyphens-auto text-6xl text-black-0"
-                        lang="de"
+                        lang={$currentLanguage.language}
                     >
                         {$t(post.title)}
                     </h1>
                 </header>
-                <p class="text-center text-xl break-words">
+                <p class="text-center text-xl break-words" lang={$currentLanguage.language}>
                     {post.description["smallDescription"]}
                 </p>
             </div>
