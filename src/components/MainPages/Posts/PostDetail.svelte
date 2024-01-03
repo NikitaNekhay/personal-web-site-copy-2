@@ -213,7 +213,8 @@
             <div class="w-[100%] flex flex-col gap-y-4">
                 <header>
                     <h1
-                        class="font-abril text-center break-words text-6xl text-black-0"
+                        class:-tracking-[0.1025em] = {$currentLanguage.language === 'ru' && innerWidth < 400}
+                        class="font-abril text-center break-words text-6xl sm:tracking-tight  text-black-0"
                         lang={$currentLanguage.language}
                     >
                         {$t(post.title)}
