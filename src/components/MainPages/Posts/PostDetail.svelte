@@ -213,7 +213,7 @@
             <div class="w-[100%] flex flex-col gap-y-4">
                 <header>
                     <h1
-                        class="font-abril text-center hyphens-auto text-6xl text-black-0"
+                        class="font-abril text-center break-words text-6xl text-black-0"
                         lang={$currentLanguage.language}
                     >
                         {$t(post.title)}
