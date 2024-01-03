@@ -59,7 +59,7 @@
 
 <svelte:head>
   <title>{"Page of the post"}</title>
-  <meta name="single blog page" content="Detailed blog post" />
+  <meta name="description" content="Detailed blog post" />
 </svelte:head>
 
 <!-- <Router>

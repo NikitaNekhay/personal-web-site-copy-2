@@ -23,7 +23,7 @@
 
 <svelte:head>
   <title>{"Posts of the blog"}</title>
-  <meta name="post list" content="List of products" />
+  <meta name="description" content="List of products" />
 </svelte:head>
 
 {#if passComponent}

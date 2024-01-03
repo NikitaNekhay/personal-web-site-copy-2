@@ -1,6 +1,6 @@
 <svelte:head>
    <title>{'Sandbox of posts'}</title>
-   <meta name="sandbox" content="Admin dashboard, manage posts">
+   <meta name="description" content="Admin dashboard, manage posts">
 </svelte:head>
 
 <script lang="ts">

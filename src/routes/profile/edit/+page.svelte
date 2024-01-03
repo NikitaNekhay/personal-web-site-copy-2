@@ -1,6 +1,6 @@
 <svelte:head>
    <title>{'Edit profile'}</title>
-   <meta name="edit profile" content="forms for editing profile">
+   <meta name="description" content="forms for editing profile">
    <script src="https://unpkg.com/alpinejs" defer></script>
 </svelte:head>
 

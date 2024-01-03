@@ -29,7 +29,7 @@
 <svelte:head>
   <title>{"Edit page of the post"}</title>
   <meta
-    name="edit of a single blog page"
+    name="description"
     content="Edit form for the blog post"
   />
 </svelte:head>

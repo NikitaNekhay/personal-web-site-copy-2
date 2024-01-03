@@ -16,7 +16,7 @@
 
 <svelte:head>
   <title>{"Shop"}</title>
-  <meta name="shop" content="clothes, books, and products" />
+  <meta name="description" content="clothes, books, and products" />
 </svelte:head>
 
 {#if passComponent}
