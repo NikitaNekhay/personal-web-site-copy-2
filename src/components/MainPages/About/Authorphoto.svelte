@@ -211,10 +211,10 @@
         position: relative;
         width:  400px;
         height:  400px;
-        background-size: 16%;
+        background-size: 48%;
         background-repeat: no-repeat;
         /*background-position:center;*/
-        background-position:53%;
+        background-position:10%;
         background-attachment: fixed;
         -webkit-background-clip: text;
         color: transparent;

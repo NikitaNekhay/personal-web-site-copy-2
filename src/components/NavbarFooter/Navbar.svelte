@@ -87,7 +87,7 @@
                     <a
                         class=""
                         target="_self"
-                        href="{base}/works"
+                        href="{base}/"
                     >
                         <h1>
                             <p class="flex justify-center">NIKITA</p>

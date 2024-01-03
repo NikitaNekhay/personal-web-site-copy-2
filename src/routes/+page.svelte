@@ -3,9 +3,9 @@
     import { onMount } from 'svelte';
   import Home from '../components/MainPages/Home.svelte';
     import EmptyPage from '../components/Shared/EmptyPage.svelte';
-    onMount(()=>{
-      window.location.href = `${base}/works`;
-    })
+    // onMount(()=>{
+    //   window.location.href = `${base}/works`;
+    // })
 
 </script>
 
