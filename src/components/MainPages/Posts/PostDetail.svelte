@@ -8,6 +8,7 @@
     import { handleCart } from "../../../routes/posts/post";
     import {
         Errors,
+        Language,
         type ProductType,
         type Slide,
     } from "../../../shared/types";
@@ -213,14 +214,15 @@
             <div class="w-[100%] flex flex-col gap-y-4">
                 <header>
                     <h1
-                        class:-tracking-[0.1025em] = {$currentLanguage.language === 'ru' && innerWidth < 400}
-                        class="font-abril text-center break-words text-6xl sm:tracking-tight  text-black-0"
+                        
+                        
+                        class="font-abril sm:text-5xl text-center break-words text-6xl sm:tracking-tight  text-black-0"
                         lang={$currentLanguage.language}
                     >
                         {$t(post.title)}
                     </h1>
                 </header>
-                <p class="text-center text-xl break-words" lang={$currentLanguage.language}>
+                <p class="text-center text-xl break-words " lang={$currentLanguage.language}>
                    {$t(post.description["smallDescription"])} 
                 </p>
             </div>
