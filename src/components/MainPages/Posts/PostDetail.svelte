@@ -261,9 +261,9 @@
                 >
                     <!-- PRICE -->
                     <div class="flex self-center text-3xl">
-                        <p class="select-none">{$t("Price")}</p>
+                        <p class="select-none text-center">{$t("Price")}</p>
                         <p>:</p>
-                        <p class="text-green-1">{post.price} BYN</p>
+                        <p class="text-green-1 text-center">{post.price} BYN</p>
                     </div>
                     <div class="flex">
                         <SquareButton
