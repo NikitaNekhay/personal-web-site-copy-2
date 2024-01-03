@@ -6,8 +6,8 @@
 </script>
 
 <svelte:head>
-   <title>{'Works'}</title>
-   <meta name="description" content="Recent vivid works">
+   <title>{'NIKITA SITE'}</title>
+   <meta name="description" content="Designer. Clothes shop.">
 </svelte:head>
 
 {#if triggerAnimate}

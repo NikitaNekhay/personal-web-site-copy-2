@@ -1,6 +1,6 @@
 <svelte:head>
    <title>{'Works'}</title>
-   <meta name="work" content="clothes, books, and products">
+   <meta name="description" content="Last clothes collection and description">
 </svelte:head>
 
 <script >
