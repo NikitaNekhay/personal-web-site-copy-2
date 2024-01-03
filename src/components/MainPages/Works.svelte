@@ -20,7 +20,7 @@
       <h1
         class="tracking-widest text-black-1 uppercase font-abril text-6xl sm:text-4xl sm:text-center md:text-center lg:text-center"
       >
-        {$t("project 1 CAPSULE COLLECTION")}
+        {$t("PROJECT 1 CAPSULE COLLECTION")}
       </h1>
     </div>
   </section>

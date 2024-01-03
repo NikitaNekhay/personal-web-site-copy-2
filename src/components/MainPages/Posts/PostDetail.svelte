@@ -263,7 +263,8 @@
                     <div class="flex self-center text-3xl">
                         <p class="select-none text-center">{$t("Price")}</p>
                         <p>:</p>
-                        <p class="text-green-1 text-center">{post.price} BYN</p>
+                        <p class=" text-transparent bg-clip-text 
+                        bg-gradient-to-t from-green-950 via-green-1 to-green-0 text-center animate-pulse">{post.price} BYN</p>
                     </div>
                     <div class="flex">
                         <SquareButton
