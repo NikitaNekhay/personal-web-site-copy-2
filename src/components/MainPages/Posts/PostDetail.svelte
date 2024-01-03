@@ -293,7 +293,7 @@
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                            class="absolute"
+                                            
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -329,7 +329,7 @@
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                            class="absolute"
+                                            
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -369,7 +369,7 @@
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                            class="absolute"
+                                           
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -406,7 +406,7 @@
                                 </span>
                                 <span class="transition group-open:rotate-180">
                                     <svg
-                                        class="absolute"
+                                        
                                         fill="none"
                                         height="24"
                                         shape-rendering="geometricPrecision"
