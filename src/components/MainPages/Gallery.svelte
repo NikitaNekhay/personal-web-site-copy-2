@@ -231,7 +231,7 @@
                       </div>
                     </div>
                     <div
-                      class="mx-3 sm:mx-0 md:mx-0 lg:mx-6
+                      class="mx-3 sm:mx-0 md:mx-0 lg:mx-6 xl:mx-6
             flex
             sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                     >
@@ -244,7 +244,8 @@
                     </div>
                     {#if $isAdmin.value}
                       <div
-                        class="flex flex-col md:flex-row md:justify-around sm:flex-row sm:justify-around"
+                        class="flex flex-col md:flex-row md:justify-around sm:flex-row sm:justify-around
+                        "
                       >
                         <SquareButton
                           passedfunction={() => {
@@ -305,7 +306,8 @@
                         </div>
                         <div
                           class="md:grid md:justify-items-end md:grid-col-2 md:grid-col-span-1
-                      sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1"
+                      sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1
+                       "
                         >
                           <SquareButton
                             passedfunction={() => {

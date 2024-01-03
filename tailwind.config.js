@@ -46,6 +46,20 @@ export default {
         'abril': ['Abril Fatface','cursive']
        
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeOut: {
+          '100%': { opacity: 1 },
+          '0%': { opacity: 0 },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.7s ease-in-out forwards',
+        fadeOut: 'fadeOut 0.7s ease-in-out backwards',
+      },
 
     },
   },

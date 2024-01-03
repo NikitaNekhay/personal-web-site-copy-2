@@ -113,7 +113,7 @@
         <!-- LEFT SIDE FOR IMAGE -->
         <div
             class="w-[80%] h-[80%] sm:w-screen md:w-[80%]
-                    place-self-center"
+                    place-self-center select-none"
         >
             <div
                 class=" grid grid-flow-col sm:grid-flow-row relative max-w-md sm:max-w-sm sm:w-[90%] mx-auto shadow-lg"
@@ -123,8 +123,15 @@
                         <div
                             class="mx-auto shadow-lg sm:w-[100%] max-w-md h-max w-max relative"
                             in:fly={{
-                                x: innerWidth>1024 ? (isRightSwipe ? 500 : -500) : (isRightSwipe ? 10 : -10),
-                                duration: 2000
+                                x:
+                                    innerWidth > 1024
+                                        ? isRightSwipe
+                                            ? 500
+                                            : -500
+                                        : isRightSwipe
+                                          ? 10
+                                          : -10,
+                                duration: 2000,
                             }}
                         >
                             <!-- Left clickable area for swiping left -->
@@ -203,7 +210,7 @@
             "
         >
             <!-- TITLE + SMALL DESCRIPTION -->
-            <div class="w-[100%]">
+            <div class="w-[100%] flex flex-col gap-y-4">
                 <header>
                     <h1
                         class="font-abril text-center hyphens-auto text-6xl text-black-0"
@@ -212,43 +219,53 @@
                         {$t(post.title)}
                     </h1>
                 </header>
+                <p class="text-center text-xl break-words">
+                    {post.description["smallDescription"]}
+                </p>
             </div>
             <div
                 class="flex flex-col items-center place-content-center
-                        
-                        gap-y-6 sm:gap-y-6 md:gap-y-6 sm:mx-4 md:mx-6"
+                     w-[80%] sm:w-[100%] md:w-[100%]
+                         sm:mx-4 md:mx-6"
             >
                 <!-- COLOR AVAILABLE -->
-                <div class="text-center">
-                    <p>Colors:</p>
+                <div class="text-center w-[100%] pb-3 shadow-xl">
+                    <p class="text-navy-1 text-3xl">Colors:</p>
                     <div class="flex flex-row gap-3 place-content-center">
                         {#each post.description["colors"] as colorItem}
-                            <div>{colorItem}</div>
+                            <div class="">{colorItem}</div>
                         {/each}
                     </div>
                 </div>
+
                 <!-- SIZE'S INFO -->
-                <div class=" flex flex-col gap-y-4 text-center">
+                <div
+                    class="pt-3 w-[80%] sm:w-[100%] md:w-[100%] flex flex-col text-center mb-8"
+                >
                     <!-- SIZE GUIDE -->
-                    <div>SIZE GUIDE</div>
+
+                    <p class="text-3xl select-none">SIZE GUIDE</p>
                     <!-- LIST OF SIZES -->
-                    <div>
-                        <p>LIST OF SIZES:</p>
-                        <div class="flex flex-row gap-3 place-content-center">
-                            {#each post.description["sizes"] as sizeItem}
-                                <p>{sizeItem}</p>
-                            {/each}
-                        </div>
+                    <div class="flex flex-row gap-3 place-content-center">
+                        {#each post.description["sizes"] as sizeItem}
+                            <p class="underline-offset-4 underline">
+                                {sizeItem}
+                            </p>
+                        {/each}
                     </div>
                 </div>
 
                 <!-- PURCHASE BUTTONS -->
-                <div class="flex flex-row gap-x-4">
+                <div
+                    class=" flex flex-row justify-center gap-x-4 px-2 border-x-4 border-navy-2 shadow-2xl bg-white-1"
+                >
                     <!-- PRICE -->
-                    <div class="flex self-center">
-                        <p>{$t("Price")} : {post.price} BYN</p>
+                    <div class="flex self-center text-3xl">
+                        <p class="select-none">{$t("Price")}</p>
+                        <p>:</p>
+                        <p class="text-green-1">{post.price} BYN</p>
                     </div>
-                    <div class="">
+                    <div class="flex">
                         <SquareButton
                             passedfunction={handleCartClicked}
                             typeSquare="cart"
@@ -258,20 +275,163 @@
                     <!-- <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleCart} text={""}/> -->
                 </div>
 
-                <!-- DESCRIPTION -->
-                <div>
-                    DESCRIPTION: {post.description["bigDescription"]}
+                <!-- BLOCK OF DESCRIPTION AND DETAILS -->
+                <div
+                    class="grid divide-y divide-navy-2 mx-auto mt-6 w-[80%] sm:w-[100%] md:w-[100%]"
+                >
+                    <!-- DESCRIPTION -->
+                    {#if post.description["bigDescription"].length !== 0}
+                        <div class="py-5 shadow-xl">
+                            <details class="group">
+                                <summary
+                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                >
+                                    <span class="text-3xl select-none"
+                                        >DESCRIPTION</span
+                                    >
+                                    <span
+                                        class="transition group-open:rotate-180"
+                                    >
+                                        <svg
+                                            class="absolute"
+                                            fill="none"
+                                            height="24"
+                                            shape-rendering="geometricPrecision"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            ><path d="M6 9l6 6 6-6"></path>
+                                        </svg>
+                                    </span>
+                                </summary>
+                                <p
+                                    class="text-gray-700 mx-4 mt-3 group-open:animate-fadeIn"
+                                >
+                                    {post.description["bigDescription"]}
+                                </p>
+                            </details>
+                        </div>
+                    {/if}
+                    <!-- MATERIALS -->
+                    {#if post.description["materialsDescription"].length !== 0}
+                        <div class="py-5 shadow-xl">
+                            <details class="group">
+                                <summary
+                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                >
+                                    <span class="text-3xl select-none">
+                                        MATERIALS</span
+                                    >
+                                    <span
+                                        class="transition group-open:rotate-180"
+                                    >
+                                        <svg
+                                            class="absolute"
+                                            fill="none"
+                                            height="24"
+                                            shape-rendering="geometricPrecision"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            ><path d="M6 9l6 6 6-6"></path>
+                                        </svg>
+                                    </span>
+                                </summary>
+                                <p
+                                    in:fly={{ x: 200, duration: 700 }}
+                                    class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
+                                >
+                                    {post.description["materialsDescription"]}
+                                    <!-- We offers a variety of billing options, including monthly and annual subscription plans,
+                                as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
+                                card or other secure online payment method. -->
+                                </p>
+                            </details>
+                        </div>
+                    {/if}
+                    <!-- MODEL -->
+                    {#if post.description["materialsDescription"].length !== 0}
+                        <div class="py-5 shadow-xl">
+                            <details class="group">
+                                <summary
+                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                >
+                                    <span class="text-3xl select-none">
+                                        MODEL
+                                    </span>
+                                    <span
+                                        class="transition group-open:rotate-180"
+                                    >
+                                        <svg
+                                            class="absolute"
+                                            fill="none"
+                                            height="24"
+                                            shape-rendering="geometricPrecision"
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            ><path d="M6 9l6 6 6-6"></path>
+                                        </svg>
+                                    </span>
+                                </summary>
+                                <p
+                                    class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
+                                >
+                                    {post.description["modelDescription"]}
+                                    <!-- We offers a variety of billing options, including monthly and annual subscription plans,
+                            as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
+                            card or other secure online payment method. -->
+                                </p>
+                            </details>
+                        </div>
+                    {/if}
+
+                    <!-- PAYMENT METHODS AND KLARNA -->
+                    <div class="py-5 shadow-xl">
+                        <details class="group">
+                            <summary
+                                class="flex justify-between items-center font-medium cursor-pointer list-none"
+                            >
+                                <span class="text-3xl select-none">
+                                    PAYMENT METHODS
+                                </span>
+                                <span class="transition group-open:rotate-180">
+                                    <svg
+                                        class="absolute"
+                                        fill="none"
+                                        height="24"
+                                        shape-rendering="geometricPrecision"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        ><path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </span>
+                            </summary>
+                            <p
+                                class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
+                            >
+                                We offer a variety of billing options, including
+                                monthly and annual subscription plans, as well
+                                as pay-as-you-go pricing for certain services.
+                                Payment is typically made through a credit card
+                                or other secure online payment method.
+                            </p>
+                        </details>
+                    </div>
                 </div>
-                <!-- MATERIALS -->
-                <div>
-                    MATERIALS: {post.description["materialsDescription"]}
-                </div>
-                <!-- MODEL -->
-                <div>
-                    MODEL: {post.description["modelDescription"]}
-                </div>
-                <!-- PAYMENT METHODS AND KLARNA -->
-                <div>PAYMENT METHODS:</div>
             </div>
         </div>
     </div>

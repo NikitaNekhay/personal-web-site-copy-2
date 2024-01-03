@@ -167,7 +167,7 @@
           <div class="sm:w-10/12">
             <a
               class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"
-              href="{base}/posts/kBH4EnTSf0vXOR0tGU94"
+              href="{base}/posts/wR5Vkuzy3Xc7XeGK4aVI"
               >{$t("circled tank top")}</a
             >
           </div>
