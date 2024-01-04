@@ -232,9 +232,9 @@
                          sm:mx-4 md:mx-6"
             >
                 <!-- COLOR AVAILABLE -->
-                <div class="text-center w-[100%] pb-3 shadow-xl">
-                    <p class="text-navy-1 text-3xl">{$t('COLORS')}:</p>
-                    <div class="flex flex-row gap-3 place-content-center">
+                <div class="text-center w-[100%] py-1.5 shadow-xl bg-white-1">
+                    <p class="text-navy-1 text-3xl ">{$t('COLORS')}:</p>
+                    <div class="flex flex-row gap-3  place-content-center">
                         {#each post.description["colors"] as colorItem}
                             <div class="">{$t(colorItem)} </div>
                         {/each}
@@ -281,11 +281,11 @@
 
                 <!-- BLOCK OF DESCRIPTION AND DETAILS -->
                 <div
-                    class="grid divide-y divide-navy-2 mx-auto mt-6 w-[80%] sm:w-[100%] md:w-[100%]"
+                    class="grid divide-y-2 divide-navy-2 mx-auto mt-6 w-[80%] sm:w-[100%] md:w-[100%]"
                 >
                     <!-- DESCRIPTION -->
                     {#if post.description["bigDescription"].length !== 0}
-                        <div class="py-5 shadow-xl">
+                        <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
@@ -322,7 +322,7 @@
                     {/if}
                     <!-- MATERIALS -->
                     {#if post.description["materialsDescription"].length !== 0}
-                        <div class="py-5 shadow-xl">
+                        <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
@@ -359,7 +359,7 @@
                     {/if}
                     <!-- MODEL -->
                     {#if post.description["materialsDescription"].length !== 0}
-                        <div class="py-5 shadow-xl">
+                        <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
                                     class="flex justify-between items-center font-medium cursor-pointer list-none"
@@ -398,7 +398,7 @@
                     {/if}
 
                     <!-- PAYMENT METHODS AND KLARNA -->
-                    <div class="py-5 shadow-xl">
+                    <div class="py-5 shadow-xl bg-white-1">
                         <details class="group">
                             <summary
                                 class="flex justify-between items-center font-medium cursor-pointer list-none"

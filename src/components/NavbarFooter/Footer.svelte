@@ -96,7 +96,7 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
         
                 <a
                     href="tel:+375445785057"
-                    class="block text-2xl font-medium text-black-1 transition duration-300 delay-100 hover:opacity-75 hover:text-blue-0 sm:text-3xl"
+                    class="block text-2xl font-medium text-black-1  transition duration-300 delay-100 hover:opacity-75 hover:text-blue-0 sm:text-3xl"
                 >
                     <!-- {#if innerWidth > 374 && innerWidth<414}
                     +37544...
@@ -190,7 +190,7 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
                     <ul class="space-y-4 text-sm">
                     <li>
                         <a href="{base}/" class="text-black-0 transition duration-300 delay-100 hover:text-yellow-0">
-                           {$t('Individual sewing and designing')} 
+                           {$t('Individual sewing')} 
                         </a>
                     </li>
         

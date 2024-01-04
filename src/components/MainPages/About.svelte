@@ -1,48 +1,327 @@
 <script>
-    import { onMount } from 'svelte';
-  import { t } from 'svelte-i18n';
+    import { onMount } from "svelte";
+    import { t } from "svelte-i18n";
+    import Authorphoto from "./About/Authorphoto.svelte";
+    import { base } from "$app/paths";
+
+    let innerWidth = 0;
+    let innerHeight = 0;
 
 </script>
 
+<svelte:window bind:innerWidth bind:innerHeight />
 
+<div class="flex flex-col h-auto ml-[2%] mr-[5%]">
+    <!-- BRIEF TEXT -->
+    <div class="mt-[20%] sm:mt-[30%]">
+        <p class="">
+            {$t(
+                "My name is Nikita and hier you will find some things about me and that I do.",
+            )}<br />
+        </p>
+    </div>
 
+    <!-- 2 columns -->
+    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[30%]">
+        <!-- 1 column -->
+        <div class="grid grid-flow-row">
+            <div class="">
+                <div class="h-[40%] sm:h-[50%] md:h-[50%]">
+                    {#key innerWidth}
+                    <Authorphoto bind:innerWidth/>
+                    {/key}
+                </div>
 
+                <div
+                    class=" grid gap-y-[10%]  mx-auto mt-6"
+                >
+                    <!-- What i sew -->
+                    <div class="py-5 shadow-xl border-b-2 border-navy-2 bg-white-1">
+                        <details class="group" open>
+                            <summary
+                                class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
+                            >
+                                <span class="text-3xl sm:text-lg select-none"
+                                    >{$t("WHAT I SEW")}</span
+                                >
+                                <span class="transition group-open:rotate-180">
+                                    <svg
+                                        fill="none"
+                                        height="24"
+                                        shape-rendering="geometricPrecision"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        ><path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </span>
+                            </summary>
 
-<p class="short_info">
-    {$t('IT-Student based in Belarus, Minsk. Part-time making clothes-design. Mainly studies at BSUIR and majoring in Informational systems and technologies in logistics.')}<br>
-</p>
+                            <ul
+                                class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                            >
+                                <li>
+                                    <p>{$t("my ideas")}</p>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
 
+                    <!-- small space for small text -->
+                    <div class="mt-[40%] sm:mt-[10%]"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 2 column -->
+        <div class="grid grid-flow-row">
+            <div class="">
+                <div class=" grid gap-y-[10%]  mt-6">
+                    <!-- who am i -->
+                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2">
+                        <details class="group" open>
+                            <summary
+                                class="flex mx-2 justify-between items-center font-medium cursor-pointer list-none"
+                            >
+                                <span class="text-3xl sm:text-lg select-none"
+                                    >{$t("WHO AM I")}</span
+                                >
+                                <span class="transition group-open:rotate-180">
+                                    <svg
+                                        fill="none"
+                                        height="24"
+                                        shape-rendering="geometricPrecision"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        ><path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </span>
+                            </summary>
 
-<div class=" text-center justify-self-center">
-    <ul class="text-center ">
-        <!-- <li class="gap-y-10">
-            <p style=" margin-block-start: 0px; margin-block-end: 0px;" >
-                <a target="_blank" style=" text-decoration:none;" 
-                class="href_links transition duration-200 hover:text-blue-0" href ="https://docs.google.com/document/d/1rcklzYqRFf4ICC1Ai48KPzl5S0NArSxANsda5uv7IdM/edit">
-                CV
-                </a>
-            </p>
-          
-        </li> -->
-        <!-- <li><a style=" text-decoration:none;" class="href_links transition duration-200 hover:text-blue-0" target="_blank" href ="https://github.com/NikitaNekhay?tab=repositories">Github projects</a></li>
-        <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://youtu.be/aJqHTiAQ560" >Conceptual video "Campus tour"</a></li>
-        <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://youtu.be/WdUAxi6tISg" >Short cut film "The Whole"</a></li>
-        <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://www.instagram.com/nekhaynikita/">Capsule collection 2022</a></li> -->
-        <!-- <li><a class="href_links transition duration-200 hover:text-blue-0" target="_blank" href="https://www.behance.net/nekhaynikita">Phography and 3D Design</a></li> -->
-    </ul>
+                            <ul
+                                class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                            >
+                                <li>
+                                    <p>
+                                        {$t(
+                                            "a young designer who has passed 2 sewing, cutting and modeling courses",
+                                        )}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        {$t(
+                                            "a student majoring in programming and economics",
+                                        )}
+                                    </p>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+                    <!-- what i do -->
+                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2">
+                        <details class="group" open>
+                            <summary
+                                class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
+                            >
+                                <span class="text-3xl sm:text-lg select-none"
+                                    >{$t("WHAT I DO")}</span
+                                >
+                                <span class="transition group-open:rotate-180">
+                                    <svg
+                                        fill="none"
+                                        height="24"
+                                        shape-rendering="geometricPrecision"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        ><path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </span>
+                            </summary>
+
+                            <ul
+                                class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                            >
+                                <li>
+                                    <p>
+                                        {$t(
+                                            "sew myself, design myself, make photos myself, write web-sites myself",
+                                        )}
+                                    </p>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+                    <!-- small space for small text -->
+                    <div class="mt-[40%] sm:mt-[30%] md:mt-[35%]"></div>
+
+                    <!-- what i suggest -->
+                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-t-2">
+                        <details class="group" open>
+                            <summary
+                                class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
+                            >
+                                <span class="text-3xl sm:text-lg select-none"
+                                    >{$t("WHAT I SELL")}</span
+                                >
+                                <span class="transition group-open:rotate-180">
+                                    <svg
+                                        fill="none"
+                                        height="24"
+                                        shape-rendering="geometricPrecision"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        ><path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </span>
+                            </summary>
+
+                            <ul
+                                class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                            >
+                                <li>
+                                    <p>
+                                        {$t("finished clothes")}
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        {$t(
+                                            "individual tailoring of my clothes",
+                                        )}
+                                    </p>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+                    <!-- where are photos -->
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAST 2 BLOCKS -->
+    <div class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%] md:mt-[25%]">
+        <div class="grid grid-flow-row">
+            <div>
+                <!-- where to read -->
+                <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-b-2">
+                    <details class="group" open>
+                        <summary
+                            class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
+                        >
+                            <span class="text-3xl sm:text-lg select-none"
+                                >{$t("WHERE TO READ ME")}</span
+                            >
+                            <span class="transition group-open:rotate-180">
+                                <svg
+                                    fill="none"
+                                    height="24"
+                                    shape-rendering="geometricPrecision"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.5"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    ><path d="M6 9l6 6 6-6"></path>
+                                </svg>
+                            </span>
+                        </summary>
+
+                        <ul
+                            class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                        >
+                            <li>
+                                <p>
+                                    {$t("group in the telegram")} ->
+                                    <a
+                                        class="p-link"
+                                        target="_blank"
+                                        href="https://t.me/araneaesolidum"
+                                        >{$t("hier")}</a
+                                    >
+                                </p>
+                            </li>
+                        </ul>
+                    </details>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-flow-row">
+            <div>
+                <!-- where to see my photos -->
+                <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-b-2">
+                    <details class="group" open>
+                        <summary
+                            class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
+                        >
+                            <span class="text-3xl sm:text-lg select-none"
+                                >{$t("WHERE TO SEE MY PHOTOS")}</span
+                            >
+                            <span class="transition group-open:rotate-180">
+                                <svg
+                                    fill="none"
+                                    height="24"
+                                    shape-rendering="geometricPrecision"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.5"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    ><path d="M6 9l6 6 6-6"></path>
+                                </svg>
+                            </span>
+                        </summary>
+
+                        <ul
+                            class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
+                        >
+                            <li>
+                                <p>
+                                    {$t("home page of the site")} ->
+                                    <a
+                                        class="p-link"
+                                        target="_blank"
+                                        href="{base}/">{$t("hier")}</a
+                                    >
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    {$t("profile at Behance")} ->
+                                    <a
+                                        class="p-link"
+                                        target="_blank"
+                                        href="https://www.behance.net/nekhaynikita"
+                                        >{$t("hier")}</a
+                                    >
+                                </p>
+                            </li>
+                        </ul>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
-
-        ul{
-            padding-left: 20px;
-            list-style-type:upper-roman;
-        }
-
-        .short_info{
-            text-align: left; 
-            padding-left: 0px
-
-        }
 
 </style>

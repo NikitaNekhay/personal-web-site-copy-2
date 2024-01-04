@@ -14,12 +14,10 @@
 </svelte:head>
 
 
-<section class="w-screen h-screen flex "> 
-  <div class=" self-center" >
+<section class=" sm:w-screen md:w-screen w-[60%] h-auto"> 
+
     <About />
-    <div class="mt-4">
-      <Authorphoto /> 
-    </div>
+
     
-  </div>
+
 </section>

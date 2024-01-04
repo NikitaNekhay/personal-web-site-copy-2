@@ -8,4 +8,6 @@ body{
     @apply font-maven 
 }
 
-
+.p-link {
+    @apply transition duration-200 delay-100 text-blue-0 underline underline-offset-4 animate-pulse;
+}

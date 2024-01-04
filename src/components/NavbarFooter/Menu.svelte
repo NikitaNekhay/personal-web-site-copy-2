@@ -7,7 +7,8 @@
   import en from '../../services/en.json';
   import { currentLanguagee } from "../../store/store_";
     import { Language } from "../../shared/types";
-
+    import { page } from "$app/stores";
+    let currentPage = $page.url.pathname;
   
   if($currentLanguagee!==undefined){
         const currentValue = $currentLanguagee;
@@ -74,28 +75,46 @@ if($authStore.data.name === undefined){
             on:clickOutside={handleClickOutside}
             lang={$currentLanguage.language}
         >
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            <a class="{currentPage.includes('/profile') && !currentPage.includes('/shoppingcart')
+            ? 'text-yellow-0 animate-pulse'
+            : 'text-black'}
+            col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/profile'>
                 {$t('Profile')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            <a class="{currentPage.includes('/shoppingcart')
+            ? 'text-yellow-0 animate-pulse'
+            : 'text-black'}
+            col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/profile/shoppingcart'>
                 {$t('Shopping cart')} : {($authStore.data.cart).length}
             </a>
             {#if $isAdmin.value}
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            <a class="
+            {currentPage.includes('/create')
+            ? 'text-yellow-0 animate-pulse'
+            : 'text-black'}
+            col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/create'>
                 {$t('Create')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            <!-- <a class="col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/posts'>
                 {$t('View')} 
-            </a>
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            </a> -->
+            <a class="{
+            currentPage.includes('/dashboard')
+            ? 'text-yellow-0 animate-pulse'
+            : 'text-black'}
+            col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/dashboard'>
                 {$t('Users')} 
             </a>
-            <a class="col-span-full grid-row-auto transition duration-300 delay-100 
+            <a class="
+            {currentPage.includes('/stat')
+            ? 'text-yellow-0 animate-pulse'
+            : 'text-black'}
+            col-span-full grid-row-auto transition duration-300 delay-100 
             hover:text-yellow-0 hover:animate-pulse" target="_self" href='{base}/stat'>
                 {$t('Stat')} 
             </a>
