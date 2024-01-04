@@ -22,18 +22,19 @@
     </div>
 
     <!-- 2 columns -->
-    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[30%]">
+    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[30%] sm:mb-[40%] {innerWidth<1023 && innerWidth > 775 ? 'md:mb-[0%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mb-[16%]' :'md:mb-[38%]')}">
         <!-- 1 column -->
         <div class="grid grid-flow-row">
             <div class="">
                 <div class="h-[40%] sm:h-[20%] md:h-[50%]">
-                    {#key innerWidth}
+                    <!-- {#key innerWidth}
                     <Authorphoto bind:innerWidth/>
-                    {/key}
+                    {/key} -->
+                    <img class=" bg-contain" src="{base}/media/NIKITA.JPG" alt="nikita's portrait">
                 </div>
 
                 <div
-                    class=" grid gap-y-[10%]  mx-auto mt-6"
+                    class="z-10 grid gap-y-[10%]  mx-auto mt-6"
                 >
                     <!-- What i sew -->
                     <div class="py-5 shadow-xl border-b-2 border-navy-2 bg-white-1">
@@ -216,7 +217,8 @@
     </div>
 
     <!-- LAST 2 BLOCKS -->
-    <div class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%] md:mt-[25%]">
+    <div
+        class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%] {innerWidth<1023 && innerWidth > 775 ? 'md:mt-[10%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mt-[26%]' :'md:mt-[35%]')}">
         <div class="grid grid-flow-row">
             <div>
                 <!-- where to read -->
