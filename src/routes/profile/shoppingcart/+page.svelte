@@ -1,6 +1,6 @@
 <svelte:head>
-   <title>{'Shopping cart'}</title>
-   <meta name="description" content="Shopping cart">
+   <title>Shopping cart</title>
+   <meta name="description" content="Shopping cart of yours">
 </svelte:head>
 
 <script >

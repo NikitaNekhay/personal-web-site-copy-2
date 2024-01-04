@@ -1,5 +1,5 @@
 <svelte:head>
-   <title>{'Login'}</title>
+   <title>Login</title>
    <meta name="description" content="Login page">
 </svelte:head>
 

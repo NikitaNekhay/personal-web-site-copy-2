@@ -27,10 +27,10 @@
 </script>
 
 <svelte:head>
-  <title>{"Edit page of the post"}</title>
+  <title>Edit page of the post</title>
   <meta
     name="description"
-    content="Edit form for the blog post"
+    content="Edit form for the product"
   />
 </svelte:head>
 

@@ -9,4 +9,9 @@
 
 </script>
 
+<svelte:head>
+  <title>NIKITA NIAKHAI. CLOTHES SHOP</title>
+  <meta name="description" content="Home page with a photo portfolio" />
+</svelte:head>
+
 <Home />

@@ -22,8 +22,8 @@
 </script>
 
 <svelte:head>
-  <title>{"Posts of the blog"}</title>
-  <meta name="description" content="List of products" />
+  <title>List of products</title>
+  <meta name="description" content="List of products for admin" />
 </svelte:head>
 
 {#if passComponent}

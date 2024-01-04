@@ -1,11 +1,16 @@
 <svelte:head>
-   <title>{$t('project 1 CAPSULE COLLECTION')}</title>
-   <meta name="description" content={$t("Last clothes collection and description")}>
+  <title>PROJECT 1</title>
+  <meta
+    name="description"
+    content="Last capsule collection of clothes. PROJECT 1"
+  />
 </svelte:head>
 
 <script >
     import { t } from 'svelte-i18n';
   import Works from '../../components/MainPages/Works.svelte'
 </script>
+
+
 
 <Works />

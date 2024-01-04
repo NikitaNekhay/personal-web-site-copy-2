@@ -6,10 +6,10 @@
 </script>
 
 <svelte:head>
-  <title>{"About"}</title>
+  <title>About</title>
   <meta
     name="description"
-    content="About informarion. Achievements, goals, motivation"
+    content="About informarion. Who am I? What I do? Where to follow me?"
   />
 </svelte:head>
 

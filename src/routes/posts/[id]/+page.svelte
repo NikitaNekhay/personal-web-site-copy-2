@@ -58,8 +58,8 @@
 </script>
 
 <svelte:head>
-  <title>{"Page of the post"}</title>
-  <meta name="description" content="Detailed blog post" />
+  <title>Page of the product</title>
+  <meta name="description" content="Detail information about a product" />
 </svelte:head>
 
 <!-- <Router>

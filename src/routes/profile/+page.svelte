@@ -1,5 +1,5 @@
 <svelte:head>
-   <title>{'User Profile'}</title>
+   <title>Profile</title>
    <meta name="description" content="User Profile">
 </svelte:head>
 
