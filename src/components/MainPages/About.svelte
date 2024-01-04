@@ -323,5 +323,7 @@
 </div>
 
 <style>
-
+    ul {
+        @apply list-disc pl-4;
+    }
 </style>
