@@ -288,7 +288,7 @@
                         <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
-                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                    class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none"
                                         >{$t('DESCRIPTION')}</span
@@ -325,7 +325,7 @@
                         <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
-                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                    class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
                                        {$t('MATERIALS')} </span
@@ -362,7 +362,7 @@
                         <div class="py-5 shadow-xl bg-white-1">
                             <details class="group">
                                 <summary
-                                    class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                    class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
                                         {$t('MODEL')}
@@ -401,7 +401,7 @@
                     <div class="py-5 shadow-xl bg-white-1">
                         <details class="group">
                             <summary
-                                class="flex justify-between items-center font-medium cursor-pointer list-none"
+                                class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                             >
                                 <span class="text-3xl select-none">
                                     {$t('PAYMENT METHODS')}
