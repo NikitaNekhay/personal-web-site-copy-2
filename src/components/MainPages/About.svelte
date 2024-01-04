@@ -16,7 +16,7 @@
     <div class="mt-[20%] sm:mt-[30%]">
         <p class="">
             {$t(
-                "My name is Nikita and hier you will find some things about me and especially what I do.",
+                "My name is Nikita and hier you will find some things about me especially what I do.",
             )}<br />
         </p>
     </div>
