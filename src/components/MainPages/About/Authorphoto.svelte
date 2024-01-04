@@ -53,7 +53,7 @@
     @media (max-width: 500px) {
         .text-image {
             background-size: 40%;
-            background-position: center;
+            background-position: top 40% right 45%;
         }
     }
 </style>
