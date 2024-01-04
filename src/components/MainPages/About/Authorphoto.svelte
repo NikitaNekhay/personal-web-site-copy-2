@@ -22,7 +22,7 @@
 
 </script>
 
-<p class="text-image text-ellipsis" style=" background-image: url({base}/media/NIKITA.JPG);">
+<p class="text-image" style=" background-image: url({base}/media/NIKITA.JPG);">
     {textFilling}
 </p>
 
