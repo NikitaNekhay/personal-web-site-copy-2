@@ -114,7 +114,7 @@
                             "
                             target="_self"
                             href="{base}/contact"
-                            >{$t("Contact")}
+                            >{$t("Contacts")}
                         </a>
                     </div>
                     <div

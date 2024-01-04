@@ -223,7 +223,7 @@ font-anonymous bottom-0 mt-20  shadow-white-2 drop-shadow-2xl">
                     </li>
                     <li>
                         <a href="{base}/contact" class="text-black-0 transition duration-300 delay-100 hover:text-yellow-0">
-                           {$t('Contact')} 
+                           {$t('Contacts')} 
                         </a>
                     </li>
                     <!-- <li>
