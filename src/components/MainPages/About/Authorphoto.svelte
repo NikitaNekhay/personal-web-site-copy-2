@@ -50,4 +50,10 @@
             background-size: 30%;
         }
     }
+    @media (max-width: 500px) {
+        .text-image {
+            background-size: 40%;
+            background-position: bottom 60% right 95%;
+        }
+    }
 </style>

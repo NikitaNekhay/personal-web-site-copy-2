@@ -26,7 +26,7 @@
         <!-- 1 column -->
         <div class="grid grid-flow-row">
             <div class="">
-                <div class="h-[40%] sm:h-[50%] md:h-[50%]">
+                <div class="h-[40%] sm:h-[20%] md:h-[50%]">
                     {#key innerWidth}
                     <Authorphoto bind:innerWidth/>
                     {/key}

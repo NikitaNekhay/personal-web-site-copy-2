@@ -8,8 +8,6 @@
   <meta name="description" content="Current contacts and placement of author" />
 </svelte:head>
 
-<section class="w-screen h-screen flex "> 
-  <div class=" self-center" >
-    <Contact />
-  </div>
-</section>
+<section class=" sm:w-screen md:w-screen w-[60%] h-screen"> 
+  <Contact />
+</section> 
