@@ -16,7 +16,7 @@
     <div class="mt-[20%] sm:mt-[30%]">
         <p class="">
             {$t(
-                "My name is Nikita and hier you will find some things about me especially what I do.",
+                "My name is Nikita and here you will find some things about me especially what I do.",
             )}<br />
         </p>
     </div>
@@ -256,7 +256,7 @@
                                         class="p-link"
                                         target="_blank"
                                         href="https://t.me/araneaesolidum"
-                                        >{$t("hier")}</a
+                                        >{$t("here")}</a
                                     >
                                 </p>
                             </li>
@@ -301,7 +301,7 @@
                                     <a
                                         class="p-link"
                                         target="_blank"
-                                        href="{base}/">{$t("hier")}</a
+                                        href="{base}/">{$t("here")}</a
                                     >
                                 </p>
                             </li>
@@ -312,7 +312,7 @@
                                         class="p-link"
                                         target="_blank"
                                         href="https://www.behance.net/nekhaynikita"
-                                        >{$t("hier")}</a
+                                        >{$t("here")}</a
                                     >
                                 </p>
                             </li>
