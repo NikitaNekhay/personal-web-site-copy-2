@@ -26,11 +26,11 @@
         <!-- 1 column -->
         <div class="grid grid-flow-row">
             <div class="">
-                <div class="h-[40%] sm:h-[20%] md:h-[50%]">
+                <div class="h-[40%] sm:h-[20%] md:h-[30%] flex justify-center">
                     <!-- {#key innerWidth}
                     <Authorphoto bind:innerWidth/>
                     {/key} -->
-                    <img class=" bg-contain" src="{base}/media/NIKITA.JPG" alt="nikita's portrait">
+                    <img class="h-auto {innerWidth < 410 ? "md:h-[100%]" :"md:h-[99%] "} lg:h-[100%] xl:h-[100%] 2xl:h-[100%] 3xl:h-[100%]"  src="{base}/media/NIKITA.JPG" alt="nikita's portrait">
                 </div>
 
                 <div
