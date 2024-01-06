@@ -300,7 +300,7 @@
                                     {$t("home page of the site")} ->
                                     <a
                                         class="p-link"
-                                        target="_blank"
+                                       
                                         href="{base}/">{$t("here")}</a
                                     >
                                 </p>

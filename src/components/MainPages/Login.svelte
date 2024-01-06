@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {  authHandlers, authStore } from "../../store/store";
+    import { authHandlers, authStore } from "../../store/store";
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../services/ru.json";
     import en from "../../services/en.json";
@@ -14,16 +14,19 @@
     import CommonPopUp from "../Shared/CommonPopUp.svelte";
     import SubmitButton from "../Shared/SubmitButton.svelte";
 
+    let innerWidth = 0;
+    let innerHeight = 0;
+
     let submitClicked = false;
-    let isLoading = true
-    
+    let isLoading = true;
+
     let register = false;
     let authenticating = false;
-    
-    let isChanged:boolean = false;
-    let msg:String ="";
-    let smmsg:String = "Something went wrong while creating your account."
-    
+
+    let isChanged: boolean = false;
+    let msg: String = "";
+    let smmsg: String = "Something went wrong while creating your account.";
+
     let email = "";
     let password = "";
     let rpassword = "";
@@ -45,108 +48,162 @@
 
     async function handleAuthenticate() {
         try {
-        submitClicked = !submitClicked;
-        isLoading = true;
-        if (authenticating) {
-            isLoading = false;
-            return;
-        }
-
-        if(rpassword!==password && register){
-            throw Errors.RepeatPass
-        }
-
-        if((email.length ===0 || password.length ===0 || rpassword.length ===0) && register){
-            throw Errors.EmptyInput
-        }
-
-        authenticating = true;
-        isLoading = false;
-
-        try {
-            if (!register) {
-                await authHandlers.login(email, password);
-            } else {
-                await authHandlers.signup(email, password);
+            submitClicked = !submitClicked;
+            isLoading = true;
+            if (authenticating) {
+                isLoading = false;
+                return;
             }
-    
+
+            if (rpassword !== password && register) {
+                throw Errors.RepeatPass;
+            }
+
+            if (
+                (email.length === 0 ||
+                    password.length === 0 ||
+                    rpassword.length === 0) &&
+                register
+            ) {
+                throw Errors.EmptyInput;
+            }
+
+            authenticating = true;
+            isLoading = false;
+
+            try {
+                if (!register) {
+                    await authHandlers.login(email, password);
+                } else {
+                    await authHandlers.signup(email, password);
+                }
+            } catch (err) {
+                throw err;
+            }
         } catch (err) {
-            throw err;
-        }
-    } catch (err) {
-            if(typeof(err)==="string"){
+            if (typeof err === "string") {
                 msg = err;
-            } else if(err.message !== undefined){
+            } else if (err.message !== undefined) {
                 msg = err.message;
             } else {
-                msg = Errors.Authentication
+                msg = Errors.Authentication;
             }
-            isChanged = true
+            isChanged = true;
 
             isLoading = false;
             authenticating = false;
-
         } finally {
             setTimeout(() => {
                 // Calculate and set the new scroll position based on the previous percentage
-                submitClicked = false
+                submitClicked = false;
             }, 2500);
         }
-
     }
-
 
     function handleRegister() {
         register = !register;
     }
 </script>
+
+<svelte:window bind:innerWidth bind:innerHeight />
+
 {#if isChanged}
-    <CommonPopUp bind:isChanged isPreviev={false} isError={true} message={msg} smallMessage={smmsg}  />
+    <CommonPopUp
+        bind:isChanged
+        isPreviev={false}
+        isError={true}
+        message={msg}
+        smallMessage={smmsg}
+    />
 {/if}
-<section class="h-screen w-screen 3xl:pb-[40%] ">
-    <div class="flex place-content-center px-[20%] py-[14%] sm:px-6 sm:py-[25%] md:py-[25%] lg:px-8 xl:py-[8%] 2xl:py-[8%] 3xl:py-[9%]" />
-        <div class="  " >
+<section class="h-screen w-screen 3xl:pb-[40%]">
+    <div
+        class="flex place-content-center px-[20%] py-[14%] sm:px-6 sm:py-[25%] {innerWidth >
+        620
+            ? 'md:py-[15%]'
+            : 'md:py-[25%]'} lg:px-8 xl:py-[8%] 2xl:py-[8%] 3xl:py-[9%]"
+    />
+    <div class="  ">
+        <header class="mb-6 justify-center text-center">
+            <h1 class="font-abril text-4xl text-blue-0">
+                {register ? $t("REGISTER") : $t("LOGIN")}
+            </h1>
+        </header>
 
-            <header class="mb-6 justify-center text-center ">
-                <h1 class="font-abril text-4xl text-blue-0">
-                    {register ? $t("REGISTER") : $t("LOGIN")}
-                </h1>
-            </header>
-
-            <div class="flex sm:px-[10%] place-content-center">
-                <form class="w-full max-w-lg flex flex-col justify-center items-center">
-                    <div class="-mx-3 mb-6 flex flex-wrap w-full">
-                        <div class="w-full px-3">
-                            <label
-                                class="relative block overflow-hidden rounded-md
+        <div class="flex sm:px-[4%] place-content-center">
+            <form
+                class="w-full max-w-lg flex flex-col justify-center items-center"
+            >
+                <div class="-mx-3 mb-6 flex flex-wrap w-full">
+                    <div class="w-full px-3">
+                        <label
+                            class="relative block overflow-hidden rounded-md
                             border border-gray-200 bg-white-1
                             px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
                             focus-within:ring-white-2"
-                                for="email"
-                            >
-                                <input
-                                    class="peer h-8 w-full border-none bg-transparent
+                            for="email"
+                        >
+                            <input
+                                class="peer h-8 w-full border-none bg-transparent
                             bg-white-1 p-0 placeholder-transparent
                             focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    required
-                                    placeholder="email"
-                                    autocomplete="email"
-                                    bind:value={email}
-                                />
-                                <span
-                                    class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+                                id="email"
+                                name="email"
+                                type="email"
+                                required
+                                placeholder="email"
+                                autocomplete="email"
+                                bind:value={email}
+                            />
+                            <span
+                                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
                             peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-                                >
-                                    {$t("Email")}
-                                </span>
-                            </label>
-                        </div>
+                            >
+                                {$t("Email")}
+                            </span>
+                        </label>
                     </div>
+                </div>
 
+                <div class="-mx-3 mb-3 flex flex-wrap w-full">
+                    <div class="w-full px-3">
+                        <label
+                            class="relative block overflow-hidden rounded-md
+                            border border-gray-200 bg-white-1
+                            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+                            focus-within:ring-white-2"
+                            for="password"
+                        >
+                            <input
+                                class="peer h-8 w-full border-none bg-transparent
+                            bg-white-1 p-0 placeholder-transparent
+                            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                                bind:value={password}
+                                id="password"
+                                placeholder="Password"
+                                name="password"
+                                type="password"
+                                autocomplete="current-password"
+                                required
+                            />
+                            <span
+                                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+                            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                            >
+                                {$t("Password")}
+                            </span>
+                        </label>
+                        <p class="mt-3 text-xs italic text-gray-600">
+                            {$t(
+                                "Password must consist at least from 6 symbols",
+                            )}
+                        </p>
+                    </div>
+                </div>
+
+                {#if register}
                     <div class="-mx-3 mb-3 flex flex-wrap w-full">
                         <div class="w-full px-3">
                             <label
@@ -160,12 +217,11 @@
                                     class="peer h-8 w-full border-none bg-transparent
                             bg-white-1 p-0 placeholder-transparent
                             focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-                                    bind:value={password}
-                                    id="password"
-                                    placeholder="Password"
-                                    name="password"
+                                    bind:value={rpassword}
+                                    id="rpassword"
+                                    placeholder="   Repeat password"
+                                    name="rpassword"
                                     type="password"
-                                    autocomplete="current-password"
                                     required
                                 />
                                 <span
@@ -173,88 +229,53 @@
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
                             peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
                                 >
-                                    {$t("Password")}
+                                    {$t("Repeat Password")}
                                 </span>
-
                             </label>
-                            <p class="mt-3 text-xs italic text-gray-600">
-                                {$t("Password must consist at least from 6 symbols")}
-                              </p>
                         </div>
-
                     </div>
+                {/if}
 
-                    {#if register}
-                        <div class="-mx-3 mb-3 flex flex-wrap w-full">
-                            <div class="w-full px-3">
-                                <label
-                                    class="relative block overflow-hidden rounded-md
-                            border border-gray-200 bg-white-1
-                            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-                            focus-within:ring-white-2"
-                                    for="password"
-                                >
-                                    <input
-                                        class="peer h-8 w-full border-none bg-transparent
-                            bg-white-1 p-0 placeholder-transparent
-                            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-                                        bind:value={rpassword}
-                                        id="rpassword"
-                                        placeholder="   Repeat password"
-                                        name="rpassword"
-                                        type="password"
-                                        required
-                                    />
-                                    <span
-                                        class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-                            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-                                    >
-                                        {$t("Repeat Password")}
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                    {/if}
-
-                    
-                    <SubmitButton bind:submitClicked bind:isLoading passedfunction={handleAuthenticate} text={"Submit"}/>
-
-                </form>
-            </div>
-            <div class="flex h-2/6">
-                <div class="options">
-                    {#if register}
-                        <div>
-                            <p>{$t("Already have an account?")}</p>
-                            <p
-                                class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
-                                on:click={handleRegister}
-                                on:keydown={() => {}}
-                            >
-                                {$t("Login")}
-                            </p>
-                        </div>
-                    {:else}
-                        <div>
-                            <p>{$t("Don't have an account?")}</p>
-                            <p
-                                class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
-                                on:click={handleRegister}
-                                on:keydown={() => {}}
-                            >
-                                {$t("Register")}
-                            </p>
-                        </div>
-                    {/if}
-                </div>
+                <SubmitButton
+                    bind:submitClicked
+                    bind:isLoading
+                    passedfunction={handleAuthenticate}
+                    text={"Submit"}
+                />
+            </form>
+        </div>
+        <div class="flex h-2/6">
+            <div class="options">
+                {#if register}
+                    <div>
+                        <p>{$t("Already have an account?")}</p>
+                        <p
+                            class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
+                            on:click={handleRegister}
+                            on:keydown={() => {}}
+                        >
+                            {$t("Login")}
+                        </p>
+                    </div>
+                {:else}
+                    <div>
+                        <p>{$t("Don't have an account?")}</p>
+                        <p
+                            class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
+                            on:click={handleRegister}
+                            on:keydown={() => {}}
+                        >
+                            {$t("Register")}
+                        </p>
+                    </div>
+                {/if}
             </div>
         </div>
+    </div>
     <div class="flex max-h-screen w-2/6" />
 </section>
 
 <style>
-
     h1 {
         text-align: center;
     }
