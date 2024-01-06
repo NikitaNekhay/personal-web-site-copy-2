@@ -114,6 +114,7 @@
         isError={true}
         message={msg}
         smallMessage={smmsg}
+        href=""
     />
 {/if}
 <section class="h-screen w-screen 3xl:pb-[40%]">
@@ -248,26 +249,36 @@
             <div class="options">
                 {#if register}
                     <div>
-                        <p>{$t("Already have an account?")}</p>
-                        <p
-                            class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
+                        <p>
+                            {$t("Already have an account?")}
+                        </p>
+                        <button
+                            tabindex="0"
+                            class=" bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 
+                             duration-300 delay-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-75"
                             on:click={handleRegister}
-                            on:keydown={() => {}}
+                            on:keydown={() => {
+                                handleRegister;
+                            }}
                         >
                             {$t("Login")}
-                        </p>
+                        </button>
                     </div>
                 {:else}
-                    <div>
-                        <p>{$t("Don't have an account?")}</p>
-                        <p
-                            class=" via-red-00 bg-gradient-to-r from-pink-100 to-yellow-100 bg-clip-text font-anonymous text-base font-extrabold text-transparent transition hover:text-red-0 hover:opacity-25"
-                            on:click={handleRegister}
-                            on:keydown={() => {}}
-                        >
-                            {$t("Register")}
-                        </p>
-                    </div>
+                <div>
+                    <p class="">{$t("Don't have an account?")}</p>
+    
+                    <button
+                        tabindex="0"
+                        class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 
+                         duration-300 delay-100 hover:opacity-75 hover:text-red-0  bg-clip-text font-anonymous text-base font-extrabold text-transparent transition "
+                        on:click={handleRegister}
+                        on:keydown={() => {}}
+                    >
+                        {$t("Register")}
+                    </button>
+                </div>
+
                 {/if}
             </div>
         </div>
@@ -293,11 +304,6 @@
         margin: 0 auto;
     }
 
-    .errore {
-        font-size: 0.9ram;
-        text-align: center;
-        @apply text-red-2;
-    }
 
     .options {
         padding: 14px 0;
@@ -313,10 +319,5 @@
         align-items: center;
         gap: 8px;
         justify-content: center;
-    }
-
-    .options div p:last-of-type {
-        cursor: pointer;
-        @apply text-orange-0;
     }
 </style>

@@ -30,12 +30,12 @@
   export let isOpen = false
 
 let name_menu="";
-//console.log($authStore.data.name)
+////console.log($authStore.data.name)
 if($authStore.data.name === undefined){
     name_menu = "template_name"
     
 } else{
-    console.log($authStore.data)
+    //console.log($authStore.data)
     name_menu=$authStore.data.name
 }
 

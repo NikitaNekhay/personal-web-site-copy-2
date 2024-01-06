@@ -8,25 +8,24 @@
     import { handleCart } from "../../../routes/posts/post";
     import {
         Errors,
-        Language,
         type ProductType,
         type Slide,
     } from "../../../shared/types";
     import { authStore, currentLanguage } from "../../../store/store";
     import CartAdded from "../../Shared/CartAdded.svelte";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-    import SubmitButton from "../../Shared/SubmitButton.svelte";
+
     import { writable } from "svelte/store";
     import SquareButton from "../../Shared/SquareButton.svelte";
-    import { onMount } from "svelte";
-    import { fade, fly } from "svelte/transition";
+
+    import {  fly } from "svelte/transition";
 
     export let post: ProductType;
     let isChanged: boolean = false;
     let isChangedCart: boolean = false;
     let msg: String = "";
     let smmsg: String = "Something went wrong while fetching the data.";
-    let href: String = `${base}/shop`;
+    let href: string = `${base}/shop`;
     let isError: boolean = true;
     export let slides: Slide[];
 
@@ -37,7 +36,7 @@
 
     async function handleCartClicked() {
         try {
-            console.log($authStore);
+            //console.log($authStore);
             await handleCart(post, $authStore);
 
             // HANDLE DOUBLE CLICK
@@ -50,7 +49,7 @@
                 isChangedCart = !isChangedCart;
             }
         } catch (err) {
-            console.log("error in PostDetail");
+            //console.log("error in PostDetail");
             if (typeof err === "string") {
                 msg = err;
             } else if (err.message !== undefined) {
@@ -214,16 +213,17 @@
             <div class="w-[100%] flex flex-col gap-y-4">
                 <header>
                     <h1
-                        
-                        
-                        class="font-abril sm:text-5xl text-center break-words text-6xl sm:tracking-tight  text-black-0"
+                        class="font-abril sm:text-5xl text-center break-words text-6xl sm:tracking-tight text-black-0"
                         lang={$currentLanguage.language}
                     >
                         {$t(post.title)}
                     </h1>
                 </header>
-                <p class="text-center text-xl break-words " lang={$currentLanguage.language}>
-                   {$t(post.description["smallDescription"])} 
+                <p
+                    class="text-center text-xl break-words"
+                    lang={$currentLanguage.language}
+                >
+                    {$t(post.description["smallDescription"])}
                 </p>
             </div>
             <div
@@ -233,10 +233,10 @@
             >
                 <!-- COLOR AVAILABLE -->
                 <div class="text-center w-[100%] py-1.5 shadow-xl bg-white-1">
-                    <p class="text-navy-1 text-3xl ">{$t('COLORS')}:</p>
-                    <div class="flex flex-row gap-3  place-content-center">
+                    <p class="text-navy-1 text-3xl">{$t("COLORS")}:</p>
+                    <div class="flex flex-row gap-3 place-content-center">
                         {#each post.description["colors"] as colorItem}
-                            <div class="">{$t(colorItem)} </div>
+                            <div class="">{$t(colorItem)}</div>
                         {/each}
                     </div>
                 </div>
@@ -247,7 +247,11 @@
                 >
                     <!-- SIZE GUIDE -->
 
-                    <p class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0 hover:cursor-pointer">{$t('SIZE GUIDE')}</p>
+                    <p
+                        class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0 hover:cursor-pointer"
+                    >
+                        {$t("SIZE GUIDE")}
+                    </p>
                     <!-- LIST OF SIZES -->
                     <div class="flex flex-row gap-3 place-content-center">
                         {#each post.description["sizes"] as sizeItem}
@@ -266,8 +270,12 @@
                     <div class="flex self-center text-3xl">
                         <p class="select-none text-center">{$t("Price")}</p>
                         <p>:</p>
-                        <p class=" text-transparent bg-clip-text 
-                        bg-gradient-to-t from-green-950 via-green-1 to-green-0 text-center animate-pulse">{post.price} BYN</p>
+                        <p
+                            class=" text-transparent bg-clip-text
+                        bg-gradient-to-t from-green-950 via-green-1 to-green-0 text-center animate-pulse"
+                        >
+                            {post.price} BYN
+                        </p>
                     </div>
                     <div class="flex">
                         <SquareButton
@@ -291,13 +299,12 @@
                                     class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none"
-                                        >{$t('DESCRIPTION')}</span
+                                        >{$t("DESCRIPTION")}</span
                                     >
                                     <span
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                            
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -314,8 +321,7 @@
                                 <p
                                     class="text-gray-700 mx-4 mt-3 group-open:animate-fadeIn"
                                 >
-                                {$t(post.description["bigDescription"])}
-                                
+                                    {$t(post.description["bigDescription"])}
                                 </p>
                             </details>
                         </div>
@@ -328,13 +334,12 @@
                                     class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
-                                       {$t('MATERIALS')} </span
-                                    >
+                                        {$t("MATERIALS")}
+                                    </span>
                                     <span
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                            
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -352,7 +357,11 @@
                                     in:fly={{ x: 200, duration: 700 }}
                                     class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                                 >
-                                {$t(post.description["materialsDescription"])}
+                                    {$t(
+                                        post.description[
+                                            "materialsDescription"
+                                        ],
+                                    )}
                                 </p>
                             </details>
                         </div>
@@ -365,13 +374,12 @@
                                     class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                                 >
                                     <span class="text-3xl select-none">
-                                        {$t('MODEL')}
+                                        {$t("MODEL")}
                                     </span>
                                     <span
                                         class="transition group-open:rotate-180"
                                     >
                                         <svg
-                                           
                                             fill="none"
                                             height="24"
                                             shape-rendering="geometricPrecision"
@@ -388,10 +396,7 @@
                                 <p
                                     class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                                 >
-                                   {$t(post.description["modelDescription"])}
-                                    <!-- We offers a variety of billing options, including monthly and annual subscription plans,
-                            as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
-                            card or other secure online payment method. -->
+                                    {$t(post.description["modelDescription"])}
                                 </p>
                             </details>
                         </div>
@@ -404,11 +409,10 @@
                                 class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
                             >
                                 <span class="text-3xl select-none">
-                                    {$t('PAYMENT METHODS')}
+                                    {$t("PAYMENT METHODS")}
                                 </span>
                                 <span class="transition group-open:rotate-180">
                                     <svg
-                                        
                                         fill="none"
                                         height="24"
                                         shape-rendering="geometricPrecision"
@@ -425,19 +429,36 @@
                             <p
                                 class="text-gray-700 mt-3 mx-4 group-open:animate-fadeIn"
                             >
-                            {$t('We accept cash, cashless payments. Order is performed only with a prepayment. Return conditions vary.')}
-                            <br><br>
-                            {$t('We suggest some shipping solutions:')}<br>
-                            {$t('Minsk: Self-delivery/Delivery by our courier to your door;')}<br>
-                            {$t("RB: Self-delivery from any Evropochta's office;")}<br>
-                            {$t('RF: Self-delivery from SDEK;')}<br>
-                            {$t('Other countries: Belpochta or any personal agreements.')}<br>
-                            <em>{$t('* Price of mail services will be included in the order price.')}</em><br>
-                            <br>
-                            {$t('More detailed description of shipping, purchase, return conditions and policy:')}
-                            <a href="{base}/purchase" class="underline transition duration-300 delay-100 hover:text-yellow-0">{$t('forward link')}</a>
-                   
-                                
+                                {$t(
+                                    "We accept cash, cashless payments. Order is performed only with a prepayment. Return conditions vary.",
+                                )}
+                                <br /><br />
+                                {$t("We suggest some shipping solutions:")}<br
+                                />
+                                {$t(
+                                    "Minsk: Self-delivery/Delivery by our courier to your door;",
+                                )}<br />
+                                {$t(
+                                    "RB: Self-delivery from any Evropochta's office;",
+                                )}<br />
+                                {$t("RF: Self-delivery from SDEK;")}<br />
+                                {$t(
+                                    "Other countries: Belpochta or any personal agreements.",
+                                )}<br />
+                                <em
+                                    >{$t(
+                                        "* Price of mail services will be included in the order price.",
+                                    )}</em
+                                ><br />
+                                <br />
+                                {$t(
+                                    "More detailed description of shipping, purchase, return conditions and policy:",
+                                )}
+                                <a
+                                    href="{base}/purchase"
+                                    class="underline transition duration-300 delay-100 hover:text-yellow-0"
+                                    >{$t("forward link")}</a
+                                >
                             </p>
                         </details>
                     </div>

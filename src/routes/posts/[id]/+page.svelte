@@ -22,13 +22,13 @@
 
   if (data.post !== undefined && data.post !== null) {
     isLoading = false;
-    console.log("entered +page.svelte", data.post);
+    //console.log("entered +page.svelte", data.post);
     post = data.post;
     slides = data.post.images.map(image => ({ img: image }));
 
   } else if ($page.params !== undefined && $page.params !== null) {
     post = $page.params;
-    console.log("entered +page.svelte with params", $page.params);
+    //console.log("entered +page.svelte with params", $page.params);
     isLoading = false;
   } else {
     isLoading = true;
@@ -37,19 +37,19 @@
 
   onMount(() => {
         slides.forEach(slide => {
-            console.log(slide)
+            //console.log(slide)
             const img = new Image();
             img.src = slide.img;
             
             // You can also add onload and onerror handlers if needed
-            img.onload = () => console.log('Image loaded:', slide.img);
+            img.onload = () => //console.log('Image loaded:', slide.img);
             img.onerror = () => console.error('Failed to load image:', slide.img);
             preloadCounter ++;
-            console.log(preloadCounter)
+            //console.log(preloadCounter)
         });
         
         if(preloadCounter === slides.length){
-          console.log("equals")
+          //console.log("equals")
           isLoading2 = false
         }
     });

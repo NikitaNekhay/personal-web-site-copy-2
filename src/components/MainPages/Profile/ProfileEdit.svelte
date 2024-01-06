@@ -35,7 +35,7 @@
 
   onMount(() => {
     try {
-      console.log("updating profile...")
+      //console.log("updating profile...")
   
       const unsubscribe = auth.onAuthStateChanged(async (user) => {
         try {
@@ -43,14 +43,14 @@
             userCopy=user;
 
             let Ready_profile:UserDataType = await getUserProfile(user);
-            console.log("what we got from db getUserProfile:",Ready_profile);
+            //console.log("what we got from db getUserProfile:",Ready_profile);
             profileValue = Ready_profile;
-            console.log("profileValue - what we got after assgingin:",profileValue);
+            //console.log("profileValue - what we got after assgingin:",profileValue);
             msg = msgT;
             smmsg = smmsgT;
             isError = false;
           } else {
-            console.log("no user in Profile.svelte");
+            //console.log("no user in Profile.svelte");
           }
         } catch (error) {
           console.error("error while fetching profile", error);
@@ -101,7 +101,7 @@
           profileValue.cart
         )
         .then(() => {
-          console.log("Profile updated successfully.");
+          //console.log("Profile updated successfully.");
           isChanged = true;
           msg = msgT;
           smmsg = smmsgT;
@@ -129,7 +129,7 @@
       }, 2500);
     }
     } else {
-      console.log("user dont exists so we cant handle submit")
+      //console.log("user dont exists so we cant handle submit")
       setTimeout(() => {
           // Calculate and set the new scroll position based on the previous percentage
           submitClicked = false;
@@ -141,7 +141,7 @@
       throw Errors.EditProfile;
     }
    
-    // console.log("authStore in prfile.svelte after handling",$authStore.data);
+    // //console.log("authStore in prfile.svelte after handling",$authStore.data);
     } catch (error) {
       msg = Errors.EditProfile;
       smmsg = smmsgE;

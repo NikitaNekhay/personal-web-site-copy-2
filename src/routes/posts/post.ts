@@ -9,10 +9,10 @@ export const blogsCollection = collection(db, "products");
 
 export async function addProduct(obj:ProductType){
   try {
-   // console.log('Temp post:', tempPost)
+   // //console.log('Temp post:', tempPost)
     const docRef = await addDoc(blogsCollection, obj);
     obj.id = docRef.id;
-    console.log("New blog added with ID: ", docRef.id);
+    //console.log("New blog added with ID: ", docRef.id);
     updateProduct(obj);
   } catch (error) {
     console.error("error while adding blog post",error)
@@ -56,7 +56,7 @@ export async function updateProduct(obj:ProductType){
 
 export async function getProduct(id:string){
   try{
-   // console.log("this is id passed to function for db call: ", id)
+   // //console.log("this is id passed to function for db call: ", id)
     const postDoc = doc(collection(db, "products"), id);
     const postSnapshot = await getDoc(postDoc);
     // put the value in store
@@ -97,7 +97,7 @@ export async function getProducts() {
       id: String(doc.id),
       ...doc.data(),
     }));
-    console.log("blog posts from post.ts:",blogPosts)
+    //console.log("blog posts from post.ts:",blogPosts)
     return blogPosts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
@@ -109,7 +109,7 @@ export async function deleteProduct(id:string){
   try {
     const postDocRef = doc(collection(db, 'products'), id);
     await deleteDoc(postDocRef);
-    console.log('product deleted:', id);
+    //console.log('product deleted:', id);
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }
@@ -122,8 +122,8 @@ export async function  handleCart(post: ProductType, tempAuthStore:AuthStoreType
       tempArr.push(post);
       
       tempAuthStore.data.cart = tempArr;
-      //console.log("tempAuthStore is",tempAuthStore)
-      //console.log("handleClick - pushed value for cart:",tempArr)
+      ////console.log("tempAuthStore is",tempAuthStore)
+      ////console.log("handleClick - pushed value for cart:",tempArr)
       await updateUserProfile(
         tempAuthStore.user,
         tempAuthStore.data.name,

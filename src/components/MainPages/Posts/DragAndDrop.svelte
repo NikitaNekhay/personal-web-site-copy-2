@@ -2,7 +2,7 @@
     import { base } from "$app/paths";
     import { onDestroy } from "svelte";
     import type { ProductType } from "../../../shared/types";
-    import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+    import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
     import { storage } from "$lib/firebase/firebase";
 
     export let tempProductStore: ProductType;
@@ -26,9 +26,11 @@
             const imageUrls = await Promise.all(
                 tempProductStore.images.map(uploadImage),
             );
-            tempProductStore.images = imageUrls.filter((url): url is string => url !== undefined);
-            console.log(tempProductStore)
-            console.log(tempProductStore.images)
+            tempProductStore.images = imageUrls.filter(
+                (url): url is string => url !== undefined,
+            );
+            //console.log(tempProductStore)
+            //console.log(tempProductStore.images)
         }
     }
 
@@ -68,7 +70,7 @@
 
     onDestroy(() => {
         tempProductStore.images.forEach((image) => {
-            if (typeof image !== 'string') {
+            if (typeof image !== "string") {
                 URL.revokeObjectURL(image.name);
             }
         });
@@ -76,8 +78,12 @@
 </script>
 
 <div class="p-3 rounded mx-auto w-full h-auto bg-white-0">
-    <div class="relative flex flex-col p-1 text-gray-400 border bg-white-2 border-white-0 rounded-md">
-        <div class="relative flex flex-col text-gray-400 bg-white-1 border border-navy-1 border-dashed rounded cursor-pointer">
+    <div
+        class="relative flex flex-col p-1 text-gray-400 border bg-white-2 border-white-0 rounded-md"
+    >
+        <div
+            class="relative flex flex-col text-gray-400 bg-white-1 border border-navy-1 border-dashed rounded cursor-pointer"
+        >
             <input
                 type="file"
                 multiple
@@ -85,11 +91,14 @@
                 on:change={handleImageUpload}
                 title=""
             />
-            <div class="flex flex-col items-center justify-center py-10 text-center">
+            <div
+                class="flex flex-col items-center justify-center py-10 text-center"
+            >
                 <img src="{base}/media/cloud-upload.svg" alt="upload icon" />
                 <div>
                     <p class="mb-2 text-sm text-gray-00">
-                        <span class="font-semibold">Click to upload</span> or drag and drop
+                        <span class="font-semibold">Click to upload</span> or drag
+                        and drop
                     </p>
                     <p class="text-xs text-gray-00">
                         SVG, PNG, JPG or GIF (MAX. 800x400px)
@@ -99,7 +108,9 @@
         </div>
 
         {#if tempProductStore.images.length > 0}
-            <div class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-6 w-full h-auto">
+            <div
+                class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-6 w-full h-auto"
+            >
                 {#each tempProductStore.images as url, index}
                     <div
                         class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none"
@@ -118,14 +129,17 @@
                             type="button"
                             on:click={() => removeImage(index)}
                         >
-                            <img src="{base}/media/trash.svg" alt="trash icon" />
+                            <img
+                                src="{base}/media/trash.svg"
+                                alt="trash icon"
+                            />
                         </button>
 
                         <div class="file-preview-container">
                             <img
                                 class="object-cover w-full h-full border-4 border-white preview"
                                 src={url}
-                                alt="Image preview"
+                                alt="Source preview"
                             />
                         </div>
                     </div>

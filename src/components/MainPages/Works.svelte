@@ -146,27 +146,27 @@
         >
           <div class="sm:w-10/12">
             <a
-              class="transition duration-300 delay-100 delay-100 hover:text-yellow-0"
+              class="transition duration-300 delay-100 hover:text-yellow-0"
               href="{base}/posts/CgF16bXhfrKo5WmhEwgZ"
               >{$t("'Polar bear' longsleeve")}</a
             >
           </div>
           <div class="sm:w-10/12">
             <a
-              class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"
+              class=" transition duration-300 delay-100 hover:text-yellow-0"
               href="{base}/posts/js65QLblGNmOhZVTl6W5">{$t("Chanel jacket")}</a
             >
           </div>
           <div class="sm:w-10/12">
             <a
-              class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"
+              class=" transition duration-300 delay-100  hover:text-yellow-0"
               href="{base}/posts/5qv9ICdoxyPrFvc4aqEP"
               >{$t("assymetric longsleeve")}</a
             >
           </div>
           <div class="sm:w-10/12">
             <a
-              class=" transition duration-300 delay-100 delay-100 hover:text-yellow-0"
+              class=" transition duration-300 delay-100 hover:text-yellow-0"
               href="{base}/posts/wR5Vkuzy3Xc7XeGK4aVI"
               >{$t("circled tank top")}</a
             >

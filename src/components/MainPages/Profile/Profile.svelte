@@ -32,15 +32,15 @@
   
 
   onMount(() => {
-    //  console.log("updating profile...")
-    //  console.log("isadmin in profile in mounting...",$isAdmin)
+    //  //console.log("updating profile...")
+    //  //console.log("isadmin in profile in mounting...",$isAdmin)
      isthereadmin = $isAdmin.value
-    //  console.log("authStore in prfile.svelte before everything",$authStore.data);
+    //  //console.log("authStore in prfile.svelte before everything",$authStore.data);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
         if(user){
           let Ready_profile:UserDataType = await getUserProfile(user);
-          // console.log("what we got from db getUserProfile:",Ready_profile);
+          // //console.log("what we got from db getUserProfile:",Ready_profile);
           if(Ready_profile){
             profileValue = Ready_profile;
 
@@ -50,10 +50,10 @@
             window.location.href = `${base}/`;
             return;
           }
-          // console.log("Restoring profileValue from user profile data",profileValue);
+          // //console.log("Restoring profileValue from user profile data",profileValue);
  
         } else {
-          console.log("no user in Profile.svelte");
+          //console.log("no user in Profile.svelte");
           return
             
         }

@@ -10,7 +10,7 @@
 
   export let isChangedCart: boolean;
   function changeState() {
-    console.log(isChangedCart);
+    //console.log(isChangedCart);
 
     isChangedCart = !isChangedCart;
   }

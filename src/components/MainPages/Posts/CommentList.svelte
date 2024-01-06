@@ -1,7 +1,11 @@
 <script lang="ts">
     import { afterUpdate, onMount } from "svelte";
     import { Errors, type MessageType } from "../../../shared/types";
-    import { deleteComment, getComments, updateComment } from "../../../routes/posts/comments";
+    import {
+        deleteComment,
+        getComments,
+        updateComment,
+    } from "../../../routes/posts/comments";
     import { page } from "$app/stores";
     import { authStore, isAdmin, triggerComments } from "../../../store/store";
     import { comment } from "postcss";
@@ -10,127 +14,112 @@
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
     import type { User } from "firebase/auth";
 
-    let commentaries:MessageType[] = [];
-    
+    let commentaries: MessageType[] = [];
+
     let editClicked = {
-        value:false,
-        index:-1,
-    }
-    let isLoading:boolean = true;
-    let showTrigger:boolean;
+        value: false,
+        index: -1,
+    };
+    let isLoading: boolean = true;
+    let showTrigger: boolean;
 
-    let isChanged:boolean = false;
-    let msgT:String ="Your changes have been saved.";
-    let msg:String ="Your changes have been saved.";
-    let smmsg:String = "Changes saved!";
-    let smmsgE:String = "Error while editing commentaries!";
-    let smmsgT:String = "Changes saved!";
-    let isError:boolean = false;
-    
-    onMount(async()=>{
+    let isChanged: boolean = false;
+    let msgT: String = "Your changes have been saved.";
+    let msg: String = "Your changes have been saved.";
+    let smmsg: String = "Changes saved!";
+    let smmsgE: String = "Error while editing commentaries!";
+    let smmsgT: String = "Changes saved!";
+    let isError: boolean = false;
+
+    onMount(async () => {
         try {
-
-            const unsubscribe = authStore.subscribe((authStore)=>{
-                
-                
-                if($authStore.loading)
-                    isLoading = false
-                else
-                    isLoading = true
-            })
+            const unsubscribe = authStore.subscribe((authStore) => {
+                if ($authStore.loading) isLoading = false;
+                else isLoading = true;
+            });
 
             try {
                 commentaries = await getComments();
-                
-                commentaries= commentaries.filter((obj) => obj.post === $page.params.id);
-                console.log($triggerComments.value);
-                //$triggerComments.value = false
-                console.log(commentaries)
-                // if($triggerComments.value){
-                //     $triggerComments.value = false;
-                // }
+
+                commentaries = commentaries.filter(
+                    (obj) => obj.post === $page.params.id,
+                );
             } catch (error) {
                 throw Errors.FetchComments;
             }
 
-
-            isLoading = false
+            isLoading = false;
         } catch (err) {
-            if(typeof(err)==="string"){
+            if (typeof err === "string") {
                 msg = err;
-            } else if(err.message !== undefined){
+            } else if (err.message !== undefined) {
                 msg = err.message;
             } else {
-                msg = Errors.FetchPost
+                msg = Errors.FetchPost;
             }
-            isChanged= true
+            isChanged = true;
             isError = true;
-            smmsg = smmsgE; 
-            isLoading = false
+            smmsg = smmsgE;
+            isLoading = false;
         }
-        
-    })
+    });
 
-    afterUpdate(async()=>{
+    afterUpdate(async () => {
         showTrigger = $triggerComments.value;
-        //console.log(showTrigger)
-    })
+        ////console.log(showTrigger)
+    });
 
-    function checkUserRight(comment:MessageType){
-        console.log($authStore.user)
-        if($authStore.user){
-            if($authStore.user.uid === comment.id || $isAdmin.value){
-                return true
+    function checkUserRight(comment: MessageType) {
+        //console.log($authStore.user)
+        if ($authStore.user) {
+            if ($authStore.user.uid === comment.id || $isAdmin.value) {
+                return true;
             } else {
-                return false
+                return false;
             }
         } else {
-            console.error("no user to check the rights")
-            isLoading = false
-            return false
+            console.error("no user to check the rights");
+            isLoading = false;
+            return false;
         }
-        
     }
-    
-    function handleSave(event,comment){
-        event.preventDefault()
+
+    function handleSave(event, comment) {
+        event.preventDefault();
         editClicked = !editClicked;
 
         try {
-            updateComment(comment)
-            console.log(comment)
+            updateComment(comment);
+            //console.log(comment)
             $triggerComments.value = true;
 
-            setTimeout(()=>{
-            $triggerComments.value = false;
-            console.log($triggerComments.value)
-
-            },1500)
+            setTimeout(() => {
+                $triggerComments.value = false;
+                //console.log($triggerComments.value)
+            }, 1500);
             isChanged = true;
             isError = false;
             msg = msgT;
             smmsg = smmsgT;
         } catch (error) {
-            console.log("error while save comment")
+            //console.log("error while save comment")
             throw Errors.SaveComment;
         }
-       
     }
 
-    function handleEdit(event,commentIndex){
-        editClicked.value = !(editClicked.value);
+    function handleEdit(event, commentIndex) {
+        editClicked.value = !editClicked.value;
         editClicked.index = commentIndex;
-    }   
+    }
 
-    function handleDelete(event,cid:string){
+    function handleDelete(event, cid: string) {
         try {
             $triggerComments.value = true;
 
-            setTimeout(()=>{
-            $triggerComments.value = false;
-            console.log($triggerComments.value)
-
-            },1500)
+            setTimeout(() => {
+                $triggerComments.value = false;
+                //console.log($triggerComments.value)
+            }, 1500);
             deleteComment(cid);
             isChanged = true;
             isError = false;
@@ -138,18 +127,20 @@
             smmsg = smmsgT;
         } catch (error) {
             throw Errors.DeleteComment;
-            console.log("error while delete comment")
+            //console.log("error while delete comment")
         }
-       
-    }  
-
-
-
-
+    }
 </script>
 
 {#if isChanged}
-    <CommonPopUp bind:isChanged isError={isError} isPreviev={false} message={msg} smallMessage={smmsg} href=""/>
+    <CommonPopUp
+        bind:isChanged
+        {isError}
+        isPreviev={false}
+        message={msg}
+        smallMessage={smmsg}
+        href=""
+    />
 {/if}
 
 <div>
@@ -157,57 +148,57 @@
 </div>
 
 {#key triggerComments}
-{#if commentaries.length !== 0}
-<ul>
-{#each commentaries as comment, i}
+    {#if commentaries.length !== 0}
+        <ul>
+            {#each commentaries as comment, i}
+                {#if $isAdmin.value}
+                    <li>{comment.id}: {comment.comment}</li>
+                {:else}
+                    <li>Someone thinks: {comment.comment}</li>
+                {/if}
 
+                <div class="flex items-center justify-end gap-2 bg-white p-3">
+                    {#if checkUserRight(comment)}
+                        <p>What to do with your comment?</p>
+                        {#if editClicked && editClicked.index === i}
+                            <input type="text" bind:value={comment.comment} />
+                            <button
+                                type="button"
+                                class="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
+                                on:click={(event) => {
+                                    handleSave(event, comment);
+                                }}
+                            >
+                                Save
+                            </button>
+                        {:else}
+                            <button
+                                type="button"
+                                class="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
+                                on:click={(event) => {
+                                    handleEdit(event, i);
+                                }}
+                            >
+                                Edit
+                            </button>
+                        {/if}
 
-    {#if $isAdmin.value}
-    <li>{comment.id}: {comment.comment}</li> 
+                        <button
+                            type="button"
+                            class="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
+                            on:click={(event) => {
+                                handleDelete(event, comment.cid);
+                            }}
+                        >
+                            Delete
+                        </button>
+                    {/if}
+                </div>
+            {/each}
+        </ul>
     {:else}
-    <li>Someone thinks: {comment.comment}</li> 
+        <div>
+            <h1 class="text-center w-full mt-4">Please leave a comment!</h1>
+        </div>
     {/if}
-
-    <div class="flex items-center justify-end gap-2 bg-white p-3">
-        {#if checkUserRight(comment)}
-            <p>What to do with your comment?</p>
-            {#if editClicked && editClicked.index===i}
-            <input type="text" bind:value={comment.comment} />
-            <button
-                type="button"
-                class="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
-                on:click={(event)=>{handleSave(event,comment)}}
-            >
-                Save
-            </button>
-            {:else}
-            <button
-                type="button"
-                class="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-600"
-                on:click={(event)=>{handleEdit(event,i)}}
-            >
-                Edit
-            </button>
-            {/if}
-              
-                <button
-                type="button"
-                class="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
-                on:click={(event)=>{handleDelete(event,comment.cid)}}
-            >
-                Delete
-            </button>
-        {/if}
-      </div>
-
-
-
-{/each}
-</ul>
-{:else}
-<div>
-    <h1 class="text-center w-full mt-4">Please leave a comment!</h1>
-</div>
-{/if}
-
 {/key}

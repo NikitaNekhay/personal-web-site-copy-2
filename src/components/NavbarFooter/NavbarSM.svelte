@@ -31,7 +31,7 @@
 
     onMount(()=>{
     const unsubscribe = authStore.subscribe((authStore) => {
-        //console.log(authStore)
+        ////console.log(authStore)
         if(authStore.user){
             isUser = true
         } else {

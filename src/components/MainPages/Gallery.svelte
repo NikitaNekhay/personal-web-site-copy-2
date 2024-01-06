@@ -62,7 +62,7 @@
       const unsubscribe = authStore.subscribe((authStore) => {
         // get user info for cart
         tempAuthStore = authStore;
-        console.log(tempAuthStore);
+        //console.log(tempAuthStore);
       });
 
       // Fetch blog posts from the database
@@ -70,10 +70,10 @@
         isEmpty = true;
       }
       isLoading = false;
-      //console.log(tempProductStore);
+      ////console.log(tempProductStore);
       if (!passComponent) {
         const interval = setTimeout(() => {
-          console.log("gall");
+          //console.log("gall");
           passComponent = true;
         }, 2000);
       }
@@ -82,9 +82,9 @@
 
   function handleClick(id: string) {
     // Navigate to the detailed page of the selected blog post
-    console.log("handle click for ", id);
+    //console.log("handle click for ", id);
     $productStore.id = id;
-    //console.log($productStore.id);
+    ////console.log($productStore.id);
     window.location.href = `${base}/posts/${id}`;
   }
 
@@ -101,7 +101,7 @@
         isChangedCart = !isChangedCart;
       }
     } catch (err) {
-      console.log("error in gallery");
+      //console.log("error in gallery");
       if (typeof err === "string") {
         msg = err;
       } else if (err.message !== undefined) {

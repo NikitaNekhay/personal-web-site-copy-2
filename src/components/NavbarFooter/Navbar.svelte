@@ -16,7 +16,7 @@
     import { page } from "$app/stores";
 
     let currentPage = $page.url.pathname;
-    console.log(currentPage.includes("/about"));
+    //console.log(currentPage.includes("/about"));
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
         // Switch the language value
@@ -36,7 +36,7 @@
 
     onMount(() => {
         const unsubscribe = authStore.subscribe((authStore) => {
-            //console.log(authStore)
+            ////console.log(authStore)
             if (authStore.user) {
                 isUser = true;
             } else {
@@ -49,15 +49,15 @@
 
     //   onMount(()=>{
     //     const unsubscribe_authstore = authStore.subscribe((authStore) => {
-    //         console.log(authStore)
+    //         //console.log(authStore)
     //     });
-    //     console.log("user at about:",$authStore)
-    //         console.log("isAdmin at about:",$isAdmin)
+    //     //console.log("user at about:",$authStore)
+    //         //console.log("isAdmin at about:",$isAdmin)
     //     return unsubscribe;
 
     //     })
 
-    //  console.log("is there any user at navbar",isUser)
+    //  //console.log("is there any user at navbar",isUser)
 </script>
 
 <nav class="flex w-screen font-anonymous">

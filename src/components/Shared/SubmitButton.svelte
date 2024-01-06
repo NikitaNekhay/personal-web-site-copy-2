@@ -5,8 +5,8 @@
    export let isLoading:boolean;
    export let submitClicked:boolean;
    export let text:String | MessageObject;
-    // console.log(isLoading)
-    // console.log(console.log(isLoading))
+    // //console.log(isLoading)
+    // //console.log(//console.log(isLoading))
     
 </script>
 
@@ -14,6 +14,7 @@
 <LoadingButton />
 {:else}
     <button
+    tabindex="0"
         class="group relative  flex
   w-48 sm:w-36 items-center justify-center overflow-hidden
 rounded-md border border-orange-0

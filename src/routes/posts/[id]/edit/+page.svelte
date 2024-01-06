@@ -23,7 +23,7 @@
     isLoading = true;
     console.error("error getting params for posts page");
   }
-  // console.log('entered ../[id]/edit/+page.svelte with this exported value of post',post)
+  // //console.log('entered ../[id]/edit/+page.svelte with this exported value of post',post)
 </script>
 
 <svelte:head>

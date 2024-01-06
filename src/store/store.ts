@@ -62,9 +62,9 @@ export const triggerComments = writable({
 
 export const authHandlers = {
 
-  signup: async (email, pass) => {
+  signup: async (email:string, pass:string) => {
     await createUserWithEmailAndPassword(auth, email, pass)
-    // console.log("creating user")
+    // //console.log("creating user")
     // var emailAuth = email;
 
     // FirebaseAuth.instance.sendSignInLinkToEmail(
@@ -73,16 +73,16 @@ export const authHandlers = {
     //     .then((value) => print('Successfully sent email verification'));
     // };
   },
-  login: async (email, pass) => {
-    // console.log("signing in")
+  login: async (email:string, pass:string) => {
+    // //console.log("signing in")
     await signInWithEmailAndPassword(auth, email, pass)
   },
   logout: async () => {
-    // console.log("signing out")
+    // //console.log("signing out")
     await signOut(auth)
 
   },
-  changeCredentials: async(user,email, pass)=>{
+  changeCredentials: async(user,email:string, pass:string)=>{
     try {
           //const user  = auth.currentUser;
       updatePassword(user,pass);
@@ -97,7 +97,7 @@ export const authHandlers = {
   deactivate: async () => {
       try {
         if(auth.currentUser){
-          console.log("deactivating account...",auth.currentUser.uid)
+          //console.log("deactivating account...",auth.currentUser.uid)
           let user:User = auth.currentUser;
           // Delete the user from Firestore
           const userDocRef = doc(db, "user", auth.currentUser.uid);
@@ -107,7 +107,7 @@ export const authHandlers = {
           user?.delete;
 
           await auth.currentUser?.delete()
-          //  console.log('User successfully deactivated');
+          //  //console.log('User successfully deactivated');
         }
 
     

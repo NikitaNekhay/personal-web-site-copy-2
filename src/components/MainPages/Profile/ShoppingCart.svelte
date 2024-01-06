@@ -26,18 +26,18 @@
         let templateUser:User;
 
         const unsubscribe = authStore.subscribe((authStore) => {
-            console.log("authstore - in cart",authStore)
+            //console.log("authstore - in cart",authStore)
             tempAuthStore = authStore;
             cartPrice = countPrice();
             // cartPrice = authStore.data.cart
             // cartItems.forEach(item=> {
-            //   console.log(item.price)
+            //   //console.log(item.price)
             //   cartPrice += Number(item.price);
             // })
         });
         //
 
-        //console.log("cartitems - in cart - after await",$authStore.data.cart)
+        ////console.log("cartitems - in cart - after await",$authStore.data.cart)
         
         return unsubscribe;
     })
@@ -47,7 +47,7 @@
       cartPrice = 0;
       cartItems = tempAuthStore.data.cart
             cartItems.forEach(item=> {
-              console.log(item.price)
+              //console.log(item.price)
               cartPrice += Number(item.price);
             })
       return cartPrice
@@ -59,16 +59,16 @@
           const clickedItem:ProductType = cartItems.find((obj) => {
             return obj.id === cartItems[tempId].id;
           });
-          //console.log("handleCart - clicked item is:",clickedItem)
+          ////console.log("handleCart - clicked item is:",clickedItem)
         
-          //console.log(cartItems.indexOf(clickedItem))
+          ////console.log(cartItems.indexOf(clickedItem))
           
           //if (cartItems.indexOf(clickedItem) !== -1) {
             cartItems.splice(cartItems.indexOf(clickedItem),1);
-            console.log(cartItems)
+            //console.log(cartItems)
             tempAuthStore.cart = cartItems;
           //}
-          //console.log("handleClick - pushed value for cart:",cartItems)
+          ////console.log("handleClick - pushed value for cart:",cartItems)
 
           // make map out of user's cart
           cartItems.forEach(item => {
@@ -87,18 +87,18 @@
 
           cartPrice = countPrice();
           } else {
-          console.log("cant handle cart because temoauthstore is empty")
+          //console.log("cant handle cart because temoauthstore is empty")
           }
       }
 
         function handleCart (){
             submitClicked  = !submitClicked ;
-            //console.log("handleCart cliekd")
+            ////console.log("handleCart cliekd")
             // make map out of user's cart
             cartItems.forEach(item => {
             productQuantities.set(item.title, (productQuantities.get(item.title) || 0) + 1);
             });
-            //console.log("cartmap - in cart - after await",productQuantities)
+            ////console.log("cartmap - in cart - after await",productQuantities)
             downloadCheck();
             setTimeout(()=>{
               submitClicked  = !submitClicked ;

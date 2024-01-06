@@ -13,7 +13,7 @@
     let triggerReload:boolean = false;
   let passComponent = false;
   let tempProductStore:ProductType[];
-  console.log("mounting in posts...",passComponent);
+  //console.log("mounting in posts...",passComponent);
   onMount(async() => {
     tempProductStore = await getProducts();
 

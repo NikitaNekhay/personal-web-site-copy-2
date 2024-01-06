@@ -1,20 +1,14 @@
 <script lang="ts">
-  import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-  import { auth, storage } from "$lib/firebase/firebase";
+  import { auth } from "$lib/firebase/firebase";
   import { addProduct, updateProduct } from "../../../routes/posts/post";
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../../services/ru.json";
-  import en from "../../../services/en.json";
-  import { currentLanguagee } from "../../../store/store_";
+  import { t } from "svelte-i18n";
 
-  import LoadingButton from "../../Shared/LoadingButton.svelte";
-  import { beforeUpdate } from "svelte";
   import SubmitButton from "../../Shared/SubmitButton.svelte";
   import { currentLanguage, productStore } from "../../../store/store";
   import type { ProductType } from "../../../shared/types";
-  import Comment from "./Comment.svelte";
+
   import DragAndDrop from "./DragAndDrop.svelte";
-  import EmptyPage from "../../Shared/EmptyPage.svelte";
+
   import { processColorsString } from "../../../services/help";
   import { writable, type Writable } from "svelte/store";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
@@ -29,7 +23,6 @@
   let submitClicked = false;
 
   let tempProductStore: ProductType;
-  let files: Writable<Array<{ file: File; url: string }>> = writable([]);
   export let typeCRUD: string;
   export let post: ProductType | null;
 
@@ -40,7 +33,6 @@
   }
 
   async function handleSubmit() {
-    const user = auth.currentUser;
     submitClicked = !submitClicked;
     isLoading = true;
     try {
@@ -50,10 +42,10 @@
 
       if (typeCRUD === "CREATE POST") {
         addProduct(tempProductStore);
-        console.log("createed");
+        //console.log("createed");
       } else {
         updateProduct(tempProductStore);
-        console.log("updated");
+        //console.log("updated");
       }
       isChanged = !isChanged;
 

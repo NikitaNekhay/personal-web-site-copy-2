@@ -5,12 +5,12 @@ import { Language } from "../shared/types";
 export const persistLanguageStore = (key,initial) => {
     if (typeof window !== "undefined") {
         const persist = localStorage.getItem(key);
-      //  console.log(persist)
+      //  //console.log(persist)
         const data = persist ?? initial;
-       // console.log(data)
+       // //console.log(data)
         const store = writable(data, () => {
           const unsubscribe = store.subscribe((value) => {
-            //console.log(value)
+            ////console.log(value)
             localStorage.setItem(key, value);
           });
           return unsubscribe;

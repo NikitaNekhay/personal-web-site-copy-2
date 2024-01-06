@@ -41,15 +41,15 @@
     
   
     onMount(() => {
-       console.log("updating profile credentials...")
+       //console.log("updating profile credentials...")
       const unsubscribe = auth.onAuthStateChanged(async (user) => {
         try {
           if(user){
             userCopy=user;
-            console.log(userCopy)
+            //console.log(userCopy)
             profileValue = await getUserProfile(user);
             profileCredentials.email = profileValue.email;
-            console.log("what we got from db getUserProfile:",profileValue);
+            //console.log("what we got from db getUserProfile:",profileValue);
           
           } else {
             throw Errors.FetchUser;
@@ -76,7 +76,7 @@
       submitClicked = true;
 
       if(userCopy && profileValue){
-        console.log("user exists so we can handle submit")
+        //console.log("user exists so we can handle submit")
         
         try {
             // YOU CAN'T CHANGE YOUR EMAIL!
@@ -91,7 +91,7 @@
           //   profileValue.cart
           // )
           // .then(() => {
-          //   console.log("Profile updated successfully.");
+          //   //console.log("Profile updated successfully.");
           // })
           // .catch((error) => {
           //   console.error(Errors.EditProfile, error);
@@ -130,7 +130,7 @@
         }, 2500);
       }
       } else {
-        console.log("user dont exists so we cant handle submit")
+        //console.log("user dont exists so we cant handle submit")
         setTimeout(() => {
             // Calculate and set the new scroll position based on the previous percentage
             submitClicked = false;

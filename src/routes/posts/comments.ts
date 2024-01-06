@@ -6,9 +6,9 @@ export const commentsCollection = collection(db, "comments");
 
 export async function addComment(obj:MessageType){
     try {
-     // console.log('Temp post:', tempPost)
+     // //console.log('Temp post:', tempPost)
       const docRef = await addDoc(commentsCollection, obj);
-      console.log("New comment added with ID: ", docRef.id);
+      //console.log("New comment added with ID: ", docRef.id);
       obj.cid = docRef.id;
       await runTransaction(db, async (transaction) => {
      
@@ -50,7 +50,7 @@ export async function addComment(obj:MessageType){
   
   export async function getComment(cid:string){
     try{
-     // console.log("this is id passed to function for db call: ", id)
+     // //console.log("this is id passed to function for db call: ", id)
       const postDoc = doc(collection(db, "comments"), cid);
       const postSnapshot = await getDoc(postDoc);
       // put the value in store
@@ -73,13 +73,13 @@ export async function addComment(obj:MessageType){
       
       const CommentsCollection = collection(db, 'comments');
       const CommentsSnapshot = await getDocs(CommentsCollection);
-        console.log(CommentsSnapshot)
+        //console.log(CommentsSnapshot)
       // Extract the data from each blog post document
       const Comments = CommentsSnapshot.docs.map((doc) => ({
         id: String(doc.id),
         ...doc.data(),
       }));
-      console.log("Comments from comments.ts:",Comments)
+      //console.log("Comments from comments.ts:",Comments)
       return Comments;
     } catch (error) {
       console.error('Error fetching Comments :', error);
@@ -91,7 +91,7 @@ export async function addComment(obj:MessageType){
     try {
       const commentsDocRef = doc(collection(db, 'comments'), cid);
       await deleteDoc(commentsDocRef);
-     // console.log('Blog post deleted:', id);
+     // //console.log('Blog post deleted:', id);
     } catch (error) {
       console.error('Error deleting comment:', error);
     }

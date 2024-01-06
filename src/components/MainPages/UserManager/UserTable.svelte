@@ -3,14 +3,12 @@
   import { t } from "svelte-i18n";
   import {
     getUserProfiles,
-    handleDelete,
-    updateUserProfile,
   } from "../../../routes/profile/user";
   import { base } from "$app/paths";
     import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
     import UserList from "./UserList.svelte";
     import { SortMethod, type UserDataType } from "../../../shared/types";
-    import { connectStorageEmulator } from "firebase/storage";
+
 
   let sortMethod:SortMethod = SortMethod.Default;
   let idsearched:string;
@@ -25,9 +23,9 @@
   onMount(async() => {
     try {
       // Fetch blog posts from the database
-       console.log('Fetching blog posts from the database...')
+       //console.log('Fetching blog posts from the database...')
       userProfiles = await getUserProfiles();
-      // console.log(userProfiles)
+      // //console.log(userProfiles)
       l_userProfiles = userProfiles.length;
       const interval = setInterval(() => {
         
@@ -45,7 +43,7 @@
       console.error("fetched the user from db got error:", error);
     }
 
-    //console.log(userProfiles)
+    ////console.log(userProfiles)
   });
 
 
@@ -62,13 +60,13 @@
         document.documentElement.clientHeight);
     window.scrollTo(0, newScrollPosition);
     window.location.href = `${base}/dashboard/#`;
-    console.log("positioned to start");
+    //console.log("positioned to start");
   }
 
   function nextClick(lastElement) {
     try {
       if (userProfiles[userProfiles.indexOf(lastElement) + 1] !== undefined) {
-        // console.log(userProfiles[userProfiles.indexOf(lastElement)+1])
+        // //console.log(userProfiles[userProfiles.indexOf(lastElement)+1])
         nextPairs(
           userProfiles[userProfiles.indexOf(lastElement) + 1],
           userProfiles.indexOf(lastElement) + 1
@@ -81,9 +79,9 @@
 
   function backClick(lastElement) {
     try {
-      //console.log(latestProfiles[0])
+      ////console.log(latestProfiles[0])
       if (userProfiles[userProfiles.indexOf(lastElement) - 1] !== undefined) {
-        //console.log(userProfiles[userProfiles.indexOf(lastElement)-1])
+        ////console.log(userProfiles[userProfiles.indexOf(lastElement)-1])
         prevPairs(
           userProfiles[userProfiles.indexOf(lastElement) - 1],
           userProfiles.indexOf(lastElement) - 1
@@ -109,8 +107,8 @@
 
   function nextPairs(lastElement, lastElement_index) {
     let borderNumber = 4;
-    // console.log(lastElement_index)
-      //console.log(latestProfiles)
+    // //console.log(lastElement_index)
+      ////console.log(latestProfiles)
     if (latestProfiles.length >= 4) {
       latestProfiles.length = 0;
     }
@@ -126,7 +124,7 @@
       if (lastElement_index !== 0) borderNumber = lastElement_index % 4;
       else borderNumber = userProfiles.length;
     }
-    //  console.log(borderNumber)
+    //  //console.log(borderNumber)
     var i = 0;
     for (var j = lastElement_index; i < borderNumber; j++) {
       i = 0;
@@ -137,7 +135,7 @@
           break;
         }
         latestProfiles.push(userProfiles[j]);
-        //  console.log(latestProfiles.length)
+        //  //console.log(latestProfiles.length)
         i++;
       }
     }
@@ -146,7 +144,7 @@
 
   function handleSort(event){
     //event.preventDefault();
-    console.log("sort method changes to", sortMethod)
+    //console.log("sort method changes to", sortMethod)
     switch (sortMethod) {
       case 0:{
 
@@ -181,7 +179,7 @@
         break;
       }
       default:{
-        console.log("incorrect sort value")
+        //console.log("incorrect sort value")
         break;
       }
         
@@ -191,7 +189,7 @@
   }
 
   function handleIdSearch(event){
-    //console.log(idsearched)
+    ////console.log(idsearched)
     try {
       const found:UserDataType|undefined = userProfiles.find((obj) => {
         return obj.id === idsearched;
@@ -199,10 +197,10 @@
       if(found){
         latestProfiles.length=0;
         latestProfiles.push(found);
-        console.log("user was found")
+        //console.log("user was found")
       } else {
         latestProfiles.length=0;
-        console.log("user wasn't founded")
+        //console.log("user wasn't founded")
       }
 
     } catch (error) {
