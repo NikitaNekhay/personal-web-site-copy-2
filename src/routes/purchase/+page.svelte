@@ -1,5 +1,6 @@
 <script>
-    import EmptyPage from "../../components/Shared/EmptyPage.svelte";
+    import Purchase from "../../components/MainPages/About/Purchase.svelte";
+import EmptyPage from "../../components/Shared/EmptyPage.svelte";
 
 </script>
 <svelte:head>
@@ -7,4 +8,4 @@
   <meta name="description" content="Policies of purchase, return, shipping and etc." />
 </svelte:head>
 
-<EmptyPage />
+<Purchase />

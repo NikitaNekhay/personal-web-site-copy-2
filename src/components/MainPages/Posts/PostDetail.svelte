@@ -447,7 +447,7 @@
                                 )}<br />
                                 <em
                                     >{$t(
-                                        "* Price of mail services will be included in the order price.",
+                                        "Price of mail services will be included in the order price.",
                                     )}</em
                                 ><br />
                                 <br />

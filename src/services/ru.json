@@ -161,15 +161,7 @@
         "Height 172cm":"Рост 172СМ",
         "Classic Chanel Jacket with tweed":"Классический жакет Шанель из твида", 
         "Male height 182cm, female height 172cm":"Рост парня 182см, рост девушки 172см", 
-        "We accept cash, cashless payments. Order is performed only with a prepayment. Return conditions vary.":"Мы принимаем безналичный, наличный расчеты. Заказ осуществляется только по предоплате. Условия возврата варьируются.",   
-        "We suggest some shipping solutions:":"Мы предлагаем несколько способов доставки:", 
-        "Minsk: Self-delivery/Delivery by our courier to your door;":"Минск: Самовывоз/Доставка нашим курьером до двери;", 
-        "RB: Self-delivery from any Evropochta's office;":"РБ: Самовывоз из любого отделения Европочты;", 
-        "RF: Self-delivery from SDEK;":"РФ: Самовывоз СДЭК;",   
-        "Other countries: Belpochta or any personal agreements.":"Остальные страны: Белпочта или оговаривается лично.", 
-        "* Price of mail services will be included in the order price.":"* Оплата услуг почты добавляется к стоимости заказа.", 
-        "More detailed description of shipping, purchase, return conditions and policy:":"Более подробное описание условий доставки, оплаты, возврата по ссылке:", 
-        "forward link":"перейти по ссылке",   
+
         "My name is Nikita and here you will find some things about me especially what I do.":"Меня зовут Никита. Здесь вы узнаете немного обо мне и что же я тут делаю.", 
         "WHAT I SEW":"ЧТО Я ШЬЮ", 
         "WHO AM I":"КТО Я", 
@@ -186,8 +178,132 @@
         "a student majoring in programming and economics":"студент-программист-экономист 3 курса", 
         "a young designer who has passed 2 sewing, cutting and modeling courses":"начинающий дизайнер, закончил 2 курса по кройке, шитью и моделлированию", 
         "my ideas":"свои идеи", 
-        "here":"сюда",   
-        "":"", 
-        "":"", 
-        "":""      
+        "here":"сюда",  
+
+
+
+        "Shipping and delivery of goods":"Отправка и доставка товаров",
+
+        "We accept cash, cashless payments. Order is performed only with a prepayment. Return conditions vary.":"Мы принимаем безналичный, наличный расчеты. Заказ осуществляется только по предоплате. Условия возврата варьируются.",   
+        "We suggest some shipping options:":"Мы предлагаем несколько способов доставки:", 
+        "Minsk: Self-delivery/Delivery by our courier to your door:":"Минск: Самовывоз/Доставка нашим курьером до двери:", 
+        "Place and date for self-delivery are provided by our manager later":"Место и сроки самовывоза предлагаются продавцом в личной переписке;",
+        "Self-delivery is free":"Самовывоз бесплатный",
+        "Delivery service fee -- 10 BYN":"Услуги курьера -- 10 BYN",
+        "Courier will contact you by your contact details before about exact time":"Для уточнения времени и места доставки, курьер предварительно свяжется с вами по указанным Вами контактам.",
+
+        "Self-delivery":"Самовывоз",
+        "If delivery is being made within МКАД, fitting is available.":"*При выборе доставки в пределах МКАД доступна услуга примерки.",
+        "Self-delivery are made from Zavodksoy district of Minsk, exact adress will be sent to you later after checkout.":"Самовывоз осуществляется из Заводского района г.Минск, точный адрес будет сообщен Вам после оформления заказа.",
+        "Fitting is available for self-delivery and courier delivery.":"При самовывозе доступна примерка товара.",
+        "Buyer must pick up the product from our warehouse(self-delivery) within 10 calendar days since order was successfully prepared/ Otherwise order is eliminated and money wont be returned to the Buyer.":"Покупатель обязан забрать товар с нашего склада в течении 10 календарных дней с момента успешного выполнения заказа. В ином случае заказ анулируется, оплата за заказ Покупателю не возвращается.",
+    
+        "Courier delivery":"Доставка курьером",
+        "Home delivery is available for an additional fee -- 10 BYN.":"Выезд на Ваш личный адрес осуществляется за дополнительную плату -- 10 BYN",
+        "Courier delivery is carried out at the address pointed out in the order of the Buyer. The Buyer is obliged to provide access for the courier to the building and the premises specified in the delivery address.":"Курьерская доставка осуществляется по адресу, указанному в заказе Покупателя. Покупатель обязан обеспечить доступ для курьера в здание и помещение, указанное в адресе доставки.",
+        "Courier delivery is carried out daily from 12:00 to 21:00, in addition to public holidays and holidays in the interval specified by the Buyer at the placing of the order of goods or another time agreed by the parties.":"Курьерская доставка производится ежедневно с 12:00 по 21:00, кроме государственных праздников и праздничных дней в интервал времени, указанный Покупателем при размещении заказа товара или иной срок, дополнительно согласованный сторонами;",
+        "Inspection and fitting of the goods is performed by the Buyer within a period of time not exceeding 15 minutes.":"Проверка и примерка товара производится Покупателем в промежуток времени, не превышающий 15 минут.",
+        "The buyer is obliged to take the courier to the address and at the time specified in the order or additionally agreed by the parties. If, upon arrival of the courier at the address indicated by the Buyer, the Buyer is not at the place and does not answer the phone calls within 10 minutes, the repeated delivery in the new terms agreed with the Seller. Repeated delivery is paid.":"Покупатель обязан принять курьера по адресу и во время, указанные в заказе или дополнительно согласованные сторонами. Если по прибытии курьера по адресу, указанному Покупателем, Покупатель не находится на месте и не отвечает на телефонные звонки в течение 10 минут, производится повторная доставка в новые сроки, согласованные с Продавцом. Повторная доставка производится платно.",
+
+        "RB: Self-delivery from any Evropochta's office:":"РБ: Самовывоз из любого отделения Европочты:", 
+        "Delivery time -- 3-5 working days":"Сроки доставки 3-5 рабочих дней",
+        "Shipping costs -- 5 BYN":"Стоимость доставки 5 BYN",
+        "SMS-notification":"СМС-оповещение",
+        "Storage at the mail office for up to 7 calendar days":"Хранение в пункте выдачи до 7-ми дней",
+
+        "RF: Self-delivery from SDEK:":"РФ: Самовывоз СДЭК:",   
+        "Storage at the mail office for up to 7 calendar days":"Хранение в пункте выдачи до 7-ми дней",
+        "The time and cost of delivery is calculated in the shopping cart automatically and depends on the region of delivery":"Расчет срока и стоимости доставки производится в корзине автоматически и зависит от региона доставки",
+        "SMS-notification (id SDEK app is configured by Buyer)":"СМС-оповещение (при наличии оффициального приложения СДЭК)",
+
+        "Other countries: Belpochta or any personal agreements:":"Остальные страны: Белпочта или оговаривается лично:", 
+        "The time and cost of delivery is calculated by the seller. The seller offers possible ways of delivery to your region. The seller has the right to refuse the offered delivery options.":"Расчет срока и стоимости доставки производится продавцом. Продавец предлагает возможные способы доставки в ваш регион. Продавец в праве отказаться от предложенных вариантов доставки.",
+        "The seller is not responsible for the quality of logistics services when sending abroad, nor is he responsible for the safety of the goods.":"Продавец не несет ответственности за качество логистических услуг при отправке за границу, а также не ответственен за сохранность товара.",
+
+        "The assembly and processing time of the order is from 1 to 4 working days, when delivery is choosen.":"Срок сборки и обработки заказа при выборе доставки составляет от 1 до 4 рабочих дней.",
+        "The seller or courier has the right to refuse to make delivery, transfer of goods in public places (public transport, railway and other public buildings, commercial objects, public catering facilities, etc.).":"Продавец или курьер вправе отказаться производить доставку, передачу товара в общественных местах (общественном транспорте, зданиях вокзалов и других общественных зданиях, торговых объектах, пунктах общественного питания и др.).",
+        "The transfer of the goods at the self-delivery points of the Seller is carried out during the whole period of operation of the self-delivery. The inspection and fitting time is 15 minutes.":"Передача товара в пунктах самовывоза объекта Продавца производится в течение всего времени работы пунктов самовывоза. Время проверки и примерки товара составляет 15 минут.",
+        "If the order was made and sent to the buyer by Evropochta's delivery service or by courier (Minsk/EMS), but not paid in full - the buyer bears the costs of transportation costs for the passage of the goods to the customer and return to the seller, according to the Civil Code of the Republic of Belarus, in the amount of the cost of delivery.":"Если заказ был оформлен и отправлен покупателю службой доставки Европочта или же курьером (по Минску/EMS), но полностью не оплачен – покупатель несет расходы за транспортные издержки по прохождению товара к клиенту и возврату к продавцу, согласно Гражданскому кодексу Республики Беларусь, в размере стоимости доставки.",
+        "Ownership of the delivered goods passes to the Buyer from the moment of the actual delivery of the goods to the Buyer and payment by the latter of the full value of the goods. The risk of accidental death or damage to the goods passes to the Buyer from the moment of the actual transfer of the goods to the Buyer.":"Право собственности на доставленный товар переходит к Покупателю с момента фактической передачи товара Покупателю и оплаты последним полной стоимости товара. Риск случайной гибели или повреждения товара переходит к Покупателю с момента фактической передачи товара Покупателю.",
+        "After the goods have been handed over to the Buyer, the name, quantity and completeness of the goods are not accepted.":"После передачи товара Покупателю претензии к наименованию, количеству и комплектности товара не принимаются.",
+        "The Buyer understands and agrees that delivery in accordance with this Policy is a separate service that is not an integral part of the goods purchased by the Buyer, the proper performance of which is confirmed by the Buyer’s receipt of the goods. The primary accounting document confirming the provision of service for the delivery of goods to the Buyer shall be prepared by the Seller separetely.":"Покупатель понимает и соглашается с тем, что доставка в соответствии с настоящей офертой является отдельной услугой, не являющейся неотъемлемой частью приобретаемого Покупателем товара, надлежащее выполнение которой подтверждается фактом получения Покупателем товара. Первичный учетный документ, подтверждающий оказание услуги по доставке товара Покупателю, составляется Продавцом единолично.",
+        "Price of mail services will be included in the order price.":"Оплата услуг почты добавляется к стоимости заказа.",
+        "If incorrect data is entered in the order form or in the user profile, the Seller does not bear any responsibility for the further implementation of the order, and in case of partial or full payment for the order the Seller is entitled not to return the funds to the Buyer.":"При введение неправильных данных в форме оформления заказа или в профиле пользователя, Продавец не несет никакой ответственности за дальнейшее осуществление заказа, а при частичной или полной оплате за заказ Продавец вправе не возвращать средства Покупателю.",
+        
+        "More detailed description of shipping, purchase, return conditions and policy:":"Более подробное описание условий доставки, оплаты, возврата по ссылке:", 
+        "forward link":"перейти по ссылке",   
+
+
+
+        "Payment conditions":"Условия оплаты",
+
+        "Cash payment":"Наличный расчет",
+        "We accept cash on delivery by courier or in person.":"Мы принимаем наличный расчет при доставке курьером или при личной встрече.", 
+        
+        "Cashless payment":"Безналичный расчет",
+        "Cashless payments with bank cards of Belarusian banks, Visa Electron, MasterCard, Maestro, Belkart, MIR. Payment is made to the bank details sent to you. If payment is successful, we will contact you.":"Безналичный расчет банковскими картами белорусских банков, картами системы Visa, Visa Electron, MasterCard, Maestro, Белкарт, МИР. Оплата осуществляется на отправленные вам реквизиты. При успешном совершении платежа, мы с вами свяжемся.",
+        
+        "Payment via mail's services":"Оплата через услуги почты",
+        "Cash-on-delivery if mail services are choosen is obligatory.":"Наложенный платеж при отправке почтой обязателен.",
+        
+        "Attention!":"Внимание!",
+        "If you have not found your bank in this list, then write us and we together will try to find a solution of payment or prepayment of the order.":"Если Вы не нашли своих банковских реквизитов в данном списке, то напишете нам и мы вместе попробуем найти решение оплаты, предоплаты заказа.",
+        
+        "Obligatory prepayment":"Обязательная предоплата",
+        "The prepayment is made only cashless by supported banks.":"Предоплата осуществеляется только безналичным расчетом поддерживаемыми картами.", 
+        "To start your order you must pay at least 30% of the price.":"Для начала выполнение вашего заказа Вы обязаны внести предоплату не менее 30% от стоимости товара.",
+
+        "Internet payment":"Интернет-платеж",
+        "It is possible with bank cards Visa, Visa Electron, MasterCard, Maestro, Belkart, MIR on the website of the online store (payment will be automatically transferred to the payment system BePaid). Payment is made before the order starts. Fees for payment by means of a credit card shall not be deducted (unless stipulated in the agreement between the Buyer and the bank).":"Можно произвести по банковским пластиковым карточкам Visa, Visa Electron, MasterCard, Maestro, Белкарт, МИР на сайте интернет-магазина (платеж будет автоматически переведен на платежную систему BePaid). Оплата производится до начала выполнения заказа. Комиссии за платеж посредством банковской карты не снимаются (кроме случаев, если это предусмотрено в договоре между Покупателем и банком).",
+        
+
+
+
+        "Fitting of goods":"Примерка товара",
+        "If there are manufactured products of the required size, we carry out fitting in Minsk. And place and time are agreed personally in a place convenient for you.":"Если в наличии имеются изготовленные изделия необходимого Вам размера, то мы осуществляем примерку в г. Минске, а место и время согласовываются в личном порядке в удобном для Вас месте.",
+        "If there is no item of the desired size, the fitting is not performed. See the size table on a separate page of the product in the description.":"Если наличие товара нужного размера отсутствует, то примерка не осуществляется. Смотрите таблицу размеров на отдельной странице товара в описании.",
+        "Product inspection and fitting are carried out for a maximum of 15 minutes from the moment the product is handed over to the Buyer.":"Проверка и примерка товара осуществляются не более, чем 15 минут с момента получения товара на руки Покупателем.",
+        "Fitting of the product is free. Re-fitting of the product is subject to a fee -- 10 BYN.":"Примерка товара бесплатна. Повторная примерка товара платная -- 10 BYN.",
+
+
+        "Return of goods":"Возврат товара",
+        "Return of goods is only possible in case of defects or flaws in the product within 14 calendar days from the date of purchase. Confirmation of defects is done through our inspection.":"Возврат товара осуществляется только при наличии брака или изъяна изделия в течении 14 календарных дней с момента покупки товара. Подтверждение брака осуществляется экспертизой с нашей стороны. ",
+        "Return and exchange of non-defective goods are possible if the product has not been used, shows no signs of wear or contamination, maintains its original appearance, factory packaging is intact, and the document confirming the purchase conditions is retained.":"Возврат и обмен товара надлежащего качества возможен в случае, если товар не был в употреблении, отсутствуют следы носки и загрязнения, сохранен его товарный вид, не повреждена заводская упаковка, сохранен документ, подтверждающий факт и условия покупки указанного товара.",
+        "To initiate a return, please contact us by email at or by phone.":"Для осуществления возврата свяжитесь с нами по почте или по номеру телефона",
+        
+        "In your email message, please provide:":"В своем сообщение на электронную почту укажите:",
+        "Full name of the buyer for whom the product was purchased":"ФИО покупателя, на которого осуществлялось изделие",
+        "Details for the refund of funds: Buyer's account number, bank name, bank code, card number":"Реквизиты, на которые будет произведен возврат денежных средств: номер счета Покупателя, название банка, код банка, номер карты",
+        "Description of the product defect, and please attach several photos":"Описание брака изделия, а также приложите несколького фотографий",
+
+        "After our inspection confirms the defect for further return, you need to:":"После подтверждения брака нашей экспертизой для дальнейшего возврата Вам необходимо:",
+        "Pack the items you want to return in a bag or the original box.":"Упаковать вещи, которые хотите вернуть в пакет или фирменную коробку.",
+        "Send the product back to the seller using the method we suggest, such as by mail.":"Осуществить отправку товара продавцу, предложенным им способом, например почтой.",
+        "Send the product and wait for the refund of funds.":"Осуществить отправку и ждать возврата денежных средств.",
+
+        "In case of a full order refund, the buyer is responsible for covering the shipping costs.":"В случае полного возврата заказа, покупатель обязан компенсировать стоимость доставки.",
+
+        "Return of money":"Возврат денежных средств",
+        "The refund of funds is processed only to the same bank card that was used for the order payment.":"Возврат денежных средств производится только на ту банковскую карту, которой осуществлялась оплата заказа.",
+        "The transfer of funds by the Seller will be made no later than 7 calendar days from the return of the product and receipt of the letter from the Buyer, provided that it contains all the necessary information. The time it takes for the funds to appear in the Buyer's account depends on the rules of the issuing bank and may range from 3 to 30 days from the Seller's return.":"Перечисление денежных средств осуществляется Продавцом в срок не позднее 7 календарных дней с момента возврата товара и получения письма от Покупателя, при условии указания в нем всей необходимой информации. Срок поступления денежных средств на карту Покупателя зависит от правил банка-эмитента и может составлять от 3 до 30 дней с момента осуществления возврата Продавцом.",
+
+
+        "Checkout and acceptance of orders":"Оформление и принятие заказа",
+        "For checkout, please, fill out form on our site on the page of shopping cart or if you have already signed up check your profile to have true data in it. Next make the prepayment via a convenient option. If prepayment was successfully recieved by us we will inform you that the order has been started, if it is needed we will send you more details.":"Для оформления заказа заполните необходимую форму на странице с корзиной нашего сайта или, если вы уже зарегистрированы на сайте, то перед созданием заказа убедитесь в правильности указанных данных в вашем личном профиле. Далее Вам необходимо внести предоплату любым удобным для Вас способом. При успешном получении предоплаты с Вами свяжутся о начале выполнения заказа, при необходимости будут сообщены дополнительные детали заказа.",
+        "Orders is being performed within 10 calendar days since receiving a prepayment for the order.":"Оформление заказа осуществляется не более чем в течении 10 календарных дней с момента поступления предоплаты за заказ.",
+        "You will be informed when the order was started and ended - you will get appropriate notification.":"По началу и окончанию выполнения заказа Вы получите соответствующее оповещение.",
+        "After finishing the order, our manager will contact you. If the order is in stock or was performed, then you can pickup your it in Minsk at the same day of notification (orders, performed after 1 PM, will be available to pickup on the next day).":"После выполнения или подтверждения вашего заказа, менеджер свяжется с вами и сообщит об его выполнении. Забрать товар в г. Минск возможно в день выполнения или  подтверждения заказа при его наличии (заказы, оформленные после 13:00, будут доступны для выдачи на следующий день).",
+
+        "Termins":"Термины",
+        "The moment of purchase -- is the moment of payment of the full price for the goods.":"Момент покупки товара - это момент внесения полной стоимости за товар.",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":""     
 }
