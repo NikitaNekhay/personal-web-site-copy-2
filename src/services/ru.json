@@ -250,6 +250,7 @@
         "If you have not found your bank in this list, then write us and we together will try to find a solution of payment or prepayment of the order.":"Если Вы не нашли своих банковских реквизитов в данном списке, то напишете нам и мы вместе попробуем найти решение оплаты, предоплаты заказа.",
         
         "Obligatory prepayment":"Обязательная предоплата",
+        "Prepayment":"Предоплата",
         "The prepayment is made only cashless by supported banks.":"Предоплата осуществеляется только безналичным расчетом поддерживаемыми картами.", 
         "To start your order you must pay at least 30% of the price.":"Для начала выполнение вашего заказа Вы обязаны внести предоплату не менее 30% от стоимости товара.",
 
@@ -296,7 +297,12 @@
 
         "Termins":"Термины",
         "The moment of purchase -- is the moment of payment of the full price for the goods.":"Момент покупки товара - это момент внесения полной стоимости за товар.",
-        "":"",
+       
+
+
+
+
+        "Price for goods":"Стоимость товаров",
         "":"",
         "":"",
         "":"",

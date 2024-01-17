@@ -17,6 +17,9 @@
 
     let currentPage = $page.url.pathname;
     //console.log(currentPage.includes("/about"));
+
+    
+
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
         // Switch the language value

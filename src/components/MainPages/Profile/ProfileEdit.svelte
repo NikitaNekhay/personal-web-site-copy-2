@@ -185,6 +185,7 @@
               type="text"
               bind:value={profileValue.name}
               required
+              placeholder="Username"
               id="name"
               autocomplete="given-name"
             />

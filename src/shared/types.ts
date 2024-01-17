@@ -6,6 +6,25 @@ export enum Language {
     Russian = 'ru',
   }
 
+export enum ContactOptions{
+    Telegram = "tg",
+    Instagram = "ig",
+    Facebook = "fb",
+    Whatsapp = "wapp",
+}
+
+export enum DeliveryOptions{
+    SelfDelivery = "sd",
+    EMS ="ems",
+    Evropochta = "ep",
+    Belpochta = "bp",
+}
+
+
+export enum PaymentOptions {
+
+}
+
   export type Slide = {
     img: string;
   };
@@ -72,7 +91,20 @@ export interface ProductType {
 
 } 
 
-
+export interface UserCartType {
+    fullName:string,
+    phoneNumber:string,
+    email:string,
+    contactOption: ContactOptions,
+    contactName: string,
+    deliveryOption:DeliveryOptions,
+    country:string,
+    city:string,
+    adress:string,
+    paymentOption:PaymentOptions,
+    discount:string,
+    
+}
 
 export interface MessageType {
     cid:string,

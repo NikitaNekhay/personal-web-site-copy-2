@@ -6,7 +6,7 @@ import { Errors, Language } from "../shared/types";
 
 
 export const currentLanguage = writable({
-  language: Language.Russian
+  language: Language.English
 })
 
 

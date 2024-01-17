@@ -2,9 +2,22 @@ import { writable } from "svelte/store"
 import { Language } from "../shared/types";
 
 
+let userLng = "";
+
+const currentLanguageData ={
+  language: userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English , 
+}
+
 export const persistLanguageStore = (key,initial) => {
     if (typeof window !== "undefined") {
-        const persist = localStorage.getItem(key);
+      
+      
+      userLng = window.navigator.userLanguage || window.navigator.language.split("-", 2)[1].toLowerCase();
+      console.log("window navigate",window.navigator.languages)
+    
+      currentLanguageData.language = userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English;
+
+      const persist = localStorage.getItem(key);
       //  //console.log(persist)
         const data = persist ?? initial;
        // //console.log(data)
@@ -22,9 +35,10 @@ export const persistLanguageStore = (key,initial) => {
 
 }
 
-   const currentLanguageData ={
-    language: Language.Russian, 
-  }
+
+  
+
+  
 
   export let currentLanguagee = persistLanguageStore("language",currentLanguageData.language)
 
