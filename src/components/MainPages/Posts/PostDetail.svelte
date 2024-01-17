@@ -289,7 +289,7 @@
 
                 <!-- BLOCK OF DESCRIPTION AND DETAILS -->
                 <div
-                    class="grid divide-y-2 divide-navy-2 mx-auto mt-6 w-[80%] sm:w-[100%] md:w-[100%]"
+                    class="grid divide-y-2 divide-navy-2 mx-auto mt-6 w-[100%]"
                 >
                     <!-- DESCRIPTION -->
                     {#if post.description["bigDescription"].length !== 0}
