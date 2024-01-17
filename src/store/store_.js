@@ -19,7 +19,7 @@ export const persistLanguageStore = (key,initial) => {
       currentLanguageData.language = userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English;
 
       const persist = localStorage.getItem(key);
-      //  //console.log(persist)
+        //console.log(persist)
         const data = persist ?? initial;
        // //console.log(data)
         const store = writable(data, () => {
