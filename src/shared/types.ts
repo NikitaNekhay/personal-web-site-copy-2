@@ -16,7 +16,7 @@ export enum ContactOptions{
 export enum DeliveryOptions{
     SelfDelivery = "sd",
     EMS ="ems",
-    Sdek = "sdek",
+    Cdek = "cdek",
     Evropochta = "ep",
 }
 

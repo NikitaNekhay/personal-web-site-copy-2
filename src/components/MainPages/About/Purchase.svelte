@@ -87,7 +87,7 @@
                 </h2>
                 <ul>
                     <li>
-                        <p>{$t('Place and date for self-delivery are provided by our manager later')}</p>  
+                        <p>{$t('Place (Minsk, Zavodskoy district) and date for self-delivery are provided by our manager later')}</p>  
                     </li>
                     <li class="list-disc ml-4">
                         <p>{$t('Self-delivery is free')}</p>  
@@ -126,7 +126,7 @@
 
                 <h2 class="tracking-widest uppercase text-black-1 font-serif text-lg">
                     {$t(
-                        "RF: Self-delivery from SDEK:",
+                        "RF: Self-delivery from CDEK:",
                     )}
                 </h2>
                 <ul>
@@ -138,7 +138,7 @@
                         <p>{$t('Storage at the mail office for up to 7 calendar days')}</p>
                     </li>
                     <li class="list-disc ml-4">
-                        <p>{$t('SMS-notification (id SDEK app is configured by Buyer)')}</p>
+                        <p>{$t('SMS-notification (id CDEK app is configured by Buyer)')}</p>
                     </li>
                     <!-- <li class="list-disc ml-4">
                         <p>{$t('')}</p>

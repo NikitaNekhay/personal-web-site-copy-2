@@ -441,7 +441,7 @@
                                 {$t(
                                     "RB: Self-delivery from any Evropochta's office;",
                                 )}<br />
-                                {$t("RF: Self-delivery from SDEK;")}<br />
+                                {$t("RF: Self-delivery from CDEK;")}<br />
                                 {$t(
                                     "Other countries: Evropochta or any personal agreements.",
                                 )}<br />

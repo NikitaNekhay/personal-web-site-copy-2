@@ -142,7 +142,6 @@
   }
 
   function handleCart() {
-    
     submitClicked = !submitClicked;
     ////console.log("handleCart cliekd")
     // make map out of user's cart
@@ -154,7 +153,7 @@
     });
     ////console.log("cartmap - in cart - after await",productQuantities)
     downloadCheck();
-    console.log(tempUserCart)
+    console.log(tempUserCart);
     setTimeout(() => {
       submitClicked = !submitClicked;
       isLoading = false;
@@ -333,7 +332,7 @@
   <section class="h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%]">
     <form class="font-sans">
       <div class="purchase-container">
-        <h2 class="purchase-heading2">{$t("Your data")}</h2>
+        <h2 class="purchase-heading2">{$t("Personal data")}</h2>
 
         <!-- FULL NAME AND ... -->
         <div class="purchase-item flex mb-6 flex-wrap w-full">
@@ -438,6 +437,7 @@
             <div>
               <input
                 bind:group={tempUserCart.contactOption}
+                class=" focus:ring-green-0 focus:text-green-0 text-green-0"
                 type="radio"
                 name="contact"
                 id="tg"
@@ -449,6 +449,7 @@
             <div>
               <input
                 bind:group={tempUserCart.contactOption}
+                class=" focus:ring-green-0 focus:text-green-0 text-green-0"
                 type="radio"
                 name="contact"
                 id="ig"
@@ -460,6 +461,7 @@
             <div>
               <input
                 bind:group={tempUserCart.contactOption}
+                class=" focus:ring-green-0 focus:text-green-0 text-green-0"
                 type="radio"
                 name="contact"
                 id="fb"
@@ -471,6 +473,7 @@
             <div>
               <input
                 bind:group={tempUserCart.contactOption}
+                class=" focus:ring-green-0 focus:text-green-0 text-green-0"
                 type="radio"
                 name="contact"
                 id="wapp"
@@ -513,7 +516,7 @@
       </div>
       <!-- DELIVERY -->
       <div class="purchase-container">
-        <h2 class="purchase-heading2">{$t("Your delivery details")}</h2>
+        <h2 class="purchase-heading2">{$t("Delivery details")}</h2>
 
         <!-- Country Selector with Flags -->
         <div class="purchase-item relative">
@@ -626,7 +629,7 @@
           <div>
             <input
               bind:group={tempUserCart.deliveryOption}
-              class=""
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
               type="radio"
               name="delivery"
               id=""
@@ -638,6 +641,7 @@
           <div>
             <input
               bind:group={tempUserCart.deliveryOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
               type="radio"
               name="delivery"
               id="ep"
@@ -649,17 +653,19 @@
           <div>
             <input
               bind:group={tempUserCart.deliveryOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
               type="radio"
               name="delivery"
-              id="sdek"
-              value="sdek"
+              id="cdek"
+              value="cdek"
             />
-            <label for="sdek">{$t("SDEK")}</label>
+            <label for="cdek">{$t("CDEK")}</label>
           </div>
 
           <div>
             <input
               bind:group={tempUserCart.deliveryOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
               type="radio"
               name="delivery"
               id="ems"
@@ -674,8 +680,11 @@
         {:else if tempUserCart.deliveryOption === DeliveryOptions.SelfDelivery}
           <!-- SELF-DELIVERY -->
           <div class="purchase-item">
-            <p>This is our adress</p>
-            <div>MAP</div>
+            <p>
+              {$t(
+                "Place (Minsk, Zavodskoy district) and date for self-delivery are provided by our manager later",
+              )}
+            </p>
           </div>
         {:else}
           <!-- YOUR ADRESS -->
@@ -727,7 +736,7 @@
       </div>
 
       <div class="purchase-container">
-        <h2 class="purchase-heading2">{$t("Your payment details")}</h2>
+        <h2 class="purchase-heading2">{$t("Payment details")}</h2>
         <!-- PAYMENT METHOD RADIO -->
         <p class="purchase-item">
           {$t("You need to make a prepayment via cashless method in anyway.")}
@@ -735,12 +744,26 @@
         <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
           <legend>{$t("Choose payment method")} :</legend>
           <div>
-            <input bind:group={tempUserCart.paymentOption} type="radio" name="payment" id="c" value="c" />
+            <input
+              bind:group={tempUserCart.paymentOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="radio"
+              name="payment"
+              id="c"
+              value="c"
+            />
             <label for="c">{$t("With cash when picking up a good")}</label>
           </div>
 
           <div>
-            <input bind:group={tempUserCart.paymentOption} type="radio" name="payment" id="cl" value="cl" />
+            <input
+              bind:group={tempUserCart.paymentOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="radio"
+              name="payment"
+              id="cl"
+              value="cl"
+            />
             <label for="cl">{$t("Cashless")}</label>
           </div>
         </fieldset>
@@ -805,6 +828,7 @@
       </div>
 
       <!-- Button -->
+
       <div class="grid w-full justify-center text-center">
         <SubmitButton
           bind:submitClicked
@@ -855,15 +879,13 @@
   @media (min-width: 1024px) {
     /* lg screens and above */
     .sticky-section {
- 
       position: sticky;
       top: 20vh; /* Adjust this value based on your navbar's height */
       bottom: 0;
       padding-top: 68;
       z-index: 10;
-      max-height: calc(100vh - 60vh);
+      max-height: calc(100vh - 35vh);
       overflow-y: auto; /* In case the content overflows */
-  
     }
   }
 </style>
