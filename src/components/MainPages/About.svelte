@@ -255,7 +255,7 @@
                                     <a
                                         class="p-link"
                                         target="_blank"
-                                        href="https://t.me/araneaesolidum"
+                                        href="https://t.me/nikitaniakhai"
                                         >{$t("here")}</a
                                     >
                                 </p>

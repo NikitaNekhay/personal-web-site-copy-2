@@ -15,9 +15,9 @@ export const persistLanguageStore = (key,initial) => {
       userLng = (window.navigator.userLanguage || window.navigator.language.split("-", 2)[1]).toLowerCase();
       //console.log("window navigate",window.navigator)
       userLng.toLowerCase;
-      console.log(userLng)
+      // console.log(userLng)
       currentLanguageData.language = userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English;
-      console.log("window navigate",userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English)
+      //console.log("window navigate",userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English)
       const persist = localStorage.getItem(key);
         //console.log(persist)
         const data = persist ?? initial;
@@ -35,11 +35,6 @@ export const persistLanguageStore = (key,initial) => {
 
 
 }
-
-
-  
-
-  
 
   export let currentLanguagee = persistLanguageStore("language",currentLanguageData.language)
 

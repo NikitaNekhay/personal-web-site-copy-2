@@ -443,7 +443,7 @@
                                 )}<br />
                                 {$t("RF: Self-delivery from SDEK;")}<br />
                                 {$t(
-                                    "Other countries: Belpochta or any personal agreements.",
+                                    "Other countries: Evropochta or any personal agreements.",
                                 )}<br />
                                 <em
                                     >{$t(

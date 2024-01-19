@@ -52,7 +52,7 @@
                         <a
                             class="p-link"
                             target="_blank"
-                            href="https://t.me/araneaesolidum">{$t("SAY HELLO IN TELEGRAM")}</a
+                            href="https://t.me/nikitaniakhai">{$t("SAY HELLO IN TELEGRAM")}</a
                         ><br />
                     </li>
                 </ul>

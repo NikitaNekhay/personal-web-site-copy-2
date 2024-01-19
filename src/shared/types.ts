@@ -16,13 +16,14 @@ export enum ContactOptions{
 export enum DeliveryOptions{
     SelfDelivery = "sd",
     EMS ="ems",
+    Sdek = "sdek",
     Evropochta = "ep",
-    Belpochta = "bp",
 }
 
 
 export enum PaymentOptions {
-
+    Cash = "c",
+    CashLess = "cl",
 }
 
   export type Slide = {

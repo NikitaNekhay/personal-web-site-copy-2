@@ -44,6 +44,8 @@
 
 		"caniuse-lite": "^1.0.30001565",
 
+		"country-flag-icons": "^1.5.9",
+
 		"eslint": "^8.54.0",
 
 		"firebase": "^9.20.0",

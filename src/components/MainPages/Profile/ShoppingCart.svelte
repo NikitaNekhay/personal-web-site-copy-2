@@ -8,8 +8,21 @@
   import { t } from "svelte-i18n";
   import { updateUserProfile } from "../../../routes/profile/user";
   import { currentLanguagee } from "../../../store/store_";
-  import type { AuthStoreType, ProductType } from "../../../shared/types";
+  import {
+    ContactOptions,
+    type AuthStoreType,
+    type ProductType,
+    type UserCartType,
+    DeliveryOptions,
+    PaymentOptions,
+  } from "../../../shared/types";
   import SquareButton from "../../Shared/SquareButton.svelte";
+  import { base } from "$app/paths";
+
+  export let userCity;
+  export let userCountry;
+  // Assuming you have a list of countries and their codes
+  export let countries;
 
   let submitClicked = false;
   let isLoading = false;
@@ -18,27 +31,51 @@
   let tempAuthStore: AuthStoreType;
   let cartPrice: number = 0;
   let totalСartPrice: number = 0;
+  let deliveryPrice: number = 0;
   let prepaymentPrice: number = 0;
+  let tempUserCart: UserCartType = {
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    contactOption: ContactOptions.Telegram,
+    contactName: "",
+    deliveryOption: DeliveryOptions.SelfDelivery,
+    country: userCountry ?? "",
+    city: userCity ?? "",
+    adress: "",
+    paymentOption: PaymentOptions.Cash,
+    discount: "",
+  };
+
+  let showDropdown = false;
 
   onMount(async () => {
-    let templateUser: User;
-
     const unsubscribe = authStore.subscribe((authStore) => {
       //console.log("authstore - in cart",authStore)
       tempAuthStore = authStore;
-      cartPrice = countPrice();
-      // cartPrice = authStore.data.cart
-      // cartItems.forEach(item=> {
-      //   //console.log(item.price)
-      //   cartPrice += Number(item.price);
-      // })
-    });
-    //
 
-    ////console.log("cartitems - in cart - after await",$authStore.data.cart)
+      cartItems = tempAuthStore.data.cart;
+      cartPrice = countPrice();
+      totalСartPrice = cartPrice + deliveryPrice;
+      prepaymentPrice = totalСartPrice * 0.3;
+    });
 
     return unsubscribe;
   });
+
+  tempUserCart = setUserPreferences(tempUserCart);
+  console.log(userCity, userCountry);
+
+  function setUserPreferences(userData: UserCartType): UserCartType {
+    return userData;
+  }
+
+  function selectCountry(country) {
+    tempUserCart.country = country.code;
+    showDropdown = false;
+    // Additional logic to handle the selected country
+  }
+
   // Calculate the quantities of each product
 
   function countPrice() {
@@ -63,7 +100,7 @@
       //if (cartItems.indexOf(clickedItem) !== -1) {
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
       //console.log(cartItems)
-      tempAuthStore.cart = cartItems;
+      tempAuthStore.data.cart = cartItems;
       //}
       ////console.log("handleClick - pushed value for cart:",cartItems)
 
@@ -83,13 +120,26 @@
         tempAuthStore.data.country,
         tempAuthStore.data.description,
         tempAuthStore.data.messages,
-        tempAuthStore.cart,
+        tempAuthStore.data.cart,
       );
 
       cartPrice = countPrice();
+      totalСartPrice = cartPrice + deliveryPrice;
+      prepaymentPrice = totalСartPrice * 0.3;
     } else {
       //console.log("cant handle cart because temoauthstore is empty")
     }
+  }
+
+  // Function to handle country selection
+  function handleCountrySelect(event) {
+    tempUserCart.country = event.target.value;
+    // Additional logic to handle the selected country
+  }
+
+  // Function to get the flag URL
+  function getFlagUrl(countryCode: string) {
+    return `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`;
   }
 
   function handleCart() {
@@ -167,12 +217,13 @@
 </script>
 
 <div
-  class="w-[100%] h-auto
+  class="w-[100%] relative  h-auto
             grid grid-flow-col sm:grid-flow-row md:grid-flow-row
             gap-x-6 sm:gap-x-0 md:gap-x-0
             py-[14%] px-[3%] sm:py-[40%] xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt"
 >
-  <section class=" h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%]">
+  <section class="sticky-section h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%] w-[100%] ">
+    <div class=" left-0">
     <header class="text mb-6 flex justify-center">
       <h1 class="font-abril text-4xl text-blue-0">{$t("Your Cart")}</h1>
     </header>
@@ -270,73 +321,380 @@
         </div>
       {/key}
     </div>
+  </div>
   </section>
   <section class="h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%]">
-    <form>
-      <!-- FULL NAME AND ... -->
-      <div class="mb-6 flex flex-wrap w-full">
-        <div class="w-full px-3">
-          <label
-            class="relative block overflow-hidden rounded-md
+    <form class="font-sans ">
+      <div class="purchase-container">
+        <h2 class="purchase-heading2">{$t("Your data")}</h2>
+
+        <!-- FULL NAME AND ... -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
         focus-within:ring-white-2"
-            for="first-name"
-          >
-            <input
-              class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+              for="first-name"
+            >
+              <input
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
         focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-              type="text"
-              placeholder="Name, Surname, Middle name*"
-              required
-              id="name"
-              autocomplete="given-name"
-            />
-            <span
-              class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+                type="text"
+                placeholder="name"
+                bind:value={tempUserCart.fullName}
+                required
+                id="name"
+                autocomplete="given-name"
+              />
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
           peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t("Name, Surname, Middle name (if exists)")}
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- YOUR PHONE -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
+              border border-gray-200 bg-white-1
+              px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+              focus-within:ring-white-2"
+              for="phone-number"
             >
-              {$t("Name, Surname, Middle name*")}
-            </span>
-          </label>
+              <input
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+                focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                type="tel"
+                bind:value={tempUserCart.phoneNumber}
+                placeholder="tel"
+                id="phone"
+                required
+                autocomplete="tel"
+              />
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+                  bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t("Phone number")}
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- YOUR EMAIL -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
+            border border-gray-200 bg-white-1
+            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+            focus-within:ring-white-2"
+              for="email"
+            >
+              <input
+                class="flex peer h-8 w-full border-none bg-transparent
+              bg-white-1 p-0 placeholder-transparent
+              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                type="email"
+                bind:value={tempUserCart.email}
+                required
+                id="email"
+                autocomplete="email"
+                placeholder="email@web.net"
+              />
+
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+              bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t("Email")}
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- SOCIAL NETWORK -->
+        <!-- HOW TO ACCESS YOU RADIO -->
+        <div>
+          <fieldset class="purchase-item">
+            <legend>
+              {$t("Choose contact option")} :
+            </legend>
+
+            <input type="radio" name="contact" id="tg" value="tg" />
+            <label for="tg">Telegram</label>
+
+            <input type="radio" name="contact" id="fb" value="tg" />
+            <label for="ig">Instagram</label>
+
+            <input type="radio" name="contact" id="fb" value="fb" />
+            <label for="fb">Facebook</label>
+
+            <input type="radio" name="contact" id="wapp" value="wapp" />
+            <label for="wapp">Whatsapp</label>
+          </fieldset>
+        </div>
+        <!-- USERNAME -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
+        border border-gray-200 bg-white-1
+        px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+        focus-within:ring-white-2"
+              for="first-name"
+            >
+              <input
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+        focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                type="text"
+                placeholder="Username"
+                bind:value={tempUserCart.contactName}
+                required
+                id="name"
+                autocomplete="given-name"
+              />
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t("Username")}
+              </span>
+            </label>
+          </div>
         </div>
       </div>
-      <!-- YOUR PHONE -->
-
-      <!-- YOUR EMAIL -->
-
-      <!-- SOCIAL NETWORK -->
-      <!-- HOW TO ACCESS YOU RADIO -->
-      <!-- USERNAME -->
-
       <!-- DELIVERY -->
-      <!-- COUNTRY -->
-      <!-- CITY -->
-      <!-- RADIO OPTION OF DELIVERY -->
-      <!-- BUSINESS LOGIC IF ELSE -->
-      <!-- BY BELPOCHTA -->
-      <!-- YOUR ADRESS -->
-      <!-- BY EVROPOCHTA  -->
-      <!-- BY EMS -->
-      <!-- SELF-DELIVERY -->
-      <!-- PAYMENT METHOD RADIO -->
-      <!-- IF ONLINE THEN BANNER -->
-      <!-- BANNER -->
-      <!-- DETAIL -->
-      <!-- POLICY -->
-      <!-- DISCOUNT BANNER -->
-      <div class="flex justify-end gap-6 text-base font-medium mb-8">
-        {$t("Prepayment")} :
-        {prepaymentPrice} BYN
+      <div class="purchase-container">
+        <h2 class="purchase-heading2">{$t("Your delivery details")}</h2>
+
+        <!-- Country Selector with Flags -->
+        <div class="purchase-item relative">
+          <!-- Custom Dropdown Trigger -->
+          <button
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={showDropdown.toString()}
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer flex justify-start gap-x-2 items-center"
+            on:click={() => (showDropdown = !showDropdown)}
+          >
+            <img
+              src={tempUserCart.country ? getFlagUrl(tempUserCart.country) : ""}
+              alt={tempUserCart.country}
+              class="inline-block w-5 h-3 ml-0 {tempUserCart.country
+                ? 'opacity-100'
+                : 'opacity-0'}"
+            />
+            {tempUserCart.country
+              ? countries.find((c) => c.code === tempUserCart.country).name
+              : "Select a country"}
+
+            <svg
+              class="w-4 h-4 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path></svg
+            >
+          </button>
+
+          <!-- Custom Dropdown Options -->
+          {#if showDropdown}
+            <ul
+              class="absolute z-10 w-full bg-white border border-gray-300 mt-1 max-h-60 overflow-y-auto rounded-lg"
+              role="listbox"
+              aria-labelledby="country"
+            >
+              {#each countries as country}
+                <li
+                  role="option"
+                  aria-selected={tempUserCart.country === country.code}
+                >
+                  <button
+                    type="button"
+                    class="flex items-center p-2 hover:bg-gray-100 cursor-pointer w-full text-left"
+                    on:click={() => selectCountry(country)}
+                  >
+                    <img
+                      src={getFlagUrl(country.code)}
+                      alt={country.name}
+                      class="inline-block mr-2 w-5 h-3"
+                    />
+                    {country.name}
+                  </button>
+                </li>
+              {/each}
+            </ul>
+          {/if}
+        </div>
+
+        <!-- City Input -->
+        <div class="purchase-item mb-4">
+          <label for="city" class="block mb-2 text-sm font-medium">City</label>
+          <input
+            type="text"
+            id="city"
+            bind:value={tempUserCart.city}
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Enter your city"
+          />
+        </div>
+
+        <!-- RADIO OPTION OF DELIVERY -->
+        <fieldset class="purchase-item">
+          <legend>{$t("Choose delivery option")} :</legend>
+          <input type="radio" name="delivery" id="" value="sd" />
+          <label for="sd">{$t("Self Delivery")}</label>
+
+          <input type="radio" name="delivery" id="ep" value="ep" />
+          <label for="ep">{$t("Evropochta")}</label>
+
+          <input type="radio" name="delivery" id="sdek" value="sdek" />
+          <label for="sdek">{$t("SDEK")}</label>
+
+          <input type="radio" name="delivery" id="ems" value="ems" />
+          <label for="ems">EMS</label>
+        </fieldset>
+
+        <!-- YOUR ADRESS -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
+          border border-gray-200 bg-white-1
+          px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+          focus-within:ring-white-2"
+              for="adress"
+            >
+              <input
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                type="text"
+                placeholder="Adress"
+                bind:value={tempUserCart.adress}
+                required
+                id="adress"
+              />
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t(
+                  "Adress (street, house number, appartement number, post code)",
+                )}
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SELF-DELIVERY -->
+        <div class="purchase-item">
+          <p>This is our adress</p>
+          <div>MAP</div>
+        </div>
+
+        <!-- POLICY -->
+        <div class="flex gap-1">
+          <p>{$t("You can read in details about delivery policy")} -></p>
+          <a class="p-link" target="_blank" href="{base}/purchase"
+            >{$t("here")}
+          </a>
+        </div>
       </div>
-      <div class="flex justify-end gap-6 text-base font-medium mb-8">
-        {$t("Total")} :
-        {totalСartPrice} BYN
+
+      <div class="purchase-container">
+        <h2 class="purchase-heading2">{$t("Your payment details")}</h2>
+        <!-- PAYMENT METHOD RADIO -->
+        <p class="purchase-item">
+          {$t("You need to make a prepayment via cashless method in anyway.")}
+        </p>
+        <fieldset class="purchase-item">
+          <legend>{$t("Choose payment method")} :</legend>
+          <input type="radio" name="payment" id="c" value="c" />
+          <label for="c">{$t("With cash when picking up a good")}</label>
+
+          <input type="radio" name="payment" id="cl" value="cl" />
+          <label for="cl">{$t("Cashless")}</label>
+        </fieldset>
+        <!-- IF ONLINE THEN BANNER -->
+        <!-- BANNER -->
+        <!-- DETAIL -->
+        <!-- POLICY -->
+
+
+        <!-- DISCOUNT BANNER -->
+        <div class="purchase-item flex mb-6 flex-wrap w-full">
+          <div class="w-full px-3">
+            <label
+              class="relative block overflow-hidden rounded-md
+  border border-gray-200 bg-white-1
+  px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+  focus-within:ring-white-2"
+              for="discount"
+            >
+              <input
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+  focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                type="text"
+                placeholder="Discount"
+                bind:value={tempUserCart.discount}
+                required
+                id="discount"
+              />
+              <span
+                class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+    bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              >
+                {$t("Discount")}
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class=" flex gap-1">
+          <p>{$t("You can read in details about purchase policy")} -></p>
+          <a class="p-link" target="_blank" href="{base}/purchase"
+            >{$t("here")}
+          </a>
+        </div>
+      </div>
+
+      <!-- PRICES -->
+      <div
+        class=" grid w-full justify-end grid-flow-row text-base font-medium my-8 gap-3"
+      >
+        <div>
+          <p>
+            {$t("Prepayment")} :
+            {prepaymentPrice} BYN
+          </p>
+        </div>
+        <div>
+          <p>
+            {$t("Total")} :
+            {totalСartPrice} BYN
+          </p>
+        </div>
       </div>
 
       <!-- Button -->
-      <div class="flex justify-center text-center">
+      <div class="grid w-full justify-center text-center">
         <SubmitButton
           bind:submitClicked
           bind:isLoading
@@ -347,3 +705,51 @@
     </form>
   </section>
 </div>
+
+<style>
+  .purchase-container {
+    @apply mb-12 shadow-xl p-6 bg-white-0;
+  }
+
+  .purchase-item {
+    @apply mb-6;
+  }
+
+  .purchase-heading3 {
+    @apply text-xl font-anonymous;
+  }
+
+  .purchase-heading2 {
+    @apply text-3xl font-anonymous mb-4;
+  }
+
+  /* Add this inside your <style> tag */
+.purchase-container {
+  @apply mb-12 shadow-xl p-6 bg-white-0;
+}
+
+.purchase-item {
+  @apply mb-6;
+}
+
+.purchase-heading3 {
+  @apply text-xl font-anonymous;
+}
+
+.purchase-heading2 {
+  @apply text-3xl font-anonymous mb-4;
+}
+
+/* Custom sticky behavior */
+@media (min-width: 1024px) { /* lg screens and above */
+  .sticky-section {
+    position: sticky;
+    top: 0; /* Adjust this value based on your navbar's height */
+    z-index: 10;
+    max-height: calc(100vh - 60vh);
+    overflow-y: auto; /* In case the content overflows */
+  }
+}
+
+
+</style>

@@ -17,6 +17,7 @@
     let innerWidth = 0;
     let innerHeight = 0;
 
+    let isPassHidden:boolean = true;
     let submitClicked = false;
     let isLoading = true;
 
@@ -44,6 +45,16 @@
     } else {
         addMessages(Language.English, en);
         locale.set(Language.English);
+    }
+
+    function typeAction(node){
+        console.log(node.type)
+        node.type = isPassHidden ? "password" : "text";
+        console.log(node.type)
+    }
+
+    function changeActionTransparency(){
+        isPassHidden = !isPassHidden;
     }
 
     async function handleAuthenticate() {
@@ -144,6 +155,12 @@
                             focus-within:ring-white-2"
                             for="email"
                         >
+                        
+                        <div class="text-gray-400 absolute right-3 inset-y-2 my-auto active:text-gray-600"
+                      
+                        >
+                        <img src="{base}/media/envelop.svg" alt="mail icon">
+                        </div> 
                             <input
                                 class="peer h-8 w-full border-none bg-transparent
                             bg-white-1 p-0 placeholder-transparent
@@ -162,7 +179,9 @@
                             peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
                             >
                                 {$t("Email")}
+                                
                             </span>
+                            
                         </label>
                     </div>
                 </div>
@@ -176,18 +195,32 @@
                             focus-within:ring-white-2"
                             for="password"
                         >
+
+                        <button class="text-gray-400 absolute right-3 inset-y-0 my-auto active:text-gray-600"
+                        on:click={changeActionTransparency}
+                        >
+                            {#if isPassHidden}
+                                <img src="{base}/media/closed-eye.svg" alt="closed eye icon">
+                            {:else}
+                                 <img src="{base}/media/open-eye.svg" alt="open eye icon">
+                            {/if}
+               
+                        </button>
+                            {#key isPassHidden}
                             <input
-                                class="peer h-8 w-full border-none bg-transparent
-                            bg-white-1 p-0 placeholder-transparent
-                            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-                                bind:value={password}
-                                id="password"
-                                placeholder="Password"
-                                name="password"
-                                type="password"
-                                autocomplete="current-password"
-                                required
-                            />
+                            class="peer h-8 w-full border-none bg-transparent
+                        bg-white-1 p-0 placeholder-transparent
+                        focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                            bind:value={password}
+                            id="password"
+                            placeholder="Password"
+                            name="password"
+                            use:typeAction
+                            autocomplete="current-password"
+                            required
+                        />
+                            {/key}
+
                             <span
                                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
@@ -214,6 +247,7 @@
                             focus-within:ring-white-2"
                                 for="password"
                             >
+                            {#key isPassHidden}
                                 <input
                                     class="peer h-8 w-full border-none bg-transparent
                             bg-white-1 p-0 placeholder-transparent
@@ -222,9 +256,10 @@
                                     id="rpassword"
                                     placeholder="   Repeat password"
                                     name="rpassword"
-                                    type="password"
+                                    use:typeAction
                                     required
                                 />
+                                {/key}
                                 <span
                                     class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
