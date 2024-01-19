@@ -83,9 +83,7 @@
             return
         }
 
-        if (!user && (currentPath === `${base}/profile/shoppingcart` 
-            || currentPath === `${base}/profile/shoppingcart`
-            || currentPath === `${base}/profile`
+        if (!user && (currentPath === `${base}/profile` 
             || currentPath === `${base}/profile/edit/credentials`
             || currentPath === `${base}/profile/edit`)) {
             //console.log("user haven't logged in")

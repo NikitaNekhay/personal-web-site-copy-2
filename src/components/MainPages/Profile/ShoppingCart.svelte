@@ -64,7 +64,6 @@
   });
 
   tempUserCart = setUserPreferences(tempUserCart);
-  console.log(userCity, userCountry);
 
   function setUserPreferences(userData: UserCartType): UserCartType {
     return userData;
@@ -143,6 +142,7 @@
   }
 
   function handleCart() {
+    
     submitClicked = !submitClicked;
     ////console.log("handleCart cliekd")
     // make map out of user's cart
@@ -154,6 +154,7 @@
     });
     ////console.log("cartmap - in cart - after await",productQuantities)
     downloadCheck();
+    console.log(tempUserCart)
     setTimeout(() => {
       submitClicked = !submitClicked;
       isLoading = false;
@@ -217,85 +218,91 @@
 </script>
 
 <div
-  class="w-[100%] relative  h-auto
+  class="w-[100%] relative h-auto
             grid grid-flow-col sm:grid-flow-row md:grid-flow-row
             gap-x-6 sm:gap-x-0 md:gap-x-0
             py-[14%] px-[3%] sm:py-[40%] xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt"
 >
-  <section class="sticky-section h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%] w-[100%] ">
+  <section
+    class="sticky-section h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%] w-[100%]"
+  >
     <div class=" left-0">
-    <header class="text mb-6 flex justify-center">
-      <h1 class="font-abril text-4xl text-blue-0">{$t("Your Cart")}</h1>
-    </header>
+      <header class="text mb-6 flex justify-center">
+        <h1 class="font-abril text-4xl text-blue-0">{$t("Your Cart")}</h1>
+      </header>
 
-    <!-- <header class="text-center">
+      <!-- <header class="text-center">
             <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">{$t('Your Cart')} </h1>
           </header> -->
 
-    <div class="sm:w-[100%] md:sm:w-[100%]">
-      <!-- List of cart -->
-      {#key tempAuthStore}
-        {#if cartItems.length > 0}
-          <ul class="space-y-6">
-            {#each cartItems as item, index}
-              <li class="flex items-center justify-between">
-                <div class="flex items-center justify-start gap-x-4">
-                  <img
-                    src={item.images[0]}
-                    alt="item img"
-                    class="h-16 w-16 rounded object-cover"
-                  />
+      <div class="sm:w-[100%] md:sm:w-[100%]">
+        <!-- List of cart -->
+        {#key tempAuthStore}
+          {#if cartItems.length > 0}
+            <ul class="space-y-6">
+              {#each cartItems as item, index}
+                <li class="flex items-center justify-between">
+                  <div class="flex items-center justify-start gap-x-4">
+                    <a href="{base}/posts/{item.id}">
+                      <img
+                        src={item.images[0]}
+                        alt="item img"
+                        class="h-16 w-16 rounded object-cover"
+                      />
+                    </a>
 
-                  <div class="sm:w-28 md:w-32">
-                    <div class=" ">
-                      <h3 class="text-sm text-gray-900 sm:truncate md:truncate">
-                        {item.title}
-                      </h3>
-                    </div>
+                    <div class="sm:w-28 md:w-32">
+                      <div class=" ">
+                        <h3
+                          class="text-sm text-gray-900 sm:truncate md:truncate"
+                        >
+                          {item.title}
+                        </h3>
+                      </div>
 
-                    <!-- Block of item props -->
-                    <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
-                      <div>
-                        <dt class="inline">Size:</dt>
-                        <dd class="inline">Universal</dd>
-                      </div>
-                      <div>
-                        <dt class="inline">Price:</dt>
-                        <dd class="inline">{item.price} BYN</dd>
-                      </div>
-                      <!-- <div>
+                      <!-- Block of item props -->
+                      <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                        <div>
+                          <dt class="inline">Size:</dt>
+                          <dd class="inline">Universal</dd>
+                        </div>
+                        <div>
+                          <dt class="inline">Price:</dt>
+                          <dd class="inline">{item.price} BYN</dd>
+                        </div>
+                        <!-- <div>
                         <dt class="inline">Color:</dt>
                         <dd class="inline">White</dd>
                       </div> -->
-                    </dl>
+                      </dl>
+                    </div>
                   </div>
-                </div>
 
-                <div class="flex gap-2">
-                  <SquareButton
-                    passedfunction={() => {
-                      handleDeleteItemFromCart(index);
-                    }}
-                    typeSquare="delete"
-                  />
-                </div>
-              </li>
-            {/each}
-          </ul>
-        {:else}
-          {$t("NO ITEMS IN CART | BROWSE THE SHOP!")}
-        {/if}
+                  <div class="flex gap-2">
+                    <SquareButton
+                      passedfunction={() => {
+                        handleDeleteItemFromCart(index);
+                      }}
+                      typeSquare="delete"
+                    />
+                  </div>
+                </li>
+              {/each}
+            </ul>
+          {:else}
+            {$t("NO ITEMS IN CART | BROWSE THE SHOP!")}
+          {/if}
 
-        <!-- Check info -->
-        <div class="mt-8 flex justify-end border-t-2 border-navy-2 pt-8">
-          <div class="w-[100%] max-w-lg space-y-4">
-            <div class="flex justify-end gap-6 text-base font-medium mb-8">
-              {$t("Price for goods")} :
-              {cartPrice} BYN
-            </div>
+          <!-- Check info -->
+          <div class="mt-8 flex justify-end border-t-2 border-navy-2 pt-8">
+            <div class="w-[100%] max-w-lg space-y-4">
+              <div class="flex justify-end gap-6 text-base font-medium mb-8">
+                {$t("Price for goods")} :
+                {cartPrice} BYN
+              </div>
 
-            <!-- DISCOUNT BANNER -->
-            <!-- <div class="flex justify-end">
+              <!-- DISCOUNT BANNER -->
+              <!-- <div class="flex justify-end">
                   <span
                     class="inline-flex items-center justify-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-indigo-700"
                   >
@@ -317,14 +324,14 @@
                     <p class="whitespace-nowrap text-xs">0 {$t('Discounts Applied')} </p>
                   </span>
                 </div> -->
+            </div>
           </div>
-        </div>
-      {/key}
+        {/key}
+      </div>
     </div>
-  </div>
   </section>
   <section class="h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%]">
-    <form class="font-sans ">
+    <form class="font-sans">
       <div class="purchase-container">
         <h2 class="purchase-heading2">{$t("Your data")}</h2>
 
@@ -423,22 +430,54 @@
         <!-- SOCIAL NETWORK -->
         <!-- HOW TO ACCESS YOU RADIO -->
         <div>
-          <fieldset class="purchase-item">
+          <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
             <legend>
               {$t("Choose contact option")} :
             </legend>
 
-            <input type="radio" name="contact" id="tg" value="tg" />
-            <label for="tg">Telegram</label>
+            <div>
+              <input
+                bind:group={tempUserCart.contactOption}
+                type="radio"
+                name="contact"
+                id="tg"
+                value="tg"
+              />
+              <label for="tg">Telegram</label>
+            </div>
 
-            <input type="radio" name="contact" id="fb" value="tg" />
-            <label for="ig">Instagram</label>
+            <div>
+              <input
+                bind:group={tempUserCart.contactOption}
+                type="radio"
+                name="contact"
+                id="ig"
+                value="ig"
+              />
+              <label for="ig">Instagram</label>
+            </div>
 
-            <input type="radio" name="contact" id="fb" value="fb" />
-            <label for="fb">Facebook</label>
+            <div>
+              <input
+                bind:group={tempUserCart.contactOption}
+                type="radio"
+                name="contact"
+                id="fb"
+                value="fb"
+              />
+              <label for="fb">Facebook</label>
+            </div>
 
-            <input type="radio" name="contact" id="wapp" value="wapp" />
-            <label for="wapp">Whatsapp</label>
+            <div>
+              <input
+                bind:group={tempUserCart.contactOption}
+                type="radio"
+                name="contact"
+                id="wapp"
+                value="wapp"
+              />
+              <label for="wapp">Whatsapp</label>
+            </div>
           </fieldset>
         </div>
         <!-- USERNAME -->
@@ -479,43 +518,52 @@
         <!-- Country Selector with Flags -->
         <div class="purchase-item relative">
           <!-- Custom Dropdown Trigger -->
-          <button
-            type="button"
-            aria-haspopup="listbox"
-            aria-expanded={showDropdown.toString()}
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer flex justify-start gap-x-2 items-center"
-            on:click={() => (showDropdown = !showDropdown)}
-          >
-            <img
-              src={tempUserCart.country ? getFlagUrl(tempUserCart.country) : ""}
-              alt={tempUserCart.country}
-              class="inline-block w-5 h-3 ml-0 {tempUserCart.country
-                ? 'opacity-100'
-                : 'opacity-0'}"
-            />
-            {tempUserCart.country
-              ? countries.find((c) => c.code === tempUserCart.country).name
-              : "Select a country"}
+          <div class=" mb-6 w-full">
+            <div class="w-full px-3">
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded={showDropdown.toString()}
+                class="w-full relative block overflow-hidden rounded-md
+                border border-gray-200 bg-white-1
+                px-3 py-1.5 shadow-sm focus-within:border-white-2 focus-within:ring-1
+                focus-within:ring-white-2"
+                on:click={() => (showDropdown = !showDropdown)}
+              >
+                <img
+                  src={tempUserCart.country
+                    ? getFlagUrl(tempUserCart.country)
+                    : ""}
+                  alt={tempUserCart.country}
+                  class="inline-block w-5 h-3 ml-0 {tempUserCart.country
+                    ? 'opacity-100'
+                    : 'opacity-0'}"
+                />
+                {tempUserCart.country
+                  ? countries.find((c) => c.code === tempUserCart.country).name
+                  : "Select a country"}
 
-            <svg
-              class="w-4 h-4 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              ></path></svg
-            >
-          </button>
+                <svg
+                  class="ml-[50%] w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path></svg
+                >
+              </button>
+            </div>
+          </div>
 
           <!-- Custom Dropdown Options -->
           {#if showDropdown}
             <ul
-              class="absolute z-10 w-full bg-white border border-gray-300 mt-1 max-h-60 overflow-y-auto rounded-lg"
+              class="absolute z-10 w-full bg-white border border-gray-300 -mt-2 max-h-60 overflow-y-auto rounded-lg"
               role="listbox"
               aria-labelledby="country"
             >
@@ -543,70 +591,131 @@
         </div>
 
         <!-- City Input -->
-        <div class="purchase-item mb-4">
-          <label for="city" class="block mb-2 text-sm font-medium">City</label>
-          <input
-            type="text"
-            id="city"
-            bind:value={tempUserCart.city}
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Enter your city"
-          />
-        </div>
-
-        <!-- RADIO OPTION OF DELIVERY -->
-        <fieldset class="purchase-item">
-          <legend>{$t("Choose delivery option")} :</legend>
-          <input type="radio" name="delivery" id="" value="sd" />
-          <label for="sd">{$t("Self Delivery")}</label>
-
-          <input type="radio" name="delivery" id="ep" value="ep" />
-          <label for="ep">{$t("Evropochta")}</label>
-
-          <input type="radio" name="delivery" id="sdek" value="sdek" />
-          <label for="sdek">{$t("SDEK")}</label>
-
-          <input type="radio" name="delivery" id="ems" value="ems" />
-          <label for="ems">EMS</label>
-        </fieldset>
-
-        <!-- YOUR ADRESS -->
         <div class="purchase-item flex mb-6 flex-wrap w-full">
           <div class="w-full px-3">
             <label
+              for="city"
               class="relative block overflow-hidden rounded-md
           border border-gray-200 bg-white-1
           px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
           focus-within:ring-white-2"
-              for="adress"
             >
               <input
-                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
-          focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                 type="text"
-                placeholder="Adress"
-                bind:value={tempUserCart.adress}
+                id="city"
+                bind:value={tempUserCart.city}
+                class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+            focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                placeholder="Enter your city"
                 required
-                id="adress"
               />
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-            bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
               >
-                {$t(
-                  "Adress (street, house number, appartement number, post code)",
-                )}
+                {$t("City")}
               </span>
             </label>
           </div>
         </div>
 
-        <!-- SELF-DELIVERY -->
-        <div class="purchase-item">
-          <p>This is our adress</p>
-          <div>MAP</div>
-        </div>
+        <!-- RADIO OPTION OF DELIVERY -->
+        <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
+          <legend>{$t("Choose delivery option")} :</legend>
+          <div>
+            <input
+              bind:group={tempUserCart.deliveryOption}
+              class=""
+              type="radio"
+              name="delivery"
+              id=""
+              value="sd"
+            />
+            <label class="" for="sd">{$t("Self Delivery")}</label>
+          </div>
+
+          <div>
+            <input
+              bind:group={tempUserCart.deliveryOption}
+              type="radio"
+              name="delivery"
+              id="ep"
+              value="ep"
+            />
+            <label for="ep">{$t("Evropochta")}</label>
+          </div>
+
+          <div>
+            <input
+              bind:group={tempUserCart.deliveryOption}
+              type="radio"
+              name="delivery"
+              id="sdek"
+              value="sdek"
+            />
+            <label for="sdek">{$t("SDEK")}</label>
+          </div>
+
+          <div>
+            <input
+              bind:group={tempUserCart.deliveryOption}
+              type="radio"
+              name="delivery"
+              id="ems"
+              value="ems"
+            />
+            <label for="ems">EMS</label>
+          </div>
+        </fieldset>
+
+        {#if !tempUserCart.deliveryOption}
+          <div></div>
+        {:else if tempUserCart.deliveryOption === DeliveryOptions.SelfDelivery}
+          <!-- SELF-DELIVERY -->
+          <div class="purchase-item">
+            <p>This is our adress</p>
+            <div>MAP</div>
+          </div>
+        {:else}
+          <!-- YOUR ADRESS -->
+          <div class="purchase-item flex mb-6 flex-wrap w-full">
+            <div class="w-full px-3">
+              <label
+                class="relative block overflow-hidden rounded-md
+                  border border-gray-200 bg-white-1
+                  px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
+                  focus-within:ring-white-2"
+                for="adress"
+              >
+                <input
+                  class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
+                  focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                  type="text"
+                  placeholder="Adress"
+                  bind:value={tempUserCart.adress}
+                  required
+                  id="adress"
+                />
+                <span
+                  class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
+                    bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
+                    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                >
+                  {$t("Adress")}
+                </span>
+              </label>
+              <p class="mt-3 text-xs italic text-gray-600">
+                {$t(
+                  "Specify your street, house number, appartement number, post code",
+                )}
+              </p>
+              <p class="mt-3 text-xs italic text-gray-600">
+                {$t("Specify information about post office e.g its number")}
+              </p>
+            </div>
+          </div>
+        {/if}
 
         <!-- POLICY -->
         <div class="flex gap-1">
@@ -623,19 +732,22 @@
         <p class="purchase-item">
           {$t("You need to make a prepayment via cashless method in anyway.")}
         </p>
-        <fieldset class="purchase-item">
+        <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
           <legend>{$t("Choose payment method")} :</legend>
-          <input type="radio" name="payment" id="c" value="c" />
-          <label for="c">{$t("With cash when picking up a good")}</label>
+          <div>
+            <input bind:group={tempUserCart.paymentOption} type="radio" name="payment" id="c" value="c" />
+            <label for="c">{$t("With cash when picking up a good")}</label>
+          </div>
 
-          <input type="radio" name="payment" id="cl" value="cl" />
-          <label for="cl">{$t("Cashless")}</label>
+          <div>
+            <input bind:group={tempUserCart.paymentOption} type="radio" name="payment" id="cl" value="cl" />
+            <label for="cl">{$t("Cashless")}</label>
+          </div>
         </fieldset>
         <!-- IF ONLINE THEN BANNER -->
         <!-- BANNER -->
         <!-- DETAIL -->
         <!-- POLICY -->
-
 
         <!-- DISCOUNT BANNER -->
         <div class="purchase-item flex mb-6 flex-wrap w-full">
@@ -653,7 +765,6 @@
                 type="text"
                 placeholder="Discount"
                 bind:value={tempUserCart.discount}
-                required
                 id="discount"
               />
               <span
@@ -677,7 +788,7 @@
 
       <!-- PRICES -->
       <div
-        class=" grid w-full justify-end grid-flow-row text-base font-medium my-8 gap-3"
+        class=" border-t-2 pt-8 border-navy-2 grid w-full justify-end grid-flow-row text-base font-medium my-8 gap-3"
       >
         <div>
           <p>
@@ -724,32 +835,35 @@
   }
 
   /* Add this inside your <style> tag */
-.purchase-container {
-  @apply mb-12 shadow-xl p-6 bg-white-0;
-}
-
-.purchase-item {
-  @apply mb-6;
-}
-
-.purchase-heading3 {
-  @apply text-xl font-anonymous;
-}
-
-.purchase-heading2 {
-  @apply text-3xl font-anonymous mb-4;
-}
-
-/* Custom sticky behavior */
-@media (min-width: 1024px) { /* lg screens and above */
-  .sticky-section {
-    position: sticky;
-    top: 0; /* Adjust this value based on your navbar's height */
-    z-index: 10;
-    max-height: calc(100vh - 60vh);
-    overflow-y: auto; /* In case the content overflows */
+  .purchase-container {
+    @apply mb-12 shadow-xl p-6 bg-white-0;
   }
-}
 
+  .purchase-item {
+    @apply mb-6;
+  }
 
+  .purchase-heading3 {
+    @apply text-xl font-anonymous;
+  }
+
+  .purchase-heading2 {
+    @apply text-3xl font-anonymous mb-4;
+  }
+
+  /* Custom sticky behavior */
+  @media (min-width: 1024px) {
+    /* lg screens and above */
+    .sticky-section {
+ 
+      position: sticky;
+      top: 20vh; /* Adjust this value based on your navbar's height */
+      bottom: 0;
+      padding-top: 68;
+      z-index: 10;
+      max-height: calc(100vh - 60vh);
+      overflow-y: auto; /* In case the content overflows */
+  
+    }
+  }
 </style>

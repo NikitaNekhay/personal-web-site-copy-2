@@ -18,8 +18,6 @@
     let currentPage = $page.url.pathname;
     //console.log(currentPage.includes("/about"));
 
-    
-
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
         // Switch the language value
@@ -63,7 +61,7 @@
     //  //console.log("is there any user at navbar",isUser)
 </script>
 
-<nav class="flex w-screen font-anonymous">
+<nav class="flex w-[100%] font-anonymous">
     <!--The form itself  -->
     <div class="fixed top-0 z-30 w-full">
         <div
@@ -73,7 +71,7 @@
         >
             <div
                 class="mx-2 flex w-full items-center justify-between
-                sm:gap-0 md:gap-8 lg:gap-16 xl:gap-16 2xl:gap-16 3x:gap-16"
+                sm:gap-0 lg:gap-16 xl:gap-16 2xl:gap-16 3x:gap-16"
             >
                 <!-- Logo(Left side) -->
                 <div
@@ -93,7 +91,7 @@
                 <!-- Links(Center) -->
                 <div
                     class="flex items-center justify-between drop-shadow
-                    sm:mx-0 md:mx-8 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
+                    sm:mx-0 lg:mx-10 xl:mx-12 2xl:mx-20 3xl:mx-20
                     "
                 >
                     <div class="border-r-2 border-navy-2 sm:flex sm:flex-col">
@@ -124,7 +122,8 @@
                         class="border-l-2 border-navy-2 sm:flex sm:flex-col sm:justify-end"
                     >
                         <a
-                            class=" {currentPage.includes('/shop') && !currentPage.includes('/shoppingcart')
+                            class=" {currentPage.includes('/shop') &&
+                            !currentPage.includes('/shoppingcart')
                                 ? 'text-yellow-0 animate-pulse'
                                 : 'text-black'}
                             no-underline underline-offset-4 hover:underline
@@ -150,9 +149,20 @@
                 </div>
 
                 <!-- Login/Profile(Right side) -->
-                <div>
-                    <div class="grid-column-auto grid-row-auto">
+                    <div class="grid grid-flow-col">
                         {#if !isUser}
+                            <a
+                                class="{currentPage.includes('/shoppingcart')
+                                    ? 'text-yellow-0 animate-pulse'
+                                    : 'text-black'}
+                            col-span-full grid-row-auto transition duration-300 delay-100
+                            hover:text-yellow-0 hover:animate-pulse"
+                                target="_self"
+                                href="{base}/profile/shoppingcart"
+                            >
+                                {$t("Shopping cart")}:{$authStore.data.cart
+                                    .length}
+                            </a>
                             <a
                                 on:click={authHandlers.login}
                                 class="{currentPage.includes('/login')
@@ -169,7 +179,6 @@
                         {:else}
                             <Menu />
                         {/if}
-                    </div>
                 </div>
             </div>
         </div>
