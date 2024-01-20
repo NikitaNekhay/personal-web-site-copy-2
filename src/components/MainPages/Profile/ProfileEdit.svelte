@@ -192,7 +192,7 @@
             <span
               class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
               bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("User name")}
             </span>
@@ -219,7 +219,7 @@
             <span
               class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
               bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Short description about you")}
             </span>
@@ -229,37 +229,6 @@
           </p>
         </div>
       </div>
-
-      <!-- <div class="-mx-3 mb-6 flex flex-wrap">
-        <div class="w-full px-3">
-          <label
-            class="relative block overflow-hidden rounded-md
-            border border-gray-200 bg-white-1
-            px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-            focus-within:ring-white-2"
-            for="email"
-          >
-            <input
-              class="peer h-8 w-full border-none bg-transparent
-              bg-white-1 p-0 placeholder-transparent
-              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-              type="email"
-              bind:value={profileValue.email}
-              required
-              id="email"
-              autocomplete="email"
-              placeholder="email@web.net"
-            />
-            <span
-              class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-              bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-            >
-              {$t("Email")}
-            </span>
-          </label>
-        </div>
-      </div> -->
 
       <div class="-mx-3 mb-6 flex flex-wrap w-full">
         <div class=" w-1/2 px-3">
@@ -282,7 +251,7 @@
             <span
               class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                   bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Phone number")}
             </span>

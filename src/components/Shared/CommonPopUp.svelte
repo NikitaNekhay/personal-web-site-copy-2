@@ -24,7 +24,7 @@
   out:fade
   role="alert"
   data-popover="popover"
-  class="fixed z-10 rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16 top-[10%]
+  class="fixed z-20 rounded-xl border border-gray-100 bg-white p-4 shadow-xl mt-6 mb-16 top-[10%]
     left-1/4 right-1/4 sm:left-10 sm:right-10 md:left-10 md:right-10"
 >
   <div class="flex items-start gap-4">
@@ -43,10 +43,10 @@
     {/if}
 
     <div class="flex-1">
-      <strong class="block font-medium text-gray-900">{smallMessage} </strong>
+      <strong class="block font-medium text-gray-900">{$t(smallMessage)} </strong>
 
       <p class="mt-1 text-sm text-gray-700">
-        {message}
+        {$t(message)}
       </p>
       {#if isPreviev}
         <div class="mt-4 flex gap-2">

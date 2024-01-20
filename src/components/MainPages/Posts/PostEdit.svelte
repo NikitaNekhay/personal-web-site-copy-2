@@ -99,7 +99,7 @@
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
           >
             {$t("Title")}
           </span>
@@ -126,7 +126,7 @@
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
           >
             {$t("Small description")}
           </span>
@@ -153,7 +153,7 @@
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
           >
             {$t("Big description")}
           </span>
@@ -180,7 +180,7 @@
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
           >
             {$t("Description of model")}
           </span>
@@ -207,7 +207,7 @@
           <span
             class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
           >
             {$t("Description of materials")}
           </span>
@@ -316,7 +316,7 @@
             <span
               class="absolute start-3 top-3 -translate-y-1/2 cursor-text
             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Price")}
             </span>
@@ -346,7 +346,7 @@
             <span
               class="absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Colors")}
             </span>
@@ -383,7 +383,7 @@
             <span
               class="absolute start-3 top-3 -translate-y-1/2 cursor-text
             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Section")}
             </span>
@@ -417,32 +417,6 @@
 
     <div class="-mx-3 mb-4 flex flex-wrap w-full">
       <DragAndDrop bind:tempProductStore />
-
-      <!-- <div class="mx-3 md:mb-12 w-full">
-        <label
-          class=" relative block overflow-hidden rounded-md
-            border border-gray-200 bg-white-1
-            px-3 pt-8 shadow-sm self-center focus-within:border-white-2 focus-within:ring-1
-            focus-within:ring-white-2"
-          for="files"
-        >
-          <input
-            class=" transparent peer mb-8 h-full w-full border-none bg-transparent bg-white-1
-              text-center placeholder-transparent
-              focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            type="file"
-            id="images"
-            on:change={handleImageUpload}
-            multiple
-            placeholder="Files"
-          />
-          <span
-            class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
-              bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
-          />
-        </label>
-      </div> -->
     </div>
     <div class="">
       <SubmitButton

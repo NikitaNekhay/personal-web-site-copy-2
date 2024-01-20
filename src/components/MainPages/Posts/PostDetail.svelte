@@ -260,6 +260,9 @@
                             </p>
                         {/each}
                     </div>
+                    <p class="mt-3 text-xs italic text-gray-600">
+                        {$t("I can sew clothes for your measurements. For this option contact me directly.")}
+                      </p>
                 </div>
 
                 <!-- PURCHASE BUTTONS -->

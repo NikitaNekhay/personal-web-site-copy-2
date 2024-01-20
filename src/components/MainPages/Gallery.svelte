@@ -197,36 +197,41 @@
                     />
                   </div>
                   <div
-                    class="mt-2 flex sm:flex-col md:flex-col justify-between"
+                    class="mt-2 flex sm:flex-col md:flex-col justify-between shadow-xl p-4 sm:p-3 md:p-3 "
                   >
-                    <div class=" flex-row">
+                    <div
+                      class="sm:grid sm:grid-flow-col sm:cols-2
+                    md:grid md:grid-flow-col md:cols-2"
+                    >
+                      <h3
+                        class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
+                      >
+                        <div class="sm:col-span-1 md:col-span-1 break-auto">
+                          {$t(post.title)}
+                        </div>
+                      </h3>
+                      {#if post.isArchive}
+                        <div
+                          class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end"
+                        >
+                          <img
+                            src="{base}/media/archive.svg"
+                            alt="archive icon"
+                          />
+                        </div>
+                      {/if}
                       <div>
                         <h3 class=" text-sm text-gray-700">
-                          <div class="flex flex-row gap-x-4">
+                          <div
+                            class="flex flex-row gap-x-4 sm:justify-center md:justify-end {post
+                              .description['sizes'].length > 3
+                              ? 'md:grid md:grid-cols-2'
+                              : ''}"
+                          >
                             {#each post.description["sizes"] as sizeItem}
                               <p>{sizeItem}</p>
                             {/each}
                           </div>
-                        </h3>
-                      </div>
-                      <div>
-                        <h3
-                          class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
-                        >
-                          <div class="sm:col-span-1 md:col-span-1 break-auto">
-                            {$t(post.title)} 
-                          </div>
-
-                          {#if post.isArchive}
-                            <div
-                              class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end"
-                            >
-                              <img
-                                src="{base}/media/archive.svg"
-                                alt="archive icon"
-                              />
-                            </div>
-                          {/if}
                         </h3>
                       </div>
                     </div>
@@ -236,10 +241,12 @@
             sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                     >
                       <h2
-                        class="break-words text-gray-700 text-center self-center sm:self-start sm:text-left md:self-start"
+                        class="break-words text-gray-700 text-center self-center
+                        sm:self-start sm:text-left
+                        md:self-end md:text-right"
                         lang={$currentLanguagee.language}
                       >
-                      {$t(post.description["smallDescription"])}
+                        {$t(post.description["smallDescription"])}
                       </h2>
                     </div>
                     {#if $isAdmin.value}
@@ -275,7 +282,7 @@
                             {post.price}BYN
                           </p>
                         </div>
-                        <div
+                        <!-- <div
                           class="md:grid md:justify-items-end md:grid-col-2 md:grid-col-span-1
                       sm:grid sm:justify-items-end sm:grid-col-2 sm:grid-col-span-1
                        "
@@ -286,7 +293,7 @@
                             }}
                             typeSquare="cart"
                           />
-                        </div>
+                        </div> -->
                       </div>
                     {/if}
                   </div>

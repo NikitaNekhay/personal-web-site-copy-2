@@ -149,37 +149,11 @@
                 </div>
 
                 <!-- Login/Profile(Right side) -->
-                    <div class="grid grid-flow-col">
-                        {#if !isUser}
-                            <a
-                                class="{currentPage.includes('/shoppingcart')
-                                    ? 'text-yellow-0 animate-pulse'
-                                    : 'text-black'}
-                            col-span-full grid-row-auto transition duration-300 delay-100
-                            hover:text-yellow-0 hover:animate-pulse"
-                                target="_self"
-                                href="{base}/profile/shoppingcart"
-                            >
-                                {$t("Shopping cart")}:{$authStore.data.cart
-                                    .length}
-                            </a>
-                            <a
-                                on:click={authHandlers.login}
-                                class="{currentPage.includes('/login')
-                                    ? 'text-yellow-0 animate-pulse'
-                                    : 'text-black'}
-                                grid-row-auto
-                            col-span-full transition duration-300 delay-100
-                            hover:text-yellow-0 hover:animate-pulse"
-                                target="_self"
-                                href="{base}/login"
-                            >
-                                {$t("Login")}
-                            </a>
-                        {:else}
-                            <Menu />
-                        {/if}
-                </div>
+
+        
+                        <Menu {isUser}/>
+                    
+
             </div>
         </div>
     </div>

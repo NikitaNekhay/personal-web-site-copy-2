@@ -15,17 +15,39 @@
     type UserCartType,
     DeliveryOptions,
     PaymentOptions,
+    Errors,
   } from "../../../shared/types";
   import SquareButton from "../../Shared/SquareButton.svelte";
   import { base } from "$app/paths";
+  import CommonPopUp from "../../Shared/CommonPopUp.svelte";
 
   export let userCity;
   export let userCountry;
   // Assuming you have a list of countries and their codes
   export let countries;
 
+  // } catch (err) {
+  //             if(typeof(err)==="string"){
+  //                 msg = err;
+  //             } else if(err.message !== undefined){
+  //                 msg = err.message;
+  //             } else {
+  //                 msg = Errors.Authentication
+  //             }
+  //             isChangedError= true
+
+  let isChanged = false;
+  let isErrorInput = "";
+  let msgT: String = Errors.PurchaseFormAttention;
+  let msg: String = Errors.PurchaseFormAttention;
+  let smmsgE: String = Errors.PurchaseForm;
+  let isError: boolean = true;
+  let href = `${base}/profile`;
+
+  let showDropdown = false;
   let submitClicked = false;
   let isLoading = false;
+
   let productQuantities = new Map<string, number>();
   let cartItems: ProductType[] = [];
   let tempAuthStore: AuthStoreType;
@@ -33,6 +55,7 @@
   let totalСartPrice: number = 0;
   let deliveryPrice: number = 0;
   let prepaymentPrice: number = 0;
+
   let tempUserCart: UserCartType = {
     fullName: "",
     phoneNumber: "",
@@ -46,8 +69,6 @@
     paymentOption: PaymentOptions.Cash,
     discount: "",
   };
-
-  let showDropdown = false;
 
   onMount(async () => {
     const unsubscribe = authStore.subscribe((authStore) => {
@@ -142,22 +163,42 @@
   }
 
   function handleCart() {
-    submitClicked = !submitClicked;
-    ////console.log("handleCart cliekd")
-    // make map out of user's cart
-    cartItems.forEach((item) => {
-      productQuantities.set(
-        item.title,
-        (productQuantities.get(item.title) || 0) + 1,
-      );
-    });
-    ////console.log("cartmap - in cart - after await",productQuantities)
-    downloadCheck();
-    console.log(tempUserCart);
-    setTimeout(() => {
-      submitClicked = !submitClicked;
-      isLoading = false;
-    }, 2500);
+    try {
+      if (handleFormValidation()) {
+        submitClicked = !submitClicked;
+        ////console.log("handleCart cliekd")
+        // make map out of user's cart
+        cartItems.forEach((item) => {
+          productQuantities.set(
+            item.title,
+            (productQuantities.get(item.title) || 0) + 1,
+          );
+        });
+        ////console.log("cartmap - in cart - after await",productQuantities)
+        downloadCheck();
+        console.log(tempUserCart);
+      } else {
+        throw Errors.PurchaseFormAttention;
+      }
+  } catch (err) {
+              if(typeof(err)==="string"){
+                  msg = err;
+              } else if(err.message !== undefined){
+                  msg = err.message;
+              } else {
+                  msg = msgT
+              }
+              isChanged= true
+    } finally {
+      setTimeout(() => {
+        submitClicked = !submitClicked;
+        isLoading = false;
+      }, 2500);
+    }
+  }
+
+  function handleFormValidation(): boolean {
+    return false;
   }
 
   function downloadCheck() {
@@ -215,6 +256,17 @@
     }
   }
 </script>
+
+{#if isChanged}
+  <CommonPopUp
+    bind:isChanged
+    {isError}
+    isPreviev={false}
+    message={msg}
+    smallMessage={smmsgE}
+    href=""
+  />
+{/if}
 
 <div
   class="w-[100%] relative h-auto
@@ -299,30 +351,6 @@
                 {$t("Price for goods")} :
                 {cartPrice} BYN
               </div>
-
-              <!-- DISCOUNT BANNER -->
-              <!-- <div class="flex justify-end">
-                  <span
-                    class="inline-flex items-center justify-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-indigo-700"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="-ms-1 me-1.5 h-4 w-4"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                      />
-                    </svg>
-    
-                    <p class="whitespace-nowrap text-xs">0 {$t('Discounts Applied')} </p>
-                  </span>
-                </div> -->
             </div>
           </div>
         {/key}
@@ -341,7 +369,7 @@
               class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2"
+        focus-within:ring-white-2 {isChanged && (isErrorInput === "name" || isErrorInput === "") ? "ring-red-1 ring-1" : ""}"
               for="first-name"
             >
               <input
@@ -357,7 +385,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Name, Surname, Middle name (if exists)")}
               </span>
@@ -387,7 +415,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                   bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Phone number")}
               </span>
@@ -419,7 +447,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
               bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Email")}
               </span>
@@ -506,7 +534,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Username")}
               </span>
@@ -615,7 +643,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
           bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+          peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("City")}
               </span>
@@ -709,7 +737,7 @@
                 <span
                   class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                     bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
                 >
                   {$t("Adress")}
                 </span>
@@ -793,7 +821,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
     bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+    peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Discount")}
               </span>

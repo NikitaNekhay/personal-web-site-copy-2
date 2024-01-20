@@ -77,7 +77,7 @@
             <span
               class=" whitespace-no-wrap absolute start-3 top-3 -translate-y-1/2
                 cursor-text text-xs text-gray-900 transition-all peer-placeholder-shown:top-1/2
-                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Enter the name")}
             </span>
@@ -124,7 +124,7 @@
             <span
               class=" whitespace-no-wrap absolute start-3 top-3 -translate-y-1/2
                 cursor-text text-xs text-gray-900 transition-all peer-placeholder-shown:top-1/2
-                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
               {$t("Enter email")}
             </span>

@@ -214,7 +214,7 @@
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                 bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
                 {$t("Email")}
               </span>
@@ -248,20 +248,20 @@
                   {#key isPassHidden}
                 <input
                   class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
-                focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm pointer-events-none"
                     bind:value={profileCredentials.password}
                     id="password"
                     placeholder={$t("New password")}
                     name="password"
                     use:typeAction
-                    autocomplete="current-password"
+                    autocomplete="new-password"
                     required
                 />
                 {/key}
                 <span
                   class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                   bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                  peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
                 >
                 {$t("New password")}
                 </span>
@@ -294,7 +294,7 @@
             <span
               class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
               bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+              peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
             >
             {$t("Repeat Password")}
             </span>

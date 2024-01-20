@@ -8,7 +8,7 @@
     import { base } from "$app/paths";
     import { onDestroy } from "svelte";
     import { page } from "$app/stores";
-    import { applyAction } from "$app/forms";
+    import { applyAction, enhance } from "$app/forms";
     import { Errors, Language } from "../../shared/types";
     import { error } from "@sveltejs/kit";
     import CommonPopUp from "../Shared/CommonPopUp.svelte";
@@ -145,6 +145,7 @@
         <div class="flex sm:px-[4%] place-content-center">
             <form
                 class="w-full max-w-lg flex flex-col justify-center items-center"
+                 
             >
                 <div class="-mx-3 mb-6 flex flex-wrap w-full">
                     <div class="w-full px-3">
@@ -176,7 +177,7 @@
                             <span
                                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
                             >
                                 {$t("Email")}
                                 
@@ -224,7 +225,7 @@
                             <span
                                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
                             >
                                 {$t("Password")}
                             </span>
@@ -263,7 +264,7 @@
                                 <span
                                     class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
                             bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
-                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+                            peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
                                 >
                                     {$t("Repeat Password")}
                                 </span>
