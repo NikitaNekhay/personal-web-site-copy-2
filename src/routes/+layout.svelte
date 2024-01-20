@@ -102,7 +102,7 @@
                 const currentPath = window.location.pathname;
                 checkUserStatus(user);
                 handleRedirect(user, currentPath);
-                
+               
                 let dataToSetToStore:UserDataType = {
                     id: "",
                     name: "template",
@@ -187,7 +187,11 @@
 
 
 <Analytics />
+
 <Navbar />
+
+
+
 <!-- <NavbarSm /> -->
 {#if $page.error}
   <EmptyPage />

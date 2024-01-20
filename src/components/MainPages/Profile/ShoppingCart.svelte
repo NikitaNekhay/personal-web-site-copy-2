@@ -20,6 +20,7 @@
   import SquareButton from "../../Shared/SquareButton.svelte";
   import { base } from "$app/paths";
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+  import { page } from "$app/stores";
 
   export let userCity;
   export let userCountry;
@@ -37,7 +38,7 @@
   //             isChangedError= true
 
   let isChanged = false;
-  let isErrorInput = "";
+  let isErrorInput: string[] = [];
   let msgT: String = Errors.PurchaseFormAttention;
   let msg: String = Errors.PurchaseFormAttention;
   let smmsgE: String = Errors.PurchaseForm;
@@ -55,6 +56,7 @@
   let totalСartPrice: number = 0;
   let deliveryPrice: number = 0;
   let prepaymentPrice: number = 0;
+  let isDiscount: boolean = false;
 
   let tempUserCart: UserCartType = {
     fullName: "",
@@ -78,6 +80,7 @@
       cartItems = tempAuthStore.data.cart;
       cartPrice = countPrice();
       totalСartPrice = cartPrice + deliveryPrice;
+      totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
       prepaymentPrice = totalСartPrice * 0.3;
     });
 
@@ -145,6 +148,7 @@
 
       cartPrice = countPrice();
       totalСartPrice = cartPrice + deliveryPrice;
+      totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
       prepaymentPrice = totalСartPrice * 0.3;
     } else {
       //console.log("cant handle cart because temoauthstore is empty")
@@ -164,41 +168,169 @@
 
   function handleCart() {
     try {
+      isErrorInput.length = 0;
       if (handleFormValidation()) {
         submitClicked = !submitClicked;
-        ////console.log("handleCart cliekd")
-        // make map out of user's cart
-        cartItems.forEach((item) => {
-          productQuantities.set(
-            item.title,
-            (productQuantities.get(item.title) || 0) + 1,
-          );
-        });
-        ////console.log("cartmap - in cart - after await",productQuantities)
-        downloadCheck();
-        console.log(tempUserCart);
+        try {
+          // make map out of user's cart
+          cartItems.forEach((item) => {
+            productQuantities.set(
+              item.title,
+              (productQuantities.get(item.title) || 0) + 1,
+            );
+          });
+          ////console.log("cartmap - in cart - after await",productQuantities)
+          downloadCheck();
+          console.log(tempUserCart);
+        } catch (error) {
+          throw error;
+        }
       } else {
-        throw Errors.PurchaseFormAttention;
+        if (msg !== msgT) {
+          throw msg;
+        } else {
+          throw Errors.PurchaseFormAttention;
+        }
       }
-  } catch (err) {
-              if(typeof(err)==="string"){
-                  msg = err;
-              } else if(err.message !== undefined){
-                  msg = err.message;
-              } else {
-                  msg = msgT
-              }
-              isChanged= true
+    } catch (err) {
+      if (typeof err === "string") {
+        msg = err;
+      } else if (err.message !== undefined) {
+        msg = err.message;
+      } else {
+        msg = msgT;
+      }
+      isChanged = true;
+      document.body.scrollIntoView();
     } finally {
       setTimeout(() => {
         submitClicked = !submitClicked;
-        isLoading = false;
+        isLoading = true;
       }, 2500);
     }
   }
 
-  function handleFormValidation(): boolean {
-    return false;
+  function validateFullName(fullName) {
+    // Now allows for Cyrillic characters, and names can have parts separated by spaces or hyphens
+    const regex = /^[a-zA-Zа-яА-ЯёЁ]+(?:[\s-][a-zA-Zа-яА-ЯёЁ]+)+$/;
+    return regex.test(fullName.trim());
+  }
+
+  function validatePhoneNumber(phoneNumber, userCountry) {
+    // Find the country object that matches the userCountry
+    const country = countries.find((obj) => obj.code === userCountry);
+    console.log(phoneNumber, userCountry, country);
+    //if (!country) return false;
+
+    // Build the regex dynamically based on the country's dial code and allow for a flexible length of the phone number
+    const regex = new RegExp(`^\\${country.dial_code}\\d{7,15}$`);
+    console.log();
+    return regex.test(phoneNumber);
+  }
+
+  function validateEmail(email) {
+    // The email regex does not need to change for Cyrillic as email standards are international
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function validateUsername(username) {
+    // Username can now include Cyrillic characters, underscores, and periods
+    const regex = /^[a-zA-Z0-9а-яА-ЯёЁ._]+$/;
+    return regex.test(username);
+  }
+
+  function validateAddress(address) {
+    // Address validation now includes Cyrillic characters and a more lenient structure
+    const regex = /^[a-zA-Z0-9а-яА-ЯёЁ\s,.]+$/;
+    return regex.test(address);
+  }
+
+  function validateCity(city, userCountry, countries) {
+    // Assuming that the city validation is just to check it's not empty
+    // For real-world application, it would require an API call to validate against known cities in the country
+    return city.length > 0; // Replace with real API check
+  }
+
+  function validateDiscount(discount) {
+    if (discount.length > 0) {
+      if (discount === "RIMSKYKORSAKOV") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function handleFormValidation() {
+    var isBadReturn: boolean = false;
+    // Validate all fields
+    const isFullNameValid = validateFullName(tempUserCart.fullName);
+    const isPhoneNumberValid = validatePhoneNumber(
+      tempUserCart.phoneNumber,
+      tempUserCart.country,
+    );
+    const isEmailValid = validateEmail(tempUserCart.email);
+    const isUsernameValid = validateUsername(tempUserCart.contactName);
+    const isAddressValid = validateAddress(tempUserCart.adress);
+    const isCityValid = validateCity(
+      tempUserCart.city,
+      tempUserCart.country,
+      countries,
+    );
+    const isDiscountValid = validateDiscount(tempUserCart.discount);
+
+    // If any validation fails, set an error message and return false
+    if (!isFullNameValid) {
+      isErrorInput.push("fullName");
+      msg = Errors.PurchaseFormName;
+      isBadReturn = true;
+    }
+    if (!isPhoneNumberValid) {
+      isErrorInput.push("phoneNumber");
+      msg = Errors.PurchaseFormPhone;
+      isBadReturn = true;
+    }
+    if (!isEmailValid) {
+      isErrorInput.push("email");
+      msg = Errors.PurchaseFormEmail;
+      isBadReturn = true;
+    }
+    if (!isUsernameValid) {
+      isErrorInput.push("username");
+      msg = Errors.PurchaseFormUsername;
+      isBadReturn = true;
+    }
+    if (
+      !isAddressValid &&
+      tempUserCart.deliveryOption !== DeliveryOptions.SelfDelivery
+    ) {
+      isErrorInput.push("address");
+      msg = Errors.PurchaseFormAdress;
+      isBadReturn = true;
+    }
+    if (!isCityValid) {
+      isErrorInput.push("city");
+      msg = Errors.PurchaseFormCity;
+      isBadReturn = true;
+    }
+    if (!isDiscountValid) {
+      isErrorInput.push("discount");
+      msg = Errors.PurchaseFormDiscount;
+      isBadReturn = true;
+    }
+
+    if (isBadReturn) {
+      console.log(isErrorInput);
+      return false;
+    }
+
+    // If everything's valid, clear error messages and return true
+    isErrorInput.length = 0;
+    msg = msgT;
+    return true;
   }
 
   function downloadCheck() {
@@ -369,7 +501,11 @@
               class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2 {isChanged && (isErrorInput === "name" || isErrorInput === "") ? "ring-red-1 ring-1" : ""}"
+        focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('fullName') ||
+                isErrorInput.includes('fullName'))
+                ? 'ring-red-1 ring-1'
+                : ''}"
               for="first-name"
             >
               <input
@@ -399,7 +535,11 @@
               class="relative block overflow-hidden rounded-md
               border border-gray-200 bg-white-1
               px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-              focus-within:ring-white-2"
+              focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('phoneNumber') ||
+                isErrorInput.includes(''))
+                ? 'ring-red-1 ring-1'
+                : ''}"
               for="phone-number"
             >
               <input
@@ -429,7 +569,10 @@
               class="relative block overflow-hidden rounded-md
             border border-gray-200 bg-white-1
             px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-            focus-within:ring-white-2"
+            focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('email') || isErrorInput.includes(''))
+                ? 'ring-red-1 ring-1'
+                : ''}"
               for="email"
             >
               <input
@@ -518,7 +661,10 @@
               class="relative block overflow-hidden rounded-md
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-        focus-within:ring-white-2"
+        focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('username') || isErrorInput.includes(''))
+                ? 'ring-red-1 ring-1'
+                : ''}"
               for="first-name"
             >
               <input
@@ -629,7 +775,10 @@
               class="relative block overflow-hidden rounded-md
           border border-gray-200 bg-white-1
           px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-          focus-within:ring-white-2"
+          focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('city') || isErrorInput.includes(''))
+                ? 'ring-red-1 ring-1'
+                : ''}"
             >
               <input
                 type="text"
@@ -722,7 +871,10 @@
                 class="relative block overflow-hidden rounded-md
                   border border-gray-200 bg-white-1
                   px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-                  focus-within:ring-white-2"
+                  focus-within:ring-white-2 {isChanged &&
+                (isErrorInput.includes('address') || isErrorInput.includes(''))
+                  ? 'ring-red-1 ring-1'
+                  : ''}"
                 for="adress"
               >
                 <input
@@ -807,7 +959,10 @@
               class="relative block overflow-hidden rounded-md
   border border-gray-200 bg-white-1
   px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-  focus-within:ring-white-2"
+  focus-within:ring-white-2 {isChanged &&
+              (isErrorInput.includes('discount') || isErrorInput.includes(''))
+                ? 'ring-red-1 ring-1'
+                : ''}"
               for="discount"
             >
               <input
@@ -841,13 +996,13 @@
       <div
         class=" border-t-2 pt-8 border-navy-2 grid w-full justify-end grid-flow-row text-base font-medium my-8 gap-3"
       >
-        <div>
+        <div class="grid justify-end">
           <p>
             {$t("Prepayment")} :
             {prepaymentPrice} BYN
           </p>
         </div>
-        <div>
+        <div class="grid justify-end">
           <p>
             {$t("Total")} :
             {totalСartPrice} BYN

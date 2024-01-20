@@ -155,7 +155,7 @@
       <div
         class="grid grid-cols-3
         sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3
-        gap-x-24 sm:gap-x-24 xl:gap-x-16 2xl:gap-x-20
+        gap-x-24 sm:gap-x-24 md:gap-x-4 xl:gap-x-16 2xl:gap-x-20
         gap-y-6 xl:gap-y-20
         "
       >
@@ -204,9 +204,9 @@
                     md:grid md:grid-flow-col md:cols-2"
                     >
                       <h3
-                        class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
+                        class="sm:grid sm:grid-cols-2  md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
                       >
-                        <div class="sm:col-span-1 md:col-span-1 break-auto">
+                        <div class="sm:col-span-1 md:col-span-2 break-words" lang={$currentLanguagee.language}>
                           {$t(post.title)}
                         </div>
                       </h3>
@@ -223,7 +223,7 @@
                       <div>
                         <h3 class=" text-sm text-gray-700">
                           <div
-                            class="flex flex-row gap-x-4 sm:justify-center md:justify-end {post
+                            class="flex flex-row gap-x-4 md:gap-x-2 sm:justify-center md:justify-end {post
                               .description['sizes'].length > 3
                               ? 'md:grid md:grid-cols-2'
                               : ''}"

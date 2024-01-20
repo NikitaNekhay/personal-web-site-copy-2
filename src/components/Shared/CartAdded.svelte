@@ -46,7 +46,7 @@
           }}
           class="hover:animate-pulse inline-flex items-center gap-2 rounded-lg bg-yellow-0 px-4 py-2 text-white-0 hover:bg-orange-0 transition-colors duration-200"
         >
-          <span class="text-sm"> {$t("Preview cart")} </span>
+          <span class="text-sm"> {$t("Make an order / checkout")} </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

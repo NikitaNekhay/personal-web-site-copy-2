@@ -58,16 +58,19 @@ export enum PaymentOptions {
     NoUserToAddToCart = "Error while adding item to cart, because there is no user",
     AddToCart = "Error while adding item to cart!",
     DeleteAtCart = "",
+
+
     PurchaseForm = "Error while filling purchase form!",
+
     PurchaseFormAttention = "Please, check all forms to be filled properly (Discount input is not required one).",
-    PurchaseFormName = "",
-    PurchaseFormUsername = "",
-    PurchaseFormEmail = "",
-    PurchaseFormAdress = "",
-    PurchaseFormPhone = "",
-    PurchaseFormDiscount = "",
-    PurchaseFormCity = "",
-    PurchaseSuccess ="",
+    PurchaseFormName = "Please provide your full name. Ensure it is correct.",
+    PurchaseFormUsername = "Please provide a username. Ensure it is correct.",
+    PurchaseFormEmail = "Please provide a valid email address.",
+    PurchaseFormAdress = "Please provide your full address, including street and number.",
+    PurchaseFormPhone = "Phone number is incorrect or missing. It must be from the same country where you order.",
+    PurchaseFormDiscount = "Discount code is invalid. (If you do not have one, you can leave this field empty.)",
+    PurchaseFormCity = "Please provide name of your city, it should be correct.",
+    PurchaseSuccess ="Please check your detail again",
 
     FetchUser = "Error while fetching user's info!",
     FetchUsers = "Error while fetching info about users!",

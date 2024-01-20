@@ -150,9 +150,8 @@
 
                 <!-- Login/Profile(Right side) -->
 
-        
+
                         <Menu {isUser}/>
-                    
 
             </div>
         </div>
