@@ -17,7 +17,7 @@ import('fs').then(fs => {
     })
     .then((content) => {
       console.log(content);
-      fs.writeFileSync('../routes/robots.txt', content);
+      fs.writeFileSync('../../static/robots.txt', content);
       return content;
     })
     .catch((error) => {
