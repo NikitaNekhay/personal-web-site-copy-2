@@ -266,7 +266,7 @@
                                     <a
                                         class="p-link"
                                         target="_blank"
-                                        href="https://t.me/nikitaniakhai"
+                                        href="https://t.me/nikitanekhay"
                                         >{$t("here")}</a
                                     >
                                 </p>

@@ -116,7 +116,7 @@ font-anonymous bottom-0 mt-20 shadow-white-2 drop-shadow-2xl"
                 <ul class="flex gap-6 mt-8">
                     <li class="">
                         <a
-                            href="https://t.me/nikitaniakhai"
+                            href="https://t.me/nikitanekhay"
                             rel="noreferrer"
                             target="_blank"
                             class="text-gray-700 transition duration-300 delay-100 hover:opacity-75 hover:text-blue-0"
@@ -324,7 +324,7 @@ font-anonymous bottom-0 mt-20 shadow-white-2 drop-shadow-2xl"
                     class="mt-8 text-xs text-gray-700 sm:mt-0 text-transparent bg-clip-text
                 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500"
                 >
-                    &copy; 2023. NIKITA NIAKHAI. {$t("All rights reserved")}.
+                    &copy; 2023. NIKITA NEKHAY. {$t("All rights reserved")}.
                 </p>
             </div>
         </div>

@@ -84,7 +84,7 @@
                     <a class="" target="_self" href="{base}/">
                         <h1>
                             <p class="flex justify-center">NIKITA</p>
-                            <p>NIAKHAI</p>
+                            <p>NEKHAY</p>
                         </h1>
                     </a>
                 </div>

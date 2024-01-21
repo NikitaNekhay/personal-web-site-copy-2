@@ -54,7 +54,7 @@
         >
             <h1 class="flex justify-center">
                 NIKITA <br>
-                NIAKHAI
+                NEKHAY
             </h1>
         </a> 
     </div>
