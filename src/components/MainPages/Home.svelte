@@ -7,11 +7,6 @@
     setTimeout(()=>{triggerAnimate =true},100)
 </script>
 
-<svelte:head>
-   <title>{'NIKITA SITE'}</title>
-   <meta name="description" content="Designer. Clothes shop.">
-</svelte:head>
-
 {#if triggerAnimate}
 
 
