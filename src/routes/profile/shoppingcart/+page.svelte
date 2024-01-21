@@ -26,7 +26,7 @@
 
 <svelte:head>
     <title>Shopping cart</title>
-    <meta name="description" content="Shopping cart of yours" />
+    <meta name="description" content="Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it." />
 </svelte:head>
 
 {#if userCountry!=="Unknown"}

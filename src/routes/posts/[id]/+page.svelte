@@ -58,8 +58,8 @@
 </script>
 
 <svelte:head>
-  <title>Page of the product</title>
-  <meta name="description" content="Detail information about a product" />
+  <title>{post.title}</title>
+  <meta name="description" content="Detail information about a product {post.title}. You can slide through images, check the price, see available sizes, size guide. Click on forms and you get more details on clothes and purchase, return policies. {post.description["smallDescription"]}" />
 </svelte:head>
 
 <!-- <Router>

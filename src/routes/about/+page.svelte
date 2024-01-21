@@ -9,7 +9,7 @@
   <title>About</title>
   <meta
     name="description"
-    content="About informarion. Who am I? What I do? Where to follow me?"
+    content=" What is it about this NIKITA? Who is he? What does he do and suggests? Is he mad? Take your sight on it. About information."
   />
 </svelte:head>
 

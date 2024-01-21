@@ -30,7 +30,7 @@
   <title>Edit page of the post</title>
   <meta
     name="description"
-    content="Edit form for the product"
+    content="Edit form for the product available for admin. Title, price, descriptions, section in closet, sizes, colors, archive quaility and images."
   />
 </svelte:head>
 

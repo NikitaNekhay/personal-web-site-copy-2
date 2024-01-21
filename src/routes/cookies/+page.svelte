@@ -5,7 +5,7 @@
 
 <svelte:head>
   <title>Cookits</title>
-  <meta name="description" content="Policy of cookies" />
+  <meta name="description" content="Policy of cookies." />
 </svelte:head>
 
 <EmptyPage />

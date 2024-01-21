@@ -5,7 +5,7 @@ import EmptyPage from "../../components/Shared/EmptyPage.svelte";
 </script>
 <svelte:head>
   <title>Policy</title>
-  <meta name="description" content="Policies of purchase, return, shipping and etc." />
+  <meta name="description" content="A big adult page of policies. There you can read details on purchase, return, shipping policies and etc." />
 </svelte:head>
 
 <Purchase />

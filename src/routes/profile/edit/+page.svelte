@@ -1,6 +1,6 @@
 <svelte:head>
    <title>Edit profile</title>
-   <meta name="description" content="Forms for editing your profile">
+   <meta name="description" content="Forms for editing user's profile: name, country, city, phone number, social network option and username in it.">
    <script src="https://unpkg.com/alpinejs" defer></script>
 </svelte:head>
 

@@ -5,7 +5,7 @@
 
 <svelte:head>
   <title>Policy</title>
-  <meta name="description" content="Policies of use" />
+  <meta name="description" content="Policies working in internet. Detailed and suffisticated information about cookies and processing user's data." />
 </svelte:head>
 
 <EmptyPage />

@@ -23,7 +23,7 @@
 
 <svelte:head>
   <title>List of products</title>
-  <meta name="description" content="List of products for admin" />
+  <meta name="description" content="Page of products, with available options to delete or edit the item." />
 </svelte:head>
 
 {#if passComponent}

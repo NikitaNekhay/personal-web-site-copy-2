@@ -10,8 +10,8 @@
 </script>
 
 <svelte:head>
-  <title>NIKITA NIAKHAI. CLOTHES SHOP</title>
-  <meta name="description" content="Home page with a photo portfolio" />
+  <title>NEKHAY NIKITA - CLOTHES SHOP</title>
+  <meta name="description" content="Internet shop of clothes designer NIKITA NEKHAY. Home page represents NIKITA'S photo portfolio." />
 </svelte:head>
 
 <Home />

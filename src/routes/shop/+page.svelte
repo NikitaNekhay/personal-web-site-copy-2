@@ -16,7 +16,7 @@
 
 <svelte:head>
   <title>Shop</title>
-  <meta name="description" content="List of clothes available to purchase" />
+  <meta name="description" content="Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details." />
 </svelte:head>
 
 {#if passComponent}
