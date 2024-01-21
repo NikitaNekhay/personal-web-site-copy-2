@@ -22,7 +22,7 @@
     </div>
 
     <!-- 2 columns -->
-    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[30%] sm:mb-[40%] {innerWidth<1023 && innerWidth > 775 ? 'md:mb-[0%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mb-[16%]' :'md:mb-[38%]')}">
+    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[20%] sm:mb-[42%] lg:mb-[35%] {innerWidth<1023 && innerWidth > 775 ? 'md:mb-[0%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mb-[16%]' :'md:mb-[38%]')}">
         <!-- 1 column -->
         <div class="grid grid-flow-row">
             <div class="">
@@ -72,7 +72,11 @@
                     </div>
 
                     <!-- small space for small text -->
-                    <div class="mt-[40%] sm:mt-[10%]"></div>
+                    <div class="mt-[40%] sm:mt-[10%]">
+                        <p class="relative -bottom-60 sm:-bottom-[75vh] ">
+                            {$t('aaaam I digiiitilizedd?')}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,7 +168,12 @@
                         </details>
                     </div>
                     <!-- small space for small text -->
-                    <div class="mt-[40%] sm:mt-[30%] md:mt-[35%]"></div>
+                    <div class="mt-[40%] sm:mt-[30%] md:mt-[35%]">
+                        <p class="relative bottom-10">
+                            {$t('guesss what else?..')}
+                        </p>
+                       
+                    </div>
 
                     <!-- what i suggest -->
                     <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-t-2">
@@ -218,7 +227,9 @@
 
     <!-- LAST 2 BLOCKS -->
     <div
-        class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%] {innerWidth<1023 && innerWidth > 775 ? 'md:mt-[10%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mt-[26%]' :'md:mt-[35%]')}">
+        class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%]
+        xl:mt-[0%] lg:mt-[7%] 2xl:mt-[0%] 3xl:mt-[0%]    
+        {innerWidth<1023 && innerWidth > 775 ? 'md:mt-[10%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mt-[26%]' :'md:mt-[35%]')}">
         <div class="grid grid-flow-row">
             <div>
                 <!-- where to read -->

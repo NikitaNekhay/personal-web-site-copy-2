@@ -200,8 +200,9 @@
       } else {
         msg = msgT;
       }
+      document.body.scrollIntoView({ block: 'start',  behavior: 'smooth' });
       isChanged = true;
-      document.body.scrollIntoView();
+      
     } finally {
       setTimeout(() => {
         submitClicked = !submitClicked;
@@ -402,12 +403,16 @@
 
 <div
   class="w-[100%] relative h-auto
-            grid grid-flow-col sm:grid-flow-row md:grid-flow-row
+            grid grid-flow-col 
+            lg:grid-cols-7 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-7
+            sm:grid-flow-row md:grid-flow-row
             gap-x-6 sm:gap-x-0 md:gap-x-0
             py-[14%] px-[3%] sm:py-[40%] xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt"
 >
   <section
-    class="sticky-section h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%] w-[100%]"
+    class="sticky-section h-auto 
+    lg:col-span-3 xl:col-span-3 2xl:col-span-3 3xl:col-span-3 
+    3xl:pb-[40%] sm:w-[100%] md:w-[100%] "
   >
     <div class=" left-0">
       <header class="text mb-6 flex justify-center">
@@ -489,7 +494,12 @@
       </div>
     </div>
   </section>
-  <section class="h-auto 3xl:pb-[40%] sm:w-[100%] md:sm:w-[100%]">
+  <section class="h-auto 3xl:pb-[40%]
+    lg:col-span-4 xl:col-span-4 2xl:col-span-4 3xl:col-span-4
+    sm:w-[100%] md:w-[100%]">
+    <header class="text mb-6 flex justify-center">
+      <h1 class="font-abril text-4xl text-blue-0">{$t("Make an order / checkout")}</h1>
+    </header>
     <form class="font-sans">
       <div class="purchase-container">
         <h2 class="purchase-heading2">{$t("Personal data")}</h2>

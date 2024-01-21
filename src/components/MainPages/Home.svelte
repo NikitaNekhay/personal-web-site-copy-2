@@ -1,4 +1,6 @@
 <script>
+    import { base } from "$app/paths";
+
 
     import { fade, fly, slide } from "svelte/transition";
     let triggerAnimate = false;
@@ -11,7 +13,10 @@
 </svelte:head>
 
 {#if triggerAnimate}
+
+
 <div class="">
+ 
     <div id="img1" in:fade
     >
         <img src="https://lh3.googleusercontent.com/pw/AJFCJaUwN3AhGFTVGV_tpIrTBp09YiYOfLnQdm79wmXowCFlYxMHFWV4TR3jWBS44_BNz4wlomvDeP5otsxNGhVq2udIahgjWl67cdgNm1JnkRRYz-yh5vQ=w2400"
@@ -460,5 +465,12 @@
 
 
 
+</div>
+<div class="relative bottom-0 top-10 grid justify-items-center justify-self-center justify-center">
+    <button on:click={()=>{document.body.scrollIntoView({ block: 'start',  behavior: 'smooth' });}}>
+        <img
+        class="w-12  transition-all duration-200 group-hover:scale-150 animate-bounce"
+            src="{base}/media/chevrons-up.svg" alt="icon arrow up">
+    </button>  
 </div>
 {/if}

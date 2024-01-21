@@ -19,14 +19,6 @@
 
   let isLoading = true; // Initialize the loading state
 
-  // let profileValue = {
-  //   name: "",
-  //   email: "",
-  //   phone: "",
-  //   country: "",
-  //   description: "",
-  //   messages: [],
-  // };
   let profileValue:UserDataType;
   let isthereadmin = false
   
