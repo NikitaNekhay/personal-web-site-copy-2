@@ -50,6 +50,8 @@
 
 		"firebase": "^9.20.0",
 
+		"generate-robotstxt": "^8.0.3",
+
 		"gh-pages": "^3.0.0",
 
 		"postcss": "^8.4.23",

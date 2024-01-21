@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow:
+Crawl-delay: 2
+Sitemap: http://nekhaynikita.shop/sitemap.xml
+Host: nekhaynikita.shop
