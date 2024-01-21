@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>Shop</title>
+  <meta name="description" content="Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details." />
+</svelte:head>
+
 <script lang="ts">
   import { onMount } from "svelte";
   import Gallery from "../../components/MainPages/Gallery.svelte";
@@ -14,10 +19,7 @@
   });
 </script>
 
-<svelte:head>
-  <title>Shop</title>
-  <meta name="description" content="Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details." />
-</svelte:head>
+
 
 {#if passComponent}
   {#key triggerReload}
