@@ -15,7 +15,7 @@ export const persistLanguageStore = (key,initial) => {
       
       
       userLng = (window.navigator.userLanguage || window.navigator.language.split("-", 2)[1]).toLowerCase();
-      //console.log("window navigate",window.navigator)
+      console.log("window navigate",window.navigator)
       userLng.toLowerCase;
       // console.log(userLng)
       currentLanguageData.language = userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English;
