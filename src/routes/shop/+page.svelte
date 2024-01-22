@@ -1,14 +1,10 @@
-<svelte:head>
-  <title>Shop</title>
-  <meta name="description" content="Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details." />
-</svelte:head>
-
 <script lang="ts">
   import { onMount } from "svelte";
   import Gallery from "../../components/MainPages/Gallery.svelte";
   import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
   import type { ProductType } from "../../shared/types";
   import { getProducts } from "../posts/post";
+    import { t } from "svelte-i18n";
   let passComponent = false;
   let tempProductStore: ProductType[];
   let triggerReload: boolean = false;
@@ -19,7 +15,29 @@
   });
 </script>
 
+<svelte:head>
+  <title>{$t('SHOP')}</title>
+  <meta
+    name="description"
+    content={$t("Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details.")}
+  />
 
+  <meta
+  property="og:title"
+  content={$t("SHOP")}
+/>
+<meta
+  property="og:description"
+  content={$t("Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details."
+  )}
+/>
+<meta property="og:type" content="website" />
+<meta
+  property="og:image"
+  content=""
+/>
+<meta property="og:url" content="http://nekhaynikita.shop/shop" />
+</svelte:head>
 
 {#if passComponent}
   {#key triggerReload}

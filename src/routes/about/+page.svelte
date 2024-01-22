@@ -2,22 +2,38 @@
   import { error } from "@sveltejs/kit";
   import About from "../../components/MainPages/About.svelte";
   import { Errors } from "../../shared/types";
-    import Authorphoto from "../../components/MainPages/About/Authorphoto.svelte";
+  import Authorphoto from "../../components/MainPages/About/Authorphoto.svelte";
+  import { t } from "svelte-i18n";
 </script>
 
 <svelte:head>
-  <title>About</title>
+  <title>{$t("ABOUT")}</title>
   <meta
     name="description"
-    content=" What is it about this NIKITA? Who is he? What does he do and suggests? Is he mad? Take your sight on it. About information."
+    content={$t(
+      "What is it about this NIKITA? Who is he? What does he do and suggests? Is he mad? Take your sight on it. About information.",
+    )}
   />
+
+  <meta property="og:title" content={$t("ABOUT")} />
+
+  <meta
+    property="og:description"
+    content={$t(
+      "What is it about this NIKITA? Who is he? What does he do and suggests? Is he mad? Take your sight on it. About information.",
+    )}
+  />
+
+  <meta property="og:type" content="website" />
+
+  <meta
+    property="og:image"
+    content="https://lh3.googleusercontent.com/pw/ABLVV852oPHLKRMIwtf-Sn5fGGeiIGiVzhsU9ZoztcoPK8qW4Gt52oXElABRA8nKxrbg1xKLa-upENHFXidU4FO5ame1Dq4X69jHH3J_z7g-Soz4ALO9mIFd6z1Bg2vlAHdAM3P4BGzI69gLHVbqcMsF8eqvKw=w623-h934-s-no-gm?authuser=0"
+  />
+
+  <meta property="og:url" content="http://nekhaynikita.shop/about" />
 </svelte:head>
 
-
-<section class=" sm:w-screen md:w-screen w-[60%] h-auto"> 
-
-    <About />
-
-    
-
+<section class=" sm:w-screen md:w-screen w-[60%] h-auto">
+  <About />
 </section>

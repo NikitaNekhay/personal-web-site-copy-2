@@ -5,7 +5,8 @@
 
     let userCountry = "Unknown";
     let userCity = "Unknown";
-    import CountryData from "../../../CountryData.json"
+    import CountryData from "../../../CountryData.json";
+    import { t } from "svelte-i18n";
 
     onMount(async () => {
         // Fetch the user's IP and location using a public IP API (consider using a more private/secure method in production)
@@ -18,22 +19,34 @@
         } else {
             console.log("bad luck on fetch");
         }
-
     });
-
- 
 </script>
 
 <svelte:head>
-    <title>Shopping cart</title>
-    <meta name="description" content="Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it." />
+    <title>{$t("SHOPPING CART")}</title>
+    <meta
+        name="description"
+        content={$t("Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.")}
+    />
+
+    <meta property="og:title" content={$t("SHOPPING CART")} />
+    <meta
+        property="og:description"
+        content={$t("Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.")}
+    />
+
+    <meta property="og:type" content="website" />
+
+    <meta
+        property="og:image"
+        content=""
+    />
+
+    <meta property="og:url" content="http://nekhaynikita.shop/profile/shoppingcart" />
 </svelte:head>
 
-{#if userCountry!=="Unknown"}
-    <ShoppingCart {userCountry} {userCity} countries={CountryData}/>
+{#if userCountry !== "Unknown"}
+    <ShoppingCart {userCountry} {userCity} countries={CountryData} />
 {:else}
     <LoadingSpinner />
 {/if}
-
-
-

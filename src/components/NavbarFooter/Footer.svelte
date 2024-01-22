@@ -10,21 +10,6 @@
     let innerWidth = 0;
     let innerHeight = 0;
 
-    // if ($currentLanguagee !== undefined) {
-    //     const currentValue = $currentLanguagee;
-    //     // Switch the language value
-    //     if (currentValue === Language.English) {
-    //         addMessages(Language.English, en);
-    //         locale.set(Language.English);
-    //     } else {
-    //         addMessages(Language.Russian, ru);
-    //         locale.set(Language.Russian);
-    //     }
-    // } else {
-    //     addMessages(Language.English, en);
-    //     locale.set(Language.English);
-    // }
-
     // version 2
     function changeLanguage() {
         // Get the current value of the store
@@ -42,9 +27,9 @@
                 locale.set(Language.English);
             }
 
-            console.log("change language in footer")
+            console.log("change language in footer");
             // Update the store with the new value
-            $currentLanguagee = newLanguage
+            $currentLanguagee = newLanguage;
             $currentLanguagee.set(newLanguage);
         } else {
             console.error(
@@ -293,15 +278,6 @@ font-anonymous bottom-0 mt-20 shadow-white-2 drop-shadow-2xl"
                                 class="text-red-2 transition duration-300 delay-100 hover:opacity-75"
                             >
                                 {$t("Privacy Policy")}
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="{base}/cookies"
-                                class="text-red-2 transition duration-300 delay-100 hover:opacity-75"
-                            >
-                                {$t("Cookies")}
                             </a>
                         </li>
                         <li>

@@ -11,6 +11,7 @@
   import LoadingSpinner from "../../../components/Shared/LoadingSpinner.svelte";
   import PostDetail from "../../../components/MainPages/Posts/PostDetail.svelte";
     import { writable } from "svelte/store";
+    import { t } from "svelte-i18n";
 
   let isLoading = true; // Initialize the loading state
   let isLoading2 = true; // Initialize the loading state
@@ -58,12 +59,33 @@
 </script>
 
 <svelte:head>
-  <title>{post.title}</title>
-  <meta name="description" content="Detail information about a product {post.title}. You can slide through images, check the price, see available sizes, size guide. Click on forms and you get more details on clothes and purchase, return policies. {post.description["smallDescription"]}" />
+  <title>{$t(post.title)}</title>
+  <meta
+    name="description"
+    content={$t(post.description["smallDescription"]) + ". " +$t("You can slide through images, check the price, see available sizes, size guide. Click on forms and you get more details on clothes and purchase, return policies.")
+  }
+  />
+
+  <meta property="og:title" content={$t(post.title)} />
+
+  <meta
+    property="og:description"
+    content={$t(post.description["smallDescription"]) + ". " +$t("You can slide through images, check the price, see available sizes, size guide. Click on forms and you get more details on clothes and purchase, return policies.")
+    }
+  />
+
+  <meta property="og:type" content="product" />
+
+  <meta
+    property="og:image"
+    content={post.images[0]}
+  />
+
+  <meta property="og:url" content={"http://nekhaynikita.shop/posts/"+post.id} />
 </svelte:head>
 
 <!-- <Router>
-  
+
   <Route path={`${base}/posts/:id`} let:params> -->
 {#if isLoading && isLoading2}
   <LoadingSpinner />
