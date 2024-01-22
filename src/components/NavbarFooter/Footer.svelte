@@ -10,20 +10,20 @@
     let innerWidth = 0;
     let innerHeight = 0;
 
-    if ($currentLanguagee !== undefined) {
-        const currentValue = $currentLanguagee;
-        // Switch the language value
-        if (currentValue === Language.English) {
-            addMessages(Language.English, en);
-            locale.set(Language.English);
-        } else {
-            addMessages(Language.Russian, ru);
-            locale.set(Language.Russian);
-        }
-    } else {
-        addMessages(Language.English, en);
-        locale.set(Language.English);
-    }
+    // if ($currentLanguagee !== undefined) {
+    //     const currentValue = $currentLanguagee;
+    //     // Switch the language value
+    //     if (currentValue === Language.English) {
+    //         addMessages(Language.English, en);
+    //         locale.set(Language.English);
+    //     } else {
+    //         addMessages(Language.Russian, ru);
+    //         locale.set(Language.Russian);
+    //     }
+    // } else {
+    //     addMessages(Language.English, en);
+    //     locale.set(Language.English);
+    // }
 
     // version 2
     function changeLanguage() {
@@ -42,8 +42,10 @@
                 locale.set(Language.English);
             }
 
+            console.log("change language in footer")
             // Update the store with the new value
-            currentLanguagee.set(newLanguage);
+            $currentLanguagee = newLanguage
+            $currentLanguagee.set(newLanguage);
         } else {
             console.error(
                 "access to localStorage for languages is restricted...",

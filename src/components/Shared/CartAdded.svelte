@@ -3,7 +3,7 @@
   import ru from "../../services/ru.json";
   import en from "../../services/en.json";
   import { base } from "$app/paths";
-  import { authStore, currentLanguage } from "../../store/store";
+  import { authStore } from "../../store/store";
   import { onMount } from "svelte";
   import { handleDelete } from "../../routes/profile/user";
   import { fade, fly } from "svelte/transition";

@@ -5,10 +5,10 @@
   import { addMessages, locale, t } from "svelte-i18n";
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
-  import { currentLanguage } from "../../../store/store";
   import { onMount } from "svelte";
   import DeactivatePopUp from "../../Shared/DeactivatePopUp.svelte";
   import { fade, fly } from "svelte/transition";
+    import { currentLanguagee } from "../../../store/store_";
 
   let isDeactivate = false;
   let isOpen = false;
@@ -30,7 +30,7 @@
       <header class="  text flex justify-items-start">
         <h3
           class="font-abril text-4xl text-blue-0 hyphens-auto"
-          lang={$currentLanguage.language}
+          lang={$currentLanguagee}
         >
           {$t("User Profile")}
         </h3>

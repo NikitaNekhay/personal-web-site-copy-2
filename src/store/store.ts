@@ -5,9 +5,9 @@ import { writable } from "svelte/store"
 import { Errors, Language } from "../shared/types";
 
 
-export const currentLanguage = writable({
-  language: Language.English
-})
+// export const currentLanguage = writable({
+//   language: Language.English
+// })
 
 
 

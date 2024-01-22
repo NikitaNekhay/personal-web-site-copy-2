@@ -6,7 +6,7 @@
     updateUserProfile,
   } from "../../../routes/profile/user";
   import { auth } from "../../../lib/firebase/firebase";
-  import { authHandlers, authStore, currentLanguage,isAdmin } from "../../../store/store";
+  import { authHandlers, authStore,isAdmin } from "../../../store/store";
   import { base } from "$app/paths";
   import { clickOutside } from "../../../services/clickOutside";
   import ProfileOptions from "./ProfileOptions.svelte";

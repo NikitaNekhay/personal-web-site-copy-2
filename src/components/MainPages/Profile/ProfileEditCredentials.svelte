@@ -3,7 +3,7 @@
     import { getUserProfile, updateUserProfile } from "../../../routes/profile/user";
     import type { User } from "firebase/auth";
     import { auth, db } from "../../../lib/firebase/firebase";
-    import { authHandlers, authStore, currentLanguage } from "../../../store/store";
+    import { authHandlers } from "../../../store/store";
     import { base } from "$app/paths";
     import { clickOutside } from "../../../services/clickOutside";
     import ProfileOptions from "./ProfileOptions.svelte";

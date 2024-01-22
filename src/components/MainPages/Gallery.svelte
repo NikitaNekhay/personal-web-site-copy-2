@@ -38,20 +38,20 @@
   let msg: String = "";
   let smmsg: String = "Something went wrong while scrolling the shop.";
 
-  if ($currentLanguagee !== undefined) {
-    const currentValue = $currentLanguagee;
-    // Switch the language value
-    if (currentValue === Language.English) {
-      addMessages(Language.English, en);
-      locale.set(Language.English);
-    } else {
-      addMessages(Language.Russian, ru);
-      locale.set(Language.Russian);
-    }
-  } else {
-    addMessages(Language.English, en);
-    locale.set(Language.English);
-  }
+  // if ($currentLanguagee !== undefined) {
+  //   const currentValue = $currentLanguagee;
+  //   // Switch the language value
+  //   if (currentValue === Language.English) {
+  //     addMessages(Language.English, en);
+  //     locale.set(Language.English);
+  //   } else {
+  //     addMessages(Language.Russian, ru);
+  //     locale.set(Language.Russian);
+  //   }
+  // } else {
+  //   addMessages(Language.English, en);
+  //   locale.set(Language.English);
+  // }
 
   onMount(async () => {
     try {
@@ -206,7 +206,7 @@
                       <h3
                         class="sm:grid sm:grid-cols-2  md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
                       >
-                        <div class="sm:col-span-1 md:col-span-2 break-words" lang={$currentLanguagee.language}>
+                        <div class="sm:col-span-1 md:col-span-2 break-words" lang={$currentLanguagee}>
                           {$t(post.title)}
                         </div>
                       </h3>
@@ -244,7 +244,7 @@
                         class="break-words text-gray-700 text-center self-center
                         sm:self-start sm:text-left
                         md:self-end md:text-right"
-                        lang={$currentLanguagee.language}
+                        lang={$currentLanguagee}
                       >
                         {$t(post.description["smallDescription"])}
                       </h2>

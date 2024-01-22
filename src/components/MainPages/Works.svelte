@@ -1,7 +1,6 @@
 <script>
   import { base } from "$app/paths";
   import { t } from "svelte-i18n";
-  import { currentLanguage } from "../../store/store";
   import { currentLanguagee } from "../../store/store_";
   let innerWidth = 0;
   let innerHeight = 0;
@@ -113,7 +112,7 @@
         class="h-auto w-4/12 sm:w-5/12 mb-20 sm:mb-0 sm:place-content-center justify-center self-center font-anonymous
         text-2xl sm:text-sm md:text-xl lg:text-xl"
       >
-        <article class="hyphens-auto" lang={$currentLanguage.language}>
+        <article class="hyphens-auto" lang={$currentLanguagee}>
           <p>
             {$t(
               "This is a presentation of first capsule collection made by my hands. Also it is my early experience in clothes' making.",
@@ -141,7 +140,7 @@
       </div>
       <div
         class="h-auto grid w-3/12 md:w-6/12 sm:w-5/12 break-words sm:gap-y-30 justify-center self-center font-anonymous text-2xl sm:text-lg gap-y-20"
-        lang={$currentLanguage.language}
+        lang={$currentLanguagee}
       >
         <div class="sm:w-10/12">
           <a

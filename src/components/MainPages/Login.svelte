@@ -3,7 +3,7 @@
     import { addMessages, locale, t } from "svelte-i18n";
     import ru from "../../services/ru.json";
     import en from "../../services/en.json";
-    import { currentLanguagee } from "../../store/store_";
+    //import { currentLanguagee } from "../../store/store_";
     import LoadingButton from "../Shared/LoadingButton.svelte";
     import { base } from "$app/paths";
     import { onDestroy } from "svelte";
@@ -32,20 +32,20 @@
     let password = "";
     let rpassword = "";
 
-    if ($currentLanguagee !== undefined) {
-        const currentValue = $currentLanguagee;
-        // Switch the language value
-        if (currentValue === Language.English) {
-            addMessages(Language.English, en);
-            locale.set(Language.English);
-        } else {
-            addMessages(Language.Russian, ru);
-            locale.set(Language.Russian);
-        }
-    } else {
-        addMessages(Language.English, en);
-        locale.set(Language.English);
-    }
+    // if ($currentLanguagee !== undefined) {
+    //     const currentValue = $currentLanguagee;
+    //     // Switch the language value
+    //     if (currentValue === Language.English) {
+    //         addMessages(Language.English, en);
+    //         locale.set(Language.English);
+    //     } else {
+    //         addMessages(Language.Russian, ru);
+    //         locale.set(Language.Russian);
+    //     }
+    // } else {
+    //     addMessages(Language.English, en);
+    //     locale.set(Language.English);
+    // }
 
     function typeAction(node){
         console.log(node.type)

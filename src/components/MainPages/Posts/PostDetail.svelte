@@ -11,7 +11,7 @@
         type ProductType,
         type Slide,
     } from "../../../shared/types";
-    import { authStore, currentLanguage } from "../../../store/store";
+    import { authStore } from "../../../store/store";
     import CartAdded from "../../Shared/CartAdded.svelte";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
 
@@ -19,6 +19,7 @@
     import SquareButton from "../../Shared/SquareButton.svelte";
 
     import {  fly } from "svelte/transition";
+    import { currentLanguagee } from "../../../store/store_";
 
     export let post: ProductType;
     let isChanged: boolean = false;
@@ -214,14 +215,14 @@
                 <header>
                     <h1
                         class="font-abril sm:text-5xl text-center break-words text-6xl sm:tracking-tight text-black-0"
-                        lang={$currentLanguage.language}
+                        lang={$currentLanguagee}
                     >
                         {$t(post.title)}
                     </h1>
                 </header>
                 <p
                     class="text-center text-xl break-words"
-                    lang={$currentLanguage.language}
+                    lang={$currentLanguagee}
                 >
                     {$t(post.description["smallDescription"])}
                 </p>

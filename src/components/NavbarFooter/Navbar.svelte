@@ -20,6 +20,7 @@
 
     if ($currentLanguagee !== undefined) {
         const currentValue = $currentLanguagee;
+        console.log("no error while lng",currentValue)
         // Switch the language value
         if (currentValue === Language.English) {
             addMessages(Language.English, en);
@@ -28,7 +29,9 @@
             addMessages(Language.Russian, ru);
             locale.set(Language.Russian);
         }
+        console.log("no error while lng 2",currentValue)
     } else {
+        console.log("error while lng")
         addMessages(Language.English, en);
         locale.set(Language.English);
     }

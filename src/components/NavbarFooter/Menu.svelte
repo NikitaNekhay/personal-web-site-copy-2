@@ -4,32 +4,32 @@
     import {
         authHandlers,
         authStore,
-        currentLanguage,
         isAdmin,
     } from "../../store/store";
     import { addMessages, locale, t } from "svelte-i18n";
-    import ru from "../../services/ru.json";
-    import en from "../../services/en.json";
-    import { currentLanguagee } from "../../store/store_";
+    // import ru from "../../services/ru.json";
+    // import en from "../../services/en.json";
+    // import { currentLanguagee } from "../../store/store_";
     import { Language } from "../../shared/types";
     import { page } from "$app/stores";
+    import { currentLanguagee } from "../../store/store_";
     export let isUser: boolean;
     let currentPage = $page.url.pathname;
 
-    if ($currentLanguagee !== undefined) {
-        const currentValue = $currentLanguagee;
-        // Switch the language value
-        if (currentValue === Language.English) {
-            addMessages(Language.English, en);
-            locale.set(Language.English);
-        } else {
-            addMessages(Language.Russian, ru);
-            locale.set(Language.Russian);
-        }
-    } else {
-        addMessages(Language.English, en);
-        locale.set(Language.English);
-    }
+    // if (currentLanguagee !== undefined) {
+    //     const currentValue = currentLanguagee;
+    //     // Switch the language value
+    //     if (currentValue === Language.English) {
+    //         addMessages(Language.English, en);
+    //         locale.set(Language.English);
+    //     } else {
+    //         addMessages(Language.Russian, ru);
+    //         locale.set(Language.Russian);
+    //     }
+    // } else {
+    //     addMessages(Language.English, en);
+    //     locale.set(Language.English);
+    // }
 
     export let isOpen = false;
 
@@ -151,7 +151,7 @@
             text-black break-words -ml-4"
                 use:clickOutside
                 on:clickOutside={handleClickOutside}
-                lang={$currentLanguage.language}
+                lang={currentLanguagee.language}
             >
                 <a
                     class="{currentPage.includes('/profile') &&
