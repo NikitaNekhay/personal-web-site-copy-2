@@ -32,6 +32,12 @@
             $currentLanguagee = newLanguage;
             $currentLanguagee.set(newLanguage);
         } else {
+            let userLng = (window.navigator.userLanguage || window.navigator.language.split("-", 2)[1]).toLowerCase();
+            console.log("window navigate",window.navigator)
+            userLng.toLowerCase;
+            //console.log(userLng)
+            $currentLanguagee = userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.English;
+            
             console.error(
                 "access to localStorage for languages is restricted...",
             );
