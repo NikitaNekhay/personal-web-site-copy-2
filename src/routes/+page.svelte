@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t("NIKITA NIAKHAI - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")}</title>
+  <title>{$t("NIKITA NEKHAY - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")}</title>
   <meta
     name="description"
     content={$t(
@@ -15,7 +15,7 @@
     )}
   />
 
-  <meta property="og:title" content={$t("NIKITA NIAKHAI - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")} />
+  <meta property="og:title" content={$t("NIKITA NEKHAY - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")} />
   <meta
     property="og:description"
     content={$t(
