@@ -329,12 +329,12 @@
       }
 
       let checkText =
-        "Hello user! This is your check with instructions, please follow them in order to purchase your goods:\n\n";
+        `Hello user! This is your check with instructions,\nplease, follow them in order to purchase your goods:\n\n`;
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Product: ${item.title}\nQuantity: ${quantity}\nAuthor: ${item.author}\nContact Email: ${item.authorEmail}\n\n`;
-        checkText += `Please write an email to ${item.authorEmail} with the subject "Purchase Inquiry for ${item.title}" and include the quantity (${quantity}) in your message. Request further instructions for the purchase.\n\n`;
+        checkText += `Product: ${item.title}\nQuantity: ${quantity}\nAuthor: Nikita\nContact Email: ktofreesapiens@gmail.com\n\n`;
+        checkText += `Please write an email to ktofreesapiens@gmail.com with the subject: \n"Purchase Inquiry for ${item.title}" and include the quantity (${quantity}) in your message. \n\nRequest further instructions for the purchase.\n\n`;
       });
 
       // Remove duplicates if any
@@ -349,12 +349,12 @@
       }
 
       let checkText =
-        "Приветствую вас! Вот ваш чек, пожалуйста. Покупка произаводится в индивидуальном порядке путем диалога с продавцом. Здесь представлены инструкции для покупки ваших товаров:\n\n";
+        `Приветствую вас! Вот ваш чек.\nПокупка произаводится в индивидуальном порядке путем диалога с продавцом.\nЗдесь представлены инструкции для покупки ваших товаров:\n\n"`
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: ${item.author}\nКонтактный email: ${item.authorEmail}\n\n`;
-        checkText += `Пожалуйства свяжитесь по email ${item.authorEmail} с целью покупки "${item.title}" также уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. Ведите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
+        checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: НИКИТА\nКонтактный email: ktofreesapiens@gmail.com\n\n`;
+        checkText += `Пожалуйста, свяжитесь по email ktofreesapiens@gmail.com с целью покупки "${item.title}" \nтакже уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. \n\nВедите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
       });
 
       // Remove duplicates if any
