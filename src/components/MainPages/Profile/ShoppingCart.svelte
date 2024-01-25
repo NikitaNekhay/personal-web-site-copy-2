@@ -22,6 +22,7 @@
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
   import { page } from "$app/stores";
   import { cart } from "../../../store/cart_store_";
+    import { validateAddress, validateCity, validateDiscount, validateEmail, validateFullName, validatePhoneNumber, validateUsername } from "../../../services/help";
 
   // Assuming you have a list of countries and their codes
   export let countries;
@@ -238,59 +239,7 @@
     }
   }
 
-  function validateFullName(fullName) {
-    // Now allows for Cyrillic characters, and names can have parts separated by spaces or hyphens
-    const regex = /^[a-zA-Zа-яА-ЯёЁ]+(?:[\s-][a-zA-Zа-яА-ЯёЁ]+)+$/;
-    return regex.test(fullName.trim());
-  }
 
-  function validatePhoneNumber(phoneNumber, userCountry) {
-    // Find the country object that matches the userCountry
-    const country = countries.find((obj) => obj.code === userCountry);
-    console.log(phoneNumber, userCountry, country);
-    //if (!country) return false;
-
-    // Build the regex dynamically based on the country's dial code and allow for a flexible length of the phone number
-    const regex = new RegExp(`^\\${country.dial_code}\\d{7,15}$`);
-    console.log();
-    return regex.test(phoneNumber);
-  }
-
-  function validateEmail(email) {
-    // The email regex does not need to change for Cyrillic as email standards are international
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  }
-
-  function validateUsername(username) {
-    // Username can now include Cyrillic characters, underscores, and periods
-    const regex = /^[a-zA-Z0-9а-яА-ЯёЁ._]+$/;
-    return regex.test(username);
-  }
-
-  function validateAddress(address) {
-    // Address validation now includes Cyrillic characters and a more lenient structure
-    const regex = /^[a-zA-Z0-9а-яА-ЯёЁ\s,.]+$/;
-    return regex.test(address);
-  }
-
-  function validateCity(city, userCountry, countries) {
-    // Assuming that the city validation is just to check it's not empty
-    // For real-world application, it would require an API call to validate against known cities in the country
-    return city.length > 0; // Replace with real API check
-  }
-
-  function validateDiscount(discount) {
-    if (discount.length > 0) {
-      if (discount === "RIMSKYKORSAKOV") {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
 
   function handleFormValidation() {
     var isBadReturn: boolean = false;
@@ -299,6 +248,7 @@
     const isPhoneNumberValid = validatePhoneNumber(
       tempUserCart.phoneNumber,
       tempUserCart.country,
+      countries
     );
     const isEmailValid = validateEmail(tempUserCart.email);
     const isUsernameValid = validateUsername(tempUserCart.contactName);

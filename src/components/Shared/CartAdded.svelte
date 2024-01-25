@@ -36,7 +36,7 @@
         {$t("You have added item to your cart!")}
         <br />
         {$t("Currently you have")}
-        {$authStore.user ? tempAuthStore.data.cart.length : $cart.cart.length}
+        {$authStore.user ? $authStore.data.cart.length : $cart.cart.length}
         {$t("item(s) in the cart")}.
       </p>
 

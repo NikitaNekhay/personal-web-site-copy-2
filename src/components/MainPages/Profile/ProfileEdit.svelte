@@ -18,11 +18,13 @@
   import type { DocumentData } from "firebase/firestore";
   import type { User } from "firebase/auth";
   import SubmitButton from "../../Shared/SubmitButton.svelte";
+    import { validateCity, validateEmail, validateFullName, validatePhoneNumber } from "../../../services/help";
 
   // Assuming you have a list of countries and their codes
   export let countries;
 
   let showDropdown = false;
+  let isErrorInput: string[] = [];
   let isLoading = false;
   let submitClicked = false;
   let isChanged = false;
@@ -76,6 +78,56 @@
       isChanged = true;
     }
   });
+
+  function handleFormValidation() {
+    var isBadReturn: boolean = false;
+    // Validate all fields
+    console.log(profileValue.name)
+    const isFullNameValid = validateFullName(profileValue.name);
+    const isPhoneNumberValid = validatePhoneNumber(
+      profileValue.phone,
+      profileValue.country,
+      countries
+    );
+    const isEmailValid = validateEmail(profileValue.email);
+    const isCityValid = validateCity(
+      profileValue.city,
+      profileValue.country,
+      countries,
+    );
+
+    // If any validation fails, set an error message and return false
+    if (!isFullNameValid) {
+      isErrorInput.push("name");
+      msg = Errors.PurchaseFormName;
+      isBadReturn = true;
+    }
+    if (!isPhoneNumberValid) {
+      isErrorInput.push("phone");
+      msg = Errors.PurchaseFormPhone;
+      isBadReturn = true;
+    }
+    if (!isEmailValid) {
+      isErrorInput.push("email");
+      msg = Errors.PurchaseFormEmail;
+      isBadReturn = true;
+    }
+    if (!isCityValid) {
+      isErrorInput.push("city");
+      msg = Errors.PurchaseFormCity;
+      isBadReturn = true;
+    }
+
+    if (isBadReturn) {
+      console.log(isErrorInput);
+      return false;
+    }
+
+    // If everything's valid, clear error messages and return true
+    isErrorInput.length = 0;
+    msg = msgT;
+    return true;
+  }
 
   async function handleSubmit() {
     try {
@@ -162,6 +214,7 @@
 
       // //console.log("authStore in prfile.svelte after handling",$authStore.data);
     } catch (error) {
+      console.log(error)
       msg = Errors.EditProfile;
       smmsg = smmsgE;
       isError = true;
@@ -215,8 +268,11 @@
               class="relative block overflow-hidden rounded-md
             border border-gray-200 bg-white-1
             px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
-            focus-within:ring-white-2"
-              for="first-name"
+            focus-within:ring-white-2 {(isErrorInput.includes('name') ||
+            isErrorInput.includes('fullName'))
+            ? 'ring-red-1 ring-1'
+            : ''}"
+              for="name"
             >
               <input
                 class="peer h-8 w-full border-none bg-transparent bg-white-1 p-0 placeholder-transparent
@@ -224,16 +280,16 @@
                 type="text"
                 bind:value={profileValue.name}
                 required
-                placeholder="Username"
+                placeholder="Name"
                 id="name"
-                autocomplete="given-name"
+                autocomplete="name"
               />
               <span
                 class=" absolute start-3 top-3 -translate-y-1/2 cursor-text
               bg-white-1 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2
               peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs pointer-events-none"
               >
-                {$t("User name")}
+              {$t("Name, Surname, Middle name (if exists)")}
               </span>
             </label>
           </div>
@@ -276,7 +332,7 @@
               border border-gray-200 bg-white-1
               px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
               focus-within:ring-white-2 {isChanged &&
-              (isErrorInput.includes('phoneNumber') ||
+              (isErrorInput.includes('phone') ||
                 isErrorInput.includes(''))
                 ? 'ring-red-1 ring-1'
                 : ''}"
