@@ -106,7 +106,7 @@
                             : 'text-black'}
          transition duration-300 delay-100
          group-hover:text-yellow-0 group-hover:animate-pulse"
-                        >{$authStore.user ? tempAuthStore.data.cart.length : $cart.cart.length}</span
+                        >{isUser ? $authStore.data.cart.length : $cart.cart.length}</span
                     >
                 </a>
 
