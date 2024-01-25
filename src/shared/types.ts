@@ -71,6 +71,10 @@ export enum PaymentOptions {
     PurchaseFormDiscount = "Discount code is invalid. (If you do not have one, you can leave this field empty.)",
     PurchaseFormCity = "Please provide name of your city, it should be correct.",
     PurchaseSuccess ="Please check your detail again",
+    PurchaseFormContact = "Please choose a contact option.",
+    PurchaseFormDelivery = "Please choose a delivery option.",
+    PurchaseFormPayment = "Please choose a payment option.",
+    PurchaseFormPolicyAgree = "Please, agree our policy.",
 
     FetchUser = "Error while fetching user's info!",
     FetchUsers = "Error while fetching info about users!",

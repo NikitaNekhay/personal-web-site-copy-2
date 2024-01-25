@@ -132,7 +132,7 @@
               <dd
                 class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
               >
-                {profileValue.country}
+                {profileValue.country} : {profileValue.city} 
               </dd>
             </div>
             <div class="grid grid-cols-4 gap-4 px-4 py-6 sm:px-0">

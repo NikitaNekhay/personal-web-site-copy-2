@@ -1,6 +1,6 @@
 import { getAuth, type User } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase/firebase';
-import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc, query } from "firebase/firestore";
+import { collection, doc, getDoc, runTransaction, getDocs, deleteDoc, query, addDoc, setDoc } from "firebase/firestore";
 import { authStore } from '../../store/store';
 import { base } from '$app/paths';
 import { type UserDataType,type ProductType, Errors } from '../../shared/types';
@@ -11,13 +11,17 @@ export const prerender = 'auto'
 export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string,city: string, description: string, messages: [], cart:[]) {
   try {
     let userDocRef:any;
-    //console.log(cart)
+    console.log(user,user.uid,user.user.uid)
     
     if(user.id){
       userDocRef = doc(collection(db, "user"), user.id);
     }  else if (user.uid) {
       userDocRef = doc(collection(db, "user"), user.uid);
+    } else if(user.user.uid){
+      userDocRef = doc(collection(db, "user"), user.user.uid);
+      console.log(userDocRef)
     } else {
+
       throw new Error("User does not exist, can't find his id");
     }
 
@@ -25,8 +29,26 @@ export async function updateUserProfile(user: User | string , name: string, emai
       const userDoc = await transaction.get(userDocRef);
       ////console.log("userDoc is existing?",userDoc)
       if (!userDoc.exists()) {
-        throw new Error("User does not exist");
+        console.log(("User does not exist we need to create him"));
+        const userCollection = collection(db, "user");
+        const updatedUserData:UserDataType = {
+          name: name ,
+          email: email ,
+          phone: phone ,
+          country: country ,
+          city: city ,
+          description: description ,
+          messages: messages,
+          cart: cart ,
+        };
 
+        await setDoc(doc(db, "user", user.user.uid), updatedUserData);
+
+        // const docRef = await addDoc(userCollection,updatedUserData);
+        // const thrownId = docRef.id;
+        // console.log(thrownId) 
+        //updateProduct(obj);
+        return true;
       }
 
       const userData = userDoc.data();

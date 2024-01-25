@@ -23,13 +23,13 @@ export const getSession = () => {
         fullName: '',
         phoneNumber: '',
         email: '',
-        contactOption: ContactOptions.Telegram, // Default contact option
+        contactOption: "", // Default contact option
         contactName: '',
-        deliveryOption: DeliveryOptions.SelfDelivery, // Default delivery option
+        deliveryOption: "", // Default delivery option
         country: '',
         city: '',
         adress: '',
-        paymentOption: PaymentOptions.Cash, // Default payment option
+        paymentOption: "", // Default payment option
         discount: '',
         cart: []
     };

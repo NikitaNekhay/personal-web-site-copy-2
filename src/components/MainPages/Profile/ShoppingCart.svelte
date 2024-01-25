@@ -3,7 +3,7 @@
 
   import SubmitButton from "../../Shared/SubmitButton.svelte";
 
-  import { authStore } from "../../../store/store";
+  import { authHandlers, authStore } from "../../../store/store";
   import type { User } from "firebase/auth";
   import { t } from "svelte-i18n";
   import { updateUserProfile } from "../../../routes/profile/user";
@@ -22,7 +22,18 @@
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
   import { page } from "$app/stores";
   import { cart } from "../../../store/cart_store_";
-    import { validateAddress, validateCity, validateDiscount, validateEmail, validateFullName, validatePhoneNumber, validateUsername } from "../../../services/help";
+  import {
+    generateSecurePassword,
+    validateAddress,
+    validateCity,
+    validateDiscount,
+    validateEmail,
+    validateFullName,
+    validatePhoneNumber,
+    validateUsername,
+  } from "../../../services/help";
+  import { error } from "@sveltejs/kit";
+  import Error from "../../../routes/+error.svelte";
 
   // Assuming you have a list of countries and their codes
   export let countries;
@@ -35,6 +46,8 @@
   let isError: boolean = true;
   let href = `${base}/profile`;
 
+  let isAgreePolicy = false;
+  let isCreateAccout = false;
   let showDropdown = false;
   let submitClicked = false;
   let isLoading = false;
@@ -53,27 +66,27 @@
         fullName: $authStore.data.name ?? "",
         phoneNumber: $authStore.data.phone ?? "",
         email: $authStore.data.email ?? "",
-        contactOption: ContactOptions.Telegram,
+        contactOption: "",
         contactName: "",
-        deliveryOption: DeliveryOptions.SelfDelivery,
+        deliveryOption: "",
         country: $authStore.data.country ?? "",
         city: $authStore.data.city ?? "",
         adress: "",
-        paymentOption: PaymentOptions.Cash,
+        paymentOption: "",
         discount: "",
         cart: $authStore.data.cart,
       }
     : {
-        fullName:  "",
+        fullName: "",
         phoneNumber: "",
-        email:  "",
-        contactOption: ContactOptions.Telegram,
+        email: "",
+        contactOption: "",
         contactName: "",
-        deliveryOption: DeliveryOptions.SelfDelivery,
+        deliveryOption: "",
         country: "",
         city: "",
         adress: "",
-        paymentOption: PaymentOptions.Cash,
+        paymentOption: "",
         discount: "",
         cart: [],
       };
@@ -82,23 +95,62 @@
     const unsubscribe = authStore.subscribe((authStore) => {
       console.log("authstore - in cart", authStore);
       tempAuthStore = authStore;
-      console.log("first onmount",tempAuthStore)
+      console.log("first onmount", tempAuthStore);
+
       tempUserCart = $authStore.user
-        ? {
-            fullName: $authStore.data.name ?? "",
-            phoneNumber: $authStore.data.phone ?? "",
-            email: $authStore.data.email ?? "",
-            contactOption: ContactOptions.Telegram,
-            contactName: "",
-            deliveryOption: DeliveryOptions.SelfDelivery,
-            country: $authStore.data.country ?? "",
-            city: $authStore.data.city ?? "",
-            adress: "",
-            paymentOption: PaymentOptions.Cash,
-            discount: "",
-            cart: $authStore.data.cart ?? [],
-          }
-        : $cart;
+            ? {
+                fullName: $authStore.data.name ?? "",
+                phoneNumber: $authStore.data.phone ?? "",
+                email: $authStore.data.email ?? "",
+                contactOption: "",
+                contactName: "",
+                deliveryOption: "",
+                country: $authStore.data.country ?? "",
+                city: $authStore.data.city ?? "",
+                adress: "",
+                paymentOption: "",
+                discount: "",
+                cart: $authStore.data.cart ?? [],
+              }
+            : $cart;
+
+      // if (authStore.metadata !== undefined) {
+      //   if (authStore.metadata.createdAt === authStore.metadata.lastLoginAt) {
+      //     console.log("cart stays the same");
+      //     const performUpdate = (async ()=>{
+      //       await updateUserProfile(
+      //       authStore.user,
+      //       tempUserCart.fullName,
+      //       tempUserCart.email,
+      //       tempUserCart.phoneNumber,
+      //       tempUserCart.country,
+      //       tempUserCart.city,
+      //       "",
+      //       [],
+      //       tempUserCart.cart,
+      //     );
+      //     }) 
+      //   } else {
+      //     tempUserCart = $authStore.user
+      //       ? {
+      //           fullName: $authStore.data.name ?? "",
+      //           phoneNumber: $authStore.data.phone ?? "",
+      //           email: $authStore.data.email ?? "",
+      //           contactOption: "",
+      //           contactName: "",
+      //           deliveryOption: "",
+      //           country: $authStore.data.country ?? "",
+      //           city: $authStore.data.city ?? "",
+      //           adress: "",
+      //           paymentOption: "",
+      //           discount: "",
+      //           cart: $authStore.data.cart ?? [],
+      //         }
+      //       : $cart;
+      //   }
+      // } else {
+      //   tempUserCart =  $cart;
+      // }
 
       cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
       cartPrice = countPrice();
@@ -208,9 +260,9 @@
               (productQuantities.get(item.title) || 0) + 1,
             );
           });
-          ////console.log("cartmap - in cart - after await",productQuantities)
           downloadCheck();
-          console.log(tempUserCart);
+
+          if (isAgreePolicy) handleCreateNewUser();
         } catch (error) {
           throw error;
         }
@@ -239,20 +291,59 @@
     }
   }
 
+  function validateContactOption(contactOption) {
+    if (contactOption.length === 0) {
+      return false;
+    }
 
+    return true;
+  }
+
+  function validateDeliveryOption(deliveryOption) {
+    if (deliveryOption.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  function validatePaymentOption(paymentOption) {
+    if (paymentOption.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   function handleFormValidation() {
+    console.log(tempUserCart);
     var isBadReturn: boolean = false;
     // Validate all fields
+
+    const isContactOptionValid = validateContactOption(
+      tempUserCart.contactOption,
+    );
+    const isDeliveryOptionValid = validateDeliveryOption(
+      tempUserCart.deliveryOption,
+    );
+    const isPaymentOptionValid = validatePaymentOption(
+      tempUserCart.paymentOption,
+    );
     const isFullNameValid = validateFullName(tempUserCart.fullName);
     const isPhoneNumberValid = validatePhoneNumber(
       tempUserCart.phoneNumber,
       tempUserCart.country,
-      countries
+      countries,
     );
     const isEmailValid = validateEmail(tempUserCart.email);
     const isUsernameValid = validateUsername(tempUserCart.contactName);
-    const isAddressValid = validateAddress(tempUserCart.adress);
+    let isAddressValid = true;
+
+    if (
+      isContactOptionValid &&
+      tempUserCart.deliveryOption !== DeliveryOptions.SelfDelivery
+    ) {
+      isAddressValid = validateAddress(tempUserCart.adress);
+    }
+
     const isCityValid = validateCity(
       tempUserCart.city,
       tempUserCart.country,
@@ -261,6 +352,26 @@
     const isDiscountValid = validateDiscount(tempUserCart.discount);
 
     // If any validation fails, set an error message and return false
+    if (!isAgreePolicy) {
+      isErrorInput.push("policy");
+      msg = Errors.PurchaseFormPolicyAgree;
+      isBadReturn = true;
+    }
+    if (!isContactOptionValid) {
+      isErrorInput.push("contact");
+      msg = Errors.PurchaseFormContact;
+      isBadReturn = true;
+    }
+    if (!isDeliveryOptionValid) {
+      isErrorInput.push("delivery");
+      msg = Errors.PurchaseFormDelivery;
+      isBadReturn = true;
+    }
+    if (!isPaymentOptionValid) {
+      isErrorInput.push("payment");
+      msg = Errors.PurchaseFormPayment;
+      isBadReturn = true;
+    }
     if (!isFullNameValid) {
       isErrorInput.push("fullName");
       msg = Errors.PurchaseFormName;
@@ -283,7 +394,8 @@
     }
     if (
       !isAddressValid &&
-      tempUserCart.deliveryOption !== DeliveryOptions.SelfDelivery
+      tempUserCart.deliveryOption !== DeliveryOptions.SelfDelivery &&
+      tempUserCart.deliveryOption.length !== 0
     ) {
       isErrorInput.push("address");
       msg = Errors.PurchaseFormAdress;
@@ -311,6 +423,36 @@
     return true;
   }
 
+  async function handleCreateNewUser() {
+    if (isCreateAccout && !$authStore.user) {
+      try {
+        let password: string = generateSecurePassword();
+        let user = await authHandlers.signup(tempUserCart.email, password);
+        console.log(user);
+        await updateUserProfile(user,tempUserCart.fullName,tempUserCart.email,tempUserCart.phoneNumber,tempUserCart.country,tempUserCart.city,"","",tempUserCart.cart)
+      } catch (error) {
+        if (typeof err === "string") {
+          msg = err;
+        } else if (err.message !== undefined) {
+          msg = err.message;
+        } else {
+          msg = msgT;
+        }
+        document.body.scrollIntoView({ block: "start", behavior: "smooth" });
+        isChanged = true;
+      } finally {
+        setTimeout(() => {
+          submitClicked = !submitClicked;
+          isLoading = true;
+        }, 2500);
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   function downloadCheck() {
     const checkText = generateCheck();
     const blob = new Blob([checkText], { type: "text/plain" });
@@ -328,8 +470,7 @@
         return "Your cart is currently empty. Please add some products before proceeding.";
       }
 
-      let checkText =
-        `Hello user! This is your check with instructions,\nplease, follow them in order to purchase your goods:\n\n`;
+      let checkText = `Hello user! This is your check with instructions,\nplease, follow them in order to purchase your goods:\n\n`;
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
@@ -348,8 +489,7 @@
         return "Ваша корзина временно пуста. Пожалуйста, выберите товары перед тем, как продолжить операцию.";
       }
 
-      let checkText =
-        `Приветствую вас! Вот ваш чек.\nПокупка произаводится в индивидуальном порядке путем диалога с продавцом.\nЗдесь представлены инструкции для покупки ваших товаров:\n\n"`
+      let checkText = `Приветствую вас! Вот ваш чек.\nПокупка произаводится в индивидуальном порядке путем диалога с продавцом.\nЗдесь представлены инструкции для покупки ваших товаров:\n\n"`;
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
@@ -493,8 +633,7 @@
         border border-gray-200 bg-white-1
         px-3 pt-3 shadow-sm focus-within:border-white-2 focus-within:ring-1
         focus-within:ring-white-2 {isChanged &&
-              (isErrorInput.includes('fullName') ||
-                isErrorInput.includes('fullName'))
+              (isErrorInput.includes('fullName') || isErrorInput.includes(''))
                 ? 'ring-red-1 ring-1'
                 : ''}"
               for="first-name"
@@ -591,7 +730,12 @@
         <!-- SOCIAL NETWORK -->
         <!-- HOW TO ACCESS YOU RADIO -->
         <div>
-          <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
+          <fieldset
+            class="purchase-item flex flex-col justify-start mb-6 mx-3 {isChanged &&
+            (isErrorInput.includes('contact') || isErrorInput.includes(''))
+              ? 'ring-red-1 ring-1'
+              : ''}"
+          >
             <legend>
               {$t("Choose contact option")} :
             </legend>
@@ -792,7 +936,12 @@
         </div>
 
         <!-- RADIO OPTION OF DELIVERY -->
-        <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
+        <fieldset
+          class="purchase-item flex flex-col justify-start mb-6 mx-3 {isChanged &&
+          (isErrorInput.includes('delivery') || isErrorInput.includes(''))
+            ? 'ring-red-1 ring-1'
+            : ''}"
+        >
           <legend>{$t("Choose delivery option")} :</legend>
           <div>
             <input
@@ -912,7 +1061,12 @@
         <p class="purchase-item">
           {$t("You need to make a prepayment via cashless method in anyway.")}
         </p>
-        <fieldset class="purchase-item flex flex-col justify-start mb-6 mx-3">
+        <fieldset
+          class="purchase-item flex flex-col justify-start mb-6 mx-3 {isChanged &&
+          (isErrorInput.includes('payment') || isErrorInput.includes(''))
+            ? 'ring-red-1 ring-1'
+            : ''}"
+        >
           <legend>{$t("Choose payment method")} :</legend>
           <div>
             <input
@@ -984,6 +1138,46 @@
       </div>
 
       <!-- PRICES -->
+      <div class="px-6 py-2">
+        <fieldset class="grid grid-rows-2 gap-4">
+          <div class="flex items-center gap-2">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="isCreateAccout"
+              value={true}
+              bind:group={isCreateAccout}
+            />
+
+            <p>
+              {$t(
+                "Do you want to create an account (password would be sent on your email)?",
+              )}
+            </p>
+          </div>
+
+          <div
+            class="flex items-center gap-2 {isErrorInput.includes('policy') ||
+            isErrorInput.includes('')
+              ? 'ring-red-1 ring-1 p-2'
+              : ''}"
+          >
+            <input
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="isAgreePolicy"
+              bind:value={isAgreePolicy}
+            />
+
+            <p class="">
+              {$t("Do you agree to our policy?")} ->
+              <a class="p-link" target="_blank" href="{base}/purchase"
+                >{$t("here")}
+              </a>
+            </p>
+          </div>
+        </fieldset>
+      </div>
       <div
         class=" border-t-2 pt-8 border-navy-2 grid w-full justify-end grid-flow-row text-base font-medium my-8 gap-3"
       >

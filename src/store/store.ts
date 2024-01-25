@@ -50,7 +50,7 @@ export const triggerComments = writable({
 export const authHandlers = {
 
   signup: async (email:string, pass:string) => {
-    await createUserWithEmailAndPassword(auth, email, pass)
+    return (await createUserWithEmailAndPassword(auth, email, pass))
     // //console.log("creating user")
     // var emailAuth = email;
 
