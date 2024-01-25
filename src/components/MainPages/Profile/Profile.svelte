@@ -6,7 +6,7 @@
     updateUserProfile,
   } from "../../../routes/profile/user";
   import { auth } from "../../../lib/firebase/firebase";
-  import { authHandlers, authStore,isAdmin } from "../../../store/store";
+  import { authHandlers, authStore, isAdmin } from "../../../store/store";
   import { base } from "$app/paths";
   import { clickOutside } from "../../../services/clickOutside";
   import ProfileOptions from "./ProfileOptions.svelte";
@@ -14,40 +14,73 @@
   import ru from "../../../services/ru.json";
   import en from "../../../services/en.json";
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
-    import type { UserDataType } from "../../../shared/types";
-    import { fade } from "svelte/transition";
+  import type { UserDataType } from "../../../shared/types";
+  import { fade } from "svelte/transition";
 
   let isLoading = true; // Initialize the loading state
 
-  let profileValue:UserDataType;
-  let isthereadmin = false
-  
+  let userCountry = "Unknown";
+  let userCity = "Unknown";
+
+  let profileValue: UserDataType;
+  let isthereadmin = false;
 
   onMount(() => {
-    //  //console.log("updating profile...")
-    //  //console.log("isadmin in profile in mounting...",$isAdmin)
-     isthereadmin = $isAdmin.value
-    //  //console.log("authStore in prfile.svelte before everything",$authStore.data);
+    isthereadmin = $isAdmin.value;
+
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
-        if(user){
-          let Ready_profile:UserDataType = await getUserProfile(user);
-          // //console.log("what we got from db getUserProfile:",Ready_profile);
-          if(Ready_profile){
+        if (user) {
+          let Ready_profile: UserDataType = await getUserProfile(user);
+
+          if (Ready_profile) {
             profileValue = Ready_profile;
+
+            // Parse the creation time from the metadata
+            const creationTime = new Date(user.metadata.creationTime);
+            const currentTime = new Date();
+            const timeDiffMinutes =
+              (currentTime.getTime() - creationTime.getTime()) / (1000 * 60);
+
+            if (timeDiffMinutes <= 3) {
+              const res = await fetch("https://ipapi.co/json/");
+              const locationData = await res.json();
+
+              if (locationData && locationData.country && locationData.city) {
+                userCountry = locationData.country;
+                userCity = locationData.city;
+
+                // Update user profile with fetched country and city
+                profileValue.country = userCountry;
+                profileValue.city = userCity;
+
+                // Update user profile in Firebase
+                await updateUserProfile(
+                  user,
+                  profileValue.name,
+                  profileValue.email,
+                  profileValue.phone,
+                  profileValue.country,
+                  profileValue.city,
+                  profileValue.description,
+                  profileValue.messages,
+                  profileValue.cart,
+                );
+
+              } else {
+                console.log("Bad luck on fetch");
+              }
+            }
 
             isLoading = false;
           } else {
-            //location.reload();
             window.location.href = `${base}/`;
             return;
           }
           // //console.log("Restoring profileValue from user profile data",profileValue);
- 
         } else {
           //console.log("no user in Profile.svelte");
-          return
-            
+          return;
         }
       } catch (error) {
         console.error("error while updating profile", error);
@@ -81,7 +114,7 @@
                 {profileValue.name}
               </dd>
             </div>
-            
+
             <div class="grid grid-cols-4 gap-4 px-4 py-6 sm:px-0">
               <dt class="text-sm font-medium leading-6 text-gray-900">
                 {$t("Email address")}

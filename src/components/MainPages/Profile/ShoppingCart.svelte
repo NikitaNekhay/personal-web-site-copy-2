@@ -23,8 +23,6 @@
   import { page } from "$app/stores";
   import { cart } from "../../../store/cart_store_";
 
-  export let userCity;
-  export let userCountry;
   // Assuming you have a list of countries and their codes
   export let countries;
 
@@ -51,25 +49,55 @@
 
   let tempUserCart: UserCartType = $authStore.user
     ? {
-        fullName: "",
-        phoneNumber: "",
-        email: "",
+        fullName: $authStore.data.name ?? "",
+        phoneNumber: $authStore.data.phone ?? "",
+        email: $authStore.data.email ?? "",
         contactOption: ContactOptions.Telegram,
         contactName: "",
         deliveryOption: DeliveryOptions.SelfDelivery,
-        country: userCountry ?? "",
-        city: userCity ?? "",
+        country: $authStore.data.country ?? "",
+        city: $authStore.data.city ?? "",
         adress: "",
         paymentOption: PaymentOptions.Cash,
         discount: "",
-        cart: $authStore.user ? $authStore.data.cart : [],
+        cart: $authStore.data.cart,
       }
-    : $cart;
+    : {
+        fullName:  "",
+        phoneNumber: "",
+        email:  "",
+        contactOption: ContactOptions.Telegram,
+        contactName: "",
+        deliveryOption: DeliveryOptions.SelfDelivery,
+        country: "",
+        city: "",
+        adress: "",
+        paymentOption: PaymentOptions.Cash,
+        discount: "",
+        cart: [],
+      };
 
   onMount(async () => {
     const unsubscribe = authStore.subscribe((authStore) => {
       console.log("authstore - in cart", authStore);
       tempAuthStore = authStore;
+      console.log("first onmount",tempAuthStore)
+      tempUserCart = $authStore.user
+        ? {
+            fullName: $authStore.data.name ?? "",
+            phoneNumber: $authStore.data.phone ?? "",
+            email: $authStore.data.email ?? "",
+            contactOption: ContactOptions.Telegram,
+            contactName: "",
+            deliveryOption: DeliveryOptions.SelfDelivery,
+            country: $authStore.data.country ?? "",
+            city: $authStore.data.city ?? "",
+            adress: "",
+            paymentOption: PaymentOptions.Cash,
+            discount: "",
+            cart: $authStore.data.cart ?? [],
+          }
+        : $cart;
 
       cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
       cartPrice = countPrice();
@@ -128,11 +156,11 @@
         tempAuthStore.data.email,
         tempAuthStore.data.phone,
         tempAuthStore.data.country,
+        tempAuthStore.data.city,
         tempAuthStore.data.description,
         tempAuthStore.data.messages,
         tempAuthStore.data.cart,
       );
-
     } else {
       const clickedItem: ProductType = cartItems.find((obj) => {
         return obj.id === cartItems[tempId].id;
@@ -148,12 +176,11 @@
           (productQuantities.get(item.title) || 0) + 1,
         );
       });
-
     }
     cartPrice = countPrice();
-      totalСartPrice = cartPrice + deliveryPrice;
-      totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
-      prepaymentPrice = totalСartPrice * 0.3;
+    totalСartPrice = cartPrice + deliveryPrice;
+    totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
+    prepaymentPrice = totalСartPrice * 0.3;
   }
 
   // Function to handle country selection

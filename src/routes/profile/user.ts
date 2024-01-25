@@ -8,7 +8,7 @@ import { type UserDataType,type ProductType, Errors } from '../../shared/types';
 
 export const prerender = 'auto'
 
-export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string, description: string, messages: [], cart:[]) {
+export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string,city: string, description: string, messages: [], cart:[]) {
   try {
     let userDocRef:any;
     //console.log(cart)
@@ -37,6 +37,7 @@ export async function updateUserProfile(user: User | string , name: string, emai
         email: email ?? userData.email,
         phone: phone ?? userData.phone,
         country: country ?? userData.country,
+        city: city ?? userData.city,
         description: description ?? userData.description,
         messages: messages ?? userData.messages ?? [],
         cart: cart ?? userData.cart ?? [],
@@ -68,16 +69,6 @@ export async function refreshUserProfile(user: User) {
         tempEmail = user.email
       }
 
-      const updatedUserData = {
-        name: "",
-        email: tempEmail,
-        phone: "",
-        country: "",
-        description: "",
-        messages: [],
-
-      };
-
       // Update authStore to reflect changes in the user profile
       //set authStore to reflect changes in the user profile
 
@@ -101,6 +92,7 @@ export async function getUserProfile(user: User) {
       name: "",
       phone: "",
       country: "",
+      city: "",
       description: "",
       messages: [],
       cart:[],

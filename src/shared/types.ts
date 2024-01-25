@@ -138,6 +138,8 @@ export interface UserDataType {
     email: string ,
     phone: string ,
     country: string ,
+    city:string,
+    adress:string,
     description: string,
     messages: MessageType[],
     cart:ProductType[],
@@ -153,6 +155,7 @@ export const nonAuthRoutes = [
     `${base}/shop`,
     `${base}/works`,
     `${base}/posts`,
+    `${base}/profile/shoppingcart`,
 ];
 
 export const AdminRoutes = [

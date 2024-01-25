@@ -13,6 +13,7 @@ export const authStore = writable({
     email: "",
     phone: "",
     country: "",
+    city: "",
     description: "",
     messages: [],
     cart:[],

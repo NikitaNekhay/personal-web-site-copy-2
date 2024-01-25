@@ -32,20 +32,7 @@
     let password = "";
     let rpassword = "";
 
-    // if ($currentLanguagee !== undefined) {
-    //     const currentValue = $currentLanguagee;
-    //     // Switch the language value
-    //     if (currentValue === Language.English) {
-    //         addMessages(Language.English, en);
-    //         locale.set(Language.English);
-    //     } else {
-    //         addMessages(Language.Russian, ru);
-    //         locale.set(Language.Russian);
-    //     }
-    // } else {
-    //     addMessages(Language.English, en);
-    //     locale.set(Language.English);
-    // }
+
 
     function typeAction(node){
         console.log(node.type)
@@ -87,6 +74,7 @@
                     await authHandlers.login(email, password);
                 } else {
                     await authHandlers.signup(email, password);
+                    
                 }
             } catch (err) {
                 throw err;

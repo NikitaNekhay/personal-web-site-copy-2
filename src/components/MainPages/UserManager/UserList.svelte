@@ -25,6 +25,7 @@
         userProfiles[userProfiles.indexOf(curentUser)].email,
         userProfiles[userProfiles.indexOf(curentUser)].phone,
         userProfiles[userProfiles.indexOf(curentUser)].country,
+        userProfiles[userProfiles.indexOf(curentUser)].city,
         userProfiles[userProfiles.indexOf(curentUser)].description,
         userProfiles[userProfiles.indexOf(curentUser)].messages,
         userProfiles[userProfiles.indexOf(curentUser)].cart

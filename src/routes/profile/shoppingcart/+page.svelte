@@ -2,13 +2,13 @@
     import { onMount } from "svelte";
     import ShoppingCart from "../../../components/MainPages/Profile/ShoppingCart.svelte";
     import LoadingSpinner from "../../../components/Shared/LoadingSpinner.svelte";
-
-    let userCountry = "Unknown";
-    let userCity = "Unknown";
     import CountryData from "../../../CountryData.json";
     import { t } from "svelte-i18n";
     import { cart } from "../../../store/cart_store_";
     import { authStore } from "../../../store/store";
+
+    let userCountry = "Unknown";
+    let userCity = "Unknown";
 
     onMount(async () => {
         // Fetch the user's IP and location using a public IP API (consider using a more private/secure method in production)
@@ -53,7 +53,7 @@
 </svelte:head>
 
 {#if userCountry !== "Unknown"}
-    <ShoppingCart {userCountry} {userCity} countries={CountryData} />
+    <ShoppingCart countries={CountryData} />
 {:else}
     <LoadingSpinner />
 {/if}

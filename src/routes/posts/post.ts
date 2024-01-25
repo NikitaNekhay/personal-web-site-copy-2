@@ -131,6 +131,7 @@ export async function handleCart(post: ProductType, tempAuthStore:AuthStoreType)
         tempAuthStore.data.email,
         tempAuthStore.data.phone,
         tempAuthStore.data.country,
+        tempAuthStore.data.city,
         tempAuthStore.data.description,
         tempAuthStore.data.messages,
         tempAuthStore.data.cart )
@@ -156,6 +157,7 @@ export async function handleCartNoUser(post: ProductType, tempCart:UserCartType)
     cart.update(($cart) => {
       const tempArr: ProductType[] = $cart.cart ?? [];
       tempArr.push(post);
+      $cart = tempCart;
       $cart.cart = tempArr;
 
       console.log("cart:", $cart.cart);

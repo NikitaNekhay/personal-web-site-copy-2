@@ -85,7 +85,8 @@
           //   profileValue.name,
           //   profileValue.email,
           //   profileValue.phone,
-          //   profileValue.country,
+          // profileValue.country,
+          //         profileValue.city,
           //   profileValue.description,
           //   profileValue.messages,
           //   profileValue.cart
