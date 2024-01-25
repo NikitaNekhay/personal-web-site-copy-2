@@ -5,7 +5,7 @@
 >
     import { base } from "$app/paths";
     import { t } from "svelte-i18n";
-    import { handleCart } from "../../../routes/posts/post";
+    import { handleCart, handleCartNoUser } from "../../../routes/posts/post";
     import {
         Errors,
         type ProductType,
@@ -18,8 +18,9 @@
     import { writable } from "svelte/store";
     import SquareButton from "../../Shared/SquareButton.svelte";
 
-    import {  fly } from "svelte/transition";
+    import { fly } from "svelte/transition";
     import { currentLanguagee } from "../../../store/store_";
+    import { cart } from "../../../store/cart_store_";
 
     export let post: ProductType;
     let isChanged: boolean = false;
@@ -37,8 +38,13 @@
 
     async function handleCartClicked() {
         try {
-            //console.log($authStore);
-            await handleCart(post, $authStore);
+            console.log($authStore);
+            if (!$authStore.user) {
+                await handleCartNoUser(post,$cart)
+            } else {
+                await handleCart(post, $authStore);
+            }
+
 
             // HANDLE DOUBLE CLICK
             if (isChangedCart) {
@@ -252,7 +258,7 @@
                         class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0"
                     >
                         <!-- {$t("SIZE GUIDE")} -->
-                        {$t('SIZES')}:
+                        {$t("SIZES")}:
                     </p>
                     <!-- LIST OF SIZES -->
                     <div class="flex flex-row gap-3 place-content-center">
@@ -263,8 +269,10 @@
                         {/each}
                     </div>
                     <p class="mt-3 text-xs italic text-gray-600">
-                        {$t("I can sew clothes for your measurements. For this option I will contact yout directly.")}
-                      </p>
+                        {$t(
+                            "I can sew clothes for your measurements. For this option I will contact yout directly.",
+                        )}
+                    </p>
                 </div>
 
                 <!-- PURCHASE BUTTONS -->

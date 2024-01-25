@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { auth } from "$lib/firebase/firebase";
   import { addProduct, updateProduct } from "../../../routes/posts/post";
   import { t } from "svelte-i18n";
 
@@ -10,11 +9,10 @@
   import DragAndDrop from "./DragAndDrop.svelte";
 
   import { processColorsString } from "../../../services/help";
-  import { writable, type Writable } from "svelte/store";
-    import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-    import { base } from "$app/paths";
-    import { currentLanguagee } from "../../../store/store_";
-  let isError:boolean = false;
+  import CommonPopUp from "../../Shared/CommonPopUp.svelte";
+  import { base } from "$app/paths";
+  import { currentLanguagee } from "../../../store/store_";
+  let isError: boolean = false;
   let isChanged: boolean = false;
   let msg: String = "Check your post in the shop!";
   let smmsg: String = "Post is edited/created!";
@@ -363,7 +361,10 @@
               {$t("Colors")}
             </span>
           </label>
-          <p class="mt-3 text-xs italic text-gray-600 break-words" lang={$currentLanguagee}>
+          <p
+            class="mt-3 text-xs italic text-gray-600 break-words"
+            lang={$currentLanguagee}
+          >
             {$t(
               "Input colors through a spacebar or coma and each word should start with a capital letter",
             )}

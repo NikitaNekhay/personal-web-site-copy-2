@@ -7,6 +7,8 @@
     let userCity = "Unknown";
     import CountryData from "../../../CountryData.json";
     import { t } from "svelte-i18n";
+    import { cart } from "../../../store/cart_store_";
+    import { authStore } from "../../../store/store";
 
     onMount(async () => {
         // Fetch the user's IP and location using a public IP API (consider using a more private/secure method in production)
@@ -16,6 +18,11 @@
         if (locationData && locationData.country && locationData.city) {
             userCountry = locationData.country;
             userCity = locationData.city;
+
+            if(!$authStore.user) {
+                $cart.country = userCountry;
+                $cart.city = userCity;
+            }
         } else {
             console.log("bad luck on fetch");
         }

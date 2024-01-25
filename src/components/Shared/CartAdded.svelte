@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import { handleDelete } from "../../routes/profile/user";
   import { fade, fly } from "svelte/transition";
+    import { cart } from "../../store/cart_store_";
 
   export let isChangedCart: boolean;
   function changeState() {
@@ -35,7 +36,7 @@
         {$t("You have added item to your cart!")}
         <br />
         {$t("Currently you have")}
-        {$authStore.data.cart.length}
+        {$authStore.user ? tempAuthStore.data.cart.length : $cart.cart.length}
         {$t("item(s) in the cart")}.
       </p>
 

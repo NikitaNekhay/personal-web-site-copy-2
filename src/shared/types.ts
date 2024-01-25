@@ -115,6 +115,7 @@ export interface UserCartType {
     adress:string,
     paymentOption:PaymentOptions,
     discount:string,
+    cart:ProductType[],
     
 }
 

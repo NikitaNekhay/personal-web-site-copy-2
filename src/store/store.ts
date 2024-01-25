@@ -2,14 +2,7 @@ import { auth, db } from "$lib/firebase/firebase"
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, type User } from "firebase/auth"
 import { deleteDoc, doc } from "firebase/firestore";
 import { writable } from "svelte/store"
-import { Errors, Language } from "../shared/types";
-
-
-// export const currentLanguage = writable({
-//   language: Language.English
-// })
-
-
+import { Errors, Language, type ProductType } from "../shared/types";
 
 
 export const authStore = writable({
@@ -25,13 +18,6 @@ export const authStore = writable({
     cart:[],
   },
 });
-
-////////////////
-// export const statisticsStore = writable({
-//   id: -1,
-//   authorEmailClicks: 0,
-//   adminDataClicks: 0,
-// });
 
 export const productStore = writable({
   id: "",

@@ -21,21 +21,12 @@
   import { base } from "$app/paths";
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
   import { page } from "$app/stores";
+  import { cart } from "../../../store/cart_store_";
 
   export let userCity;
   export let userCountry;
   // Assuming you have a list of countries and their codes
   export let countries;
-
-  // } catch (err) {
-  //             if(typeof(err)==="string"){
-  //                 msg = err;
-  //             } else if(err.message !== undefined){
-  //                 msg = err.message;
-  //             } else {
-  //                 msg = Errors.Authentication
-  //             }
-  //             isChangedError= true
 
   let isChanged = false;
   let isErrorInput: string[] = [];
@@ -58,26 +49,29 @@
   let prepaymentPrice: number = 0;
   let isDiscount: boolean = false;
 
-  let tempUserCart: UserCartType = {
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    contactOption: ContactOptions.Telegram,
-    contactName: "",
-    deliveryOption: DeliveryOptions.SelfDelivery,
-    country: userCountry ?? "",
-    city: userCity ?? "",
-    adress: "",
-    paymentOption: PaymentOptions.Cash,
-    discount: "",
-  };
+  let tempUserCart: UserCartType = $authStore.user
+    ? {
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        contactOption: ContactOptions.Telegram,
+        contactName: "",
+        deliveryOption: DeliveryOptions.SelfDelivery,
+        country: userCountry ?? "",
+        city: userCity ?? "",
+        adress: "",
+        paymentOption: PaymentOptions.Cash,
+        discount: "",
+        cart: $authStore.user ? $authStore.data.cart : [],
+      }
+    : $cart;
 
   onMount(async () => {
     const unsubscribe = authStore.subscribe((authStore) => {
-      //console.log("authstore - in cart",authStore)
+      console.log("authstore - in cart", authStore);
       tempAuthStore = authStore;
 
-      cartItems = tempAuthStore.data.cart;
+      cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
       cartPrice = countPrice();
       totalСartPrice = cartPrice + deliveryPrice;
       totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
@@ -103,7 +97,7 @@
 
   function countPrice() {
     cartPrice = 0;
-    cartItems = tempAuthStore.data.cart;
+    cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
     cartItems.forEach((item) => {
       //console.log(item.price)
       cartPrice += Number(item.price);
@@ -112,20 +106,13 @@
   }
 
   async function handleDeleteItemFromCart(tempId: number) {
-    if (tempAuthStore) {
+    if ($authStore.user) {
       const clickedItem: ProductType = cartItems.find((obj) => {
         return obj.id === cartItems[tempId].id;
       });
-      ////console.log("handleCart - clicked item is:",clickedItem)
 
-      ////console.log(cartItems.indexOf(clickedItem))
-
-      //if (cartItems.indexOf(clickedItem) !== -1) {
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
-      //console.log(cartItems)
       tempAuthStore.data.cart = cartItems;
-      //}
-      ////console.log("handleClick - pushed value for cart:",cartItems)
 
       // make map out of user's cart
       cartItems.forEach((item) => {
@@ -146,13 +133,27 @@
         tempAuthStore.data.cart,
       );
 
-      cartPrice = countPrice();
+    } else {
+      const clickedItem: ProductType = cartItems.find((obj) => {
+        return obj.id === cartItems[tempId].id;
+      });
+
+      cartItems.splice(cartItems.indexOf(clickedItem), 1);
+      $cart.cart = cartItems;
+
+      // make map out of user's cart
+      cartItems.forEach((item) => {
+        productQuantities.set(
+          item.title,
+          (productQuantities.get(item.title) || 0) + 1,
+        );
+      });
+
+    }
+    cartPrice = countPrice();
       totalСartPrice = cartPrice + deliveryPrice;
       totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
       prepaymentPrice = totalСartPrice * 0.3;
-    } else {
-      //console.log("cant handle cart because temoauthstore is empty")
-    }
   }
 
   // Function to handle country selection
@@ -200,9 +201,8 @@
       } else {
         msg = msgT;
       }
-      document.body.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+      document.body.scrollIntoView({ block: "start", behavior: "smooth" });
       isChanged = true;
-      
     } finally {
       setTimeout(() => {
         submitClicked = !submitClicked;
@@ -403,16 +403,16 @@
 
 <div
   class="w-[100%] relative h-auto
-            grid grid-flow-col 
+            grid grid-flow-col
             lg:grid-cols-7 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-7
             sm:grid-flow-row md:grid-flow-row
             gap-x-6 sm:gap-x-0 md:gap-x-0
             py-[14%] px-[3%] sm:py-[40%] xl:mb-40pt 2xl:mb-40pt 3xl:mb-40pt"
 >
   <section
-    class="sticky-section h-auto 
-    lg:col-span-3 xl:col-span-3 2xl:col-span-3 3xl:col-span-3 
-    3xl:pb-[40%] sm:w-[100%] md:w-[100%] "
+    class="sticky-section h-auto
+    lg:col-span-3 xl:col-span-3 2xl:col-span-3 3xl:col-span-3
+    3xl:pb-[40%] sm:w-[100%] md:w-[100%]"
   >
     <div class=" left-0">
       <header class="text mb-6 flex justify-center">
@@ -494,11 +494,15 @@
       </div>
     </div>
   </section>
-  <section class="h-auto 3xl:pb-[40%]
+  <section
+    class="h-auto 3xl:pb-[40%]
     lg:col-span-4 xl:col-span-4 2xl:col-span-4 3xl:col-span-4
-    sm:w-[100%] md:w-[100%]">
+    sm:w-[100%] md:w-[100%]"
+  >
     <header class="text mb-6 flex justify-center">
-      <h1 class="font-abril text-4xl text-blue-0">{$t("Make an order / checkout")}</h1>
+      <h1 class="font-abril text-4xl text-blue-0">
+        {$t("Make an order / checkout")}
+      </h1>
     </header>
     <form class="font-sans">
       <div class="purchase-container">

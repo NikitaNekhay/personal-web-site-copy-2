@@ -1,8 +1,9 @@
 import { db } from '../../lib/firebase/firebase';
 import { collection, doc, getDoc, runTransaction,  getDocs, addDoc, deleteDoc} from "firebase/firestore";
-import { productStore } from '../../store/store';
-import { Errors, type AuthStoreType, type ProductType } from '../../shared/types';
+import { authStore, productStore } from '../../store/store';
+import { Errors, type AuthStoreType, type ProductType, type UserDataType, type UserCartType } from '../../shared/types';
 import { updateUserProfile } from '../profile/user';
+import { cart } from '../../store/cart_store_';
 
 export const blogsCollection = collection(db, "products");
 
@@ -115,7 +116,7 @@ export async function deleteProduct(id:string){
   }
 }
 
-export async function  handleCart(post: ProductType, tempAuthStore:AuthStoreType){
+export async function handleCart(post: ProductType, tempAuthStore:AuthStoreType){
 
     if(tempAuthStore.user !== null && !(tempAuthStore.loading)){
       const tempArr:ProductType[] = tempAuthStore.data.cart ?? [];
@@ -135,6 +136,7 @@ export async function  handleCart(post: ProductType, tempAuthStore:AuthStoreType
         tempAuthStore.data.cart )
 
       } else {
+
         throw Errors.NoUserToAddToCart;
       }
 
@@ -142,3 +144,24 @@ export async function  handleCart(post: ProductType, tempAuthStore:AuthStoreType
 
 }
 
+// for cart store(no user)
+export async function handleCartNoUser(post: ProductType, tempCart:UserCartType){
+
+    // const tempArr:ProductType[] = tempCart.cart ?? [];
+    // tempArr.push(post);
+    // tempCart.cart = tempArr;
+
+    // console.log("cart:",tempArr)
+
+    cart.update(($cart) => {
+      const tempArr: ProductType[] = $cart.cart ?? [];
+      tempArr.push(post);
+      $cart.cart = tempArr;
+
+      console.log("cart:", $cart.cart);
+      return $cart;
+  });
+
+
+
+}

@@ -13,6 +13,7 @@
     import { Language } from "../../shared/types";
     import { page } from "$app/stores";
     import { currentLanguagee } from "../../store/store_";
+    import { cart } from "../../store/cart_store_";
     export let isUser: boolean;
     let currentPage = $page.url.pathname;
 
@@ -105,7 +106,7 @@
                             : 'text-black'}
          transition duration-300 delay-100
          group-hover:text-yellow-0 group-hover:animate-pulse"
-                        >{$authStore.data.cart.length}</span
+                        >{$authStore.user ? tempAuthStore.data.cart.length : $cart.cart.length}</span
                     >
                 </a>
 
