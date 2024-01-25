@@ -233,7 +233,7 @@
               value="XS"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="scales">XS</label>
+            <label for="XS">XS</label>
           </div>
 
           <div class="flex flex-col">
@@ -244,7 +244,7 @@
               value="S"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="horns">S</label>
+            <label for="S">S</label>
           </div>
 
           <div class="flex flex-col">
@@ -255,7 +255,7 @@
               value="M"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="horns">M</label>
+            <label for="M">M</label>
           </div>
 
           <div class="flex flex-col">
@@ -266,7 +266,7 @@
               value="L"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="horns">L</label>
+            <label for="L">L</label>
           </div>
 
           <div class="flex flex-col">
@@ -277,7 +277,18 @@
               value="XL"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="horns">XL</label>
+            <label for="XL">XL</label>
+          </div>
+
+          <div class="flex flex-col">
+            <input
+              class="focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="checkbox"
+              id="Individual size"
+              value="Individual size"
+              bind:group={tempProductStore.description["sizes"]}
+            />
+            <label for="Individual size">Individual size</label>
           </div>
 
           <div class="flex flex-col">
@@ -288,7 +299,7 @@
               value="One size"
               bind:group={tempProductStore.description["sizes"]}
             />
-            <label for="horns">One size</label>
+            <label for="One size">One size</label>
           </div>
         </fieldset>
       </div>

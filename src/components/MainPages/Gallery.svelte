@@ -220,7 +220,9 @@
                           />
                         </div>
                       {/if}
-                      <div>
+
+                      <!-- SIZES -->
+                      <!-- <div>
                         <h3 class=" text-sm text-gray-700">
                           <div
                             class="flex flex-row gap-x-4 md:gap-x-2 sm:justify-center md:justify-end {post
@@ -233,7 +235,7 @@
                             {/each}
                           </div>
                         </h3>
-                      </div>
+                      </div> -->
                     </div>
                     <div
                       class="mx-3 sm:mx-0 md:mx-0 lg:mx-6 xl:mx-6

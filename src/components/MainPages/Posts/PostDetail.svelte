@@ -249,9 +249,10 @@
                     <!-- SIZE GUIDE -->
 
                     <p
-                        class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0 hover:cursor-pointer"
+                        class="text-3xl select-none transition duration-300 delay-100 hover:text-yellow-0"
                     >
-                        {$t("SIZE GUIDE")}
+                        <!-- {$t("SIZE GUIDE")} -->
+                        {$t('SIZES')}:
                     </p>
                     <!-- LIST OF SIZES -->
                     <div class="flex flex-row gap-3 place-content-center">
@@ -262,7 +263,7 @@
                         {/each}
                     </div>
                     <p class="mt-3 text-xs italic text-gray-600">
-                        {$t("I can sew clothes for your measurements. For this option contact me directly.")}
+                        {$t("I can sew clothes for your measurements. For this option I will contact yout directly.")}
                       </p>
                 </div>
 
