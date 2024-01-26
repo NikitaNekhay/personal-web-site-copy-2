@@ -16,6 +16,8 @@
     DeliveryOptions,
     PaymentOptions,
     Errors,
+    EmailSubjects,
+    EmailText,
   } from "../../../shared/types";
   import SquareButton from "../../Shared/SquareButton.svelte";
   import { base } from "$app/paths";
@@ -423,13 +425,38 @@
     return true;
   }
 
+  async function sendEmailPost(to:string, subject:string, text:string){
+    console.log("here")
+    const response = await fetch(`${base}/api/sendEmail`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            to: to,
+            subject: subject,
+            text: text
+        })
+    });
+
+    console.log(response)
+
+    if (response.ok) {
+        console.log('Email sent');
+    } else {
+        console.error('Failed to send email');
+    }
+}
+
   async function handleCreateNewUser() {
     if (isCreateAccout && !$authStore.user) {
       try {
         let password: string = generateSecurePassword();
         let user = await authHandlers.signup(tempUserCart.email, password);
         console.log(user);
-        await updateUserProfile(user,tempUserCart.fullName,tempUserCart.email,tempUserCart.phoneNumber,tempUserCart.country,tempUserCart.city,"","",tempUserCart.cart)
+        await updateUserProfile(user,tempUserCart.fullName,tempUserCart.email,tempUserCart.phoneNumber,tempUserCart.country,tempUserCart.city,"","",tempUserCart.cart);
+        const hereR = await sendEmailPost(tempUserCart.email,EmailSubjects.NewAccount,EmailText.NewAccount+password);
+       console.log(hereR)
       } catch (error) {
         if (typeof err === "string") {
           msg = err;

@@ -30,6 +30,20 @@ export enum PaymentOptions {
     img: string;
   };
 
+  export enum EmailSubjects {
+    NewAccount = "Create Account at NEKHAYNIKITA",
+    ProceedOrder = "",
+    CompleteFullPaymentOrder = "",
+    CompletePrePaymentOrder ="",
+  }
+
+  export enum EmailText {
+    NewAccount = "Hello user. You have created account at NEKHAYNIKITA. This is your password:",
+    ProceedOrder = "",
+    CompleteFullPaymentOrder = "",
+    CompletePrePaymentOrder ="",
+  }
+
   export enum Errors {
     VerifyPass = "Error while verifying your current pass!",
     RepeatPass = "Your passwords don't match each other!",
