@@ -39,6 +39,11 @@
 
   // Assuming you have a list of countries and their codes
   export let countries;
+  export let sendEmail: (
+    to: string,
+    subject: string,
+    text: string,
+  ) => Promise<void>;
 
   let isChanged = false;
   let isErrorInput: string[] = [];
@@ -100,59 +105,21 @@
       console.log("first onmount", tempAuthStore);
 
       tempUserCart = $authStore.user
-            ? {
-                fullName: $authStore.data.name ?? "",
-                phoneNumber: $authStore.data.phone ?? "",
-                email: $authStore.data.email ?? "",
-                contactOption: "",
-                contactName: "",
-                deliveryOption: "",
-                country: $authStore.data.country ?? "",
-                city: $authStore.data.city ?? "",
-                adress: "",
-                paymentOption: "",
-                discount: "",
-                cart: $authStore.data.cart ?? [],
-              }
-            : $cart;
-
-      // if (authStore.metadata !== undefined) {
-      //   if (authStore.metadata.createdAt === authStore.metadata.lastLoginAt) {
-      //     console.log("cart stays the same");
-      //     const performUpdate = (async ()=>{
-      //       await updateUserProfile(
-      //       authStore.user,
-      //       tempUserCart.fullName,
-      //       tempUserCart.email,
-      //       tempUserCart.phoneNumber,
-      //       tempUserCart.country,
-      //       tempUserCart.city,
-      //       "",
-      //       [],
-      //       tempUserCart.cart,
-      //     );
-      //     }) 
-      //   } else {
-      //     tempUserCart = $authStore.user
-      //       ? {
-      //           fullName: $authStore.data.name ?? "",
-      //           phoneNumber: $authStore.data.phone ?? "",
-      //           email: $authStore.data.email ?? "",
-      //           contactOption: "",
-      //           contactName: "",
-      //           deliveryOption: "",
-      //           country: $authStore.data.country ?? "",
-      //           city: $authStore.data.city ?? "",
-      //           adress: "",
-      //           paymentOption: "",
-      //           discount: "",
-      //           cart: $authStore.data.cart ?? [],
-      //         }
-      //       : $cart;
-      //   }
-      // } else {
-      //   tempUserCart =  $cart;
-      // }
+        ? {
+            fullName: $authStore.data.name ?? "",
+            phoneNumber: $authStore.data.phone ?? "",
+            email: $authStore.data.email ?? "",
+            contactOption: "",
+            contactName: "",
+            deliveryOption: "",
+            country: $authStore.data.country ?? "",
+            city: $authStore.data.city ?? "",
+            adress: "",
+            paymentOption: "",
+            discount: "",
+            cart: $authStore.data.cart ?? [],
+          }
+        : $cart;
 
       cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
       cartPrice = countPrice();
@@ -425,28 +392,28 @@
     return true;
   }
 
-  async function sendEmailPost(to:string, subject:string, text:string){
-    console.log("here")
-    const response = await fetch(`${base}/api/sendEmail`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            to: to,
-            subject: subject,
-            text: text
-        })
-    });
+  // async function sendEmailPost(to: string, subject: string, text: string) {
+  //   console.log("here");
+  //   const response = await fetch(`${base}/sendEmail`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       to: to,
+  //       subject: subject,
+  //       text: text,
+  //     }),
+  //   });
 
-    console.log(response)
+  //   console.log(response);
 
-    if (response.ok) {
-        console.log('Email sent');
-    } else {
-        console.error('Failed to send email');
-    }
-}
+  //   if (response.ok) {
+  //     console.log("Email sent");
+  //   } else {
+  //     console.error("Failed to send email");
+  //   }
+  // }
 
   async function handleCreateNewUser() {
     if (isCreateAccout && !$authStore.user) {
@@ -454,9 +421,22 @@
         let password: string = generateSecurePassword();
         let user = await authHandlers.signup(tempUserCart.email, password);
         console.log(user);
-        await updateUserProfile(user,tempUserCart.fullName,tempUserCart.email,tempUserCart.phoneNumber,tempUserCart.country,tempUserCart.city,"","",tempUserCart.cart);
-        const hereR = await sendEmailPost(tempUserCart.email,EmailSubjects.NewAccount,EmailText.NewAccount+password);
-       console.log(hereR)
+        await updateUserProfile(
+          user,
+          tempUserCart.fullName,
+          tempUserCart.email,
+          tempUserCart.phoneNumber,
+          tempUserCart.country,
+          tempUserCart.city,
+          "",
+          "",
+          tempUserCart.cart,
+        );
+        await sendEmail(
+          tempUserCart.email,
+          $t(EmailSubjects.NewAccount),
+          $t(EmailText.NewAccount)+password,
+        );
       } catch (error) {
         if (typeof err === "string") {
           msg = err;

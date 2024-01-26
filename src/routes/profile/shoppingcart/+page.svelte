@@ -6,6 +6,7 @@
     import { t } from "svelte-i18n";
     import { cart } from "../../../store/cart_store_";
     import { authStore } from "../../../store/store";
+    import { base } from "$app/paths";
 
     let userCountry = "Unknown";
     let userCity = "Unknown";
@@ -19,7 +20,7 @@
             userCountry = locationData.country;
             userCity = locationData.city;
 
-            if(!$authStore.user) {
+            if (!$authStore.user) {
                 $cart.country = userCountry;
                 $cart.city = userCity;
             }
@@ -27,33 +28,60 @@
             console.log("bad luck on fetch");
         }
     });
+
+    const sendEmailPost = async (to: string, subject: string, text: string) => {
+        console.log("here");
+        const response = await fetch(`${base}/api/sendEmail`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                to: to,
+                subject: subject,
+                text: text,
+            }),
+        });
+
+        console.log(response);
+
+        if (response.ok) {
+            console.log("Email sent");
+        } else {
+            console.error("Failed to send email");
+        }
+    };
 </script>
 
 <svelte:head>
     <title>{$t("SHOPPING CART")}</title>
     <meta
         name="description"
-        content={$t("Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.")}
+        content={$t(
+            "Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.",
+        )}
     />
 
     <meta property="og:title" content={$t("SHOPPING CART")} />
     <meta
         property="og:description"
-        content={$t("Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.")}
+        content={$t(
+            "Page of shopping cart and checkout. You can fill all required forms: country, name, contacts, delivery, purchase method. You will get calculated price of your order and then you can follow to purchase it.",
+        )}
     />
 
     <meta property="og:type" content="website" />
 
-    <meta
-        property="og:image"
-        content=""
-    />
+    <meta property="og:image" content="" />
 
-    <meta property="og:url" content="http://nekhaynikita.shop/profile/shoppingcart" />
+    <meta
+        property="og:url"
+        content="http://nekhaynikita.shop/profile/shoppingcart"
+    />
 </svelte:head>
 
 {#if userCountry !== "Unknown"}
-    <ShoppingCart countries={CountryData} />
+    <ShoppingCart countries={CountryData} sendEmail={sendEmailPost} />
 {:else}
     <LoadingSpinner />
 {/if}

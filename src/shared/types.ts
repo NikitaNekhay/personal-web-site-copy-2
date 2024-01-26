@@ -38,7 +38,7 @@ export enum PaymentOptions {
   }
 
   export enum EmailText {
-    NewAccount = "Hello user. You have created account at NEKHAYNIKITA. This is your password:",
+    NewAccount = "Hello user. You have created account at NEKHAYNIKITA. This is your password: ",
     ProceedOrder = "",
     CompleteFullPaymentOrder = "",
     CompletePrePaymentOrder ="",
