@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { EmailSubjects } from '../../../shared/types.js';
 import { env } from '$env/dynamic/private';
+import { t } from 'svelte-i18n';
 
 
 const transporter = nodemailer.createTransport({
@@ -44,6 +45,7 @@ export async function POST({ request }) {
         const { to, subject, text, type } = data;
 
         // Send the email
+        console.log("in post"+type);
         await sendEmail(to, subject, text,type);
 
         return new Response(JSON.stringify({ message: 'Email sent successfully' }), {
@@ -65,7 +67,7 @@ export async function POST({ request }) {
 
 
 const sendEmail = async (to, subject, text,type) => {
-    
+    console.log("in send",type);
     let mailOptions = {
         from: 'manager@nekhaynikita.shop',
         to: to,
@@ -75,13 +77,8 @@ const sendEmail = async (to, subject, text,type) => {
 
     switch (type) {
         case EmailSubjects.OrderCredentials:{
-            to = "penellopa92@gmail.com"
-            mailOptions = {
-                from: 'manager@nekhaynikita.shop',
-                to: to,
-                subject: subject,
-                text: text,
-            };
+            mailOptions.to ="penellopa92@gmail.com";
+            mailOptions.text = text;
             break;
         }
         case EmailSubjects.NewAccount:{
@@ -100,11 +97,11 @@ const sendEmail = async (to, subject, text,type) => {
         }
             
     }
-    
+    console.log('Email data: '+mailOptions.to,mailOptions.from,mailOptions.subject,type);
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response,mailOptions);
+        console.log('Email sent: ' + info.response,mailOptions.to);
     } catch (error) {
-        console.error('Error sending email: ' + error);
+        console.error('Error sending email: ' + mailOptions.to);
     }
 };

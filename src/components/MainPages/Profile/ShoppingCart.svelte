@@ -234,10 +234,13 @@
 
           if (isAgreePolicy) {
             console.log("create user");
-            handleCreateNewUser();
+            if(isCreateAccout) handleCreateNewUser();
 
             console.log("send credentials");
             handleSendCredentials();
+            isChanged = true;
+            isError = false;
+            msg = "You have made your oder! Check your email for further instructions.";
           }
         } catch (error) {
           throw error;
@@ -249,11 +252,11 @@
           throw Errors.PurchaseFormAttention;
         }
       }
-    } catch (err) {
-      if (typeof err === "string") {
-        msg = err;
-      } else if (err.message !== undefined) {
-        msg = err.message;
+    } catch (error) {
+      if (typeof error === "string") {
+        msg = error;
+      } else if (error.message !== undefined) {
+        msg = error.message;
       } else {
         msg = msgT;
       }
@@ -405,13 +408,13 @@
         "",
         $t(EmailSubjects.OrderCredentials),
         JSON.stringify(tempUserCart),
-        $t(EmailSubjects.OrderCredentials),
+        EmailSubjects.OrderCredentials,
       );
     } catch (error) {
-      if (typeof err === "string") {
-        msg = err;
-      } else if (err.message !== undefined) {
-        msg = err.message;
+      if (typeof error === "string") {
+        msg = error;
+      } else if (error.message !== undefined) {
+        msg = error.message;
       }
 
       document.body.scrollIntoView({ block: "start", behavior: "smooth" });
@@ -448,16 +451,17 @@
         isError = false;
         msg = "You have created user account!";
       } catch (error) {
-        if (typeof err === "string") {
-          msg = err;
-        } else if (err.message !== undefined) {
-          msg = err.message;
+        if (typeof error === "string") {
+          msg = error;
+        } else if (error.message !== undefined) {
+          msg = error.message;
         } else {
           msg = Errors.Register;
         }
 
         document.body.scrollIntoView({ block: "start", behavior: "smooth" });
         isChanged = true;
+        isError = true;
         throw msg;
       } finally {
         setTimeout(() => {
@@ -466,8 +470,17 @@
         }, 2500);
       }
     } else {
-      throw Errors.Register;
+      if (typeof error === "string") {
+        msg = error;
+      } else if (error.message !== undefined) {
+        msg = error.message;
+      } else {
+        msg = Errors.Register;
+      }
+
+      document.body.scrollIntoView({ block: "start", behavior: "smooth" });
       isChanged = true;
+      isError = true;
     }
   }
 

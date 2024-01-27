@@ -30,7 +30,7 @@
         }
     });
 
-    const sendEmailPost = async (to: string, subject: string, text: string,type:EmailSubjects) => {
+    const sendEmailPost = async (to: string, subject: string, text: string,type:string) => {
         console.log("here");
         const response = await fetch(`${base}/api/sendEmail`, {
             method: "POST",
@@ -41,7 +41,7 @@
                 to: to,
                 subject: subject,
                 text: text,
-                type:subject,
+                type:type
             }),
         });
 
