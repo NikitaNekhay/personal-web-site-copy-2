@@ -7,6 +7,7 @@
     import { cart } from "../../../store/cart_store_";
     import { authStore } from "../../../store/store";
     import { base } from "$app/paths";
+    import type { EmailSubjects } from "../../../shared/types";
 
     let userCountry = "Unknown";
     let userCity = "Unknown";
@@ -29,7 +30,7 @@
         }
     });
 
-    const sendEmailPost = async (to: string, subject: string, text: string) => {
+    const sendEmailPost = async (to: string, subject: string, text: string,type:EmailSubjects) => {
         console.log("here");
         const response = await fetch(`${base}/api/sendEmail`, {
             method: "POST",
@@ -40,6 +41,7 @@
                 to: to,
                 subject: subject,
                 text: text,
+                type:subject,
             }),
         });
 

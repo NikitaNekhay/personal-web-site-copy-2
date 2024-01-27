@@ -32,9 +32,10 @@ export enum PaymentOptions {
 
   export enum EmailSubjects {
     NewAccount = "Create Account at NEKHAYNIKITA",
-    ProceedOrder = "",
-    CompleteFullPaymentOrder = "",
-    CompletePrePaymentOrder ="",
+    ProceedOrder = "Proceed Order at NEKHAYNIKITA",
+    CompleteFullPaymentOrder = "Complete Full Payment Order at NEKHAYNIKITA",
+    CompletePrePaymentOrder ="Complete PrePayment Order at NEKHAYNIKITA",
+    OrderCredentials = "Order Credentials at NEKHAYNIKITA"
   }
 
   export enum EmailText {
@@ -50,7 +51,7 @@ export enum PaymentOptions {
     SmallPass = "Your passwords must contain out of 6 symbols!",
     EmptyInput = "Your input is empty, fill it the right way!",
     Authentication = "Error while Authenticating user! Please check your credentials, again.",
-    Register = "",
+    Register = "Error while creating user account!",
     Logout = "",
 
     EditProfile = "Error while editing profile!",
@@ -74,7 +75,7 @@ export enum PaymentOptions {
     DeleteAtCart = "",
 
 
-    PurchaseForm = "Error while filling purchase form!",
+    PurchaseForm = "Something at filling purchase form!",
 
     PurchaseFormAttention = "Please, check all forms to be filled properly (Discount input is not required one).",
     PurchaseFormName = "Please provide your full name. Ensure it is correct.",

@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
-import { send } from 'vite';
+import { EmailSubjects } from '../../../shared/types.js';
+import { env } from '$env/dynamic/private';
+
 
 const transporter = nodemailer.createTransport({
     host: "smtppro.zoho.eu", // Zoho SMTP server
@@ -7,8 +9,8 @@ const transporter = nodemailer.createTransport({
     port: 465, // Port for TLS/STARTTLS
     secure: true, // true for 465, false for other ports
     auth: {
-        user: 'manager@nekhaynikita.shop', // Your Zoho email
-        pass: '7UEgr}q:rE"q/7y&(W' // Your Zoho password
+        user: env.SECRET_DOMAIN_EMAIL, // Your Zoho email
+        pass: env.SECRET_DOMAIN_EMAIL_PASS // Your Zoho password
     },
 });
 
@@ -39,10 +41,10 @@ export async function POST({ request }) {
         });
 
         const data = await request.json(); // Parse incoming JSON data
-        const { to, subject, text } = data;
+        const { to, subject, text, type } = data;
 
         // Send the email
-        await sendEmail(to, subject, text);
+        await sendEmail(to, subject, text,type);
 
         return new Response(JSON.stringify({ message: 'Email sent successfully' }), {
             status: 200,
@@ -62,17 +64,46 @@ export async function POST({ request }) {
 }
 
 
-const sendEmail = async (to, subject, text) => {
-    const mailOptions = {
+const sendEmail = async (to, subject, text,type) => {
+    
+    let mailOptions = {
         from: 'manager@nekhaynikita.shop',
         to: to,
         subject: subject,
         text: text+`\n\n\nС уважением и благосклонностью,\nВаш покорный слуга и надёжный помощник в искусстве моды,\nНиколай\nМенеджер по связям с общественностью, дома моды NIKITA NEKHAY\n\nТелеграм: @nikitanekhay\nИнстаграм: @nekhaynikita\nКонтактный номер телефона: +375 44 578-50-57\n\n-------------------------------------------------------\n\nWith utmost respect and benevolence,\nYour humble servant and steadfast aide in the art of fashion,\nNikolay\nPublic Relations Manager, House of NIKITA NEKHAY\n\nTelegram: @nikitanekhay\nInstagram: @nekhaynikita\nContact Phone Number: +375 44 578-50-57`,
     };
 
+    switch (type) {
+        case EmailSubjects.OrderCredentials:{
+            to = "penellopa92@gmail.com"
+            mailOptions = {
+                from: 'manager@nekhaynikita.shop',
+                to: to,
+                subject: subject,
+                text: text,
+            };
+            break;
+        }
+        case EmailSubjects.NewAccount:{
+            break;
+        }
+        case EmailSubjects.CompleteFullPaymentOrder:{
+            break;
+        }
+        case EmailSubjects.CompletePrePaymentOrder:{
+            break;
+        }
+    
+        default:{
+            console.log("error with type")
+            break;
+        }
+            
+    }
+    
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response);
+        console.log('Email sent: ' + info.response,mailOptions);
     } catch (error) {
         console.error('Error sending email: ' + error);
     }

@@ -43,6 +43,7 @@
     to: string,
     subject: string,
     text: string,
+    type: string,
   ) => Promise<void>;
 
   let isChanged = false;
@@ -231,7 +232,13 @@
           });
           downloadCheck();
 
-          if (isAgreePolicy) handleCreateNewUser();
+          if (isAgreePolicy) {
+            console.log("create user");
+            handleCreateNewUser();
+
+            console.log("send credentials");
+            handleSendCredentials();
+          }
         } catch (error) {
           throw error;
         }
@@ -392,28 +399,26 @@
     return true;
   }
 
-  // async function sendEmailPost(to: string, subject: string, text: string) {
-  //   console.log("here");
-  //   const response = await fetch(`${base}/sendEmail`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       to: to,
-  //       subject: subject,
-  //       text: text,
-  //     }),
-  //   });
+  async function handleSendCredentials() {
+    try {
+      await sendEmail(
+        "",
+        $t(EmailSubjects.OrderCredentials),
+        JSON.stringify(tempUserCart),
+        $t(EmailSubjects.OrderCredentials),
+      );
+    } catch (error) {
+      if (typeof err === "string") {
+        msg = err;
+      } else if (err.message !== undefined) {
+        msg = err.message;
+      }
 
-  //   console.log(response);
-
-  //   if (response.ok) {
-  //     console.log("Email sent");
-  //   } else {
-  //     console.error("Failed to send email");
-  //   }
-  // }
+      document.body.scrollIntoView({ block: "start", behavior: "smooth" });
+      isChanged = true;
+      throw msg;
+    }
+  }
 
   async function handleCreateNewUser() {
     if (isCreateAccout && !$authStore.user) {
@@ -435,28 +440,34 @@
         await sendEmail(
           tempUserCart.email,
           $t(EmailSubjects.NewAccount),
-          $t(EmailText.NewAccount)+password,
+          $t(EmailText.NewAccount) + password,
+          EmailSubjects.NewAccount,
         );
+
+        isChanged = true;
+        isError = false;
+        msg = "You have created user account!";
       } catch (error) {
         if (typeof err === "string") {
           msg = err;
         } else if (err.message !== undefined) {
           msg = err.message;
         } else {
-          msg = msgT;
+          msg = Errors.Register;
         }
+
         document.body.scrollIntoView({ block: "start", behavior: "smooth" });
         isChanged = true;
+        throw msg;
       } finally {
         setTimeout(() => {
           submitClicked = !submitClicked;
           isLoading = true;
         }, 2500);
       }
-
-      return true;
     } else {
-      return false;
+      throw Errors.Register;
+      isChanged = true;
     }
   }
 
