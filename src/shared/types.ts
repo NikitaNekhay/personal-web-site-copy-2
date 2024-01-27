@@ -23,7 +23,8 @@ export enum DeliveryOptions{
 
 export enum PaymentOptions {
     Cash = "c",
-    CashLess = "cl",
+    CashLessTotal = "clt",
+    CashLessParts = "clp",
 }
 
   export type Slide = {

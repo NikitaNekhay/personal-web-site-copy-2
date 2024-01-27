@@ -11,7 +11,7 @@ export const prerender = 'auto'
 export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string,city: string, description: string, messages: [], cart:[]) {
   try {
     let userDocRef:any;
-    console.log(user,user.uid,user.user.uid)
+    //console.log(user,user.uid,user.user.uid)
     
     if(user.id){
       userDocRef = doc(collection(db, "user"), user.id);

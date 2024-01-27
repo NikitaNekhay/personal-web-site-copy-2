@@ -62,81 +62,68 @@
 
   let productQuantities = new Map<string, number>();
   let cartItems: ProductType[] = [];
-  let tempAuthStore: AuthStoreType;
+
   let cartPrice: number = 0;
   let totalСartPrice: number = 0;
   let deliveryPrice: number = 0;
   let prepaymentPrice: number = 0;
+
   let isDiscount: boolean = false;
 
-  let tempUserCart: UserCartType = $authStore.user
+  let tempUserCart = $authStore.user
     ? {
         fullName: $authStore.data.name ?? "",
         phoneNumber: $authStore.data.phone ?? "",
         email: $authStore.data.email ?? "",
-        contactOption: "",
+        contactOption: ContactOptions.Telegram,
         contactName: "",
-        deliveryOption: "",
+        deliveryOption: DeliveryOptions.SelfDelivery,
         country: $authStore.data.country ?? "",
         city: $authStore.data.city ?? "",
         adress: "",
-        paymentOption: "",
+        paymentOption: PaymentOptions.CashLessTotal,
         discount: "",
-        cart: $authStore.data.cart,
+        cart: $authStore.data.cart ?? [],
       }
-    : {
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        contactOption: "",
-        contactName: "",
-        deliveryOption: "",
-        country: "",
-        city: "",
-        adress: "",
-        paymentOption: "",
-        discount: "",
-        cart: [],
-      };
+    : $cart;
 
-  onMount(async () => {
+  onMount(() => {
+    console.log("authstore - before unsub", $authStore);
     const unsubscribe = authStore.subscribe((authStore) => {
-      console.log("authstore - in cart", authStore);
-      tempAuthStore = authStore;
-      console.log("first onmount", tempAuthStore);
+      console.log("authstore - in unsub", authStore);
+      console.log("$authstore - in cart", $authStore);
 
+      console.log("cart in cart", $cart);
       tempUserCart = $authStore.user
         ? {
             fullName: $authStore.data.name ?? "",
             phoneNumber: $authStore.data.phone ?? "",
             email: $authStore.data.email ?? "",
-            contactOption: "",
+            contactOption: ContactOptions.Telegram,
             contactName: "",
-            deliveryOption: "",
+            deliveryOption: DeliveryOptions.SelfDelivery,
             country: $authStore.data.country ?? "",
             city: $authStore.data.city ?? "",
             adress: "",
-            paymentOption: "",
+            paymentOption: PaymentOptions.CashLessTotal,
             discount: "",
             cart: $authStore.data.cart ?? [],
           }
         : $cart;
 
-      cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
-      cartPrice = countPrice();
-      totalСartPrice = cartPrice + deliveryPrice;
-      totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
-      prepaymentPrice = totalСartPrice * 0.3;
+      console.log(tempUserCart);
+      cartItems = tempUserCart.cart;
+      countDeliveryPrice();
     });
 
     return unsubscribe;
   });
 
-  tempUserCart = setUserPreferences(tempUserCart);
+  // tempUserCart = setUserPreferences(tempUserCart);
 
-  function setUserPreferences(userData: UserCartType): UserCartType {
-    return userData;
-  }
+  // function setUserPreferences(userData: UserCartType): UserCartType {
+  //   return userData;
+  // }
 
   function selectCountry(country) {
     tempUserCart.country = country.code;
@@ -148,7 +135,8 @@
 
   function countPrice() {
     cartPrice = 0;
-    cartItems = $authStore.user ? tempAuthStore.data.cart : $cart.cart;
+    //cartItems = tempUserCart.cart;
+    //console.log(tempUserCart.cart);
     cartItems.forEach((item) => {
       //console.log(item.price)
       cartPrice += Number(item.price);
@@ -163,7 +151,8 @@
       });
 
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
-      tempAuthStore.data.cart = cartItems;
+      $authStore.data.cart = cartItems;
+      tempUserCart.cart = cartItems;
 
       // make map out of user's cart
       cartItems.forEach((item) => {
@@ -174,15 +163,15 @@
       });
 
       await updateUserProfile(
-        tempAuthStore.user,
-        tempAuthStore.data.name,
-        tempAuthStore.data.email,
-        tempAuthStore.data.phone,
-        tempAuthStore.data.country,
-        tempAuthStore.data.city,
-        tempAuthStore.data.description,
-        tempAuthStore.data.messages,
-        tempAuthStore.data.cart,
+        $authStore.user,
+        $authStore.data.name,
+        $authStore.data.email,
+        $authStore.data.phone,
+        $authStore.data.country,
+        $authStore.data.city,
+        $authStore.data.description,
+        $authStore.data.messages,
+        $authStore.data.cart,
       );
     } else {
       const clickedItem: ProductType = cartItems.find((obj) => {
@@ -190,7 +179,7 @@
       });
 
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
-      $cart.cart = cartItems;
+      tempUserCart.cart = cartItems;
 
       // make map out of user's cart
       cartItems.forEach((item) => {
@@ -200,10 +189,7 @@
         );
       });
     }
-    cartPrice = countPrice();
-    totalСartPrice = cartPrice + deliveryPrice;
-    totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
-    prepaymentPrice = totalСartPrice * 0.3;
+    countDeliveryPrice();
   }
 
   // Function to handle country selection
@@ -217,25 +203,62 @@
     return `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`;
   }
 
+  function countDeliveryPrice() {
+    // Count prices with delivery
+    switch (tempUserCart.deliveryOption) {
+      case DeliveryOptions.Evropochta: {
+        deliveryPrice = 5;
+        break;
+      }
+      case DeliveryOptions.Cdek: {
+        deliveryPrice = 30;
+        break;
+      }
+      case DeliveryOptions.EMS: {
+        deliveryPrice = 70;
+        break;
+      }
+      case DeliveryOptions.SelfDelivery: {
+        deliveryPrice = 0;
+        break;
+      }
+      default: {
+        deliveryPrice = 0;
+        cartPrice = countPrice();
+        totalСartPrice = cartPrice + deliveryPrice;
+        totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
+        prepaymentPrice = totalСartPrice * 0.3;
+        throw Errors.PurchaseFormPayment;
+      }
+    }
+    console.log("delivery option:", tempUserCart.deliveryOption, deliveryPrice);
+    cartPrice = countPrice();
+    totalСartPrice = cartPrice + deliveryPrice;
+    totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
+    prepaymentPrice = totalСartPrice * 0.3;
+  }
+
   function handleCart() {
     try {
       isErrorInput.length = 0;
       if (handleFormValidation()) {
         submitClicked = !submitClicked;
         try {
-          // make map out of user's cart
+          // make quantity of items in cart for check
           cartItems.forEach((item) => {
             productQuantities.set(
               item.title,
               (productQuantities.get(item.title) || 0) + 1,
             );
           });
+
+          countDeliveryPrice();
+          // Check
           downloadCheck();
 
           if (isAgreePolicy) {
             console.log("create user");
             if (isCreateAccout) handleCreateNewUser();
-
             console.log("send credentials");
             handleSendCredentials();
             isChanged = true;
@@ -407,9 +430,14 @@
     try {
       let objOfOrder = tempUserCart;
       objOfOrder.cart.find((c, index) => {
-        objOfOrder.cart[index] = c.title + " " + JSON.stringify(c.description);
+        objOfOrder.cart[index] =
+          c.title +
+          " " +
+          JSON.stringify(c.description["colors"]) +
+          JSON.stringify(c.description["sizes"]);
       });
 
+      objOfOrder.cart.length = 0;
       let stringOfOrder =
         "Items: " +
         JSON.stringify(objOfOrder.cart) +
@@ -417,7 +445,9 @@
         "prepayment:" +
         prepaymentPrice +
         " total price:" +
-        totalСartPrice+`\n\n`+JSON.stringify(objOfOrder);
+        totalСartPrice +
+        `\n\n` +
+        JSON.stringify(objOfOrder);
 
       await sendEmail(
         "",
@@ -588,7 +618,7 @@
 
       <div class="sm:w-[100%] md:sm:w-[100%]">
         <!-- List of cart -->
-        {#key tempAuthStore}
+        {#key tempUserCart}
           {#if cartItems.length > 0}
             <ul class="space-y-6">
               {#each cartItems as item, index}
@@ -649,7 +679,10 @@
             <div class="w-[100%] max-w-lg space-y-4">
               <div class="flex justify-end gap-6 text-base font-medium mb-8">
                 {$t("Price for goods")} :
-                {cartPrice} BYN
+
+                {cartPrice}
+
+                BYN
               </div>
             </div>
           </div>
@@ -988,7 +1021,7 @@
             ? 'ring-red-1 ring-1'
             : ''}"
         >
-          <legend>{$t("Choose delivery option")} :</legend>
+          <legend>{$t("Choose delivery option")} : </legend>
           <div>
             <input
               bind:group={tempUserCart.deliveryOption}
@@ -997,6 +1030,7 @@
               name="delivery"
               id=""
               value="sd"
+              on:change={() => countDeliveryPrice()}
             />
             <label class="" for="sd">{$t("Self Delivery")}</label>
           </div>
@@ -1009,8 +1043,9 @@
               name="delivery"
               id="ep"
               value="ep"
+              on:change={() => countDeliveryPrice()}
             />
-            <label for="ep">{$t("Evropochta")}</label>
+            <label for="ep">{$t("Evropochta")} (5 BYN)</label>
           </div>
 
           <div>
@@ -1021,8 +1056,9 @@
               name="delivery"
               id="cdek"
               value="cdek"
+              on:change={() => countDeliveryPrice()}
             />
-            <label for="cdek">{$t("CDEK")}</label>
+            <label for="cdek">{$t("CDEK")} (30 BYN)</label>
           </div>
 
           <div>
@@ -1033,8 +1069,9 @@
               name="delivery"
               id="ems"
               value="ems"
+              on:change={() => countDeliveryPrice()}
             />
-            <label for="ems">EMS</label>
+            <label for="ems">EMS (70 BYN)</label>
           </div>
         </fieldset>
 
@@ -1114,6 +1151,35 @@
             : ''}"
         >
           <legend>{$t("Choose payment method")} :</legend>
+
+          <div>
+            <input
+              bind:group={tempUserCart.paymentOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="radio"
+              name="payment"
+              id="clt"
+              value="clt"
+            />
+            <label for="clt">{$t("Full prepayment via cashless")}</label>
+          </div>
+
+          <div>
+            <input
+              bind:group={tempUserCart.paymentOption}
+              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
+              type="radio"
+              name="payment"
+              id="clp"
+              value="clp"
+            />
+            <label for="clp"
+              >{$t(
+                "Cashless when picking up a good (total price minus prepayment)",
+              )}</label
+            >
+          </div>
+
           <div>
             <input
               bind:group={tempUserCart.paymentOption}
@@ -1123,19 +1189,11 @@
               id="c"
               value="c"
             />
-            <label for="c">{$t("With cash when picking up a good")}</label>
-          </div>
-
-          <div>
-            <input
-              bind:group={tempUserCart.paymentOption}
-              class=" focus:ring-green-0 focus:text-green-0 text-green-0"
-              type="radio"
-              name="payment"
-              id="cl"
-              value="cl"
-            />
-            <label for="cl">{$t("Cashless")}</label>
+            <label for="c"
+              >{$t(
+                "With cash when picking up a good (total price minus prepayment)",
+              )}</label
+            >
           </div>
         </fieldset>
         <!-- IF ONLINE THEN BANNER -->
@@ -1230,6 +1288,7 @@
         <div class="grid justify-end">
           <p>
             {$t("Prepayment")} :
+
             {prepaymentPrice} BYN
           </p>
         </div>

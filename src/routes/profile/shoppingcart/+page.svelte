@@ -20,8 +20,9 @@
         if (locationData && locationData.country && locationData.city) {
             userCountry = locationData.country;
             userCity = locationData.city;
-
+            
             if (!$authStore.user) {
+                
                 $cart.country = userCountry;
                 $cart.city = userCity;
             }

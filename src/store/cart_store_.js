@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { ContactOptions, DeliveryOptions, PaymentOptions } from '../shared/types';
 
 function createCart() {
     let userData = {
@@ -6,13 +7,13 @@ function createCart() {
         fullName: '',
         phoneNumber: '',
         email: '',
-        contactOption: '', // Default contact option
+        contactOption: ContactOptions.Telegram, // Default contact option
         contactName: '',
-        deliveryOption: '', // Default delivery option
+        deliveryOption: DeliveryOptions.SelfDelivery, // Default delivery option
         country: '',
         city: '',
         adress: '',
-        paymentOption: '', // Default payment option
+        paymentOption: PaymentOptions.CashLessTotal, // Default payment option
         discount: '',
         cart: []
     };

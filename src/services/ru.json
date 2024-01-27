@@ -318,9 +318,17 @@
         "You can read in details about delivery policy":"Более подробно с правилами отправки вы можете ознакомиться",
         "You can read in details about purchase policy":"Более подробно с правилами покупки вы можете ознакомиться",
         "You need to make a prepayment via cashless method in anyway.":"Вам небходимо внести предоплату онлайн в любом случае.",
-        "Cashless":"Безналичный платеж",
-        "With cash when picking up a good":"Наличными при получении",
+        
+
+        "With cash when picking up a good (total price minus prepayment)":"Наличными при получении (оставшаяся стоимость от стоимости всего заказа, если внесена предоплата)",
+    
+        "Cashless when picking up a good (total price minus prepayment)":"Безналичный платеж при получении (оставшаяся стоимость от стоимости всего заказа, если внесена предоплата)",
+        "Full prepayment via cashless":"Полная предоплата безналичным платежем",
+
         "Choose payment method":"Выберите способ оплаты",
+        
+        
+        
         "Personal data":"Персональные данные",
         "Delivery details":"Способ доставки",
         "Payment details":"Платежные данные",
