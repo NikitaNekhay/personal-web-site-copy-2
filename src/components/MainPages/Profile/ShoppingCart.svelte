@@ -407,12 +407,12 @@
     try {
       let objOfOrder = tempUserCart;
       objOfOrder.cart.find((c, index) => {
-        objOfOrder.cart[index] = c.title;
+        objOfOrder.cart[index] = c.title + " " + JSON.stringify(c.description);
       });
 
       let stringOfOrder =
         "Items: " +
-        JSON.stringify(objOfOrder) +
+        JSON.stringify(objOfOrder.cart) +
         `\n` +
         "prepayment:" +
         prepaymentPrice +
