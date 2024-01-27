@@ -234,13 +234,14 @@
 
           if (isAgreePolicy) {
             console.log("create user");
-            if(isCreateAccout) handleCreateNewUser();
+            if (isCreateAccout) handleCreateNewUser();
 
             console.log("send credentials");
             handleSendCredentials();
             isChanged = true;
             isError = false;
-            msg = "You have made your oder! Check your email for further instructions.";
+            msg =
+              "You have made your oder! Check your email for further instructions.";
           }
         } catch (error) {
           throw error;
@@ -404,10 +405,24 @@
 
   async function handleSendCredentials() {
     try {
+      let objOfOrder = tempUserCart;
+      objOfOrder.cart.find((c, index) => {
+        objOfOrder.cart[index] = c.title;
+      });
+
+      let stringOfOrder =
+        "Items: " +
+        JSON.stringify(objOfOrder) +
+        `\n` +
+        "prepayment:" +
+        prepaymentPrice +
+        " total price:" +
+        totalСartPrice+`\n\n`+JSON.stringify(objOfOrder);
+
       await sendEmail(
         "",
         $t(EmailSubjects.OrderCredentials),
-        JSON.stringify(tempUserCart),
+        stringOfOrder,
         EmailSubjects.OrderCredentials,
       );
     } catch (error) {
