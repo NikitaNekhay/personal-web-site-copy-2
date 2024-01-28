@@ -72,7 +72,7 @@ const sendEmail = async (to, subject, text,type) => {
         from: 'manager@nekhaynikita.shop',
         to: to,
         subject: subject,
-        text: text+`\n\n\nС уважением и благосклонностью,\nВаш покорный слуга и надёжный помощник в искусстве моды,\nНиколай\nМенеджер по связям с общественностью, дома моды NIKITA NEKHAY\n\nТелеграм: @nikitanekhay\nИнстаграм: @nekhaynikita\nКонтактный номер телефона: +375 44 578-50-57\n\n-------------------------------------------------------\n\nWith utmost respect and benevolence,\nYour humble servant and steadfast aide in the art of fashion,\nNikolay\nPublic Relations Manager, House of NIKITA NEKHAY\n\nTelegram: @nikitanekhay\nInstagram: @nekhaynikita\nContact Phone Number: +375 44 578-50-57`,
+        text: text+`\n\n\nС уважением и благосклонностью,\nВаш покорный слуга и надёжный помощник в искусстве моды,\nНиколай\nМенеджер по связям с общественностью, дома моды NEKHAY NIKITA \n\nТелеграм: @nikitanekhay\nИнстаграм: @nekhaynikita\nКонтактный номер телефона: +375 44 578-50-57\n\n-------------------------------------------------------\n\nWith utmost respect and benevolence,\nYour humble servant and steadfast aide in the art of fashion,\nNikolay\nPublic Relations Manager, House of NEKHAY NIKITA \n\nTelegram: @nikitanekhay\nInstagram: @nekhaynikita\nContact Phone Number: +375 44 578-50-57`,
     };
 
     switch (type) {

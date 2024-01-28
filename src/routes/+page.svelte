@@ -7,19 +7,19 @@
 </script>
 
 <svelte:head>
-  <title>{$t("NIKITA NEKHAY - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")}</title>
+  <title>{$t("NEKHAY NIKITA - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")}</title>
   <meta
     name="description"
     content={$t(
-      "Internet shop of clothes designer NIKITA NEKHAY. Home page represents NIKITA'S photo portfolio. Take a look at last collection, shop. Get to know NIKITA entering about and contact pages.",
+      "Internet shop of clothes designer NEKHAY NIKITA. Home page represents NIKITA'S photo portfolio. Take a look at last collection, shop. Get to know NIKITA entering about and contact pages.",
     )}
   />
 
-  <meta property="og:title" content={$t("NIKITA NEKHAY - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")} />
+  <meta property="og:title" content={$t("NEKHAY NIKITA - DESIGNER - SHOP - PHOTOGRAPHY PORTFOLIO")} />
   <meta
     property="og:description"
     content={$t(
-      "Internet shop of clothes designer NIKITA NEKHAY. Home page represents NIKITA'S photo portfolio. Take a look at last collection, shop. Get to know NIKITA entering about and contact pages.",
+      "Internet shop of clothes designer NEKHAY NIKITA. Home page represents NIKITA'S photo portfolio. Take a look at last collection, shop. Get to know NIKITA entering about and contact pages.",
     )}
   />
   <meta property="og:type" content="website" />

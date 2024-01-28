@@ -7,8 +7,10 @@
   <title>{$t('PROJECT 1')}</title>
   <meta
     name="description"
-    content="This is the first presentation of my work on clothes, embodying my ideas about nature, fashion and thoughts about the future. Each element of the collection reflects my memories and vision, blending futuristic, antique and sexual elements, making each item unique and valuable."
-  />
+    content={$t(
+      "This is the first presentation of my work on clothes, embodying my ideas about nature, fashion and thoughts about the future. Each element of the collection reflects my memories and vision, blending futuristic, antique and sexual elements, making each item unique and valuable.",
+    )}
+    />
 
   <meta
     property="og:title"

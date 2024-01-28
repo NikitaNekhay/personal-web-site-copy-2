@@ -550,8 +550,8 @@
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Product: ${item.title}\nQuantity: ${quantity}\nAuthor: Nikita\nContact Email: ktofreesapiens@gmail.com\n\n`;
-        checkText += `Please write an email to ktofreesapiens@gmail.com with the subject: \n"Purchase Inquiry for ${item.title}" and include the quantity (${quantity}) in your message. \n\nRequest further instructions for the purchase.\n\n`;
+        checkText += `Product: ${item.title}\nQuantity: ${quantity}\nAuthor: Nikita\nContact Email: manager@nekhaynikita.shop\n\n`;
+        checkText += `Please write an email to manager@nekhaynikita.shop with the subject: \n"Purchase Inquiry for ${item.title}" and include the quantity (${quantity}) in your message. \n\nRequest further instructions for the purchase.\n\n`;
       });
 
       // Remove duplicates if any
@@ -569,8 +569,8 @@
 
       cartItems.forEach((item) => {
         const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: НИКИТА\nКонтактный email: ktofreesapiens@gmail.com\n\n`;
-        checkText += `Пожалуйста, свяжитесь по email ktofreesapiens@gmail.com с целью покупки "${item.title}" \nтакже уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. \n\nВедите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
+        checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: НИКИТА\nКонтактный email: manager@nekhaynikita.shop\n\n`;
+        checkText += `Пожалуйста, свяжитесь по email manager@nekhaynikita.shop с целью покупки "${item.title}" \nтакже уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. \n\nВедите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
       });
 
       // Remove duplicates if any

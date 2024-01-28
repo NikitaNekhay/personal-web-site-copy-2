@@ -34,7 +34,7 @@
                         {$t("email")}:
                         <a
                             class="p-link"
-                            href="mailto:ktofreesapiens@gmail.com"
+                            href="mailto:manager@nekhaynikita.shop"
                             >{$t("SAY HELLO WITH EMAIL")}
                         </a><br />
                     </li>
@@ -43,7 +43,7 @@
                         <a
                             class="p-link"
                             target="_blank"
-                            href="https://instagram.com/nikitaaaaaaaaannnnnnnnnekhay/"
+                            href="https://instagram.com/nekhaynikita/"
                             >{$t("OPEN ACCOUNT")}</a
                         >
                     </li>

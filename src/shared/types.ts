@@ -32,15 +32,15 @@ export enum PaymentOptions {
   };
 
   export enum EmailSubjects {
-    NewAccount = "Create Account at NEKHAYNIKITA",
-    ProceedOrder = "Proceed Order at NEKHAYNIKITA",
-    CompleteFullPaymentOrder = "Complete Full Payment Order at NEKHAYNIKITA",
-    CompletePrePaymentOrder ="Complete PrePayment Order at NEKHAYNIKITA",
-    OrderCredentials = "Order Credentials at NEKHAYNIKITA"
+    NewAccount = "Create Account at NEKHAY NIKITA",
+    ProceedOrder = "Proceed Order at NEKHAY NIKITA",
+    CompleteFullPaymentOrder = "Complete Full Payment Order at NEKHAY NIKITA",
+    CompletePrePaymentOrder ="Complete PrePayment Order at NEKHAY NIKITA",
+    OrderCredentials = "Order Credentials at NEKHAY NIKITA"
   }
 
   export enum EmailText {
-    NewAccount = "Hello user. You have created account at NEKHAYNIKITA. This is your password: ",
+    NewAccount = "Hello user. You have created account at NEKHAY NIKITA. This is your password: ",
     ProceedOrder = "",
     CompleteFullPaymentOrder = "",
     CompletePrePaymentOrder ="",
