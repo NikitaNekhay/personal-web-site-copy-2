@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t("CONTACT")}</title>
+  <title>{$t("CONTACT NEKHAY NIKITA")}</title>
   <meta
     name="description"
     content={$t(

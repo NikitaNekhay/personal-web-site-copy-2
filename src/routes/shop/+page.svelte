@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('SHOP')}</title>
+  <title>{$t("NEKHAY NIKITA - DESIGNER SHOP")}</title>
   <meta
     name="description"
     content={$t("Shop page of available clothes made by NIKITA. There you can scroll down and see the images, available sizes and price. Tap on the image and check the details.")}
@@ -24,7 +24,7 @@
 
   <meta
   property="og:title"
-  content={$t("SHOP")}
+  content={$t("NEKHAY NIKITA - DESIGNER SHOP")}
 />
 <meta
   property="og:description"

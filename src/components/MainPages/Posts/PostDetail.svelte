@@ -209,7 +209,7 @@
             </div>
         </div>
 
-        <!-- RIGHT SIDE FOR ABOUT -->
+        <!-- RIGHT SIDE FOR ABOUT NEKHAY NIKITA -->
         <div
             class=" m-12 flex flex-col items-center place-content-center
         text-black-1 uppercase font-anonymous text-2xl md:m-6 sm:m-6

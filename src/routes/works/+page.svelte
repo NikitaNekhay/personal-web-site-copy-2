@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('PROJECT 1')}</title>
+  <title>{$t("NEKHAY NIKITA - LAST CAPSULE COLLECTION")}</title>
   <meta
     name="description"
     content={$t(
@@ -14,7 +14,7 @@
 
   <meta
     property="og:title"
-    content={$t('PROJECT 1')}
+    content={$t("NEKHAY NIKITA - LAST CAPSULE COLLECTION")}
   />
   <meta
     property="og:description"
