@@ -98,10 +98,10 @@
     let flyBorderValueMax = 1200;
     let flyBorderValueMin = 500;
 
-    let flyBorderValuePhoneMax = 600;
-    let flyBorderValuePhoneMin = 300;
+    let flyBorderValuePhoneMax = 500;
+    let flyBorderValuePhoneMin = 200;
 
-    if (innerWidth < 600 && innerWidth > 0) {
+    $:if (innerWidth < 600 && innerWidth > 0) {
         let flyBorderValueMax = flyBorderValuePhoneMax;
         let flyBorderValueMin = flyBorderValuePhoneMin;
     } else {
