@@ -98,8 +98,8 @@
     let flyBorderValueMax = 1200;
     let flyBorderValueMin = 500;
 
-    let flyBorderValuePhoneMax = 800;
-    let flyBorderValuePhoneMin = 500;
+    let flyBorderValuePhoneMax = 600;
+    let flyBorderValuePhoneMin = 300;
 
     if (innerWidth < 600 && innerWidth > 0) {
         let flyBorderValueMax = flyBorderValuePhoneMax;
