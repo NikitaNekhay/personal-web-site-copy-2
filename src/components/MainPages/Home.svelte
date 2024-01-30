@@ -98,15 +98,14 @@
     let flyBorderValueMax = 1200;
     let flyBorderValueMin = 500;
 
-    let flyBorderValuePhoneMax = 500;
-    let flyBorderValuePhoneMin = 200;
+    let flyBorderValuePhoneMax = 600;
+    let flyBorderValuePhoneMin = 300;
 
-    $:if (innerWidth < 600 && innerWidth > 0) {
-        let flyBorderValueMax = flyBorderValuePhoneMax;
-        let flyBorderValueMin = flyBorderValuePhoneMin;
+    if (innerWidth < 600 && innerWidth > 0) {
+        flyBorderValueMax = flyBorderValuePhoneMax;
+        flyBorderValueMin = flyBorderValuePhoneMin;
     } else {
         console.error("dsds");
-        //initialImages.length = 0;
     }
 
     async function getImageDimensions(url) {
@@ -165,8 +164,8 @@
     // This function updates flyBorderValue based on the current image rotation
     function updateFlyBorderValue() {
         if (innerWidth < 600 && innerWidth > 0) {
-            let flyBorderValueMax = flyBorderValuePhoneMax;
-            let flyBorderValueMin = flyBorderValuePhoneMin;
+            flyBorderValueMax = flyBorderValuePhoneMax;
+            flyBorderValueMin = flyBorderValuePhoneMin;
         } else {
             console.error("dsds");
             //initialImages.length = 0;
