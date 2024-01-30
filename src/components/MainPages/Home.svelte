@@ -4,10 +4,6 @@
     import { writable } from "svelte/store";
     import { fly, fade } from "svelte/transition";
 
-
-
-
-
     let images = [
         "https://lh3.googleusercontent.com/ppxlqw4aPZCO3livRhql5im9ZOSa2vhsFnt77RKhtqmxB4VQ3tBDgNnBXAv5gtiWalWEXB7gd78AfgfnuMW-79YG-hupQCdCi5m_RutrDJVvpVl35cvAMI7HjQrLICb5bpy4aGRKBA=w2400",
         "https://lh3.googleusercontent.com/f8Kww7LpBp_j18kc4AKBbJBlZ3s__Sgbuwlg9QBaDi1IjkL_FBGVo7sp_soxiIkP5hvP_ODZiKGuv6ft-T60r4ZMsqJbPwAmv9UcvBDsU2b-rqroGoD64OL2Ft-z1yWmsYwntgX7Ww=w2400",
@@ -52,18 +48,49 @@
     ];
 
     let arrayOfRotations = [];
-    let arrayOfRotationsCalculate = ['h', 'v', 'v', 'v', 'h', 'h', 'h', 'h', 'h', 'h', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'h', 'v', 'v', 'v', 'v', 'v', 'h', 'v', 'v', 'v', 'h', 'v', 'h', 'v'];
-
-
+    let arrayOfRotationsCalculate = [
+        "h",
+        "v",
+        "v",
+        "v",
+        "h",
+        "h",
+        "h",
+        "h",
+        "h",
+        "h",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "h",
+        "v",
+        "v",
+        "v",
+        "v",
+        "v",
+        "h",
+        "v",
+        "v",
+        "v",
+        "h",
+        "v",
+        "h",
+        "v",
+    ];
 
     const scrollY = writable(0);
     const loadedImages = writable(2);
     const prevLoadedImagesTrigger = writable(false);
     let flyBorderValue = 500;
-
-
-
-    
 
     async function getImageDimensions(url) {
         return new Promise((resolve, reject) => {
@@ -120,8 +147,8 @@
 
     // This function updates flyBorderValue based on the current image rotation
     function updateFlyBorderValue() {
-        console.log("update value",arrayOfRotationsCalculate[$loadedImages],)
-        if (arrayOfRotationsCalculate[$loadedImages] === 'h') {
+        console.log("update value", arrayOfRotationsCalculate[$loadedImages]);
+        if (arrayOfRotationsCalculate[$loadedImages] === "h") {
             flyBorderValue = 500;
         } else {
             flyBorderValue = 1200;
@@ -163,13 +190,6 @@
     //     flyBorderValue
     // );
 
-    function changeBorder() {
-        if (flyBorderValue === 500) {
-            flyBorderValue = 1200;
-        } else {
-            flyBorderValue = 500;
-        }
-    }
 </script>
 
 <div class="h-auto">
@@ -180,7 +200,7 @@
                     <div id="img{index}">
                         <img
                             data-anchor-target="#img{index}"
-                            class="sm:w-[97%] md:w-[97%] sm:h-fit md:h-fit"
+                            class=""
                             src={image}
                             alt="image #{index}"
                             in:fade={{ delay: 300, duration: 400 }}
@@ -190,26 +210,24 @@
             {/each}
         </div>
 
-
-            <div
-                class="relative bottom-0 top-10 grid justify-items-center justify-self-center justify-center"
+        <div
+            class="relative bottom-0 top-10 grid justify-items-center justify-self-center justify-center"
+        >
+            <button
+                on:click={() => {
+                    document.body.scrollIntoView({
+                        block: "start",
+                        behavior: "smooth",
+                    });
+                }}
             >
-                <button
-                    on:click={() => {
-                        document.body.scrollIntoView({
-                            block: "start",
-                            behavior: "smooth",
-                        });
-                    }}
-                >
-                    <img
-                        class="w-12 transition-all duration-200 group-hover:scale-150 animate-bounce"
-                        src="{base}/media/chevrons-up.svg"
-                        alt="icon arrow up"
-                    />
-                </button>
-            </div>
-
+                <img
+                    class="w-12 transition-all duration-200 group-hover:scale-150 animate-bounce"
+                    src="{base}/media/chevrons-up.svg"
+                    alt="icon arrow up"
+                />
+            </button>
+        </div>
     </div>
 </div>
 
