@@ -98,7 +98,7 @@
     let flyBorderValueMax = 1200;
     let flyBorderValueMin = 500;
 
-    let flyBorderValuePhoneMax = 600;
+    let flyBorderValuePhoneMax = 500;
     let flyBorderValuePhoneMin = 300;
 
     if (innerWidth < 600 && innerWidth > 0) {
@@ -153,12 +153,13 @@
     }
 
     $: if (
-        ($scrollY % flyBorderValue) - 200 < 100 &&
-        ($scrollY % flyBorderValue) - 200 > 0 &&
+        ((($scrollY - 100) % flyBorderValue) < 100 &&
+        (($scrollY - 100) % flyBorderValue) > 0) &&
         initialImages.length <= 35
     ) {
         $prevLoadedImagesTrigger = true;
-        updateFlyBorderValue(); // Call the function to update flyBorderValue
+        console.log("prevLoadedImagesTrigger")
+        //updateFlyBorderValue(); // Call the function to update flyBorderValue
     }
 
     // This function updates flyBorderValue based on the current image rotation
@@ -170,17 +171,17 @@
             console.error("dsds");
             //initialImages.length = 0;
         }
-        //console.log("update value", arrayOfRotationsCalculate[$loadedImages]);
-        if (arrayOfRotationsCalculate[$loadedImages] === "h") {
-            flyBorderValue = flyBorderValueMin;
-        } else {
+        console.log("value of image to change for",$loadedImages,arrayOfRotationsCalculate[$loadedImages-1])
+        if (arrayOfRotationsCalculate[$loadedImages-1] === "h") {
             flyBorderValue = flyBorderValueMax;
+        } else {
+            flyBorderValue = flyBorderValueMin;
         }
     }
 
     $: if (
-        $scrollY % flyBorderValue < 100 &&
-        $scrollY % flyBorderValue > 0 &&
+        ($scrollY % flyBorderValue < 100 &&
+        $scrollY % flyBorderValue > 0) &&
         $loadedImages - initialImages.length === 0 &&
         $prevLoadedImagesTrigger &&
         $scrollY > flyBorderValue &&
@@ -189,8 +190,9 @@
         console.log("pop img", $loadedImages, initialImages.length);
         updateFlyBorderValue();
         $loadedImages += 1;
-        $prevLoadedImagesTrigger = false;
         initialImages.push(images.shift());
+        updateFlyBorderValue();
+        $prevLoadedImagesTrigger = false;
     }
 
     onMount(() => {
@@ -225,7 +227,7 @@
                     <div id="img{index}">
                         <img
                             data-anchor-target="#img{index}"
-                            class=""
+                            class=" {$loadedImages-index === 1 ? "opacity-0":"opacity-100"}"
                             src={image}
                             alt="image #{index}"
                             in:fade={{ delay: 300, duration: 400 }}
@@ -236,7 +238,7 @@
         </div>
 
         <div
-            class="relative bottom-0 top-10 grid justify-items-center justify-self-center justify-center"
+            class="{$loadedImages<30 ? "pt-96" :"pt-0"} pt- relative bottom-0 top-10 grid justify-items-center justify-self-center justify-center"
         >
             <button
                 on:click={() => {
