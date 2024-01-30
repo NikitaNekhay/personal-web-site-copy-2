@@ -87,10 +87,27 @@
         "v",
     ];
 
+    let innerWidth = 0;
+    let innerHeight = 0;
+
     const scrollY = writable(0);
     const loadedImages = writable(2);
     const prevLoadedImagesTrigger = writable(false);
     let flyBorderValue = 500;
+
+    let flyBorderValueMax = 1200;
+    let flyBorderValueMin = 500;
+
+    let flyBorderValuePhoneMax = 800;
+    let flyBorderValuePhoneMin = 500;
+
+    if (innerWidth < 600 && innerWidth > 0) {
+        let flyBorderValueMax = flyBorderValuePhoneMax;
+        let flyBorderValueMin = flyBorderValuePhoneMin;
+    } else {
+        console.error("dsds");
+        //initialImages.length = 0;
+    }
 
     async function getImageDimensions(url) {
         return new Promise((resolve, reject) => {
@@ -147,11 +164,18 @@
 
     // This function updates flyBorderValue based on the current image rotation
     function updateFlyBorderValue() {
-        console.log("update value", arrayOfRotationsCalculate[$loadedImages]);
-        if (arrayOfRotationsCalculate[$loadedImages] === "h") {
-            flyBorderValue = 500;
+        if (innerWidth < 600 && innerWidth > 0) {
+            let flyBorderValueMax = flyBorderValuePhoneMax;
+            let flyBorderValueMin = flyBorderValuePhoneMin;
         } else {
-            flyBorderValue = 1200;
+            console.error("dsds");
+            //initialImages.length = 0;
+        }
+        //console.log("update value", arrayOfRotationsCalculate[$loadedImages]);
+        if (arrayOfRotationsCalculate[$loadedImages] === "h") {
+            flyBorderValue = flyBorderValueMin;
+        } else {
+            flyBorderValue = flyBorderValueMax;
         }
     }
 
@@ -182,15 +206,17 @@
         };
     });
 
-    // $: console.log(
-    //     $scrollY,
-    //     $loadedImages,
-    //     initialImages.length,
-    //     $prevLoadedImagesTrigger,
-    //     flyBorderValue
-    // );
-
+    $: console.log(
+        $scrollY,
+        $loadedImages,
+        initialImages.length,
+        $prevLoadedImagesTrigger,
+        flyBorderValue,
+        innerWidth,
+    );
 </script>
+
+<svelte:window bind:innerWidth bind:innerHeight />
 
 <div class="h-auto">
     <div class=" pt-36">
