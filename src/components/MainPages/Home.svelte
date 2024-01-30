@@ -161,7 +161,6 @@
         console.log("prevLoadedImagesTrigger")
         //updateFlyBorderValue(); // Call the function to update flyBorderValue
     }
-
     // This function updates flyBorderValue based on the current image rotation
     function updateFlyBorderValue() {
         if (innerWidth < 600 && innerWidth > 0) {

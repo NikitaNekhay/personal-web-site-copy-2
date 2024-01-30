@@ -174,12 +174,14 @@
         $authStore.data.cart,
       );
     } else {
+      console.log("no user to delete from cart")
       const clickedItem: ProductType = cartItems.find((obj) => {
         return obj.id === cartItems[tempId].id;
       });
-
+      console.log("clickedItem from cart")
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
       tempUserCart.cart = cartItems;
+      $cart.cart = cartItems;
 
       // make map out of user's cart
       cartItems.forEach((item) => {
