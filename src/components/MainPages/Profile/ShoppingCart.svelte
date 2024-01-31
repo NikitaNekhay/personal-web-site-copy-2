@@ -430,7 +430,7 @@
 
   async function handleSendCredentials() {
     try {
-      console.log(objOfOrder)
+      console.log(tempUserCart)
       let objOfOrder = tempUserCart;
       objOfOrder.cart.find((c, index) => {
         objOfOrder.cart[index] =
