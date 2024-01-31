@@ -7,7 +7,7 @@
     let  addIndicators;
     onMount(async () => {
         // Dynamically import ScrollMagic to ensure it's only loaded client-side
-        addIndicators = (await import("scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators")).default;
+        //addIndicators = (await import("scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators")).default;
         ScrollMagic = (await import("scrollmagic")).default;
 
         //(await import("addIndicators")).default;
@@ -27,7 +27,7 @@
                 duration:1000,
             })
             .setClassToggle(div, "fade-in") // Apply the fade-in class to the div
-            .addIndicators({name: "Scene: # " + div.id }) // Add visual indicators
+            // .addIndicators({name: "Scene: # " + div.id }) // Add visual indicators
             .addTo(controller);
             
             console.log(div  )
