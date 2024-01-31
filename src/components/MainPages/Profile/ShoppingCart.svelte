@@ -111,7 +111,7 @@
           }
         : $cart;
 
-      console.log(tempUserCart);
+      //console.log(tempUserCart);
       cartItems = tempUserCart.cart;
       countDeliveryPrice();
     });
@@ -135,8 +135,6 @@
 
   function countPrice() {
     cartPrice = 0;
-    //cartItems = tempUserCart.cart;
-    //console.log(tempUserCart.cart);
     cartItems.forEach((item) => {
       //console.log(item.price)
       cartPrice += Number(item.price);
@@ -174,11 +172,11 @@
         $authStore.data.cart,
       );
     } else {
-      console.log("no user to delete from cart")
+      console.log("no user to delete from cart");
       const clickedItem: ProductType = cartItems.find((obj) => {
         return obj.id === cartItems[tempId].id;
       });
-      console.log("clickedItem from cart")
+      console.log("clickedItem from cart");
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
       tempUserCart.cart = cartItems;
       $cart.cart = cartItems;
@@ -255,14 +253,16 @@
           });
 
           countDeliveryPrice();
-          // Check
-          downloadCheck();
+
 
           if (isAgreePolicy) {
             console.log("create user");
             if (isCreateAccout) handleCreateNewUser();
             console.log("send credentials");
             handleSendCredentials();
+
+                      // Check
+          downloadCheck();
             isChanged = true;
             isError = false;
             msg =
@@ -430,6 +430,7 @@
 
   async function handleSendCredentials() {
     try {
+      console.log(objOfOrder)
       let objOfOrder = tempUserCart;
       objOfOrder.cart.find((c, index) => {
         objOfOrder.cart[index] =
@@ -439,7 +440,7 @@
           JSON.stringify(c.description["sizes"]);
       });
 
-      objOfOrder.cart.length = 0;
+      //objOfOrder.cart.length = 0;
       let stringOfOrder =
         "Items: " +
         JSON.stringify(objOfOrder.cart) +
