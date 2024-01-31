@@ -431,19 +431,20 @@
   async function handleSendCredentials() {
     try {
       console.log(tempUserCart)
-      let objOfOrder = tempUserCart;
-      objOfOrder.cart.find((c, index) => {
-        objOfOrder.cart[index] =
+      var objOfOrder = tempUserCart;
+      let cartString = [];
+      objOfOrder.cart.forEach((c, index) => {
+        cartString[index] =
           c.title +
           " " +
           JSON.stringify(c.description["colors"]) +
           JSON.stringify(c.description["sizes"]);
       });
-
+      console.log(tempUserCart,objOfOrder)
       //objOfOrder.cart.length = 0;
       let stringOfOrder =
         "Items: " +
-        JSON.stringify(objOfOrder.cart) +
+        JSON.stringify(cartString) +
         `\n` +
         "prepayment:" +
         prepaymentPrice +
@@ -624,10 +625,11 @@
         {#key tempUserCart}
           {#if cartItems.length > 0}
             <ul class="space-y-6">
-              {#each cartItems as item, index}
+              {#each tempUserCart.cart as item, index}
                 <li class="flex items-center justify-between">
                   <div class="flex items-center justify-start gap-x-4">
                     <a href="{base}/posts/{item.id}">
+                     
                       <img
                         src={item.images[0]}
                         alt="item img"
