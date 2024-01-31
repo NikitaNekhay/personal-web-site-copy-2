@@ -40,6 +40,8 @@
 
 		"@types/nodemailer": "^6.4.14",
 
+		"@types/scrollmagic": "^2.0.8",
+
 		"@vercel/speed-insights": "^1.0.2",
 
 		"autoprefixer": "^10.4.14",
@@ -65,6 +67,8 @@
 		"prettier-plugin-svelte": "^3.1.2",
 
 		"routify": "^1.2.7",
+
+		"scrollmagic": "^2.0.8",
 
 		"svelte": "^4.2.8",
 

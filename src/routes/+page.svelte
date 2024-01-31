@@ -4,6 +4,7 @@
   import Home from "../components/MainPages/Home.svelte";
   import EmptyPage from "../components/Shared/EmptyPage.svelte";
   import { t } from "svelte-i18n";
+    import HomeDesktop from "../components/MainPages/HomeDesktop.svelte";
 </script>
 
 <svelte:head>
@@ -34,3 +35,4 @@
 </svelte:head>
 
 <Home />
+<!-- <HomeDesktop /> -->
