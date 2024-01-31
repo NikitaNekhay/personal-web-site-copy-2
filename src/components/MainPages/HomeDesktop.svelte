@@ -455,8 +455,9 @@
 
 <style>
     div[id] {
-        opacity: 0; /* Start with divs invisible */
+        opacity: 1; /* Start with divs invisible */
         /* Transition for both fade-in and fade-out */
+        transition: opacity 2s ease-in-out;
     }
 
     .fade-in {
