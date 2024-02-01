@@ -277,7 +277,7 @@
             handleSendCredentials();
 
             // Download Check
-            downloadCheck();
+            //downloadCheck();
 
             // Send check to user's email
             sendEmail(tempUserCart.email, $t(EmailSubjects.ProceedOrder), generateCheck(),EmailSubjects.ProceedOrder)
