@@ -40,8 +40,9 @@ export enum PaymentOptions {
   }
 
   export enum EmailText {
+    EmptyCart = "Your cart is currently empty. Please add some products before proceeding.",
     NewAccount = "Hello user. You have created account at NEKHAY NIKITA. This is your password: ",
-    ProceedOrder = "",
+    ProceedOrder = `Hello user! This is your check with information about your order:\n\n`,
     CompleteFullPaymentOrder = "",
     CompletePrePaymentOrder ="",
   }

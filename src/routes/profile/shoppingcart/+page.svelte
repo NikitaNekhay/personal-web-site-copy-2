@@ -22,7 +22,7 @@
             userCity = locationData.city;
             
             if (!$authStore.user) {
-                
+                console.log("cart in page.svelte cart",$cart)
                 $cart.country = userCountry;
                 $cart.city = userCity;
             }

@@ -113,7 +113,7 @@
 
       //console.log(tempUserCart);
       cartItems = tempUserCart.cart;
-      countDeliveryPrice();
+      countAllPrice();
     });
 
     return unsubscribe;
@@ -189,7 +189,7 @@
         );
       });
     }
-    countDeliveryPrice();
+    countAllPrice();
   }
 
   // Function to handle country selection
@@ -203,7 +203,7 @@
     return `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`;
   }
 
-  function countDeliveryPrice() {
+  function countAllPrice() {
     // Count prices with delivery
     switch (tempUserCart.deliveryOption) {
       case DeliveryOptions.Evropochta: {
@@ -223,18 +223,31 @@
         break;
       }
       default: {
+        tempUserCart.deliveryOption = DeliveryOptions.SelfDelivery;
         deliveryPrice = 0;
         cartPrice = countPrice();
         totalСartPrice = cartPrice + deliveryPrice;
-        totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
+        totalСartPrice =
+          validateDiscount(tempUserCart.discount) &&
+          tempUserCart.discount.length > 0
+            ? totalСartPrice * 0.95
+            : totalСartPrice;
         prepaymentPrice = totalСartPrice * 0.3;
-        throw Errors.PurchaseFormPayment;
+        break;
+        //throw Errors.PurchaseFormPayment;
       }
     }
+
+    // Count discount
+
     console.log("delivery option:", tempUserCart.deliveryOption, deliveryPrice);
     cartPrice = countPrice();
     totalСartPrice = cartPrice + deliveryPrice;
-    totalСartPrice = isDiscount ? totalСartPrice * 0.95 : totalСartPrice;
+    totalСartPrice =
+      validateDiscount(tempUserCart.discount) &&
+      tempUserCart.discount.length > 0
+        ? totalСartPrice * 0.95
+        : totalСartPrice;
     prepaymentPrice = totalСartPrice * 0.3;
   }
 
@@ -252,17 +265,22 @@
             );
           });
 
-          countDeliveryPrice();
-
+          countAllPrice();
 
           if (isAgreePolicy) {
-            console.log("create user");
+            // create and handle user from form data
+            //console.log("create user");
             if (isCreateAccout) handleCreateNewUser();
-            console.log("send credentials");
+    
+            // send credentials to admin
+            //console.log("send credentials to admin");
             handleSendCredentials();
 
-                      // Check
-          downloadCheck();
+            // Download Check
+            downloadCheck();
+
+            // Send check to user's email
+            sendEmail(tempUserCart.email, $t(EmailSubjects.ProceedOrder), generateCheck(),EmailSubjects.ProceedOrder)
             isChanged = true;
             isError = false;
             msg =
@@ -415,6 +433,9 @@
       isErrorInput.push("discount");
       msg = Errors.PurchaseFormDiscount;
       isBadReturn = true;
+    } else {
+      // Apply discount:
+      countAllPrice();
     }
 
     if (isBadReturn) {
@@ -430,7 +451,7 @@
 
   async function handleSendCredentials() {
     try {
-      console.log(tempUserCart)
+      console.log(tempUserCart);
       var objOfOrder = tempUserCart;
       let cartString = [];
       objOfOrder.cart.forEach((c, index) => {
@@ -440,7 +461,7 @@
           JSON.stringify(c.description["colors"]) +
           JSON.stringify(c.description["sizes"]);
       });
-      console.log(tempUserCart,objOfOrder)
+      console.log(tempUserCart, objOfOrder);
       //objOfOrder.cart.length = 0;
       let stringOfOrder =
         "Items: " +
@@ -533,6 +554,20 @@
     }
   }
 
+  function returnDelivery(deliveryOption) {
+    const result: string =
+      deliveryOption === DeliveryOptions.SelfDelivery
+        ? "SelfDelivery"
+        : deliveryOption === DeliveryOptions.EMS
+          ? "EMS"
+          : deliveryOption === DeliveryOptions.Cdek
+            ? "Cdek"
+            : deliveryOption === DeliveryOptions.Evropochta
+              ? "Evropochta"
+              : "Invalid Option";
+    return result;
+  }
+
   function downloadCheck() {
     const checkText = generateCheck();
     const blob = new Blob([checkText], { type: "text/plain" });
@@ -545,44 +580,51 @@
   }
 
   function generateCheck() {
-    if ($currentLanguagee === "en") {
-      if (cartItems.length === 0) {
-        return "Your cart is currently empty. Please add some products before proceeding.";
-      }
+    if (cartItems.length === 0) {
+      return $t(EmailText.EmptyCart);
+    }
 
-      let checkText = `Hello user! This is your check with instructions,\nplease, follow them in order to purchase your goods:\n\n`;
+    // Accumulate quantities for each product
+    const accumulatedQuantities = new Map();
+    cartItems.forEach((item) => {
+      const quantity = accumulatedQuantities.get(item.title) || 0;
+      accumulatedQuantities.set(item.title, quantity + 1);
+    });
 
-      cartItems.forEach((item) => {
-        const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Product: ${item.title}\nQuantity: ${quantity}\nAuthor: Nikita\nContact Email: manager@nekhaynikita.shop\n\n`;
-        checkText += `Please write an email to manager@nekhaynikita.shop with the subject: \n"Purchase Inquiry for ${item.title}" and include the quantity (${quantity}) in your message. \n\nRequest further instructions for the purchase.\n\n`;
+    let checkText = $t(EmailText.ProceedOrder);
+
+    if ($currentLanguagee === "ru") {
+      // Generate check text based on accumulated quantities
+      accumulatedQuantities.forEach((quantity, title) => {
+        checkText += `Товар: ${$t(title)}\nКоличество: ${quantity}\n`;
       });
 
-      // Remove duplicates if any
-      const uniqueInstructions = Array.from(
-        new Set(checkText.split("\n\n")),
-      ).join("\n\n");
+      checkText += `\n\nДоставка: ${$t(
+        returnDelivery(tempUserCart.deliveryOption),
+      )}\n${
+        tempUserCart.discount.length !== 0
+          ? "Промокод: " + tempUserCart.discount + "\n"
+          : ""
+      }Предоплата: ${prepaymentPrice} BYN\nОбщая стоимость за заказ: ${totalСartPrice} BYN\n\n`;
+      checkText += `Вы получите электронное сообщение на почту от manager@nekhaynikita.shop с заголовком о продолжении заказа\nОжидайте дальнейших инструкций об оплате.\n\n`;
 
-      return uniqueInstructions;
+      return checkText;
     } else {
-      if (cartItems.length === 0) {
-        return "Ваша корзина временно пуста. Пожалуйста, выберите товары перед тем, как продолжить операцию.";
-      }
-
-      let checkText = `Приветствую вас! Вот ваш чек.\nПокупка произаводится в индивидуальном порядке путем диалога с продавцом.\nЗдесь представлены инструкции для покупки ваших товаров:\n\n"`;
-
-      cartItems.forEach((item) => {
-        const quantity = productQuantities.get(item.title) || 0;
-        checkText += `Наименование: ${item.title}\nКоличество: ${quantity}\nАвтор: НИКИТА\nКонтактный email: manager@nekhaynikita.shop\n\n`;
-        checkText += `Пожалуйста, свяжитесь по email manager@nekhaynikita.shop с целью покупки "${item.title}" \nтакже уточните желаемое количество в размере (${quantity}) ед. в вашем обращении. \n\nВедите диалог для дальнейшей покупки. Будьте вежливы и удачи!).\n\n`;
+      // Generate check text based on accumulated quantities
+      accumulatedQuantities.forEach((quantity, title) => {
+        checkText += `Product: ${title}\nQuantity: ${quantity}\n`;
       });
 
-      // Remove duplicates if any
-      const uniqueInstructions = Array.from(
-        new Set(checkText.split("\n\n")),
-      ).join("\n\n");
+      checkText += `\n\nDelivery option: ${returnDelivery(
+        tempUserCart.deliveryOption,
+      )}\n${
+        tempUserCart.discount.length !== 0
+          ? "Discount: " + tempUserCart.discount + "\n"
+          : ""
+      }Prepayment price: ${prepaymentPrice}\nTotal price of order: ${totalСartPrice}\n\n`;
+      checkText += `You will get an copy email from manager@nekhaynikita.shop with the subject of proceeding an order\nWait further instructions for the purchase.\n\n`;
 
-      return uniqueInstructions;
+      return checkText;
     }
   }
 </script>
@@ -629,7 +671,6 @@
                 <li class="flex items-center justify-between">
                   <div class="flex items-center justify-start gap-x-4">
                     <a href="{base}/posts/{item.id}">
-                     
                       <img
                         src={item.images[0]}
                         alt="item img"
@@ -1035,7 +1076,7 @@
               name="delivery"
               id=""
               value="sd"
-              on:change={() => countDeliveryPrice()}
+              on:change={() => countAllPrice()}
             />
             <label class="" for="sd">{$t("Self Delivery")}</label>
           </div>
@@ -1048,7 +1089,7 @@
               name="delivery"
               id="ep"
               value="ep"
-              on:change={() => countDeliveryPrice()}
+              on:change={() => countAllPrice()}
             />
             <label for="ep">{$t("Evropochta")} (5 BYN)</label>
           </div>
@@ -1061,7 +1102,7 @@
               name="delivery"
               id="cdek"
               value="cdek"
-              on:change={() => countDeliveryPrice()}
+              on:change={() => countAllPrice()}
             />
             <label for="cdek">{$t("CDEK")} (30 BYN)</label>
           </div>
@@ -1074,7 +1115,7 @@
               name="delivery"
               id="ems"
               value="ems"
-              on:change={() => countDeliveryPrice()}
+              on:change={() => countAllPrice()}
             />
             <label for="ems">EMS (70 BYN)</label>
           </div>
