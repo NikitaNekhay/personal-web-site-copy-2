@@ -33,6 +33,7 @@ import('fs').then(fs => {
             "/*.jpg", // Allow JPG images
             "/*.jpeg", // Allow JPEG images
             "/*.gif", // Allow GIF images
+            "/*.xml", // Allow XML images
           ],
           crawlDelay: 2,
         },

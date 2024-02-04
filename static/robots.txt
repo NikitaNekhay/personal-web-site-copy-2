@@ -5,6 +5,7 @@ Allow: /*.png
 Allow: /*.jpg
 Allow: /*.jpeg
 Allow: /*.gif
+Allow: /*.xml
 Disallow: /dashboard
 Disallow: /stat
 Disallow: /create
