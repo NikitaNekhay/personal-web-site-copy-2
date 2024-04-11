@@ -6,7 +6,6 @@
 
     let innerWidth = 0;
     let innerHeight = 0;
-
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -22,7 +21,14 @@
     </div>
 
     <!-- 2 columns -->
-    <div class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[20%] sm:mb-[42%] lg:mb-[35%] {innerWidth<1023 && innerWidth > 775 ? 'md:mb-[0%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mb-[16%]' :'md:mb-[38%]')}">
+    <div
+        class="grid grid-cols-2 gap-x-[7%] mt-[3%] mb-[20%] sm:mb-[42%] lg:mb-[35%] {innerWidth <
+            1023 && innerWidth > 775
+            ? 'md:mb-[0%]'
+            : innerWidth <= 775 && innerWidth >= 610
+              ? 'md:mb-[16%]'
+              : 'md:mb-[38%]'}"
+    >
         <!-- 1 column -->
         <div class="grid grid-flow-row">
             <div class="">
@@ -30,14 +36,20 @@
                     <!-- {#key innerWidth}
                     <Authorphoto bind:innerWidth/>
                     {/key} -->
-                    <img class="h-auto {innerWidth < 410 ? "md:h-[100%]" :"md:h-[99%] "} lg:h-[100%] xl:h-[100%] 2xl:h-[100%] 3xl:h-[100%]"  src="{base}/media/NIKITA.JPG" alt="nikita's portrait">
+                    <img
+                        class="h-auto {innerWidth < 410
+                            ? 'md:h-[100%]'
+                            : 'md:h-[99%] '} lg:h-[100%] xl:h-[100%] 2xl:h-[100%] 3xl:h-[100%]"
+                        src="{base}/media/NIKITA.JPG"
+                        alt="nikita's portrait"
+                    />
                 </div>
 
-                <div
-                    class="z-10 grid gap-y-[10%]  mx-auto mt-6"
-                >
+                <div class="z-10 grid gap-y-[10%] mx-auto mt-6">
                     <!-- What i sew -->
-                    <div class="py-5 shadow-xl border-b-2 border-navy-2 bg-white-1">
+                    <div
+                        class="py-5 shadow-xl border-b-2 border-navy-2 bg-white-1"
+                    >
                         <details class="group" open>
                             <summary
                                 class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
@@ -73,8 +85,8 @@
 
                     <!-- small space for small text -->
                     <div class="mt-[40%] sm:mt-[10%]">
-                        <p class="relative -bottom-60 sm:-bottom-[75vh] ">
-                            {$t('aaaam I digiiitilizedd?')}
+                        <p class="relative -bottom-60 sm:-bottom-[75vh]">
+                            {$t("aaaam I digiiitilizedd?")}
                         </p>
                     </div>
                 </div>
@@ -83,9 +95,11 @@
         <!-- 2 column -->
         <div class="grid grid-flow-row">
             <div class="">
-                <div class=" grid gap-y-[10%]  mt-6">
+                <div class=" grid gap-y-[10%] mt-6">
                     <!-- who am i -->
-                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2">
+                    <div
+                        class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2"
+                    >
                         <details class="group" open>
                             <summary
                                 class="flex mx-2 justify-between items-center font-medium cursor-pointer list-none"
@@ -130,7 +144,9 @@
                         </details>
                     </div>
                     <!-- what i do -->
-                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2">
+                    <div
+                        class="py-5 shadow-xl bg-white-1 border-navy-2 border-x-2"
+                    >
                         <details class="group" open>
                             <summary
                                 class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
@@ -170,13 +186,14 @@
                     <!-- small space for small text -->
                     <div class="mt-[40%] sm:mt-[30%] md:mt-[35%]">
                         <p class="relative bottom-10">
-                            {$t('guesss what else?..')}
+                            {$t("guesss what else?..")}
                         </p>
-                       
                     </div>
 
                     <!-- what i suggest -->
-                    <div class="py-5 shadow-xl bg-white-1 border-navy-2 border-t-2">
+                    <div
+                        class="py-5 shadow-xl bg-white-1 border-navy-2 border-t-2"
+                    >
                         <details class="group" open>
                             <summary
                                 class="flex justify-between mx-2 items-center font-medium cursor-pointer list-none"
@@ -228,8 +245,13 @@
     <!-- LAST 2 BLOCKS -->
     <div
         class="grid grid-cols-2 gap-x-[7%] mt-[10%] sm:mt-[35%]
-        xl:mt-[0%] lg:mt-[7%] 2xl:mt-[0%] 3xl:mt-[0%]    
-        {innerWidth<1023 && innerWidth > 775 ? 'md:mt-[10%]' : (innerWidth <= 775 && innerWidth >=610 ?'md:mt-[26%]' :'md:mt-[35%]')}">
+        xl:mt-[0%] lg:mt-[7%] 2xl:mt-[0%] 3xl:mt-[0%]
+        {innerWidth < 1023 && innerWidth > 775
+            ? 'md:mt-[10%]'
+            : innerWidth <= 775 && innerWidth >= 610
+              ? 'md:mt-[26%]'
+              : 'md:mt-[35%]'}"
+    >
         <div class="grid grid-flow-row">
             <div>
                 <!-- where to read -->
@@ -260,6 +282,17 @@
                         <ul
                             class="text-gray-700 font-anonymous mx-4 mt-3 group-open:animate-fadeIn"
                         >
+                            <li>
+                                <p>
+                                    {$t("technical portfolio aka CV")} ->
+                                    <a
+                                        class="p-link"
+                                        target="_blank"
+                                        href="https://docs.google.com/document/d/1ZxhRCkjZerUvDzlPPO48vNbj94rgpZnr/edit?usp=sharing&ouid=103300784789388936659&rtpof=true&sd=true"
+                                        >{$t("here")}</a
+                                    >
+                                </p>
+                            </li>
                             <li>
                                 <p>
                                     {$t("group in the telegram")} ->
@@ -309,10 +342,8 @@
                             <li>
                                 <p>
                                     {$t("home page of the site")} ->
-                                    <a
-                                        class="p-link"
-                                       
-                                        href="{base}/">{$t("here")}</a
+                                    <a class="p-link" href="{base}/"
+                                        >{$t("here")}</a
                                     >
                                 </p>
                             </li>
