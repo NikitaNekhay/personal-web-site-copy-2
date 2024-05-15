@@ -41,10 +41,10 @@
 
       if (typeCRUD === "CREATE POST") {
         addProduct(tempProductStore);
-        //console.log("createed");
+        ////console.log("createed");
       } else {
         updateProduct(tempProductStore);
-        //console.log("updated");
+        ////console.log("updated");
       }
       isChanged = !isChanged;
 

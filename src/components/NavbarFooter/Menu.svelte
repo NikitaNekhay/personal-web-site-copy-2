@@ -6,40 +6,21 @@
         authStore,
         isAdmin,
     } from "../../store/store";
-    import { addMessages, locale, t } from "svelte-i18n";
-    // import ru from "../../services/ru.json";
-    // import en from "../../services/en.json";
-    // import { currentLanguagee } from "../../store/store_";
-    import { Language } from "../../shared/types";
+    import {  t } from "svelte-i18n";
     import { page } from "$app/stores";
     import { currentLanguagee } from "../../store/store_";
     import { cart } from "../../store/cart_store_";
     export let isUser: boolean;
     let currentPage = $page.url.pathname;
 
-    // if (currentLanguagee !== undefined) {
-    //     const currentValue = currentLanguagee;
-    //     // Switch the language value
-    //     if (currentValue === Language.English) {
-    //         addMessages(Language.English, en);
-    //         locale.set(Language.English);
-    //     } else {
-    //         addMessages(Language.Russian, ru);
-    //         locale.set(Language.Russian);
-    //     }
-    // } else {
-    //     addMessages(Language.English, en);
-    //     locale.set(Language.English);
-    // }
-
     export let isOpen = false;
 
     let name_menu = "";
-    ////console.log($authStore.data.name)
+    //////console.log($authStore.data.name)
     if ($authStore.data.name === undefined) {
         name_menu = "template_name";
     } else {
-        //console.log($authStore.data)
+        ////console.log($authStore.data)
         name_menu = $authStore.data.name;
     }
 

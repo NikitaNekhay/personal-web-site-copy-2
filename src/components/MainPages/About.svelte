@@ -1,7 +1,6 @@
 <script>
-    import { onMount } from "svelte";
     import { t } from "svelte-i18n";
-    import Authorphoto from "./About/Authorphoto.svelte";
+
     import { base } from "$app/paths";
 
     let innerWidth = 0;

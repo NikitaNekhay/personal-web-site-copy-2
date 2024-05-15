@@ -1,7 +1,6 @@
 <script lang='ts'>
-      import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../services/ru.json";
-  import en from "../../services/en.json";
+      import { t } from "svelte-i18n";
+
 </script>
 
 <div class="grid h-screen place-content-center bg-white px-4">

@@ -26,13 +26,13 @@
 
       setTimeout(() => {
         $triggerComments.value = false;
-        //console.log($triggerComments.value)
+        ////console.log($triggerComments.value)
       }, 1500);
     } else {
       console.error("please enter the comments");
       return;
     }
-    //console.log(currentComment);
+    ////console.log(currentComment);
   }
 </script>
 

@@ -1,16 +1,8 @@
 <script lang="ts">
-    import { authHandlers, authStore } from "../../store/store";
-    import { addMessages, locale, t } from "svelte-i18n";
-    import ru from "../../services/ru.json";
-    import en from "../../services/en.json";
-    //import { currentLanguagee } from "../../store/store_";
-    import LoadingButton from "../Shared/LoadingButton.svelte";
+    import { authHandlers } from "../../store/store";
+    import {  t } from "svelte-i18n";
     import { base } from "$app/paths";
-    import { onDestroy } from "svelte";
-    import { page } from "$app/stores";
-    import { applyAction, enhance } from "$app/forms";
-    import { Errors, Language } from "../../shared/types";
-    import { error } from "@sveltejs/kit";
+    import { Errors } from "../../shared/types";
     import CommonPopUp from "../Shared/CommonPopUp.svelte";
     import SubmitButton from "../Shared/SubmitButton.svelte";
 
@@ -35,9 +27,9 @@
 
 
     function typeAction(node){
-        console.log(node.type)
+        //console.log(node.type)
         node.type = isPassHidden ? "password" : "text";
-        console.log(node.type)
+        //console.log(node.type)
     }
 
     function changeActionTransparency(){

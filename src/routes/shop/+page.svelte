@@ -9,7 +9,7 @@
   let tempProductStore: ProductType[];
   let triggerReload: boolean = false;
   onMount(async () => {
-    //console.log("mounting in posts...", passComponent);
+    ////console.log("mounting in posts...", passComponent);
     tempProductStore = await getProducts();
     passComponent = true;
   });

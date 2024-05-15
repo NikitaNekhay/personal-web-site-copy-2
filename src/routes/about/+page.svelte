@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { error } from "@sveltejs/kit";
   import About from "../../components/MainPages/About.svelte";
-  import { Errors } from "../../shared/types";
-  import Authorphoto from "../../components/MainPages/About/Authorphoto.svelte";
   import { t } from "svelte-i18n";
 </script>
 

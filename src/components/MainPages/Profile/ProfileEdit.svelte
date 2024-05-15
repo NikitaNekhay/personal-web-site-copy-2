@@ -12,10 +12,10 @@
   import ProfileOptions from "./ProfileOptions.svelte";
   import { t } from "svelte-i18n";
 
-  import LoadingButton from "../../Shared/LoadingButton.svelte";
+
   import { Errors, type UserDataType } from "../../../shared/types";
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-  import type { DocumentData } from "firebase/firestore";
+
   import type { User } from "firebase/auth";
   import SubmitButton from "../../Shared/SubmitButton.svelte";
     import { validateCity, validateEmail, validateFullName, validatePhoneNumber } from "../../../services/help";
@@ -42,7 +42,7 @@
 
   onMount(() => {
     try {
-      //console.log("updating profile...")
+      ////console.log("updating profile...")
 
       const unsubscribe = auth.onAuthStateChanged(async (user) => {
         try {
@@ -50,14 +50,14 @@
             userCopy = user;
 
             let Ready_profile: UserDataType = await getUserProfile(user);
-            //console.log("what we got from db getUserProfile:",Ready_profile);
+            ////console.log("what we got from db getUserProfile:",Ready_profile);
             profileValue = Ready_profile;
-            //console.log("profileValue - what we got after assgingin:",profileValue);
+            ////console.log("profileValue - what we got after assgingin:",profileValue);
             msg = msgT;
             smmsg = smmsgT;
             isError = false;
           } else {
-            //console.log("no user in Profile.svelte");
+            ////console.log("no user in Profile.svelte");
           }
         } catch (error) {
           console.error("error while fetching profile", error);
@@ -82,7 +82,7 @@
   function handleFormValidation() {
     var isBadReturn: boolean = false;
     // Validate all fields
-    console.log(profileValue.name)
+    //console.log(profileValue.name)
     const isFullNameValid = validateFullName(profileValue.name);
     const isPhoneNumberValid = validatePhoneNumber(
       profileValue.phone,
@@ -119,7 +119,7 @@
     }
 
     if (isBadReturn) {
-      console.log(isErrorInput);
+      //console.log(isErrorInput);
       return false;
     }
 
@@ -169,7 +169,7 @@
             profileValue.cart,
           )
             .then(() => {
-              //console.log("Profile updated successfully.");
+              ////console.log("Profile updated successfully.");
               isChanged = true;
               msg = msgT;
               smmsg = smmsgT;
@@ -200,7 +200,7 @@
           }, 2500);
         }
       } else {
-        //console.log("user dont exists so we cant handle submit")
+        ////console.log("user dont exists so we cant handle submit")
         setTimeout(() => {
           // Calculate and set the new scroll position based on the previous percentage
           submitClicked = false;
@@ -212,9 +212,9 @@
         throw Errors.EditProfile;
       }
 
-      // //console.log("authStore in prfile.svelte after handling",$authStore.data);
+      // ////console.log("authStore in prfile.svelte after handling",$authStore.data);
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       msg = Errors.EditProfile;
       smmsg = smmsgE;
       isError = true;

@@ -1,11 +1,9 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import { clickOutside } from "../../../services/clickOutside";
-  import { authHandlers } from "../../../store/store";
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../../services/ru.json";
-  import en from "../../../services/en.json";
-  import { onMount } from "svelte";
+
+  import {  t } from "svelte-i18n";
+
   import DeactivatePopUp from "../../Shared/DeactivatePopUp.svelte";
   import { fade, fly } from "svelte/transition";
     import { currentLanguagee } from "../../../store/store_";

@@ -1,6 +1,5 @@
 <script lang="ts">
   import Contact from "../../components/MainPages/Contact.svelte";
-  import Authorphoto from "../../components/MainPages/About/Authorphoto.svelte";
   import { t } from "svelte-i18n";
 </script>
 

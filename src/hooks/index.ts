@@ -17,7 +17,7 @@ export const getSession = () => {
 
 
     const storedUserCart = localStorage.getItem('userCart');
-    console.log(storedUserCart)
+    //console.log(storedUserCart)
     cart = storedUserCart ? JSON.parse(storedUserCart) : {
         // Provide default values for all properties of UserCartType
         fullName: '',

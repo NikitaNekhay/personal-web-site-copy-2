@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../services/ru.json";
-  import en from "../../services/en.json";
+  import { t } from "svelte-i18n";
+
   import { base } from "$app/paths";
-  import { onMount } from "svelte";
-  import { handleDelete } from "../../routes/profile/user";
+
     import { fade, fly } from "svelte/transition";
 
   export let isChanged: boolean;

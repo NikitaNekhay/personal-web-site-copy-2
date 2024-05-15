@@ -10,10 +10,10 @@ export const blogsCollection = collection(db, "products");
 
 export async function addProduct(obj:ProductType){
   try {
-   // //console.log('Temp post:', tempPost)
+   // ////console.log('Temp post:', tempPost)
     const docRef = await addDoc(blogsCollection, obj);
     obj.id = docRef.id;
-    //console.log("New blog added with ID: ", docRef.id);
+    ////console.log("New blog added with ID: ", docRef.id);
     updateProduct(obj);
   } catch (error) {
     console.error("error while adding blog post",error)
@@ -57,21 +57,14 @@ export async function updateProduct(obj:ProductType){
 
 export async function getProduct(id:string){
   try{
-   // //console.log("this is id passed to function for db call: ", id)
+   // ////console.log("this is id passed to function for db call: ", id)
     const postDoc = doc(collection(db, "products"), id);
     const postSnapshot = await getDoc(postDoc);
     // put the value in store
     if (postSnapshot.exists()) {
         const postData = postSnapshot.data()
         // to ensure that the data fits
-        // const updatedData:ProductType = {
-        //     id: postData.id ?? 0,
-        //     title: postData.title ?? '',
-        //     images: postData.images ?? [],
-        //     description: postData.description ?? 'Lorem ipsum',
-        //     price: postData.price ?? 1,
-        //     date: postData.date ?? new Date(),
-        // };
+       
         const updatedData:ProductType = postData;
         // set the value to store
         productStore.set(updatedData)
@@ -80,8 +73,7 @@ export async function getProduct(id:string){
       } else {
         return null;
       }
-    // short version without setting value to store
-    // return postSnapshot.exists() ? postSnapshot.data() : null;
+
   } catch (error) {
     console.error('Error fetching post:', error);
   }
@@ -98,7 +90,7 @@ export async function getProducts() {
       id: String(doc.id),
       ...doc.data(),
     }));
-    //console.log("blog posts from post.ts:",blogPosts)
+    ////console.log("blog posts from post.ts:",blogPosts)
     return blogPosts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
@@ -110,7 +102,7 @@ export async function deleteProduct(id:string){
   try {
     const postDocRef = doc(collection(db, 'products'), id);
     await deleteDoc(postDocRef);
-    //console.log('product deleted:', id);
+    ////console.log('product deleted:', id);
   } catch (error) {
     console.error('Error deleting blog post:', error);
   }
@@ -123,8 +115,8 @@ export async function handleCart(post: ProductType, tempAuthStore:AuthStoreType)
       tempArr.push(post);
       
       tempAuthStore.data.cart = tempArr;
-      ////console.log("tempAuthStore is",tempAuthStore)
-      ////console.log("handleClick - pushed value for cart:",tempArr)
+      //////console.log("tempAuthStore is",tempAuthStore)
+      //////console.log("handleClick - pushed value for cart:",tempArr)
       await updateUserProfile(
         tempAuthStore.user,
         tempAuthStore.data.name,
@@ -152,7 +144,7 @@ export async function handleCartNoUser(post: ProductType, tempCart:UserCartType)
     // tempArr.push(post);
     // tempCart.cart = tempArr;
 
-    // console.log("cart:",tempArr)
+    // //console.log("cart:",tempArr)
 
     cart.update(($cart) => {
       const tempArr: ProductType[] = $cart.cart ?? [];
@@ -160,7 +152,7 @@ export async function handleCartNoUser(post: ProductType, tempCart:UserCartType)
       $cart = tempCart;
       $cart.cart = tempArr;
 
-      console.log("cart:", $cart.cart);
+      //console.log("cart:", $cart.cart);
       return $cart;
   });
 

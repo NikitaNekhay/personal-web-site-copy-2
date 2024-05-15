@@ -9,16 +9,14 @@
     import { auth, db } from "$lib/firebase/firebase";
     import { base } from "$app/paths";
     import { authStore, isAdmin } from "../store/store";
-    import { writable } from "svelte/store";
-    import { onDestroy, onMount } from "svelte";
+
+    import {  onMount } from "svelte";
     import type { UserDataType } from "../shared/types";
     import { AdminRoutes, Errors, nonAuthRoutes } from "../shared/types";
     import Analytics from "../lib/Analytics.svelte";
 
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
-    import { error } from "@sveltejs/kit";
-    import CommonPopUp from "../components/Shared/CommonPopUp.svelte";
-    import { t } from "svelte-i18n";
+
 
     let isUser: boolean = false;
     let isChanged: boolead = false;
@@ -27,25 +25,22 @@
         isAdmin.set({ value: false });
 
         if (user) {
-            ////console.log("there is a user: ", user);
+            //////console.log("there is a user: ", user);
             isUser = true;
             if (
                 user.email === "ktofreesapiens@gmail.com" ||
                 user.email === "vaper20041337@gmail.com"
             ) {
                 isAdmin.set({ value: true });
-                // isAdmin.set({ value: true });
-                // $isAdmin.value = true ;
-                //isAdmin.set({value:true})
-                // $isAdmin.value = true;
+
             } else {
-                //  //console.log("no admin")
+                //  ////console.log("no admin")
                 isAdmin.set({ value: false });
                 //$isAdmin.value = false ;
             }
         } else {
-            //console.log("there is no user: ", user);
-            //console.log("no admin")
+            ////console.log("there is no user: ", user);
+            ////console.log("no admin")
             isUser = false;
             //$isAdmin.value = false ;
             isAdmin.set({ value: false });
@@ -55,13 +50,7 @@
     };
 
     const handleRedirect = (user, currentPath) => {
-        // if(user){
-        //     //console.log("this is user", user)
-        //     //console.log("this is current path", currentPath)
-        // } else {
-        //     //console.log("this is no user", user)
-        //     //console.log("this is current path", currentPath)
-        // }
+
 
         const regex = /\/posts\/([a-zA-Z0-9]+)\/edit/;
 
@@ -69,13 +58,13 @@
             (AdminRoutes.includes(currentPath) || currentPath.match(regex)) &&
             !$isAdmin.value
         ) {
-            //console.log("you are not admin")
+            ////console.log("you are not admin")
             window.location.href = `${base}/`;
             return;
         }
 
         if (user && currentPath === `${base}/login`) {
-            //console.log("go to profile")
+            ////console.log("go to profile")
             window.location.href = `${base}/profile`;
 
             return;
@@ -87,7 +76,7 @@
                 currentPath === `${base}/profile/edit/credentials` ||
                 currentPath === `${base}/profile/edit`)
         ) {
-            //console.log("user haven't logged in")
+            ////console.log("user haven't logged in")
             window.location.href = `${base}/login`;
             return;
         }
@@ -131,7 +120,7 @@
                         await setDoc(userRef, dataToSetToStore, {
                             merge: true,
                         });
-                        ////console.log("value of user to put in authStore.user, if snapshot doesn't exist",user)
+                        //////console.log("value of user to put in authStore.user, if snapshot doesn't exist",user)
                         authStore.set({
                             user: user,
                             data: dataToSetToStore,
@@ -150,7 +139,7 @@
                             messages: userData.messages,
                             cart: userData.cart,
                         };
-                        // //console.log("value of user to put in authStore.user if snapshot exists",user)
+                        // ////console.log("value of user to put in authStore.user if snapshot exists",user)
                         authStore.set({
                             user: user,
                             data: dataToSetToStore,
@@ -160,14 +149,7 @@
                 }
             });
 
-            // const unsubscribe2 = authStore.subscribe((authStore)=>{
 
-            // })
-
-            //onDestroy(unsubscribe);
-            // const interval = setInterval(() => {
-            //     //passComponent = true;
-            // }, 1000);
 
             return unsubscribe;
         });
@@ -181,7 +163,7 @@
 
 <Analytics />
 <Navbar />
-<!-- <NavbarSm /> -->
+
 {#if $page.error}
     <EmptyPage />
 {:else}

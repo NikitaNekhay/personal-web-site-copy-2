@@ -11,7 +11,7 @@ export const prerender = 'auto'
 export async function updateUserProfile(user: User | string , name: string, email: string, phone: string, country: string,city: string, description: string, messages: [], cart:[]) {
   try {
     let userDocRef:any;
-    //console.log(user,user.uid,user.user.uid)
+    ////console.log(user,user.uid,user.user.uid)
     
     if(user.id){
       userDocRef = doc(collection(db, "user"), user.id);
@@ -19,7 +19,7 @@ export async function updateUserProfile(user: User | string , name: string, emai
       userDocRef = doc(collection(db, "user"), user.uid);
     } else if(user.user.uid){
       userDocRef = doc(collection(db, "user"), user.user.uid);
-      console.log(userDocRef)
+      //console.log(userDocRef)
     } else {
 
       throw new Error("User does not exist, can't find his id");
@@ -27,9 +27,9 @@ export async function updateUserProfile(user: User | string , name: string, emai
 
     await runTransaction(db, async (transaction) => {
       const userDoc = await transaction.get(userDocRef);
-      ////console.log("userDoc is existing?",userDoc)
+      //////console.log("userDoc is existing?",userDoc)
       if (!userDoc.exists()) {
-        console.log(("User does not exist we need to create him"));
+        //console.log(("User does not exist we need to create him"));
         const userCollection = collection(db, "user");
         const updatedUserData:UserDataType = {
           name: name ,
@@ -46,14 +46,14 @@ export async function updateUserProfile(user: User | string , name: string, emai
 
         // const docRef = await addDoc(userCollection,updatedUserData);
         // const thrownId = docRef.id;
-        // console.log(thrownId) 
+        // //console.log(thrownId) 
         //updateProduct(obj);
         return true;
       }
 
       const userData = userDoc.data();
-     // //console.log("WHAT WE HAVE FROM DOCUMENTS userData: ",userData)
-     // //console.log("WHAT WE HAVE FROM passing param cart: ",name)
+     // ////console.log("WHAT WE HAVE FROM DOCUMENTS userData: ",userData)
+     // ////console.log("WHAT WE HAVE FROM passing param cart: ",name)
       const updatedUserData:UserDataType = {
         name: name ?? userData.name ?? '',
         email: email ?? userData.email,
@@ -64,10 +64,10 @@ export async function updateUserProfile(user: User | string , name: string, emai
         messages: messages ?? userData.messages ?? [],
         cart: cart ?? userData.cart ?? [],
       };
-      ////console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
+      //////console.log("WHAT WE GOT FROM SUBMIT updatedUserData: ",updatedUserData)
 
       transaction.update(userDocRef, updatedUserData); // was update
-      //console.log("we have really upaded user",updatedUserData)
+      ////console.log("we have really upaded user",updatedUserData)
 
     });
 
@@ -79,7 +79,7 @@ export async function updateUserProfile(user: User | string , name: string, emai
 
 export async function refreshUserProfile(user: User) {
   try {
-    ////console.log("refreshing")
+    //////console.log("refreshing")
     const userDocRef = doc(collection(db, "user"), user.uid);
 
     await runTransaction(db, async (transaction) => {
@@ -103,7 +103,7 @@ export async function refreshUserProfile(user: User) {
 
 export async function getUserProfile(user: User) {
   try {
-    ////console.log("getting user profile his id: ",user.uid)
+    //////console.log("getting user profile his id: ",user.uid)
     const userDoc = doc(collection(db, "user"), user.uid);
     const userSnapshot = await getDoc(userDoc);
 
@@ -120,8 +120,8 @@ export async function getUserProfile(user: User) {
       cart:[],
     }
 
-    // //console.log("is user exists? ",userSnapshot.exists())
-    // //console.log("user existing? ",userSnapshot.data())
+    // ////console.log("is user exists? ",userSnapshot.exists())
+    // ////console.log("user existing? ",userSnapshot.data())
     let checkExistance:boolean = false;
     let temp:UserDataType;
     temp = userSnapshot.data();
@@ -170,7 +170,7 @@ export async function getUserProfiles() {
       tempDoc.id = doc.id;
       //userProfiles[index] = (tempDoc);
       userProfiles.push(tempDoc);
-      // //console.log(doc.id, "=>", doc.data())
+      // ////console.log(doc.id, "=>", doc.data())
   })
   
   return userProfiles
@@ -180,25 +180,6 @@ export async function getUserProfiles() {
 export async function handleDelete(id: string) {
   try {
 
-   
-    // try {
-      // getAuth()
-      //   .getUser(uid)
-      //   .then((userRecord) => {
-      //     // See the UserRecord reference doc for the contents of userRecord.
-      //     //console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-      //   })
-      //   .catch((error) => {
-      //     //console.log('Error fetching user data:', error);
-  // });
-      //deleteDoc()
-
-
-    //   const userDocRef = doc(db, "user", id);
-    //   await deleteDoc(userDocRef);
-    // } catch (error) {
-    //    throw Errors.DeleteProfileAuth;
-    // }
 
     try {
 

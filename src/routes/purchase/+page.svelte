@@ -1,7 +1,6 @@
 <script>
   import { t } from "svelte-i18n";
   import Purchase from "../../components/MainPages/About/Purchase.svelte";
-  import EmptyPage from "../../components/Shared/EmptyPage.svelte";
 </script>
 
 <svelte:head>

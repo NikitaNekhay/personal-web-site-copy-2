@@ -3,24 +3,24 @@
 
         import { base } from "$app/paths";
 
-        import { authHandlers, authStore, isAdmin } from "../../store/store";
+        import {  authStore } from "../../store/store";
         import Menu from "./Menu.svelte";
 
         import { addMessages, locale, t } from "svelte-i18n";
         import ru from "../../services/ru.json";
         import en from "../../services/en.json";
         import { currentLanguagee } from "../../store/store_";
-        import { setContext, subscribe } from "svelte/internal";
-        import { onDestroy, onMount } from "svelte";
+
+        import { onMount } from "svelte";
         import { Language } from "../../shared/types";
         import { page } from "$app/stores";
 
         let currentPage = $page.url.pathname;
-        //console.log(currentPage.includes("/about"));
+        ////console.log(currentPage.includes("/about"));
 
         if ($currentLanguagee !== undefined) {
             const currentValue = $currentLanguagee;
-            console.log("no error while lng",currentValue)
+            //console.log("no error while lng",currentValue)
             // Switch the language value
             if (currentValue === Language.English) {
                 addMessages(Language.English, en);
@@ -29,9 +29,9 @@
                 addMessages(Language.Russian, ru);
                 locale.set(Language.Russian);
             }
-            console.log("no error while lng 2",currentValue)
+            //console.log("no error while lng 2",currentValue)
         } else {
-            console.log("error while lng")
+            //console.log("error while lng")
             addMessages(Language.English, en);
             locale.set(Language.English);
         }
@@ -40,7 +40,7 @@
 
         onMount(() => {
             const unsubscribe = authStore.subscribe((authStore) => {
-                ////console.log(authStore)
+                //////console.log(authStore)
                 if (authStore.user) {
                     isUser = true;
                 } else {

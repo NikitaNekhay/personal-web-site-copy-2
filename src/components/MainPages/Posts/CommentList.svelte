@@ -8,11 +8,8 @@
     } from "../../../routes/posts/comments";
     import { page } from "$app/stores";
     import { authStore, isAdmin, triggerComments } from "../../../store/store";
-    import { comment } from "postcss";
-    import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
-    import Error from "../../../routes/+error.svelte";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-    import type { User } from "firebase/auth";
+
 
     let commentaries: MessageType[] = [];
 
@@ -66,11 +63,11 @@
 
     afterUpdate(async () => {
         showTrigger = $triggerComments.value;
-        ////console.log(showTrigger)
+        //////console.log(showTrigger)
     });
 
     function checkUserRight(comment: MessageType) {
-        //console.log($authStore.user)
+        ////console.log($authStore.user)
         if ($authStore.user) {
             if ($authStore.user.uid === comment.id || $isAdmin.value) {
                 return true;
@@ -90,19 +87,19 @@
 
         try {
             updateComment(comment);
-            //console.log(comment)
+            ////console.log(comment)
             $triggerComments.value = true;
 
             setTimeout(() => {
                 $triggerComments.value = false;
-                //console.log($triggerComments.value)
+                ////console.log($triggerComments.value)
             }, 1500);
             isChanged = true;
             isError = false;
             msg = msgT;
             smmsg = smmsgT;
         } catch (error) {
-            //console.log("error while save comment")
+            ////console.log("error while save comment")
             throw Errors.SaveComment;
         }
     }
@@ -118,7 +115,7 @@
 
             setTimeout(() => {
                 $triggerComments.value = false;
-                //console.log($triggerComments.value)
+                ////console.log($triggerComments.value)
             }, 1500);
             deleteComment(cid);
             isChanged = true;
@@ -127,7 +124,7 @@
             smmsg = smmsgT;
         } catch (error) {
             throw Errors.DeleteComment;
-            //console.log("error while delete comment")
+            ////console.log("error while delete comment")
         }
     }
 </script>

@@ -5,8 +5,8 @@
    export let isLoading:boolean;
    export let submitClicked:boolean;
    export let text:String | MessageObject;
-    // //console.log(isLoading)
-    // //console.log(//console.log(isLoading))
+    // ////console.log(isLoading)
+    // ////console.log(////console.log(isLoading))
     
 </script>
 

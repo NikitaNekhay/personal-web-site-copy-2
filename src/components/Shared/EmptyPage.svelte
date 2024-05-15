@@ -1,6 +1,5 @@
 <script>
     import { page } from '$app/stores';
-    import { t } from 'svelte-i18n';
 
 </script>
 

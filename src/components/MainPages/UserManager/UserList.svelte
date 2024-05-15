@@ -1,10 +1,9 @@
 <script lang="ts">
     import { base } from "$app/paths";
-    import { SvelteComponent, afterUpdate, onMount } from "svelte";
-    import { getUserProfiles, handleDelete, updateUserProfile } from "../../../routes/profile/user";
+    import {  handleDelete, updateUserProfile } from "../../../routes/profile/user";
     import type { UserDataType } from "../../../shared/types";
     import { t } from "svelte-i18n";
-    import { authStore } from "../../../store/store";
+
 
     export let userProfiles:UserDataType[];
     export let latestProfiles:UserDataType[];
@@ -14,7 +13,7 @@
 
     async function handleSubmit(curentUser) {
     // event.preventDefault();
-    ////console.log(curentUser)
+    //////console.log(curentUser)
     if(curentUser && userProfiles && latestProfiles){
         
         try {
@@ -31,7 +30,7 @@
         userProfiles[userProfiles.indexOf(curentUser)].cart
       )
         .then(() => {
-          //console.log("Profile updated successfully.");
+          ////console.log("Profile updated successfully.");
         })
         .catch((error) => {
           console.error("Error updating profile:", error.message);
@@ -42,7 +41,7 @@
       console.error("error while sumbitting changes for a user",error);
     }
     } else {
-        //console.log("passed vairables don't exist in UserList")
+        ////console.log("passed vairables don't exist in UserList")
     }
    
   }
@@ -196,13 +195,13 @@
             hover:cursor-pointer focus:outline-none focus:ring active:text-black-1"
           on:click={() => {
             handleDelete(user.id);
-            //console.log("clicked delete");
+            ////console.log("clicked delete");
             userProfiles = userProfiles.filter(item => item !== user);
 
           }}
           on:keypress={() => {
             handleDelete(user.id);
-            //console.log("clicked delete");
+            ////console.log("clicked delete");
             userProfiles = userProfiles.filter(item => item !== user);
 
           }}

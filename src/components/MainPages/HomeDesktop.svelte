@@ -1,5 +1,5 @@
 <script>
-    import { base } from "$app/paths";
+
     import { onMount } from "svelte";
    
     //import "scrollmagic/uncompressed/plugins/debug.addIndicators";
@@ -19,7 +19,7 @@
 
         // Loop through each div and create a ScrollMagic scene   
         divs.forEach((div) => {
-            console.log(div)
+            //console.log(div)
             new ScrollMagic.Scene({
                 triggerElement: div, // Use the div as the trigger
                 triggerHook: 1,
@@ -30,7 +30,7 @@
             // .addIndicators({name: "Scene: # " + div.id }) // Add visual indicators
             .addTo(controller);
             
-            console.log(div  )
+            //console.log(div  )
         });
     });
 </script>
@@ -379,78 +379,6 @@
             class=""
         />
     </div>
-    <!-- <div id="img36" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img36" class="" />
-        </div>
-        <div id="img37" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img37" class="" />
-        </div>
-        <div id="img38" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img38" class="" />
-        </div>
-        <div id="img39" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img39" class="" />
-        </div>
-        <div id="img40" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img40" class="" />
-        </div>
-        <div id="img41" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img41" class="" />
-        </div>
-        <div id="img42" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img42" class="" />
-        </div>
-        <div id="img43" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img43" class="" />
-        </div>
-        <div id="img44" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img44" class="" />
-        </div>
-        <div id="img45" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img45" class="" />
-        </div>
-        <div id="img46" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img46" class="" />
-        </div>
-        <div id="img47" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img47" class="" />
-        </div>
-        <div id="img48" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img48" class="" />
-        </div>
-        <div id="img49" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img49" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div>
-        <div id="img50" class="relative">
-            <img src="" alt="" title="" data-anchor-target="#img50" class="" />
-        </div> -->
 </div>
 
 <style>

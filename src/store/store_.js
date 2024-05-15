@@ -8,11 +8,11 @@ const currentLanguageData = {
   language: userLng.length !== 0 ? (userLng === 'ru' ? Language.Russian : Language.English) : Language.Russian,
 }
 
-console.log(currentLanguageData)
+//console.log(currentLanguageData)
 
 export const persistLanguageStore = (key, initial) => {
   if (typeof window !== "undefined") {
-    console.log("window navigator", window.navigator);
+    //console.log("window navigator", window.navigator);
 
     // Initialize userLng with a default value
     let userLng = 'ru';
@@ -37,12 +37,12 @@ export const persistLanguageStore = (key, initial) => {
     }
 
     const persist = localStorage.getItem(key);
-    //console.log(persist)
+    ////console.log(persist)
     const data = persist ?? initial;
-    // //console.log(data)
+    // ////console.log(data)
     const store = writable(data, () => {
       const unsubscribe = store.subscribe((value) => {
-        ////console.log(value)
+        //////console.log(value)
         localStorage.setItem(key, value);
       });
       return unsubscribe;
@@ -56,4 +56,4 @@ export const persistLanguageStore = (key, initial) => {
 
 
 export let currentLanguagee = persistLanguageStore("language", currentLanguageData.language)
-console.log(currentLanguagee, userLng, currentLanguageData.language);
+//console.log(currentLanguagee, userLng, currentLanguageData.language);

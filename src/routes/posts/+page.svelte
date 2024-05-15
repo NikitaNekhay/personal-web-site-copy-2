@@ -2,8 +2,7 @@
 
 
   import {  onMount } from "svelte";
-  import { auth } from "$lib/firebase/firebase";
-    import { authStore, isAdmin, productStore } from "../../store/store";
+
     import LoadingSpinner from "../../components/Shared/LoadingSpinner.svelte";
     import Gallery from "../../components/MainPages/Gallery.svelte";
     import type { ProductType } from "../../shared/types";
@@ -13,7 +12,7 @@
     let triggerReload:boolean = false;
   let passComponent = false;
   let tempProductStore:ProductType[];
-  //console.log("mounting in posts...",passComponent);
+  ////console.log("mounting in posts...",passComponent);
   onMount(async() => {
     tempProductStore = await getProducts();
 

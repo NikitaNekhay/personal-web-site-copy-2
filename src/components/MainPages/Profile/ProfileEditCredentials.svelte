@@ -1,19 +1,16 @@
 <script lang="ts">
-    import { onMount, setContext } from "svelte";
-    import { getUserProfile, updateUserProfile } from "../../../routes/profile/user";
+    import { onMount } from "svelte";
+    import { getUserProfile } from "../../../routes/profile/user";
     import type { User } from "firebase/auth";
-    import { auth, db } from "../../../lib/firebase/firebase";
+    import { auth } from "../../../lib/firebase/firebase";
     import { authHandlers } from "../../../store/store";
     import { base } from "$app/paths";
-    import { clickOutside } from "../../../services/clickOutside";
+
     import ProfileOptions from "./ProfileOptions.svelte";
-    import { addMessages, locale, t } from "svelte-i18n";
-    import ru from "../../../services/ru.json";
-    import en from "../../../services/en.json";
-    import LoadingButton from "../../Shared/LoadingButton.svelte";
+    import {  t } from "svelte-i18n";
+
       import { Errors, type UserDataType } from "../../../shared/types";
     import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-    import Error from "../../../routes/+error.svelte";
     import SubmitButton from "../../Shared/SubmitButton.svelte";
   
     let submitClicked:boolean = false;
@@ -41,15 +38,15 @@
     
   
     onMount(() => {
-       //console.log("updating profile credentials...")
+       ////console.log("updating profile credentials...")
       const unsubscribe = auth.onAuthStateChanged(async (user) => {
         try {
           if(user){
             userCopy=user;
-            //console.log(userCopy)
+            ////console.log(userCopy)
             profileValue = await getUserProfile(user);
             profileCredentials.email = profileValue.email;
-            //console.log("what we got from db getUserProfile:",profileValue);
+            ////console.log("what we got from db getUserProfile:",profileValue);
           
           } else {
             throw Errors.FetchUser;
@@ -76,7 +73,7 @@
       submitClicked = true;
 
       if(userCopy && profileValue){
-        //console.log("user exists so we can handle submit")
+        ////console.log("user exists so we can handle submit")
         
         try {
             // YOU CAN'T CHANGE YOUR EMAIL!
@@ -92,7 +89,7 @@
           //   profileValue.cart
           // )
           // .then(() => {
-          //   //console.log("Profile updated successfully.");
+          //   ////console.log("Profile updated successfully.");
           // })
           // .catch((error) => {
           //   console.error(Errors.EditProfile, error);
@@ -131,7 +128,7 @@
         }, 2500);
       }
       } else {
-        //console.log("user dont exists so we cant handle submit")
+        ////console.log("user dont exists so we cant handle submit")
         setTimeout(() => {
             // Calculate and set the new scroll position based on the previous percentage
             submitClicked = false;
@@ -148,9 +145,9 @@
     }
   
     function typeAction(node){
-        console.log(node.type)
+        //console.log(node.type)
         node.type = isPassHidden ? "password" : "text";
-        console.log(node.type)
+        //console.log(node.type)
     }
 
     function changeActionTransparency(){

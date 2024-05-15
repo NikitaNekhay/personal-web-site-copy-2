@@ -5,7 +5,6 @@
 </svelte:head>
 
 <script >
-    import { onMount } from 'svelte';
     import CountryData from "../../../CountryData.json";
   import ProfileEdit from '../../../components/MainPages/Profile/ProfileEdit.svelte'
 

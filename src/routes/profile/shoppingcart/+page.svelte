@@ -7,7 +7,7 @@
     import { cart } from "../../../store/cart_store_";
     import { authStore } from "../../../store/store";
     import { base } from "$app/paths";
-    import type { EmailSubjects } from "../../../shared/types";
+
 
     let userCountry = "Unknown";
     let userCity = "Unknown";
@@ -16,23 +16,23 @@
         // Fetch the user's IP and location using a public IP API (consider using a more private/secure method in production)
         const res = await fetch("https://ipapi.co/json/");
         const locationData = await res.json();
-        console.log(locationData);
+        //console.log(locationData);
         if (locationData && locationData.country && locationData.city) {
             userCountry = locationData.country;
             userCity = locationData.city;
             
             if (!$authStore.user) {
-                console.log("cart in page.svelte cart",$cart)
+                //console.log("cart in page.svelte cart",$cart)
                 $cart.country = userCountry;
                 $cart.city = userCity;
             }
         } else {
-            console.log("bad luck on fetch");
+            //console.log("bad luck on fetch");
         }
     });
 
     const sendEmailPost = async (to: string, subject: string, text: string,type:string) => {
-        console.log("here");
+        //console.log("here");
         const response = await fetch(`${base}/api/sendEmail`, {
             method: "POST",
             headers: {
@@ -46,10 +46,10 @@
             }),
         });
 
-        console.log(response);
+        //console.log(response);
 
         if (response.ok) {
-            console.log("Email sent");
+            //console.log("Email sent");
         } else {
             console.error("Failed to send email");
         }

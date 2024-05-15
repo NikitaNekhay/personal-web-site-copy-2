@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../services/ru.json";
-  import en from "../../services/en.json";
+  import {  t } from "svelte-i18n";
+
   import { base } from "$app/paths";
   import { authStore } from "../../store/store";
-  import { onMount } from "svelte";
-  import { handleDelete } from "../../routes/profile/user";
+
   import { fade, fly } from "svelte/transition";
     import { cart } from "../../store/cart_store_";
 
   export let isChangedCart: boolean;
   function changeState() {
-    //console.log(isChangedCart);
+    ////console.log(isChangedCart);
 
     isChangedCart = !isChangedCart;
   }

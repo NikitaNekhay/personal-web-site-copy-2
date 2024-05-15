@@ -3,27 +3,21 @@
   import { onMount } from "svelte";
   import {
     deleteProduct,
-    getProducts,
     handleCart,
   } from "../../routes/posts/post";
   import { base } from "$app/paths";
   import { authStore, isAdmin, productStore } from "../../store/store";
-  import { addMessages, locale, t } from "svelte-i18n";
+  import { t } from "svelte-i18n";
   import { currentLanguagee } from "../../store/store_";
-  import ru from "../../services/ru.json";
-  import en from "../../services/en.json";
+
   import NoPosts from "../Shared/NoPosts.svelte";
   import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
   import {
     Errors,
-    Language,
     type AuthStoreType,
     type ProductType,
   } from "../../shared/types";
-  import { updateUserProfile } from "../../routes/profile/user";
   import CartAdded from "../Shared/CartAdded.svelte";
-  import { error } from "@sveltejs/kit";
-  import { applyAction } from "$app/forms";
   import CommonPopUp from "../Shared/CommonPopUp.svelte";
   import SquareButton from "../Shared/SquareButton.svelte";
 
@@ -38,20 +32,6 @@
   let msg: String = "";
   let smmsg: String = "Something went wrong while scrolling the shop.";
 
-  // if ($currentLanguagee !== undefined) {
-  //   const currentValue = $currentLanguagee;
-  //   // Switch the language value
-  //   if (currentValue === Language.English) {
-  //     addMessages(Language.English, en);
-  //     locale.set(Language.English);
-  //   } else {
-  //     addMessages(Language.Russian, ru);
-  //     locale.set(Language.Russian);
-  //   }
-  // } else {
-  //   addMessages(Language.English, en);
-  //   locale.set(Language.English);
-  // }
 
   onMount(async () => {
     try {
@@ -62,7 +42,7 @@
       const unsubscribe = authStore.subscribe((authStore) => {
         // get user info for cart
         tempAuthStore = authStore;
-        //console.log(tempAuthStore);
+        ////console.log(tempAuthStore);
       });
 
       // Fetch blog posts from the database
@@ -70,10 +50,10 @@
         isEmpty = true;
       }
       isLoading = false;
-      ////console.log(tempProductStore);
+      //////console.log(tempProductStore);
       if (!passComponent) {
         const interval = setTimeout(() => {
-          //console.log("gall");
+          ////console.log("gall");
           passComponent = true;
         }, 2000);
       }
@@ -82,9 +62,9 @@
 
   function handleClick(id: string) {
     // Navigate to the detailed page of the selected blog post
-    //console.log("handle click for ", id);
+    ////console.log("handle click for ", id);
     $productStore.id = id;
-    ////console.log($productStore.id);
+    //////console.log($productStore.id);
     window.location.href = `${base}/posts/${id}`;
   }
 
@@ -101,7 +81,7 @@
         isChangedCart = !isChangedCart;
       }
     } catch (err) {
-      //console.log("error in gallery");
+      ////console.log("error in gallery");
       if (typeof err === "string") {
         msg = err;
       } else if (err.message !== undefined) {

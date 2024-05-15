@@ -2,9 +2,8 @@
   import PostEdit from "../../../../components/MainPages/Posts/PostEdit.svelte";
   import { Router, Route } from "svelte-routing";
   import { base } from "$app/paths";
-  import { getProduct } from "../../post";
   import { page } from "$app/stores";
-  import { productStore } from "../../../../store/store";
+
   import LoadingSpinner from "../../../../components/Shared/LoadingSpinner.svelte";
     import type { ProductType } from "../../../../shared/types";
 
@@ -23,7 +22,7 @@
     isLoading = true;
     console.error("error getting params for posts page");
   }
-  // //console.log('entered ../[id]/edit/+page.svelte with this exported value of post',post)
+  // ////console.log('entered ../[id]/edit/+page.svelte with this exported value of post',post)
 </script>
 
 <svelte:head>

@@ -4,15 +4,13 @@
   import SubmitButton from "../../Shared/SubmitButton.svelte";
 
   import { authHandlers, authStore } from "../../../store/store";
-  import type { User } from "firebase/auth";
+
   import { t } from "svelte-i18n";
   import { updateUserProfile } from "../../../routes/profile/user";
   import { currentLanguagee } from "../../../store/store_";
   import {
     ContactOptions,
-    type AuthStoreType,
     type ProductType,
-    type UserCartType,
     DeliveryOptions,
     PaymentOptions,
     Errors,
@@ -22,7 +20,7 @@
   import SquareButton from "../../Shared/SquareButton.svelte";
   import { base } from "$app/paths";
   import CommonPopUp from "../../Shared/CommonPopUp.svelte";
-  import { page } from "$app/stores";
+
   import { cart } from "../../../store/cart_store_";
   import {
     generateSecurePassword,
@@ -35,7 +33,6 @@
     validateUsername,
   } from "../../../services/help";
   import { error } from "@sveltejs/kit";
-  import Error from "../../../routes/+error.svelte";
 
   // Assuming you have a list of countries and their codes
   export let countries;
@@ -88,12 +85,12 @@
     : $cart;
 
   onMount(() => {
-    console.log("authstore - before unsub", $authStore);
+    //console.log("authstore - before unsub", $authStore);
     const unsubscribe = authStore.subscribe((authStore) => {
-      console.log("authstore - in unsub", authStore);
-      console.log("$authstore - in cart", $authStore);
+      //console.log("authstore - in unsub", authStore);
+      //console.log("$authstore - in cart", $authStore);
 
-      console.log("cart in cart", $cart);
+      //console.log("cart in cart", $cart);
       tempUserCart = $authStore.user
         ? {
             fullName: $authStore.data.name ?? "",
@@ -111,7 +108,7 @@
           }
         : $cart;
 
-      //console.log(tempUserCart);
+      ////console.log(tempUserCart);
       cartItems = tempUserCart.cart;
       countAllPrice();
     });
@@ -136,7 +133,7 @@
   function countPrice() {
     cartPrice = 0;
     cartItems.forEach((item) => {
-      //console.log(item.price)
+      ////console.log(item.price)
       cartPrice += Number(item.price);
     });
     return cartPrice;
@@ -172,11 +169,11 @@
         $authStore.data.cart,
       );
     } else {
-      console.log("no user to delete from cart");
+      //console.log("no user to delete from cart");
       const clickedItem: ProductType = cartItems.find((obj) => {
         return obj.id === cartItems[tempId].id;
       });
-      console.log("clickedItem from cart");
+      //console.log("clickedItem from cart");
       cartItems.splice(cartItems.indexOf(clickedItem), 1);
       tempUserCart.cart = cartItems;
       $cart.cart = cartItems;
@@ -240,7 +237,7 @@
 
     // Count discount
 
-    console.log("delivery option:", tempUserCart.deliveryOption, deliveryPrice);
+    //console.log("delivery option:", tempUserCart.deliveryOption, deliveryPrice);
     cartPrice = countPrice();
     totalСartPrice = cartPrice + deliveryPrice;
     totalСartPrice =
@@ -269,11 +266,11 @@
 
           if (isAgreePolicy) {
             // create and handle user from form data
-            //console.log("create user");
+            ////console.log("create user");
             if (isCreateAccout) handleCreateNewUser();
     
             // send credentials to admin
-            //console.log("send credentials to admin");
+            ////console.log("send credentials to admin");
             handleSendCredentials();
 
             // Download Check
@@ -337,7 +334,7 @@
   }
 
   function handleFormValidation() {
-    console.log(tempUserCart);
+    //console.log(tempUserCart);
     var isBadReturn: boolean = false;
     // Validate all fields
 
@@ -439,7 +436,7 @@
     }
 
     if (isBadReturn) {
-      console.log(isErrorInput);
+      //console.log(isErrorInput);
       return false;
     }
 
@@ -451,7 +448,7 @@
 
   async function handleSendCredentials() {
     try {
-      console.log(tempUserCart);
+      //console.log(tempUserCart);
       var objOfOrder = tempUserCart;
       let cartString = [];
       objOfOrder.cart.forEach((c, index) => {
@@ -461,7 +458,7 @@
           JSON.stringify(c.description["colors"]) +
           JSON.stringify(c.description["sizes"]);
       });
-      console.log(tempUserCart, objOfOrder);
+      //console.log(tempUserCart, objOfOrder);
       //objOfOrder.cart.length = 0;
       let stringOfOrder =
         "Items: " +
@@ -498,7 +495,7 @@
       try {
         let password: string = generateSecurePassword();
         let user = await authHandlers.signup(tempUserCart.email, password);
-        console.log(user);
+        //console.log(user);
         await updateUserProfile(
           user,
           tempUserCart.fullName,

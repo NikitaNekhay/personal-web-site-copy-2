@@ -1,6 +1,5 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import Error from "../../routes/+error.svelte";
   import { Errors } from "../../shared/types";
 
   export let passedfunction: () => void;

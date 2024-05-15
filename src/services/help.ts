@@ -27,12 +27,12 @@ export function validateFullName(fullName) {
   export function validatePhoneNumber(phoneNumber, userCountry,countries) {
     // Find the country object that matches the userCountry
     const country = countries.find((obj) => obj.code === userCountry);
-    console.log(phoneNumber, userCountry, country);
+    //console.log(phoneNumber, userCountry, country);
     //if (!country) return false;
 
     // Build the regex dynamically based on the country's dial code and allow for a flexible length of the phone number
     const regex = new RegExp(`^\\${country.dial_code}\\d{7,15}$`);
-    console.log();
+    //console.log();
     return regex.test(phoneNumber);
   }
 

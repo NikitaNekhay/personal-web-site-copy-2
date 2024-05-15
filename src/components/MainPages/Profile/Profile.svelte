@@ -2,20 +2,18 @@
   import { onMount } from "svelte";
   import {
     getUserProfile,
-    getUserProfiles,
     updateUserProfile,
   } from "../../../routes/profile/user";
   import { auth } from "../../../lib/firebase/firebase";
-  import { authHandlers, authStore, isAdmin } from "../../../store/store";
+  import { isAdmin } from "../../../store/store";
   import { base } from "$app/paths";
-  import { clickOutside } from "../../../services/clickOutside";
+
   import ProfileOptions from "./ProfileOptions.svelte";
-  import { addMessages, locale, t } from "svelte-i18n";
-  import ru from "../../../services/ru.json";
-  import en from "../../../services/en.json";
+  import {  t } from "svelte-i18n";
+
   import LoadingSpinner from "../../Shared/LoadingSpinner.svelte";
   import type { UserDataType } from "../../../shared/types";
-  import { fade } from "svelte/transition";
+
 
   let isLoading = true; // Initialize the loading state
 
@@ -68,7 +66,7 @@
                 );
 
               } else {
-                console.log("Bad luck on fetch");
+                //console.log("Bad luck on fetch");
               }
             }
 
@@ -77,9 +75,9 @@
             window.location.href = `${base}/`;
             return;
           }
-          // //console.log("Restoring profileValue from user profile data",profileValue);
+          // ////console.log("Restoring profileValue from user profile data",profileValue);
         } else {
-          //console.log("no user in Profile.svelte");
+          ////console.log("no user in Profile.svelte");
           return;
         }
       } catch (error) {

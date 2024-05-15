@@ -29,8 +29,8 @@
             tempProductStore.images = imageUrls.filter(
                 (url): url is string => url !== undefined,
             );
-            //console.log(tempProductStore)
-            //console.log(tempProductStore.images)
+            ////console.log(tempProductStore)
+            ////console.log(tempProductStore.images)
         }
     }
 

@@ -20,9 +20,9 @@ function verifyConnection() {
     // verify connection configuration
     transporter.verify(function (error, success) {
         if (error) {
-            console.log(error);
+            //console.log(error);
         } else {
-            console.log("Server is ready to take our messages");
+            //console.log("Server is ready to take our messages");
         }
     });
 
@@ -35,9 +35,9 @@ export async function POST({ request }) {
         // verify connection configuration
         transporter.verify(function (error, success) {
             if (error) {
-                console.log(error);
+                //console.log(error);
             } else {
-                console.log("Server is ready to take our messages");
+                //console.log("Server is ready to take our messages");
             }
         });
 
@@ -45,7 +45,7 @@ export async function POST({ request }) {
         const { to, subject, text, type } = data;
 
         // Send the email
-        console.log("in post"+type);
+        //console.log("in post"+type);
         await sendEmail(to, subject, text,type);
 
         return new Response(JSON.stringify({ message: 'Email sent successfully' }), {
@@ -67,7 +67,7 @@ export async function POST({ request }) {
 
 
 const sendEmail = async (to, subject, text,type) => {
-    console.log("in send",type);
+    //console.log("in send",type);
     let mailOptions = {
         from: 'manager@nekhaynikita.shop',
         to: to,
@@ -92,15 +92,15 @@ const sendEmail = async (to, subject, text,type) => {
         }
     
         default:{
-            console.log("error with type")
+            //console.log("error with type")
             break;
         }
             
     }
-    console.log('Email data: '+mailOptions.to,mailOptions.from,mailOptions.subject,type);
+    //console.log('Email data: '+mailOptions.to,mailOptions.from,mailOptions.subject,type);
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response,mailOptions.to);
+        //console.log('Email sent: ' + info.response,mailOptions.to);
     } catch (error) {
         console.error('Error sending email: ' + mailOptions.to);
     }

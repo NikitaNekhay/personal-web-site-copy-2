@@ -38,7 +38,7 @@
 
     async function handleCartClicked() {
         try {
-            console.log($authStore);
+            //console.log($authStore);
             if (!$authStore.user) {
                 await handleCartNoUser(post,$cart)
             } else {
@@ -56,7 +56,7 @@
                 isChangedCart = !isChangedCart;
             }
         } catch (err) {
-            //console.log("error in PostDetail");
+            ////console.log("error in PostDetail");
             if (typeof err === "string") {
                 msg = err;
             } else if (err.message !== undefined) {
