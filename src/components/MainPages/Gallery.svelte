@@ -1,10 +1,7 @@
 <script lang="ts">
   // import states
   import { onMount } from "svelte";
-  import {
-    deleteProduct,
-    handleCart,
-  } from "../../routes/posts/post";
+  import { deleteProduct, handleCart } from "../../routes/posts/post";
   import { base } from "$app/paths";
   import { authStore, isAdmin, productStore } from "../../store/store";
   import { t } from "svelte-i18n";
@@ -31,7 +28,6 @@
   let isChanged: boolean = false;
   let msg: String = "";
   let smmsg: String = "Something went wrong while scrolling the shop.";
-
 
   onMount(async () => {
     try {
@@ -154,45 +150,44 @@
         {#key tempProductStore.length}
           {#each tempProductStore as post}
             {#if !post.isArchive || $isAdmin.value}
-              <div class="flex">
-                <div>
+              <div class="flex ">
+                <div class=" h-[800px]">
                   <div
-                    on:click={() => handleClick(post.id)}
-                    on:keypress={() => handleClick(post.id)}
-                    class=" min-h-80 overflow-hidden
-                object-cover
-                  bg-gray-200 hover:cursor-pointer
-                   w-[100%]
-                   transition duration-200 delay-100 hover:scale-105 hover:animate-pulse
-                  "
-                    aria-expanded="true"
-                    aria-haspopup="true"
-                    role="button"
-                    tabindex="0"
+                        on:click={() => handleClick(post.id)}
+                        on:keypress={() => handleClick(post.id)}
+                        class=" overflow-hidden  bg-gray-200 hover:cursor-pointer transition duration-200 delay-100 hover:scale-105 hover:animate-pulse
+                      "
+                        aria-expanded="true"
+                        aria-haspopup="true"
+                        role="button"
+                        tabindex="0"
                   >
                     <img
                       src={post.images[0]}
                       alt="Blog Post"
-                      class="object-center"
+                      class="object-cover w-[100%] h-[620px] "
                     />
                   </div>
                   <div
-                    class="mt-2 flex sm:flex-col md:flex-col justify-between shadow-xl p-4 sm:p-3 md:p-3 "
+                    class="mt-2 flex flex-col sm:flex-col md:flex-col justify-between shadow-xl p-4 sm:p-3 md:p-3"
                   >
                     <div
                       class="sm:grid sm:grid-flow-col sm:cols-2
-                    md:grid md:grid-flow-col md:cols-2"
+                    md:grid md:grid-flow-col md:cols-2 grid grid-flow-col cols-2"
                     >
                       <h3
-                        class="sm:grid sm:grid-cols-2  md:grid md:grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
+                        class="sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 grid grid-cols-2 text-lg font-bold text-gray-900 sm:text-xl"
                       >
-                        <div class="sm:col-span-1 md:col-span-2 break-words" lang={$currentLanguagee}>
+                        <div
+                          class="sm:col-span-1 md:col-span-2  break-words"
+                          lang={$currentLanguagee}
+                        >
                           {$t(post.title)}
                         </div>
                       </h3>
                       {#if post.isArchive}
                         <div
-                          class="sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end"
+                          class="grid col-span-1 sm:grid sm:col-span-1 md:grid md:col-span-1 sm:justify-end md:justify-end "
                         >
                           <img
                             src="{base}/media/archive.svg"
@@ -218,8 +213,8 @@
                       </div> -->
                     </div>
                     <div
-                      class="mx-3 sm:mx-0 md:mx-0 lg:mx-6 xl:mx-6
-            flex
+                      class="mx-3 sm:mx-0 md:mx-0 lg:mx-3 xl:mx-3
+            flex  flex-col place-items-start
             sm:flex-col sm:place-items-start md:flex-col md:place-items-start"
                     >
                       <h2
@@ -233,7 +228,7 @@
                     </div>
                     {#if $isAdmin.value}
                       <div
-                        class="flex flex-col md:flex-row md:justify-around sm:flex-row sm:justify-around
+                        class="flex flex-row gap-8 justify-center  md:flex-row md:justify-around sm:flex-row sm:justify-around
                         "
                       >
                         <SquareButton
