@@ -37,7 +37,7 @@
 
 <svelte:head></svelte:head>
 
-<div class="">
+<!-- <div class="">
     <div id="img1" class="">
         <img
             src="https://lh3.googleusercontent.com/pw/AJFCJaUwN3AhGFTVGV_tpIrTBp09YiYOfLnQdm79wmXowCFlYxMHFWV4TR3jWBS44_BNz4wlomvDeP5otsxNGhVq2udIahgjWl67cdgNm1JnkRRYz-yh5vQ=w2400"
@@ -379,7 +379,7 @@
             class=""
         />
     </div>
-</div>
+</div> -->
 
 <style>
     div[id] {

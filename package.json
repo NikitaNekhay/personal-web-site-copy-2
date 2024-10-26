@@ -52,7 +52,7 @@
 
 		"eslint": "^8.54.0",
 
-		"firebase": "^9.20.0",
+		"firebase": "^11.0.1",
 
 		"generate-robotstxt": "^8.0.3",
 
@@ -88,7 +88,9 @@
 
 		"typescript": "^4.9.3",
 
-		"vite": "^4.3.9"
+		"vite": "^4.3.9",
+
+		"xmp-js": "^0.0.5"
 
 	},
 

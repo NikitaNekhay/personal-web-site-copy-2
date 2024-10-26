@@ -2,7 +2,7 @@
     import { base } from "$app/paths";
     import { onDestroy } from "svelte";
     import type { ProductType } from "../../../shared/types";
-    import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+    import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
     import { storage } from "$lib/firebase/firebase";
 
     export let tempProductStore: ProductType;
@@ -10,6 +10,7 @@
 
     async function uploadImage(image: File) {
         try {
+
             const storageRef = ref(storage, `images/${image.name}`);
             await uploadBytes(storageRef, image);
             const downloadURL = await getDownloadURL(storageRef);
