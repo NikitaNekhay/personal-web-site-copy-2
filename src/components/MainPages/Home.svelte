@@ -2,11 +2,12 @@
     import { base } from "$app/paths";
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
-    import HomeDesktop from "./HomeDesktop.svelte";
+    import VirtualList from "svelte-virtual-scroll-list";
     import { ref, getDownloadURL, getMetadata } from "firebase/storage";
     import { storage } from "$lib/firebase/firebase";
     import { fade } from "svelte/transition";
     import piexif from "piexifjs";
+    import LoadingSpinner from "../Shared/LoadingSpinner.svelte";
 
     const fileNames = [
         "a_sunned_man.JPG",
@@ -82,144 +83,143 @@
         "yellow_flower_pt2.JPG",
         "yellow_flowers_hands_and_spicy_chips.JPG",
     ];
-
-    let images = []; // Holds the remaining images after initial load
-    let initialImages = []; // Holds the first 2 images to display initially
     let innerWidth = 0;
     let innerHeight = 0;
-    const scrollY = writable(0); // Reactive scroll position tracker
-    let loadedImages = 2; // Number of images initially loaded
-
+    let images = []; // Holds the remaining images after initial load
+    let loading = true; // Loading flag to manage rendering state
     // Function to fetch and prepare images
     async function fetchAndSortImages() {
         try {
+            if (!fileNames || fileNames.length === 0) {
+                console.error("Error: fileNames is empty or undefined.");
+                return;
+            }
+
             const imageUrls = await Promise.all(
                 fileNames.map(async (fileName) => {
-                    const fileRef = ref(storage, `landing-page/${fileName}`);
-                    const url = await getDownloadURL(fileRef);
-
-                    const response = await fetch(url, { mode: "cors" });
-                    if (!response.ok) {
-                        console.error(
-                            "Network response was not ok",
-                            response,
-                            url,
+                    try {
+                        const fileRef = ref(
+                            storage,
+                            `landing-page/${fileName}`,
                         );
+                        const url = await getDownloadURL(fileRef);
+
+                        const response = await fetch(url, { mode: "cors" });
+                        if (!response.ok)
+                            throw new Error("Network response was not ok");
+
+                        const blob = await response.blob();
+                        const dataUrl = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => resolve(reader.result);
+                            reader.readAsDataURL(blob);
+                        });
+
+                        // Extract and clean EXIF data
+                        let exifData = piexif.load(dataUrl);
+                        delete exifData["GPS"];
+                        const strippedDataUrl = piexif.insert(
+                            piexif.dump(exifData),
+                            dataUrl,
+                        );
+
+                        const dateTimeOriginal =
+                            exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
+                        const createdDate = dateTimeOriginal
+                            ? new Date(
+                                  dateTimeOriginal
+                                      .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
+                                      .replace(" ", "T"),
+                              ).toISOString()
+                            : new Date("2024-09-21T00:00:00Z").toISOString();
+
                         return {
-                            url,
-                            createdDate: new Date().toISOString(),
+                            url: strippedDataUrl,
+                            createdDate,
                             name: fileName,
                         };
+                    } catch (error) {
+                        console.error(
+                            "Error processing image:",
+                            fileName,
+                            error,
+                        );
+                        return null; // Skip this file if an error occurs
                     }
-
-                    const blob = await response.blob();
-
-                    // Convert blob to data URL (base64)
-                    const dataUrl = await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result);
-                        reader.readAsDataURL(blob);
-                    });
-
-                    // Extract and modify EXIF metadata using piexifjs
-                    let exifData = piexif.load(dataUrl);
-
-                    // Retrieve and log all possible date fields
-                    const dateTimeOriginals =
-                        exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
-                    const dateTimeDigitized =
-                        exifData["Exif"][piexif.ExifIFD.DateTimeDigitized];
-
-
-                    console.log("DateTimeOriginal:", fileName, dateTimeOriginals);
-                    console.log("DateTimeDigitized:",  fileName,dateTimeDigitized);
-
-
-                    // Remove GPS metadata
-                    delete exifData["GPS"];
-
-                    // Re-insert the modified EXIF data back into the image
-                    const strippedDataUrl = piexif.insert(
-                        piexif.dump(exifData),
-                        dataUrl,
-                    );
-
-                    // Get the DateTimeOriginal string
-                    const dateTimeOriginal =
-                        exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
-
-                    // Parse the DateTimeOriginal string if it exists, else use current date
-                    const createdDate = dateTimeOriginal
-                        ? new Date(
-                              dateTimeOriginal
-                                  .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
-                                  .replace(" ", "T"),
-                          ).toISOString()
-                        : new Date("2024-09-21T00:00:00Z").toISOString();
-
-                    return {
-                        url: strippedDataUrl,
-                        createdDate,
-                        name: fileName,
-                    };
                 }),
             );
 
-            // Sort images by creation date
-            imageUrls.sort(
-                (a, b) =>
-                    new Date(b.createdDate).getTime() -
-                    new Date(a.createdDate).getTime(),
-            );
-
-            // Split into initial and remaining images
-            initialImages = imageUrls.slice(0, 2);
-            images = imageUrls.slice(2);
+            // Filter out any null values
+            // Filter out any null values and sort by creation date
+            images = imageUrls
+                .filter(Boolean)
+                .sort(
+                    (a, b) =>
+                        new Date(b.createdDate).getTime() -
+                        new Date(a.createdDate).getTime(),
+                );
+                console.log(images)
         } catch (error) {
             console.error("Error fetching and sorting images:", error);
+        } finally {
+            loading = false; // Set loading to false once data is fetched
         }
     }
 
     // Load more images on scroll
-    function loadMoreImages() {
-        if (images.length > 0) {
-            const additionalImages = images.splice(0, 3); // Load 2 more images at a time
-            initialImages = [...initialImages, ...additionalImages];
-            loadedImages += additionalImages.length;
-        }
-    }
+    // function loadMoreImages() {
+    //     if (displayedImages.length < images.length) {
+    //         loadedImages += 3; // Load 3 more images
+    //         displayedImages = images.slice(0, loadedImages);
+    //     }
+    // }
 
-    // Infinite scroll: trigger loading more images as the user scrolls down
-    $: if (
-        typeof window !== "undefined" &&
-        $scrollY > document.body.scrollHeight - window.innerHeight - 50
-    ) {
-        loadMoreImages();
-    }
+    // Check if user has scrolled down 60% of viewport
+    // function checkScroll() {
+    //     if (window.scrollY + window.innerHeight >= window.innerHeight * 0.6) {
+    //         loadMoreImages();
+    //     }
+    // }
+    onMount(fetchAndSortImages);
+    // Attach scroll listener
+    // onMount(async () => {
+    //     await fetchAndSortImages(); // Initial load
 
-    // Update scroll position on component mount (client-side only)
-    if (typeof window !== "undefined") {
-        onMount(async () => {
-            await fetchAndSortImages(); // Fetch images on mount
+    //     const handleScroll = () => checkScroll();
+    //     window.addEventListener("scroll", handleScroll);
 
-            const updateScroll = () => scrollY.set(window.scrollY);
-            window.addEventListener("scroll", updateScroll);
-
-            return () => window.removeEventListener("scroll", updateScroll);
-        });
-    }
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // });
 
     // Update scroll position on component mount
     // Update scroll position on component mount (client-side only)
+    // Lazy loading directive with IntersectionObserver
+    function lazyLoad(node) {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    node.src = node.getAttribute("data-src");
+                    observer.unobserve(node);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(node);
+        return {
+            destroy() {
+                observer.unobserve(node);
+            },
+        };
+    }
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
 
-{#if innerWidth > 1024}
-    <!-- <HomeDesktop /> -->
-    <div class="h-auto pt-36">
+
+<svelte:window bind:innerWidth bind:innerHeight />
+<!-- <div class="h-auto pt-36">
         <div class=" justify-items-center grid grid-cols-1 gap-y-4">
-            {#each initialImages as image, index}
+            {#each displayedImages as image, index}
                 <div id="img{index}" class="grid justify-items-center w-3/5">
                     <img
                         class="opacity-100"
@@ -234,7 +234,7 @@
             {/each}
         </div>
 
-        <!-- Scroll to top button -->
+
         <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
             <button
                 on:click={() => {
@@ -251,12 +251,11 @@
                 />
             </button>
         </div>
-    </div>
-{:else}
-    <!-- Mobile layout with infinite scroll -->
-    <div class="h-auto pt-36">
+    </div> -->
+
+<!-- <div class="h-auto pt-36">
         <div class="grid grid-cols-1 gap-y-4">
-            {#each initialImages as image, index}
+            {#each displayedImages as image, index}
                 <div id="img{index}">
                     <img
                         class="opacity-100"
@@ -271,7 +270,7 @@
             {/each}
         </div>
 
-        <!-- Scroll to top button -->
+      
         <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
             <button
                 on:click={() => {
@@ -288,12 +287,44 @@
                 />
             </button>
         </div>
-    </div>
-{/if}
+    </div> -->
 
-<style>
-    /* Custom styling for fade effect and scroll behavior */
-    .opacity-100 {
-        opacity: 1;
-    }
-</style>
+<!-- Virtual List for Infinite Scroll and Lazy Loading -->
+<div class="h-auto pt-36">
+    {#if loading}
+        <LoadingSpinner />
+    {:else}
+        <div class="justify-items-center grid grid-cols-1 gap-y-4">
+            {#each images as image (image.name)}
+                <div class="grid justify-items-center {innerWidth>1400 ? "w-3/5" : "w-5/5"}">
+                    <img
+                        class="opacity-100"
+                        use:lazyLoad
+                        data-src={image.url}
+                        alt={image.name}
+                        style="width: 100%; height: auto;"
+                        in:fade={{ delay: 100, duration: 300 }}
+                    />
+                    <p class="text-blue-0 text-shadow-yellow">{image.name}</p>
+                </div>
+            {/each}
+        </div>
+
+        <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
+            <button
+                on:click={() => {
+                    document.body.scrollIntoView({
+                        block: "start",
+                        behavior: "smooth",
+                    });
+                }}
+            >
+                <img
+                    class="w-12 transition-all duration-200 animate-bounce"
+                    src="{base}/media/chevrons-up.svg"
+                    alt="Scroll to top"
+                />
+            </button>
+        </div>
+    {/if}
+</div>
