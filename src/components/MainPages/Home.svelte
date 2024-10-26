@@ -124,6 +124,17 @@
                     // Extract and modify EXIF metadata using piexifjs
                     let exifData = piexif.load(dataUrl);
 
+                    // Retrieve and log all possible date fields
+                    const dateTimeOriginals =
+                        exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
+                    const dateTimeDigitized =
+                        exifData["Exif"][piexif.ExifIFD.DateTimeDigitized];
+
+
+                    console.log("DateTimeOriginal:", fileName, dateTimeOriginals);
+                    console.log("DateTimeDigitized:",  fileName,dateTimeDigitized);
+
+
                     // Remove GPS metadata
                     delete exifData["GPS"];
 
@@ -144,7 +155,7 @@
                                   .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
                                   .replace(" ", "T"),
                           ).toISOString()
-                        : new Date().toISOString();
+                        : new Date("2024-09-21T00:00:00Z").toISOString();
 
                     return {
                         url: strippedDataUrl,
@@ -157,8 +168,8 @@
             // Sort images by creation date
             imageUrls.sort(
                 (a, b) =>
-                    new Date(a.createdDate).getTime() -
-                    new Date(b.createdDate).getTime(),
+                    new Date(b.createdDate).getTime() -
+                    new Date(a.createdDate).getTime(),
             );
 
             // Split into initial and remaining images
