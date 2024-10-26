@@ -29,19 +29,19 @@
       <div>
         <div class="flex">
           <img
-            src="https://lh3.googleusercontent.com/pw/AJFCJaV-M3Nn0qHBrDNRQQ4e9b-N8qc9CIx02_HG5pDHWD22yCeSbpVpYebhR19qs0Cc_wpcuEoQRYUsnGfyWrZcURhFhR4hd4JwgfgxDwLCjTWxUX4TxOg=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F1IMGL9203s.jpg?alt=media&token=94cc9adb-c4b9-4e7c-896c-62dbbf279b5d"
             alt="polar bear 1"
             title="polar bear 1"
             class=" h-3/12 w-4/12"
           />
           <img
-            src="https://lh3.googleusercontent.com/pw/AJFCJaVHekBNOjPVxp_1sDKg2x0lnHYdeD6W1Uw7P-CYZtNvMVb3c59vAZREj5-Rad5Tscon3v3EoAjpVBG-STfmqzJwJFCsRHAU86cHE9M6WOfHoMcURdI=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F2IMGL9199s.jpg?alt=media&token=148ce209-950b-4439-ab70-e71ee476264c"
             alt="polar bear 2"
             title="polar bear 2"
             class="h-5/12 w-4/12"
           />
           <div
-            class=" bg-cover bg-top w-6/12 h-3/12 bg-[url('https://lh3.googleusercontent.com/pw/AJFCJaVEQUnLA4ikpKxj4HyL84AYwH1dl2V22jNmpkjOOtTN-2nSbKIw1JP2gilpBsHXj834zS_cjqyvFmms51ooQx8NirpNN8klV0j2ntn3pjKMJLLglD8=w2400')]"
+            class=" bg-cover bg-top w-6/12 h-3/12 bg-[url('https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F3IMGL9124s.jpg?alt=media&token=85ce8965-3ca9-4530-8027-101b2371c9fa')]"
           ></div>
         </div>
 
@@ -50,13 +50,13 @@
             class=" bg-cover bg-center w-6/12 h-3/12 bg-[url('https://lh3.googleusercontent.com/pw/AJFCJaWePvjATJe1e5cXk9NParsCaTLT-yE9OTvbGdfsFynItQJ9fg9y_m6bSkK6YqEoFvuvzm3LXxrArlNBxk9DOVg8nmaGH3_RascPJ3m6tSXs9OECRsk=w2400')]"
           ></div>
           <img
-            src="https://lh3.googleusercontent.com/bQX6rwiBe-gtXA_t1LaFJVxNhdTlgnHIp0fjc-bNn8XTMe5JT1gUnjyZT3zsOEr3PsiYlqxoYb480CGAyzZ2ByeNMuARhT0eLeuMvgUq1ObAhBj-fUgV-QYW1_ZSBe_Jvg_QWeCvjA=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F3IMGL9124s.jpg?alt=media&token=85ce8965-3ca9-4530-8027-101b2371c9fa"
             alt="chanel 1"
             title="chanel 1"
             class="h-4/12 w-4/12"
           />
           <img
-            src="https://lh3.googleusercontent.com/Es2fpNKkBf-jrUw7kpj5BTQGzizO8XxDkXd5xR_Woci7E6HDtns7C9ppkdk6Xke5zWtkH8eHF--qcd2vfYLP4RM8ueRfKN0rDyFBjRmt7abRHdAJVqz2VCHuK8JBX-BUwnj1qdo7Xw=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2FIMGL9167s.jpg?alt=media&token=90f0214b-12f1-4b91-8068-0133adc43ba70"
             alt="chanel 2"
             title="chanel 2"
             class="h-4/12 w-4/12"
@@ -65,14 +65,14 @@
 
         <div class="flex justify-center">
           <img
-            src="https://lh3.googleusercontent.com/7iP5TOv6XA9Tt6YMJwIJ5rPk6N-PuIZiwSKJR960lmcv22pzgP_tQsKmOu2D_xMnub4qMcvR3wF7SrnxQlfkBmcwDEd6PZvY4mbCS9jrLQW5WL-m0Sv5IUCScMfs8RmYwFzNNgDuEw=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2Fblack2.jpg?alt=media&token=3134c183-7480-4d84-aa4c-6819bf5afde6"
             alt="black 1"
             title="black 1"
             class="h-6/12 w-4/12"
           />
 
           <img
-            src="https://lh3.googleusercontent.com/pw/AJFCJaXNJYHmbsFzdxyQHdnmOxipFFmEiavoYzP_IpT5sqW0tcSdfpFVO_USgnpl_b1zxL94or3RYMfp3JZHFo4xs-L2IeLTPBSL2yYkwJvU3zbPU0ldGpY=w2400"
+            src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2Fblack1.jpg?alt=media&token=5dfc90fe-3c78-4f3f-a657-fb2bcfaaca4a"
             alt="black 2"
             title="black 2"
             class="h-6/12 w-4/12"
@@ -175,34 +175,34 @@
             <div class="">
               <div class="flex">
                 <img
-                  src="https://lh3.googleusercontent.com/pw/AJFCJaV-M3Nn0qHBrDNRQQ4e9b-N8qc9CIx02_HG5pDHWD22yCeSbpVpYebhR19qs0Cc_wpcuEoQRYUsnGfyWrZcURhFhR4hd4JwgfgxDwLCjTWxUX4TxOg=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F1IMGL9203s.jpg?alt=media&token=94cc9adb-c4b9-4e7c-896c-62dbbf279b5d"
                   alt="polar bear 1"
                   title="polar bear 1"
                   class=" h-3/12 w-5/12"
                 />
                 <img
-                  src="https://lh3.googleusercontent.com/pw/AJFCJaVHekBNOjPVxp_1sDKg2x0lnHYdeD6W1Uw7P-CYZtNvMVb3c59vAZREj5-Rad5Tscon3v3EoAjpVBG-STfmqzJwJFCsRHAU86cHE9M6WOfHoMcURdI=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F2IMGL9199s.jpg?alt=media&token=148ce209-950b-4439-ab70-e71ee476264c"
                   alt="polar bear 2"
                   title="polar bear 2"
                   class="h-5/12 w-5/12"
                 />
                 <div
-                  class=" bg-cover bg-top w-6/12 h-3/12 bg-[url('https://lh3.googleusercontent.com/pw/AJFCJaVEQUnLA4ikpKxj4HyL84AYwH1dl2V22jNmpkjOOtTN-2nSbKIw1JP2gilpBsHXj834zS_cjqyvFmms51ooQx8NirpNN8klV0j2ntn3pjKMJLLglD8=w2400')]"
+                  class=" bg-cover bg-top w-6/12 h-3/12 bg-[url('https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F3IMGL9124s.jpg?alt=media&token=85ce8965-3ca9-4530-8027-101b2371c9fa')]"
                 ></div>
               </div>
 
               <div class="flex justify-end">
                 <div
-                  class=" bg-cover bg-center w-6/12 h-3/12 bg-[url('https://lh3.googleusercontent.com/pw/AJFCJaWePvjATJe1e5cXk9NParsCaTLT-yE9OTvbGdfsFynItQJ9fg9y_m6bSkK6YqEoFvuvzm3LXxrArlNBxk9DOVg8nmaGH3_RascPJ3m6tSXs9OECRsk=w2400')]"
+                  class=" bg-cover bg-center w-6/12 h-3/12 bg-[url('https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F3IMGL9124s.jpg?alt=media&token=85ce8965-3ca9-4530-8027-101b2371c9fa')]"
                 ></div>
                 <img
-                  src="https://lh3.googleusercontent.com/bQX6rwiBe-gtXA_t1LaFJVxNhdTlgnHIp0fjc-bNn8XTMe5JT1gUnjyZT3zsOEr3PsiYlqxoYb480CGAyzZ2ByeNMuARhT0eLeuMvgUq1ObAhBj-fUgV-QYW1_ZSBe_Jvg_QWeCvjA=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2F3IMGL9124s.jpg?alt=media&token=85ce8965-3ca9-4530-8027-101b2371c9fa"
                   alt="chanel 1"
                   title="chanel 1"
                   class="h-4/12 w-4/12"
                 />
                 <img
-                  src="https://lh3.googleusercontent.com/Es2fpNKkBf-jrUw7kpj5BTQGzizO8XxDkXd5xR_Woci7E6HDtns7C9ppkdk6Xke5zWtkH8eHF--qcd2vfYLP4RM8ueRfKN0rDyFBjRmt7abRHdAJVqz2VCHuK8JBX-BUwnj1qdo7Xw=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2FIMGL9167s.jpg?alt=media&token=90f0214b-12f1-4b91-8068-0133adc43ba7"
                   alt="chanel 2"
                   title="chanel 2"
                   class="h-4/12 w-4/12"
@@ -211,14 +211,14 @@
 
               <div class="flex justify-center">
                 <img
-                  src="https://lh3.googleusercontent.com/7iP5TOv6XA9Tt6YMJwIJ5rPk6N-PuIZiwSKJR960lmcv22pzgP_tQsKmOu2D_xMnub4qMcvR3wF7SrnxQlfkBmcwDEd6PZvY4mbCS9jrLQW5WL-m0Sv5IUCScMfs8RmYwFzNNgDuEw=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2Fblack2.jpg?alt=media&token=3134c183-7480-4d84-aa4c-6819bf5afde6"
                   alt="black 1"
                   title="black 1"
                   class="h-6/12 w-6/12"
                 />
 
                 <img
-                  src="https://lh3.googleusercontent.com/pw/AJFCJaXNJYHmbsFzdxyQHdnmOxipFFmEiavoYzP_IpT5sqW0tcSdfpFVO_USgnpl_b1zxL94or3RYMfp3JZHFo4xs-L2IeLTPBSL2yYkwJvU3zbPU0ldGpY=w2400"
+                  src="https://firebasestorage.googleapis.com/v0/b/personal-website-with-svelte.appspot.com/o/images%2Fblack1.jpg?alt=media&token=5dfc90fe-3c78-4f3f-a657-fb2bcfaaca4a"
                   alt="black 2"
                   title="black 2"
                   class="h-6/12 w-6/12"
