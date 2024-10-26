@@ -121,8 +121,17 @@
                         reader.readAsDataURL(blob);
                     });
 
-                    // Extract EXIF metadata using piexifjs
-                    const exifData = piexif.load(dataUrl);
+                    // Extract and modify EXIF metadata using piexifjs
+                    let exifData = piexif.load(dataUrl);
+
+                    // Remove GPS metadata
+                    delete exifData["GPS"];
+
+                    // Re-insert the modified EXIF data back into the image
+                    const strippedDataUrl = piexif.insert(
+                        piexif.dump(exifData),
+                        dataUrl,
+                    );
 
                     // Get the DateTimeOriginal string
                     const dateTimeOriginal =
@@ -137,8 +146,11 @@
                           ).toISOString()
                         : new Date().toISOString();
 
-                 
-                    return { url, createdDate, name: fileName };
+                    return {
+                        url: strippedDataUrl,
+                        createdDate,
+                        name: fileName,
+                    };
                 }),
             );
 
@@ -160,7 +172,7 @@
     // Load more images on scroll
     function loadMoreImages() {
         if (images.length > 0) {
-            const additionalImages = images.splice(0, 2); // Load 2 more images at a time
+            const additionalImages = images.splice(0, 3); // Load 2 more images at a time
             initialImages = [...initialImages, ...additionalImages];
             loadedImages += additionalImages.length;
         }
@@ -169,7 +181,7 @@
     // Infinite scroll: trigger loading more images as the user scrolls down
     $: if (
         typeof window !== "undefined" &&
-        $scrollY > document.body.scrollHeight - window.innerHeight - 300
+        $scrollY > document.body.scrollHeight - window.innerHeight - 50
     ) {
         loadMoreImages();
     }
@@ -178,7 +190,7 @@
     if (typeof window !== "undefined") {
         onMount(async () => {
             await fetchAndSortImages(); // Fetch images on mount
-            
+
             const updateScroll = () => scrollY.set(window.scrollY);
             window.addEventListener("scroll", updateScroll);
 
@@ -191,8 +203,6 @@
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
-
-
 
 {#if innerWidth > 1024}
     <!-- <HomeDesktop /> -->
