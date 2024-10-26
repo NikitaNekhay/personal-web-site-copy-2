@@ -1,0 +1,46 @@
+[debug] [2024-10-26T21:54:37.787Z] ----------------------------------------------------------------------
+[debug] [2024-10-26T21:54:37.790Z] Command:       Y:\Programms\nodejs\node.exe C:\Users\Леново\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2024-10-26T21:54:37.790Z] CLI Version:   13.23.0
+[debug] [2024-10-26T21:54:37.791Z] Platform:      win32
+[debug] [2024-10-26T21:54:37.791Z] Node Version:  v20.15.0
+[debug] [2024-10-26T21:54:37.791Z] Time:          Sun Oct 27 2024 00:54:37 GMT+0300 (Москва, стандартное время)
+[debug] [2024-10-26T21:54:37.791Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-10-26T21:54:37.797Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-10-26T21:54:37.798Z] > authorizing via signed-in user (ktofreesapiens@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  Y:\Universirty\2 курс\4 семестр\курсач\code\project\Personal-Website(pooled + big-update src)
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-10-26T21:55:52.724Z] Checked if tokens are valid: true, expires at: 1729983270141
+[debug] [2024-10-26T21:55:52.724Z] Checked if tokens are valid: true, expires at: 1729983270141
+[debug] [2024-10-26T21:55:52.726Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2024-10-26T21:55:54.082Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2024-10-26T21:55:54.082Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project personal-website-with-svelte (Personal-Website-with-svelte-) 
+[info] 
+=== Hosting Setup
+[debug] [2024-10-26T21:55:55.935Z] Checked if tokens are valid: true, expires at: 1729983270141
+[debug] [2024-10-26T21:55:55.936Z] Checked if tokens are valid: true, expires at: 1729983270141
+[debug] [2024-10-26T21:55:55.936Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/personal-website-with-svelte [none]
+[debug] [2024-10-26T21:55:56.266Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/personal-website-with-svelte 200
+[debug] [2024-10-26T21:55:56.266Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/personal-website-with-svelte {"projectId":"personal-website-with-svelte","projectNumber":"185564156502","displayName":"Personal-Website-with-svelte-","name":"projects/personal-website-with-svelte","resources":{"hostingSite":"personal-website-with-svelte","realtimeDatabaseInstance":"personal-website-with-svelte-default-rtdb","storageBucket":"personal-website-with-svelte.appspot.com","locationId":"europe-central2"},"state":"ACTIVE","etag":"1_d7955907-c9b6-4940-9c20-ab697cd4b5aa"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 

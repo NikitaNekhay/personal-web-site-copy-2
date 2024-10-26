@@ -6,6 +6,7 @@
     import { ref, getDownloadURL, getMetadata } from "firebase/storage";
     import { storage } from "$lib/firebase/firebase";
     import { fade } from "svelte/transition";
+    import piexif from "piexifjs";
 
     const fileNames = [
         "a_sunned_man.JPG",
@@ -97,8 +98,46 @@
                     const fileRef = ref(storage, `landing-page/${fileName}`);
                     const url = await getDownloadURL(fileRef);
 
-        
-                    const createdDate = new Date().toISOString(); // Replace with actual date if available
+                    const response = await fetch(url, { mode: "cors" });
+                    if (!response.ok) {
+                        console.error(
+                            "Network response was not ok",
+                            response,
+                            url,
+                        );
+                        return {
+                            url,
+                            createdDate: new Date().toISOString(),
+                            name: fileName,
+                        };
+                    }
+
+                    const blob = await response.blob();
+
+                    // Convert blob to data URL (base64)
+                    const dataUrl = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    });
+
+                    // Extract EXIF metadata using piexifjs
+                    const exifData = piexif.load(dataUrl);
+
+                    // Get the DateTimeOriginal string
+                    const dateTimeOriginal =
+                        exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
+
+                    // Parse the DateTimeOriginal string if it exists, else use current date
+                    const createdDate = dateTimeOriginal
+                        ? new Date(
+                              dateTimeOriginal
+                                  .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
+                                  .replace(" ", "T"),
+                          ).toISOString()
+                        : new Date().toISOString();
+
+                 
                     return { url, createdDate, name: fileName };
                 }),
             );
@@ -130,7 +169,7 @@
     // Infinite scroll: trigger loading more images as the user scrolls down
     $: if (
         typeof window !== "undefined" &&
-        $scrollY > document.body.scrollHeight - window.innerHeight - 200
+        $scrollY > document.body.scrollHeight - window.innerHeight - 300
     ) {
         loadMoreImages();
     }
@@ -139,7 +178,7 @@
     if (typeof window !== "undefined") {
         onMount(async () => {
             await fetchAndSortImages(); // Fetch images on mount
-
+            
             const updateScroll = () => scrollY.set(window.scrollY);
             window.addEventListener("scroll", updateScroll);
 
@@ -153,8 +192,45 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
+
+
 {#if innerWidth > 1024}
-    <HomeDesktop />
+    <!-- <HomeDesktop /> -->
+    <div class="h-auto pt-36">
+        <div class=" justify-items-center grid grid-cols-1 gap-y-4">
+            {#each initialImages as image, index}
+                <div id="img{index}" class="grid justify-items-center w-3/5">
+                    <img
+                        class="opacity-100"
+                        src={image.url}
+                        alt={image.name}
+                        in:fade={{ delay: 100, duration: 300 }}
+                    />
+                    <p class="text-blue-0 text-shadow-yellow">
+                        {image.name}
+                    </p>
+                </div>
+            {/each}
+        </div>
+
+        <!-- Scroll to top button -->
+        <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
+            <button
+                on:click={() => {
+                    document.body.scrollIntoView({
+                        block: "start",
+                        behavior: "smooth",
+                    });
+                }}
+            >
+                <img
+                    class="w-12 transition-all duration-200 animate-bounce"
+                    src="{base}/media/chevrons-up.svg"
+                    alt="Scroll to top"
+                />
+            </button>
+        </div>
+    </div>
 {:else}
     <!-- Mobile layout with infinite scroll -->
     <div class="h-auto pt-36">
@@ -167,6 +243,9 @@
                         alt={image.name}
                         in:fade={{ delay: 100, duration: 300 }}
                     />
+                    <p class="text-blue-0 text-shadow-yellow">
+                        {image.name}
+                    </p>
                 </div>
             {/each}
         </div>

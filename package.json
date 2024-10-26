@@ -60,6 +60,8 @@
 
 		"nodemailer": "^6.9.8",
 
+		"piexifjs": "^1.0.6",
+
 		"postcss": "^8.4.23",
 
 		"prettier": "^3.1.0",

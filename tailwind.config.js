@@ -66,5 +66,12 @@ export default {
   plugins: [
     require('@tailwindcss/forms'),   
     require('@tailwindcss/aspect-ratio'), 
+    function ({ addUtilities }) {
+      addUtilities({
+        '.text-shadow-yellow': {
+          textShadow: '0 1px 0 rgba(246, 174, 45, 0.4)', // Text shadow with yellow-0 RGB color and 40% opacity
+        },
+      });
+    },
   ],
 }
