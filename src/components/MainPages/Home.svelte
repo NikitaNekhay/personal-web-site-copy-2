@@ -1,8 +1,6 @@
 <script lang="ts">
     import { base } from "$app/paths";
     import { onMount } from "svelte";
-    import { writable } from "svelte/store";
-    import VirtualList from "svelte-virtual-scroll-list";
     import { ref, getDownloadURL, getMetadata } from "firebase/storage";
     import { storage } from "$lib/firebase/firebase";
     import { fade } from "svelte/transition";
@@ -85,126 +83,88 @@
     ];
     let innerWidth = 0;
     let innerHeight = 0;
-    let images = []; // Holds the remaining images after initial load
-    let displayedImages = []; // Currently visible images
-    let batchSize = 5; // Number of images to load per batch
-    let loading = true; // Loading flag to manage rendering state
-    let loadedBatches = 0;
-    // Tracks if the user is active
-    let userActive = true;
-    let userActivityTimeout;
+
+    let displayedImages = []; // Currently displayed images
+    let batchSize = 5; // Number of images per batch
+    let loading = true; // Tracks loading state
+    let currentBatchIndex = 0; // Tracks the index of the current batch
 
     // Function to fetch and prepare images
-    async function fetchAndSortImages() {
+    // Function to fetch a single image's metadata
+    // Fetch metadata for a single image
+    async function fetchImageMetadata(fileName) {
+        console.log(`Downloading: ${fileName}`);
         try {
-            if (!fileNames || fileNames.length === 0) {
-                console.error("Error: fileNames is empty or undefined.");
-                return;
-            }
+            const fileRef = ref(storage, `landing-page/${fileName}`);
+            const url = await getDownloadURL(fileRef);
 
-            const imageUrls = await Promise.all(
-                fileNames.map(async (fileName) => {
-                    try {
-                        const fileRef = ref(
-                            storage,
-                            `landing-page/${fileName}`,
-                        );
-                        const url = await getDownloadURL(fileRef);
+            const response = await fetch(url, { mode: "cors" });
+            if (!response.ok) throw new Error("Network response not ok");
 
-                        const response = await fetch(url, { mode: "cors" });
-                        if (!response.ok)
-                            throw new Error("Network response was not ok");
+            const blob = await response.blob();
+            const dataUrl = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            });
 
-                        const blob = await response.blob();
-                        const dataUrl = await new Promise((resolve) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => resolve(reader.result);
-                            reader.readAsDataURL(blob);
-                        });
-
-                        // Extract and clean EXIF data
-                        let exifData = piexif.load(dataUrl);
-                        delete exifData["GPS"];
-                        const strippedDataUrl = piexif.insert(
-                            piexif.dump(exifData),
-                            dataUrl,
-                        );
-
-                        const dateTimeOriginal =
-                            exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
-                        const createdDate = dateTimeOriginal
-                            ? new Date(
-                                  dateTimeOriginal
-                                      .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
-                                      .replace(" ", "T"),
-                              ).toISOString()
-                            : new Date("2024-09-21T00:00:00Z").toISOString();
-
-                        return {
-                            url: strippedDataUrl,
-                            createdDate,
-                            name: fileName,
-                        };
-                    } catch (error) {
-                        console.error(
-                            "Error processing image:",
-                            fileName,
-                            error,
-                        );
-                        return null; // Skip this file if an error occurs
-                    }
-                }),
+            let exifData = piexif.load(dataUrl);
+            delete exifData["GPS"];
+            const strippedDataUrl = piexif.insert(
+                piexif.dump(exifData),
+                dataUrl,
             );
 
-            // Filter out any null values
-            // Filter out any null values and sort by creation date
-            images = imageUrls
-                .filter(Boolean)
-                .sort(
-                    (a, b) =>
-                        new Date(b.createdDate).getTime() -
-                        new Date(a.createdDate).getTime(),
-                );
-            console.log(images);
+            const dateTimeOriginal =
+                exifData["Exif"][piexif.ExifIFD.DateTimeOriginal];
+            const createdDate = dateTimeOriginal
+                ? new Date(
+                      dateTimeOriginal
+                          .replace(/^(\d+):(\d+):(\d+)/, "$1-$2-$3")
+                          .replace(" ", "T"),
+                  ).toISOString()
+                : new Date("2024-09-21T00:00:00Z").toISOString();
+
+            return { url: strippedDataUrl, createdDate, name: fileName };
         } catch (error) {
-            console.error("Error fetching and sorting images:", error);
-        } finally {
-            loadNextBatch(); // Load the first batch of images
+            console.error(`Error downloading image: ${fileName}`, error);
+            return null; // Skip invalid images
         }
     }
 
-    // Load the next batch of images
-    // Load the next batch of images
-    function loadNextBatch() {
-        const startIndex = loadedBatches * batchSize;
-        const endIndex = startIndex + batchSize;
+    // Load and display the next batch of images
+    // Load and display the next batch of images
+    async function loadNextBatch() {
+        if (loading && displayedImages.length!==0) return; // Avoid concurrent loads
+        loading = true;
 
-        if (startIndex < images.length) {
-            const newBatch = images.slice(startIndex, endIndex);
-            displayedImages = [...displayedImages, ...newBatch];
-            loadedBatches++;
-            loading = false;
+        const startIndex = currentBatchIndex * batchSize;
+        const endIndex = Math.min(startIndex + batchSize, fileNames.length);
+
+        const batch = await Promise.all(
+            fileNames.slice(startIndex, endIndex).map(fetchImageMetadata)
+        );
+
+        const validImages = batch
+            .filter(Boolean) // Remove any null entries
+            .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)); // Sort by createdDate
+
+        displayedImages = [...displayedImages, ...validImages];
+        currentBatchIndex++;
+
+        console.log(
+            `Displayed batch: ${startIndex + 1} to ${endIndex} (total: ${displayedImages.length})`
+        );
+
+        loading = false;
+
+        // Automatically load the next batch if more images remain
+        if (currentBatchIndex * batchSize < fileNames.length) {
+            loadNextBatch();
         }
     }
 
-    // Check user activity and load the next batch if needed
-    function handleUserActivity() {
-        clearTimeout(userActivityTimeout);
-        userActive = true;
-
-        // Stop loading after 5 seconds of inactivity
-        userActivityTimeout = setTimeout(() => {
-            userActive = false;
-        }, 5000);
-
-        // If user is active, load the next batch
-        if (userActive && displayedImages.length < images.length && !loading) {
-            loading = true;
-            setTimeout(() => loadNextBatch(), 100); // Smooth transition between batches
-        }
-    }
-
-    // Lazy loading directive with IntersectionObserver
+    // Lazy loading directive
     function lazyLoad(node) {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -215,7 +175,6 @@
             },
             { threshold: 0.1 },
         );
-
         observer.observe(node);
         return {
             destroy() {
@@ -223,45 +182,10 @@
             },
         };
     }
-
-    // Attach user activity listeners
+    // Fetch images on mount
     onMount(() => {
-        fetchAndSortImages(); // Fetch all images on mount
-
-        window.addEventListener("scroll", handleUserActivity);
-        window.addEventListener("mousemove", handleUserActivity);
-        window.addEventListener("click", handleUserActivity);
-        window.addEventListener("keydown", handleUserActivity);
-
-        return () => {
-            // Cleanup event listeners
-            window.removeEventListener("scroll", handleUserActivity);
-            window.removeEventListener("mousemove", handleUserActivity);
-            window.removeEventListener("click", handleUserActivity);
-            window.removeEventListener("keydown", handleUserActivity);
-        };
+        loadNextBatch();
     });
-
-    // function lazyLoadNextBatch(node) {
-    //     const observer = new IntersectionObserver(
-    //         ([entry]) => {
-    //             if (entry.isIntersecting && !loading) {
-    //                 loading = true;
-    //                 loadNextBatch();
-    //                 observer.unobserve(node); // Stop observing this node
-    //             }
-    //         },
-    //         { threshold: 0.5 },
-    //     );
-
-    //     observer.observe(node);
-
-    //     return {
-    //         destroy() {
-    //             observer.unobserve(node);
-    //         },
-    //     };
-    // }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -275,6 +199,10 @@
                     ? 'w-3/5'
                     : 'w-5/5'}"
             >
+                <div
+                    class="skeleton"
+                    style="display: {loading ? 'block' : 'none'};"
+                ></div>
                 <img
                     class="opacity-100"
                     use:lazyLoad
