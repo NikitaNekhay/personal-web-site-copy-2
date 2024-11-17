@@ -1,3 +1,8 @@
+<script>
+
+    import { t } from "svelte-i18n";
+
+</script>
 <div class=" h-screen">
     <div
         class="relative top-1/4 content-center items-center justify-center text-center"
@@ -19,6 +24,6 @@
                 fill="#1C64F2"
             />
         </svg>
-        <p>Loading...</p>
+        <p>{$t("Thinking of what special to show you...")}</p>
     </div>
 </div>
