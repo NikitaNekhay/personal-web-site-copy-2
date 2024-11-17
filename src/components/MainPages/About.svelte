@@ -128,14 +128,23 @@
                                 <li>
                                     <p>
                                         {$t(
-                                            "a young designer who has passed 2 sewing, cutting and modeling courses",
+                                            "an employed front-end programmer in React, Bitrix24, PHP",
                                         )}
                                     </p>
+                                    
                                 </li>
                                 <li>
                                     <p>
                                         {$t(
-                                            "a student majoring in programming and economics",
+                                            "a young designer who has passed 2 sewing, cutting and modeling courses",
+                                        )}
+                                    </p>
+                                </li>
+                                
+                                <li>
+                                    <p>
+                                        {$t(
+                                            "a student (last year) majoring in programming and logistics",
                                         )}
                                     </p>
                                 </li>
