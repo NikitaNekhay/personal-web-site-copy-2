@@ -199,10 +199,6 @@
                     ? 'w-3/5'
                     : 'w-5/5'}"
             >
-                <div
-                    class="skeleton"
-                    style="display: {loading ? 'block' : 'none'};"
-                ></div>
                 <img
                     class="opacity-100"
                     use:lazyLoad
