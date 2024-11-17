@@ -94,8 +94,6 @@
     let userActive = true;
     let userActivityTimeout;
 
-
-
     // Function to fetch and prepare images
     async function fetchAndSortImages() {
         try {
@@ -171,69 +169,40 @@
         } catch (error) {
             console.error("Error fetching and sorting images:", error);
         } finally {
-            
             loadNextBatch(); // Load the first batch of images
         }
     }
 
+    // Load the next batch of images
     // Load the next batch of images
     function loadNextBatch() {
         const startIndex = loadedBatches * batchSize;
         const endIndex = startIndex + batchSize;
 
         if (startIndex < images.length) {
-            displayedImages = [
-                ...displayedImages,
-                ...images.slice(startIndex, endIndex),
-            ];
+            const newBatch = images.slice(startIndex, endIndex);
+            displayedImages = [...displayedImages, ...newBatch];
             loadedBatches++;
             loading = false;
         }
-
-        // Check for user activity before loading the next batch
-        if (displayedImages.length < images.length && userActive) {
-            loadNextBatch(); // Continue loading if the user is active
-        } else {
-            loading = false; // Stop showing spinner if all images are loaded or user is inactive
-        }
     }
 
-
-  // Check user activity and load the next batch if needed
+    // Check user activity and load the next batch if needed
     function handleUserActivity() {
         clearTimeout(userActivityTimeout);
         userActive = true;
 
-        // If inactive for 3 seconds, stop loading
+        // Stop loading after 5 seconds of inactivity
         userActivityTimeout = setTimeout(() => {
             userActive = false;
-        }, 3000);
+        }, 5000);
 
-        // Trigger loading next batch if not currently loading
+        // If user is active, load the next batch
         if (userActive && displayedImages.length < images.length && !loading) {
             loading = true;
-            loadNextBatch();
+            setTimeout(() => loadNextBatch(), 100); // Smooth transition between batches
         }
     }
-
-    // Attach user activity listeners
-    onMount(() => {
-        fetchAndSortImages(); // Fetch all images on mount
-
-        window.addEventListener("scroll", handleUserActivity);
-        window.addEventListener("mousemove", handleUserActivity);
-        window.addEventListener("click", handleUserActivity);
-        window.addEventListener("keydown", handleUserActivity);
-
-        return () => {
-            // Cleanup event listeners
-            window.removeEventListener("scroll", handleUserActivity);
-            window.removeEventListener("mousemove", handleUserActivity);
-            window.removeEventListener("click", handleUserActivity);
-            window.removeEventListener("keydown", handleUserActivity);
-        };
-    });
-
 
     // Lazy loading directive with IntersectionObserver
     function lazyLoad(node) {
@@ -255,27 +224,44 @@
         };
     }
 
-    function lazyLoadNextBatch(node) {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && !loading) {
-                    loading = true;
-                    loadNextBatch();
-                    observer.unobserve(node); // Stop observing this node
-                }
-            },
-            { threshold: 0.5 },
-        );
+    // Attach user activity listeners
+    onMount(() => {
+        fetchAndSortImages(); // Fetch all images on mount
 
-        observer.observe(node);
+        window.addEventListener("scroll", handleUserActivity);
+        window.addEventListener("mousemove", handleUserActivity);
+        window.addEventListener("click", handleUserActivity);
+        window.addEventListener("keydown", handleUserActivity);
 
-        return {
-            destroy() {
-                observer.unobserve(node);
-            },
+        return () => {
+            // Cleanup event listeners
+            window.removeEventListener("scroll", handleUserActivity);
+            window.removeEventListener("mousemove", handleUserActivity);
+            window.removeEventListener("click", handleUserActivity);
+            window.removeEventListener("keydown", handleUserActivity);
         };
-    }
+    });
 
+    // function lazyLoadNextBatch(node) {
+    //     const observer = new IntersectionObserver(
+    //         ([entry]) => {
+    //             if (entry.isIntersecting && !loading) {
+    //                 loading = true;
+    //                 loadNextBatch();
+    //                 observer.unobserve(node); // Stop observing this node
+    //             }
+    //         },
+    //         { threshold: 0.5 },
+    //     );
+
+    //     observer.observe(node);
+
+    //     return {
+    //         destroy() {
+    //             observer.unobserve(node);
+    //         },
+    //     };
+    // }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -303,7 +289,7 @@
     </div>
 
     {#if loading}
-        <div use:lazyLoadNextBatch class="grid justify-items-center pt-4">
+        <div class="grid justify-items-center pt-4">
             <LoadingSpinner />
         </div>
     {/if}

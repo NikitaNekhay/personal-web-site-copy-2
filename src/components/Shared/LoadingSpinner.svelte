@@ -5,7 +5,7 @@
         <svg
             aria-hidden="true"
             role="status"
-            class="mr-3 inline h-4 w-4 animate-spin fill-blue-0 dark:text-orange-0"
+            class="mr-3 inline h-4 w-4 animate-spin text-yellow-0 fill-blue-0 dark:text-orange-0"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
