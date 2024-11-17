@@ -86,7 +86,16 @@
     let innerWidth = 0;
     let innerHeight = 0;
     let images = []; // Holds the remaining images after initial load
+    let displayedImages = []; // Currently visible images
+    let batchSize = 5; // Number of images to load per batch
     let loading = true; // Loading flag to manage rendering state
+    let loadedBatches = 0;
+    // Tracks if the user is active
+    let userActive = true;
+    let userActivityTimeout;
+
+
+
     // Function to fetch and prepare images
     async function fetchAndSortImages() {
         try {
@@ -158,41 +167,74 @@
                         new Date(b.createdDate).getTime() -
                         new Date(a.createdDate).getTime(),
                 );
-                console.log(images)
+            console.log(images);
         } catch (error) {
             console.error("Error fetching and sorting images:", error);
         } finally {
-            loading = false; // Set loading to false once data is fetched
+            
+            loadNextBatch(); // Load the first batch of images
         }
     }
 
-    // Load more images on scroll
-    // function loadMoreImages() {
-    //     if (displayedImages.length < images.length) {
-    //         loadedImages += 3; // Load 3 more images
-    //         displayedImages = images.slice(0, loadedImages);
-    //     }
-    // }
+    // Load the next batch of images
+    function loadNextBatch() {
+        const startIndex = loadedBatches * batchSize;
+        const endIndex = startIndex + batchSize;
 
-    // Check if user has scrolled down 60% of viewport
-    // function checkScroll() {
-    //     if (window.scrollY + window.innerHeight >= window.innerHeight * 0.6) {
-    //         loadMoreImages();
-    //     }
-    // }
-    onMount(fetchAndSortImages);
-    // Attach scroll listener
-    // onMount(async () => {
-    //     await fetchAndSortImages(); // Initial load
+        if (startIndex < images.length) {
+            displayedImages = [
+                ...displayedImages,
+                ...images.slice(startIndex, endIndex),
+            ];
+            loadedBatches++;
+            loading = false;
+        }
 
-    //     const handleScroll = () => checkScroll();
-    //     window.addEventListener("scroll", handleScroll);
+        // Check for user activity before loading the next batch
+        if (displayedImages.length < images.length && userActive) {
+            loadNextBatch(); // Continue loading if the user is active
+        } else {
+            loading = false; // Stop showing spinner if all images are loaded or user is inactive
+        }
+    }
 
-    //     return () => window.removeEventListener("scroll", handleScroll);
-    // });
 
-    // Update scroll position on component mount
-    // Update scroll position on component mount (client-side only)
+  // Check user activity and load the next batch if needed
+    function handleUserActivity() {
+        clearTimeout(userActivityTimeout);
+        userActive = true;
+
+        // If inactive for 3 seconds, stop loading
+        userActivityTimeout = setTimeout(() => {
+            userActive = false;
+        }, 3000);
+
+        // Trigger loading next batch if not currently loading
+        if (userActive && displayedImages.length < images.length && !loading) {
+            loading = true;
+            loadNextBatch();
+        }
+    }
+
+    // Attach user activity listeners
+    onMount(() => {
+        fetchAndSortImages(); // Fetch all images on mount
+
+        window.addEventListener("scroll", handleUserActivity);
+        window.addEventListener("mousemove", handleUserActivity);
+        window.addEventListener("click", handleUserActivity);
+        window.addEventListener("keydown", handleUserActivity);
+
+        return () => {
+            // Cleanup event listeners
+            window.removeEventListener("scroll", handleUserActivity);
+            window.removeEventListener("mousemove", handleUserActivity);
+            window.removeEventListener("click", handleUserActivity);
+            window.removeEventListener("keydown", handleUserActivity);
+        };
+    });
+
+
     // Lazy loading directive with IntersectionObserver
     function lazyLoad(node) {
         const observer = new IntersectionObserver(
@@ -202,7 +244,7 @@
                     observer.unobserve(node);
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1 },
         );
 
         observer.observe(node);
@@ -212,119 +254,74 @@
             },
         };
     }
+
+    function lazyLoadNextBatch(node) {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !loading) {
+                    loading = true;
+                    loadNextBatch();
+                    observer.unobserve(node); // Stop observing this node
+                }
+            },
+            { threshold: 0.5 },
+        );
+
+        observer.observe(node);
+
+        return {
+            destroy() {
+                observer.unobserve(node);
+            },
+        };
+    }
+
 </script>
 
-
-
 <svelte:window bind:innerWidth bind:innerHeight />
-<!-- <div class="h-auto pt-36">
-        <div class=" justify-items-center grid grid-cols-1 gap-y-4">
-            {#each displayedImages as image, index}
-                <div id="img{index}" class="grid justify-items-center w-3/5">
-                    <img
-                        class="opacity-100"
-                        src={image.url}
-                        alt={image.name}
-                        in:fade={{ delay: 100, duration: 300 }}
-                    />
-                    <p class="text-blue-0 text-shadow-yellow">
-                        {image.name}
-                    </p>
-                </div>
-            {/each}
-        </div>
-
-
-        <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
-            <button
-                on:click={() => {
-                    document.body.scrollIntoView({
-                        block: "start",
-                        behavior: "smooth",
-                    });
-                }}
-            >
-                <img
-                    class="w-12 transition-all duration-200 animate-bounce"
-                    src="{base}/media/chevrons-up.svg"
-                    alt="Scroll to top"
-                />
-            </button>
-        </div>
-    </div> -->
-
-<!-- <div class="h-auto pt-36">
-        <div class="grid grid-cols-1 gap-y-4">
-            {#each displayedImages as image, index}
-                <div id="img{index}">
-                    <img
-                        class="opacity-100"
-                        src={image.url}
-                        alt={image.name}
-                        in:fade={{ delay: 100, duration: 300 }}
-                    />
-                    <p class="text-blue-0 text-shadow-yellow">
-                        {image.name}
-                    </p>
-                </div>
-            {/each}
-        </div>
-
-      
-        <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
-            <button
-                on:click={() => {
-                    document.body.scrollIntoView({
-                        block: "start",
-                        behavior: "smooth",
-                    });
-                }}
-            >
-                <img
-                    class="w-12 transition-all duration-200 animate-bounce"
-                    src="{base}/media/chevrons-up.svg"
-                    alt="Scroll to top"
-                />
-            </button>
-        </div>
-    </div> -->
 
 <!-- Virtual List for Infinite Scroll and Lazy Loading -->
 <div class="h-auto pt-36">
-    {#if loading}
-        <LoadingSpinner />
-    {:else}
-        <div class="justify-items-center grid grid-cols-1 gap-y-4">
-            {#each images as image (image.name)}
-                <div class="grid justify-items-center {innerWidth>1400 ? "w-3/5" : "w-5/5"}">
-                    <img
-                        class="opacity-100"
-                        use:lazyLoad
-                        data-src={image.url}
-                        alt={image.name}
-                        style="width: 100%; height: auto;"
-                        in:fade={{ delay: 100, duration: 300 }}
-                    />
-                    <p class="text-blue-0 text-shadow-yellow">{image.name}</p>
-                </div>
-            {/each}
-        </div>
-
-        <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
-            <button
-                on:click={() => {
-                    document.body.scrollIntoView({
-                        block: "start",
-                        behavior: "smooth",
-                    });
-                }}
+    <div class="justify-items-center grid grid-cols-1 gap-y-4">
+        {#each displayedImages as image (image.name)}
+            <div
+                class="grid justify-items-center {innerWidth > 1400
+                    ? 'w-3/5'
+                    : 'w-5/5'}"
             >
                 <img
-                    class="w-12 transition-all duration-200 animate-bounce"
-                    src="{base}/media/chevrons-up.svg"
-                    alt="Scroll to top"
+                    class="opacity-100"
+                    use:lazyLoad
+                    data-src={image.url}
+                    alt={image.name}
+                    style="width: 100%; height: auto;"
+                    in:fade={{ delay: 100, duration: 300 }}
                 />
-            </button>
+                <p class="text-blue-0 text-shadow-yellow">{image.name}</p>
+            </div>
+        {/each}
+    </div>
+
+    {#if loading}
+        <div use:lazyLoadNextBatch class="grid justify-items-center pt-4">
+            <LoadingSpinner />
         </div>
     {/if}
+
+    <div class="pt-96 relative bottom-0 top-10 grid justify-items-center">
+        <button
+            on:click={() => {
+                document.body.scrollIntoView({
+                    block: "start",
+                    behavior: "smooth",
+                });
+            }}
+        >
+            <img
+                class="w-12 transition-all duration-200 animate-bounce"
+                src="{base}/media/chevrons-up.svg"
+                alt="Scroll to top"
+            />
+        </button>
+    </div>
 </div>
