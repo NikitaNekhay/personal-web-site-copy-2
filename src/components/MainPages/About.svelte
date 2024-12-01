@@ -39,7 +39,7 @@
                         class="h-auto {innerWidth < 410
                             ? 'md:h-[100%]'
                             : 'md:h-[99%] '} lg:h-[100%] xl:h-[100%] 2xl:h-[100%] 3xl:h-[100%]"
-                        src="{base}/media/NIKITA.JPG"
+                        src="{base}/media/nik_rotate.gif"
                         alt="nikita's portrait"
                     />
                 </div>
