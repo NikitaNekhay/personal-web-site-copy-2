@@ -38,8 +38,8 @@ import('fs').then(fs => {
           crawlDelay: 2,
         },
       ],
-      sitemap: "https://nekhaynikita.shop/sitemap.xml", // Укажите правильный URL к вашему sitemap
-      host: "https://nekhaynikita.shop", // Укажите основной домен вашего сайта
+      sitemap: "https://nekhaynikita.ru/sitemap.xml", // Укажите правильный URL к вашему sitemap
+      host: "https://nekhaynikita.ru", // Укажите основной домен вашего сайта
     })
     .then((content) => {
       console.log(content);

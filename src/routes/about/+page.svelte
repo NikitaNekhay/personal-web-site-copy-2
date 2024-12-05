@@ -28,7 +28,7 @@
     content="https://lh3.googleusercontent.com/pw/ABLVV852oPHLKRMIwtf-Sn5fGGeiIGiVzhsU9ZoztcoPK8qW4Gt52oXElABRA8nKxrbg1xKLa-upENHFXidU4FO5ame1Dq4X69jHH3J_z7g-Soz4ALO9mIFd6z1Bg2vlAHdAM3P4BGzI69gLHVbqcMsF8eqvKw=w623-h934-s-no-gm?authuser=0"
   />
 
-  <meta property="og:url" content="http://nekhaynikita.shop/about" />
+  <meta property="og:url" content="https://nekhaynikita.ru/about" />
 
   <meta name="twitter:image" content="https://lh3.googleusercontent.com/pw/ABLVV852oPHLKRMIwtf-Sn5fGGeiIGiVzhsU9ZoztcoPK8qW4Gt52oXElABRA8nKxrbg1xKLa-upENHFXidU4FO5ame1Dq4X69jHH3J_z7g-Soz4ALO9mIFd6z1Bg2vlAHdAM3P4BGzI69gLHVbqcMsF8eqvKw=w623-h934-s-no-gm?authuser=0" />
   <meta name="twitter:card" content="summary_large_image" />

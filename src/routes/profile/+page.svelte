@@ -25,7 +25,7 @@
 
   <meta property="og:image" content="" />
 
-  <meta property="og:url" content="http://nekhaynikita.shop/profile" />
+  <meta property="og:url" content="https://nekhaynikita.ru/profile" />
 </svelte:head>
 
 <Profile />

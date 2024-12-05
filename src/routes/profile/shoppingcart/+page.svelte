@@ -79,7 +79,7 @@
 
     <meta
         property="og:url"
-        content="http://nekhaynikita.shop/profile/shoppingcart"
+        content="https://nekhaynikita.ru/profile/shoppingcart"
     />
 </svelte:head>
 

@@ -17,5 +17,5 @@ Disallow: /login/
 Disallow: /profile/
 Disallow: /shoppingcart/
 Crawl-delay: 2
-Sitemap: https://nekhaynikita.shop/sitemap.xml
-Host: nekhaynikita.shop
+Sitemap: https://nekhaynikita.ru/sitemap.xml
+Host: nekhaynikita.ru

@@ -27,7 +27,7 @@
     content=""
   />
 
-  <meta property="og:url" content="http://nekhaynikita.shop/policy" />
+  <meta property="og:url" content="https://nekhaynikita.ru/policy" />
 </svelte:head>
 
 <EmptyPage />

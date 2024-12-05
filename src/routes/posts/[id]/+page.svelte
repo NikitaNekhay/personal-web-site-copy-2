@@ -77,7 +77,7 @@
     content={post.images[0]}
   />
 
-  <meta property="og:url" content={"http://nekhaynikita.shop/posts/"+post.id} />
+  <meta property="og:url" content={"https://nekhaynikita.ru/posts/"+post.id} />
 
   <meta name="twitter:image" content={post.images[0]} />
   <meta name="twitter:card" content="summary_large_image" />

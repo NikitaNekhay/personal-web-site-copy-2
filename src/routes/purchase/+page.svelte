@@ -27,7 +27,7 @@
     content=""
   />
 
-  <meta property="og:url" content="http://nekhaynikita.shop/purchase" />
+  <meta property="og:url" content="https://nekhaynikita.ru/purchase" />
 </svelte:head>
 
 <Purchase />
