@@ -7,66 +7,43 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
+
 <url>
-  <loc>https://nekhaynikita.ru/</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/</loc>
+  <lastmod>2024-12-07T09:48:57+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/about</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/about</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/contact</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/contact</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/shop</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/shop</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/works</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/works</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/profile/shoppingcart</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/purchase</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nekhaynikita.ru/purchase</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
+  <loc>https://www.nekhaynikita.ru/policy</loc>
+  <lastmod>2024-12-07T09:49:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-<url>
-  <loc>https://nekhaynikita.ru/policy</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nekhaynikita.ru/posts/CgF16bXhfrKo5WmhEwgZ</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nekhaynikita.ru/posts/js65QLblGNmOhZVTl6W5</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nekhaynikita.ru/posts/5qv9ICdoxyPrFvc4aqEP</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nekhaynikita.ru/posts/wR5Vkuzy3Xc7XeGK4aVI</loc>
-  <lastmod>2024-01-21T14:33:45+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
+
 
 
 </urlset>
