@@ -12,62 +12,62 @@ export async function GET() {
 		>
 			<!-- <url> elements go here -->
             <url>
-            <loc>https://www.nekhaynikita.shop/</loc>
+            <loc>https://www.nekhaynikita.ru/</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>1.00</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/about</loc>
+            <loc>https://www.nekhaynikita.ru/about</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/contact</loc>
+            <loc>https://www.nekhaynikita.ru/contact</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/shop</loc>
+            <loc>https://www.nekhaynikita.ru/shop</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/works</loc>
+            <loc>https://www.nekhaynikita.ru/works</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/profile/shoppingcart</loc>
+            <loc>https://www.nekhaynikita.ru/profile/shoppingcart</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/purchase</loc>
+            <loc>https://www.nekhaynikita.ru/purchase</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/policy</loc>
+            <loc>https://www.nekhaynikita.ru/policy</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.80</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/posts/CgF16bXhfrKo5WmhEwgZ</loc>
+            <loc>https://www.nekhaynikita.ru/posts/CgF16bXhfrKo5WmhEwgZ</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.64</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/posts/js65QLblGNmOhZVTl6W5</loc>
+            <loc>https://www.nekhaynikita.ru/posts/js65QLblGNmOhZVTl6W5</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.64</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/posts/5qv9ICdoxyPrFvc4aqEP</loc>
+            <loc>https://www.nekhaynikita.ru/posts/5qv9ICdoxyPrFvc4aqEP</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.64</priority>
             </url>
             <url>
-            <loc>https://www.nekhaynikita.shop/posts/wR5Vkuzy3Xc7XeGK4aVI</loc>
+            <loc>https://www.nekhaynikita.ru/posts/wR5Vkuzy3Xc7XeGK4aVI</loc>
             <lastmod>2024-01-21T14:33:45+00:00</lastmod>
             <priority>0.64</priority>
             </url>
