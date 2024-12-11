@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["http://localhost:5173","nekhaynikita.ru","https://nekhaynikita.ru"],
+      "origin": ["http://localhost:5173","https://www.nekhaynikita.ru","www.nekhaynikita.ru","nekhaynikita.ru","https://nekhaynikita.ru"],
       "method": ["GET"],
       "maxAgeSeconds": 3600
     }
