@@ -296,7 +296,7 @@
                                     <a
                                         class="p-link"
                                         target="_blank"
-                                        href="https://docs.google.com/document/d/1ZxhRCkjZerUvDzlPPO48vNbj94rgpZnr/edit?usp=sharing&ouid=103300784789388936659&rtpof=true&sd=true"
+                                        href="https://standardresume.co/r/OAYLFpwZFWOJpeyckiFpn"
                                         >{$t("here")}</a
                                     >
                                 </p>
