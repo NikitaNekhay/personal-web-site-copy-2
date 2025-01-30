@@ -212,20 +212,20 @@
         <!-- RIGHT SIDE FOR ABOUT NEKHAY NIKITA -->
         <div
             class=" m-12 flex flex-col items-center place-content-center
-        text-black-1 uppercase font-anonymous text-2xl md:m-6 sm:m-6
+        text-black-1 font-anonymous text-2xl md:m-6 sm:m-6
              gap-y-12 w-[80%]
             "
         >
             <!-- TITLE + SMALL DESCRIPTION -->
             <div class="w-[100%] flex flex-col gap-y-4">
-                <header>
+                
                     <h1
-                        class="font-abril sm:text-5xl text-center break-words text-6xl sm:tracking-tight text-black-0"
+                        class="font-abril sm:text-4xl text-center break-words text-6xl sm:tracking-tight text-black-0"
                         lang={$currentLanguagee}
                     >
                         {$t(post.title)}
                     </h1>
-                </header>
+                
                 <p
                     class="text-center text-xl break-words"
                     lang={$currentLanguagee}
@@ -456,7 +456,7 @@
                                 )}<br />
                                 {$t("RF: Self-delivery from CDEK;")}<br />
                                 {$t(
-                                    "Other countries: Evropochta or any personal agreements.",
+                                    "Other countries: EMS or any personal agreements;",
                                 )}<br />
                                 <em
                                     >{$t(

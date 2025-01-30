@@ -17,7 +17,7 @@
     class="grid h-[100%] px-4 bg-white place-content-center lg:mb-0 md:mb-48 sm:mb-48"
   >
     <h1
-      class="tracking-widest mb- text-black-1 uppercase font-abril text-6xl sm:text-4xl text-center"
+      class="tracking-widest mb- text-black-1 font-abril text-6xl sm:text-4xl text-center"
     >
       {$t("PROJECT 1 CAPSULE COLLECTION")}
     </h1>

@@ -150,7 +150,7 @@
 
                 <h2 class="tracking-widest uppercase text-black-1 font-serif text-lg">
                     {$t(
-                       "Other countries: Evropochta or any personal agreements:"
+                       "Other countries: EMS or any personal agreements;"
                     )}
                 </h2>
                 <ul>
